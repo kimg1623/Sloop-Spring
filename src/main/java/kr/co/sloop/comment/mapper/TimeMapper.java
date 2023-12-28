@@ -1,4 +1,4 @@
-package kr.co.sloop.sample.mapper;
+package kr.co.sloop.comment.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

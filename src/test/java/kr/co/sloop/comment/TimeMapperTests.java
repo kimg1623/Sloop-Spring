@@ -1,6 +1,6 @@
-package kr.co.sloop.sample;
+package kr.co.sloop.comment;
 
-import kr.co.sloop.sample.mapper.TimeMapper;
+import kr.co.sloop.comment.mapper.TimeMapper;
 import lombok.extern.log4j.Log4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
