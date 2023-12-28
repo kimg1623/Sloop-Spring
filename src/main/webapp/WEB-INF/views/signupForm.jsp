@@ -9,7 +9,7 @@
 <body>
 <form action="/member/signup" method="post">
     <p>이 메 일 : <input type="text" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()">
-                    <button type="button" name="check-Email" value="중복확인">중복확인</button></p>
+                    <%--<button type="button" name="check-Email" value="중복확인">중복확인</button>--%></p>
     <p id="check-result"></p>
     <p>비밀번호 : <input type="text" name="memberPassword" placeholder="비밀번호" required></p>
     <p>닉 네 임 : <input type="text" name="memberNickname" placeholder="닉네임" required></p>
@@ -19,7 +19,7 @@
         <input type="radio" name="memberGender" id="female">
         <label for="female">여자</label>
     </p>
-    <p>전화번호 : <input type="text" name="memberNumber" placeholder="핸드폰번호" required></p>
+    <p>전화번호 : <input type="text" name="memberPhonenumber" placeholder="핸드폰번호" required></p>
     <p>회원대분류 :
         <select name="memberDivision" id="memberDivision" onchange="memberDivisionChange(this)" required>
             <option>선택하세요.</option>
@@ -60,8 +60,6 @@
         <select name="memberSigugun_s" id="memberSigugun_s" required>
             <option value="choose">선택하세요.</option>
         </select></p>
-    <p>나   이 : <input type="text" name="memberAge" placeholder="나이" required></p>
-    <p>전화번호 : <input type="text" name="memberMobile" placeholder="전화번호" required></p>
     <input type="submit" value="회원가입">
 </form>
 </body>

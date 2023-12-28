@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.util.Date;
+import java.time.LocalDateTime;
+
 
 @Data
 @ToString
@@ -17,7 +18,7 @@ public class MemberDTO {
     private String memberPassword;      //'회원 비밀번호',
     private String memberNickname;      // '회원 닉네임',
     private String memberGender;        //	'회원 성별',
-    private Date memberRegdate;         // '회원가입 날짜',
+    private LocalDateTime memberRegdate;// '회원가입 날짜',
     private String memberPhonenumber;   // '회원 핸드폰번호',
     private String memberSchool;        // '회원 학교',
     private int memberGradeCode;        // '학년 카테고리 코드',
