@@ -14,10 +14,10 @@ import java.util.Locale;
  * Handles requests for the application home page.
  */
 @Controller
-@RequestMapping("/sample")
-public class SampleController {
+@RequestMapping("/comment")
+public class CommentController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(SampleController.class);
+	private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -33,7 +33,7 @@ public class SampleController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-		return "sample/sample"; // String으로 반환할 때 jsp 파일이 저장된 위치부터 지정해야 함. return "{폴더명}/{jsp파일명}";
+		return "comment/comment"; // String으로 반환할 때 jsp 파일이 저장된 위치부터 지정해야 함. return "{폴더명}/{jsp파일명}";
 	}
 	
 }
