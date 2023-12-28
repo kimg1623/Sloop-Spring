@@ -4,24 +4,22 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
             crossorigin="anonymous"></script>
-    <title>index</title>
+    <title>S-loop 회원가입</title>
 </head>
 <body>
-<form action="/member/save" method="post">
-    <p>아 이 디 : <input type="text" name="memberId" placeholder="아이디" id="memberId"></p>
-    <p>비밀번호 : <input type="text" name="memberPassword" placeholder="비밀번호"></p>
-    <p>이   름 : <input type="text" name="memberName" placeholder="이름"></p>
-    <p>닉 네 임 : <input type="text" name="memberNickname" placeholder="닉네임"></p>
+<form action="/member/signup" method="post">
+    <p>이 메 일 : <input type="text" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()">
+                    <button type="button" name="check-Email" value="중복확인">중복확인</button></p>
+    <p id="check-result"></p>
+    <p>비밀번호 : <input type="text" name="memberPassword" placeholder="비밀번호" required></p>
+    <p>닉 네 임 : <input type="text" name="memberNickname" placeholder="닉네임" required></p>
     <p>성   별 :
         <input type="radio" name="memberGender" id="male">
         <label for="male">남자</label>
         <input type="radio" name="memberGender" id="female">
         <label for="female">여자</label>
     </p>
-
-    <p>이 메 일 : <input type="text" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()"></p>
-    <p id="check-result"></p>
-    <p>전화번호 : <input type="text" name="memberNumber" placeholder="핸드폰번호"></p>
+    <p>전화번호 : <input type="text" name="memberNumber" placeholder="핸드폰번호" required></p>
     <p>회원대분류 :
         <select name="memberDivision" id="memberDivision" onchange="memberDivisionChange(this)" required>
             <option>선택하세요.</option>
@@ -29,21 +27,21 @@
             <option value="middle">중학생</option>
             <option value="high">고등학생</option>
             <option value="univ">대학생</option>
-            <option value="normal">일반인</option>
+            <%--<option value="normal">일반인</option>--%>
         </select>
     </p>
     <p>회원소분류 :
         <select name="memberDivision_s" id="memberDivision_s">
             <option value="choose">선택하세요.</option>
         </select></p>
-    <p>학 교 명 : <input type="text" name="memberSchool"></p>
+    <p>학 교 명 : <input type="text" name="memberSchool" required></p>
     <p>지역대분류 :
         <select name="memberSigugun" id="memberSigugun" onchange="memberSigugunChange(this)" required>
             <option>선택하세요.</option>
             <option value="seoul">서울특별시</option>
             <option value="gyeonggi">경기도</option>
             <option value="incheon">인천광역시</option>
-            <option value="gangwon">강원도</option>
+            <option value="gangwon">강원특별자치도</option>
             <option value="chungcheongbuk">충청북도</option>
             <option value="chungcheongnam">충청남도</option>
             <option value="daejeon">대전광역시</option>
@@ -59,11 +57,11 @@
             <option value="jeju">제주특별자치도</option>
         </select></p>
     <p>지역소분류 :
-        <select name="memberSigugun_s" id="memberSigugun_s">
+        <select name="memberSigugun_s" id="memberSigugun_s" required>
             <option value="choose">선택하세요.</option>
         </select></p>
-    <p>나   이 : <input type="text" name="memberAge" placeholder="나이"></p>
-    <p>전화번호 : <input type="text" name="memberMobile" placeholder="전화번호"></p>
+    <p>나   이 : <input type="text" name="memberAge" placeholder="나이" required></p>
+    <p>전화번호 : <input type="text" name="memberMobile" placeholder="전화번호" required></p>
     <input type="submit" value="회원가입">
 </form>
 </body>
@@ -108,14 +106,14 @@
         var middle = ["1학년","2학년","3학년"];
         var high = ["1학년","2학년","3학년"];
         var univ = ["1학년","2학년","3학년","4학년"];
-        var normal = ["직장인","취준생"];
+        /*var normal = ["직장인","취준생"];*/
         var target = document.getElementById("memberDivision_s");
 
         if (e.value == "element") var d = element;
         else if (e.value == "middle") var d = middle;
         else if (e.value == "high") var d = high;
         else if (e.value == "univ") var d = univ;
-        else if (e.value == "normal") var d = normal;
+        /*else if (e.value == "normal") var d = normal;*/
         target.options.length = 0;
 
         for (x in d) {
