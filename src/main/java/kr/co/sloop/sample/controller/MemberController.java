@@ -5,10 +5,9 @@ import kr.co.sloop.sample.domain.MemberDTO;
 import kr.co.sloop.sample.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/member")
@@ -26,9 +25,35 @@ public class MemberController {
     public String signup(@ModelAttribute MemberDTO memberDTO){
         int signupResult = memberService.signup(memberDTO);
         if (signupResult > 0){
-            return "login";
+            return "loginForm";
         } else {
             return "signupForm";
         }
     }
+    // 이메일 중복확인 AJAX
+    @PostMapping("/email-check")
+    public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail){
+        System.out.println("memberEmail = " + memberEmail);
+        String checkResult = memberService.emailCheck(memberEmail);
+        return checkResult;
+    }
+
+    @GetMapping("/login")
+    public String loginForm(){
+        return "loginForm";
+    }
+
+
+    @PostMapping("/login")
+    public String login(@ModelAttribute MemberDTO memberDTO , HttpSession session) {
+        boolean loginResult = memberService.login(memberDTO);
+
+        if (loginResult) {
+            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            return "home";
+        } else {
+            return "login";
+        }
+    }
+
 }

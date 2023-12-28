@@ -16,4 +16,14 @@ public class MemberRepositoryImpl implements MemberRepository {
     public int signup(MemberDTO memberDTO){
         return sql.insert("Member.signup",memberDTO);
     }
+
+    @Override
+    public MemberDTO login(MemberDTO memberDTO) {
+        return sql.selectOne("Member.login", memberDTO);
+    }
+
+    @Override
+    public MemberDTO findByMemberEmail(String memberEmail) {
+        return sql.selectOne("Member.findByMemberEmail", memberEmail);
+    }
 }

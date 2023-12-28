@@ -1,18 +1,22 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Member">
-
-
     <insert id="signup" parameterType="member">
         insert into member
-        (memberEmail,memberPassword,memberNickname,memberGender,memberRegdate,memberPhonenumber,
-        memberSchool,memberGradeCode,memberSubjectCode,memberRegionCode)
-        values
-        (#{memberEmail},#{memberPassword},#{memberNickname},#{memberGender},#{memberRegdate},#{memberPhonenumber},
-        #{memberSchool},#{memberGradeCode},#{memberSubjectCode},#{memberRegionCode})
+                (memberEmail,memberPassword,memberNickname,memberGender,memberPhonenumber,memberSchool,
+                 memberGradeCode,memberSubjectCode,memberRegionCode)
+        values (#{memberEmail},#{memberPassword},#{memberNickname},#{memberGender},
+                #{memberPhonenumber},#{memberSchool},#{memberGradeCode},#{memberSubjectCode},#{memberRegionCode})
     </insert>
 
+    <select id="login" parameterType="member" resultType="member">
+        select * from member where memberEmail = #{memberEmail} and memberPassword = #{memberPassword}
+    </select>
+
+    <select id="findByMemberEmail" parameterType="String" resultType="member">
+        select id, memberEmail, memberPassword, memberName, memberAge, memberMobile
+        from  member
+        where memberEmail = #{loginEmail}
+    </select>
 </mapper>
