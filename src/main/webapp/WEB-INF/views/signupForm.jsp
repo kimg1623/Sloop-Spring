@@ -35,6 +35,14 @@
             <option value="choose">선택하세요.</option>
         </select></p>
     <p>학 교 명 : <input type="text" name="memberSchool" required></p>
+    <%--<p>관심 과목 :
+        <input type="checkbox" name="memberSubjectCode" value="101">국어
+        <input type="checkbox" name="memberSubjectCode" value="102">영어
+        <input type="checkbox" name="memberSubjectCode" value="103">수학
+        <input type="checkbox" name="memberSubjectCode" value="104">사회
+        <input type="checkbox" name="memberSubjectCode" value="105">과학
+        <input type="checkbox" name="memberSubjectCode" value="106">기타
+    </p>--%>
     <p>지역대분류 :
         <select name="memberRegionCode" id="memberRegionCode" onchange="memberSigugunChange(this)" required>
             <option>선택하세요.</option>
