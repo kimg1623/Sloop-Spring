@@ -1,4 +1,4 @@
 package kr.co.sloop.comment.repository.impl;
 
-public interface CommentRepository {
+public interface SampleRepository {
 }
