@@ -1,6 +1,6 @@
-package kr.co.sloop.sample.repository.impl;
+package kr.co.sloop.member.repository.impl;
 
-import kr.co.sloop.sample.domain.MemberDTO;
+import kr.co.sloop.member.domain.MemberDTO;
 
 public interface MemberRepository {
     int signup(MemberDTO memberDTO);

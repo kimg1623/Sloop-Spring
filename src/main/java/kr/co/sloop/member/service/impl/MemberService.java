@@ -1,6 +1,6 @@
-package kr.co.sloop.sample.service.impl;
+package kr.co.sloop.member.service.impl;
 
-import kr.co.sloop.sample.domain.MemberDTO;
+import kr.co.sloop.member.domain.MemberDTO;
 
 public interface MemberService {
     int signup(MemberDTO memberDTO);
