@@ -1,11 +1,10 @@
-package kr.co.sloop.sample.domain;
+package kr.co.sloop.member.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -22,7 +21,7 @@ public class MemberDTO {
     private Date memberRegdate;// '회원가입 날짜',
     private String memberPhonenumber;   // '회원 핸드폰번호',
     private String memberSchool;        // '회원 학교',
-    private int memberGradeCode;        // '학년 카테고리 코드',
-    private int memberSubjectCode;      // '과목 카테고리 코드',
-    private int memberRegionCode;       // '지역 카테고리 코드',
+    private String memberGradeCode;        // '학년 카테고리 코드',
+    private String memberSubjectCode;      // '과목 카테고리 코드',
+    private String memberRegionCode;       // '지역 카테고리 코드',
 }

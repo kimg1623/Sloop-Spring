@@ -9,7 +9,7 @@
 <body>
 <form action="/member/signup" method="post">
     <p>이 메 일 : <input type="text" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()">
-                    <%--<button type="button" name="check-Email" value="중복확인">중복확인</button>--%></p>
+                    <button type="button" name="check-Email" value="중복확인" onclick="emailCheck()">중복확인</button></p>
     <p id="check-result"></p>
     <p>비밀번호 : <input type="text" name="memberPassword" placeholder="비밀번호" required></p>
     <p>닉 네 임 : <input type="text" name="memberNickname" placeholder="닉네임" required></p>
@@ -23,9 +23,9 @@
     <p>회원대분류 :
         <select name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required>
             <option>선택하세요.</option>
-            <option value="100">초등학생</option>
-            <option value="200">중학생</option>
-            <option value="300">고등학생</option>
+            <option value="초등학생">초등학생</option>
+            <option value="중학생">중학생</option>
+            <option value="고등학생">고등학생</option>
             <%--<option value="univ">대학생</option>--%>
             <%--<option value="normal">일반인</option>--%>
         </select>
@@ -35,14 +35,14 @@
             <option value="choose">선택하세요.</option>
         </select></p>
     <p>학 교 명 : <input type="text" name="memberSchool" required></p>
-    <%--<p>관심 과목 :
-        <input type="checkbox" name="memberSubjectCode" value="101">국어
-        <input type="checkbox" name="memberSubjectCode" value="102">영어
-        <input type="checkbox" name="memberSubjectCode" value="103">수학
-        <input type="checkbox" name="memberSubjectCode" value="104">사회
-        <input type="checkbox" name="memberSubjectCode" value="105">과학
-        <input type="checkbox" name="memberSubjectCode" value="106">기타
-    </p>--%>
+    <p>관심 과목 :
+        <input type="checkbox" name="memberSubjectCode" value="국어">국어
+        <input type="checkbox" name="memberSubjectCode" value="영어">영어
+        <input type="checkbox" name="memberSubjectCode" value="수학">수학
+        <input type="checkbox" name="memberSubjectCode" value="사회">사회
+        <input type="checkbox" name="memberSubjectCode" value="과학">과학
+        <input type="checkbox" name="memberSubjectCode" value="기타">기타
+    </p>
     <p>지역대분류 :
         <select name="memberRegionCode" id="memberRegionCode" onchange="memberSigugunChange(this)" required>
             <option>선택하세요.</option>
@@ -115,9 +115,9 @@
         /*var normal = ["직장인","취준생"];*/
         var target = document.getElementById("memberGradeCode_sub");
 
-        if (e.value == "100") var d = element;
-        else if (e.value == "200") var d = middle;
-        else if (e.value == "300") var d = high;
+        if (e.value == "초등학생") var d = element;
+        else if (e.value == "중학생") var d = middle;
+        else if (e.value == "고등학생") var d = high;
         /*else if (e.value == "univ") var d = univ;*/
         /*else if (e.value == "normal") var d = normal;*/
         target.options.length = 0;

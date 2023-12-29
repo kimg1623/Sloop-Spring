@@ -1,8 +1,8 @@
-package kr.co.sloop.sample.controller;
+package kr.co.sloop.member.controller;
 
 
-import kr.co.sloop.sample.domain.MemberDTO;
-import kr.co.sloop.sample.service.impl.MemberService;
+import kr.co.sloop.member.domain.MemberDTO;
+import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -45,14 +45,21 @@ public class MemberController {
 
 
     @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO , HttpSession session) {
+    public String login(@ModelAttribute MemberDTO memberDTO,
+                        HttpSession session,
+                        @RequestParam("memberEmail") String memberEmail,
+                        @RequestParam("memberPassword") String memberPassword) {
+
         boolean loginResult = memberService.login(memberDTO);
 
+        /*if (memberEmail != null)*/
+
+
         if (loginResult) {
-            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            session.setAttribute("memberEmail", memberDTO.getMemberEmail());
             return "home";
         } else {
-            return "login";
+            return "redirect:/member/login";
         }
     }
 
