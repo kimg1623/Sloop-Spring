@@ -19,4 +19,16 @@
         from  member
         where memberEmail = #{loginEmail}
     </select>
+    <select id="findByMemberNickname" parameterType="String" resultType="member">
+        select memberEmail, memberPassword, memberNickname, memberPhonenumber
+        from  member
+        where memberNickname = #{memberNickname}
+    </select>
+
+
+    <select id="findMemberList" resultType="member">
+        select * from member order by memberRegdate desc
+    </select>
+
+
 </mapper>

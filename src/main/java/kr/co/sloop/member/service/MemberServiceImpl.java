@@ -6,6 +6,9 @@ import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -16,14 +19,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int signup(MemberDTO memberDTO){
-        log.info("service memberDTO ==== " +memberDTO);
-
-        /*String[] cho = {"초등학생 1학년","초등학생 2학년","초등학생 3학년","초등학생 4학년","초등학생 5학년","초등학생 6학년"};*/
-
-        /*if ("초등학생".equals(memberDTO.getMemberGradeCode())){
-            memberDTO.setMemberGradeCode("100");
-        }*/
-        return memberRepository.signup(memberDTO);
+        // 유효성 검사 진행 ----------
+        if (memberDTO.getMemberSubjectCode() == null){
+            return -1;
+        } else {
+            return memberRepository.signup(memberDTO);
+        }
     }
 
     @Override
@@ -40,6 +41,21 @@ public class MemberServiceImpl implements MemberService {
     public String emailCheck(String memberEmail) {
         MemberDTO memberDTO = memberRepository.findByMemberEmail(memberEmail);
         if (memberDTO == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
+
+    @Override
+    public List<MemberDTO> findMemberList(Model model) {
+        return memberRepository.findMemberList(model);
+    }
+
+    @Override
+    public String nicknameCheck(String memberNickname) {
+        MemberDTO memberDTO = memberRepository.findByMemberNickname(memberNickname);
+        if (memberDTO == null ){
             return "ok";
         } else {
             return "no";

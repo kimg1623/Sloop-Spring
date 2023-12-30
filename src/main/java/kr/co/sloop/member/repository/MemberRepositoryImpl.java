@@ -6,6 +6,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
+
+import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
@@ -16,7 +19,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public int signup(MemberDTO memberDTO){
-      log.info("repository memberDTO ==== " +memberDTO);
         return sql.insert("Member.signup",memberDTO);
     }
 
@@ -28,5 +30,15 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public MemberDTO findByMemberEmail(String memberEmail) {
         return sql.selectOne("Member.findByMemberEmail", memberEmail);
+    }
+
+    @Override
+    public List<MemberDTO> findMemberList(Model model) {
+        return sql.selectList("Member.findMemberList",model);
+    }
+
+    @Override
+    public MemberDTO findByMemberNickname(String memberNickname) {
+        return sql.selectOne("Member.findByMemberNickname",memberNickname);
     }
 }
