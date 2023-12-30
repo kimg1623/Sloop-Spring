@@ -19,7 +19,6 @@ public class MemberRepositoryImpl implements MemberRepository {
 
     @Override
     public int signup(MemberDTO memberDTO){
-      log.info("repository memberDTO ==== " +memberDTO);
         return sql.insert("Member.signup",memberDTO);
     }
 

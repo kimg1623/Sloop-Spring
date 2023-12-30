@@ -19,8 +19,12 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int signup(MemberDTO memberDTO){
-        log.info("service memberDTO ==== " +memberDTO);
-        return memberRepository.signup(memberDTO);
+        // 유효성 검사 진행 ----------
+        if (memberDTO.getMemberSubjectCode() == null){
+            return -1;
+        } else {
+            return memberRepository.signup(memberDTO);
+        }
     }
 
     @Override

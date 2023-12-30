@@ -28,8 +28,9 @@ public class MemberController {
     @PostMapping("/signup")
     public String signup(@ModelAttribute MemberDTO memberDTO){
         int signupResult = memberService.signup(memberDTO);
+
         if (signupResult > 0){
-            return "/signupSuccess";
+            return "signupSuccess";
         } else {
             return "signupForm";
         }

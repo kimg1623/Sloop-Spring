@@ -8,10 +8,10 @@
 </head>
 <body>
 <form action="/member/signup" method="post">
-    <p>이 메 일 : <input type="text" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()">
+    <p>이 메 일 : <input type="email" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()">
                     <button type="button" name="check-Email" value="중복확인" onclick="emailCheck()">중복확인</button></p>
     <p id="check-result"></p>
-    <p>비밀번호 : <input type="text" name="memberPassword" placeholder="비밀번호" required></p>
+    <p>비밀번호 : <input type="password" name="memberPassword" placeholder="비밀번호" required></p>
     <p>닉 네 임 : <input type="text" name="memberNickname" placeholder="닉네임" required></p>
     <p>성   별 :
         <input type="radio" name="memberGender" id="male" value="남자">
