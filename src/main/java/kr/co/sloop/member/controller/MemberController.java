@@ -79,6 +79,25 @@ public class MemberController {
         return "memberList";
     }
 
+    @GetMapping("update")
+    public String updateForm(Model model , HttpSession session){
+        // 세션에 저장된 이메일 가져오기
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
+        model.addAttribute("member",memberDTO);
 
+        return "update";
+
+    }
+
+    @PostMapping("update")
+    public String update (@ModelAttribute MemberDTO memberDTO){
+        boolean result = memberService.update(memberDTO);
+        if (result) {
+            return "redirect:/member?id=" + memberDTO.getMemberIdx();
+        } else {
+            return "home";
+        }
+    }
 
 }

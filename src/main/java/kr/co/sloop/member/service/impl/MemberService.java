@@ -17,5 +17,7 @@ public interface MemberService {
     String nicknameCheck(String memberNickname);
 
 
+    MemberDTO findByMemberEmail(String loginEmail);
 
+    boolean update(MemberDTO memberDTO);
 }

@@ -42,9 +42,10 @@ public class MemberRepositoryImpl implements MemberRepository {
         return sql.selectOne("Member.findByMemberNickname",memberNickname);
     }
 
-
-
-
+    @Override
+    public int update(MemberDTO memberDTO) {
+        return sql.update("Member.update", memberDTO);
+    }
 
 
 }

@@ -32,5 +32,18 @@
         select * from member order by memberRegdate desc
     </select>
 
+    <update id="update" parameterType="member">
+        update member
+        set memberEmail = #{memberEmail},
+            memberPassword = #{memberPassword},
+            memberNickname = #{memberNickname},
+            memberGender = #{memberGender},
+            memberPhonenumber = #{memberPhonenumber},
+            memberSchool = #{memberSchool},
+            memberGradeCode = #{memberGradeCode},
+            memberSubjectCode = #{memberSubjectCode},
+            memberRegionCode = #{memberRegionCode}
+        where memberIdx = #{memberIdx}
+    </update>
 
 </mapper>
