@@ -47,5 +47,10 @@ public class MemberRepositoryImpl implements MemberRepository {
         return sql.update("Member.update", memberDTO);
     }
 
+    @Override
+    public MemberDTO findByIdx(int memberIdx) {
+        return sql.selectOne("Member.findByIdx" , memberIdx);
+    }
+
 
 }

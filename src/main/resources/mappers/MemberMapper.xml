@@ -46,4 +46,13 @@
         where memberIdx = #{memberIdx}
     </update>
 
+    <select id="findByIdx" parameterType="int" resultType="member">
+        select memberIdx, memberEmail, memberPassword,
+               memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
+               memberSubjectCode, memberRegionCode
+        from member
+        where memberIdx = #{memberIdx}
+    </select>
+
+
 </mapper>

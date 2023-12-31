@@ -77,5 +77,10 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    @Override
+    public MemberDTO findByIdx(int memberIdx) {
+        return memberRepository.findByIdx(memberIdx);
+    }
+
 
 }

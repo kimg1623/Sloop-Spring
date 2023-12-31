@@ -20,4 +20,6 @@ public interface MemberService {
     MemberDTO findByMemberEmail(String loginEmail);
 
     boolean update(MemberDTO memberDTO);
+
+    MemberDTO findByIdx(int memberIdx);
 }

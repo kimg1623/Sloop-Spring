@@ -94,10 +94,18 @@ public class MemberController {
     public String update (@ModelAttribute MemberDTO memberDTO){
         boolean result = memberService.update(memberDTO);
         if (result) {
-            return "redirect:/member?id=" + memberDTO.getMemberIdx();
+            return "redirect:/member?memberIdx=" + memberDTO.getMemberIdx();
         } else {
             return "home";
         }
+    }
+
+    @GetMapping
+    public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model){
+        MemberDTO memberDTO = memberService.findByIdx(memberIdx);
+        model.addAttribute("member",memberDTO);
+        return "mypage";
+
     }
 
 }

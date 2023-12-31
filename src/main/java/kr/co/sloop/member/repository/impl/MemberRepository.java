@@ -17,4 +17,6 @@ public interface MemberRepository {
     MemberDTO findByMemberNickname(String memberNickname);
 
     int update(MemberDTO memberDTO);
+
+    MemberDTO findByIdx(int memberIdx);
 }
