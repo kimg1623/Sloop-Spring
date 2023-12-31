@@ -15,4 +15,11 @@ public interface MemberService {
     List<MemberDTO> findMemberList(Model model);
 
     String nicknameCheck(String memberNickname);
+
+
+    MemberDTO findByMemberEmail(String loginEmail);
+
+    boolean update(MemberDTO memberDTO);
+
+    MemberDTO findByIdx(int memberIdx);
 }

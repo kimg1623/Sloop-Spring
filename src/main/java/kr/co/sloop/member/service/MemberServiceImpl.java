@@ -61,4 +61,26 @@ public class MemberServiceImpl implements MemberService {
             return "no";
         }
     }
+
+    @Override
+    public MemberDTO findByMemberEmail(String loginEmail) {
+        return memberRepository.findByMemberEmail(loginEmail);
+    }
+
+    @Override
+    public boolean update(MemberDTO memberDTO) {
+        int result = memberRepository.update(memberDTO);
+        if (result > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public MemberDTO findByIdx(int memberIdx) {
+        return memberRepository.findByIdx(memberIdx);
+    }
+
+
 }

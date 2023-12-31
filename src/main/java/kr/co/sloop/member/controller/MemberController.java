@@ -50,8 +50,8 @@ public class MemberController {
 
         boolean loginResult = memberService.login(memberDTO);
         if (loginResult) {
-            session.setAttribute("memberEmail", memberDTO.getMemberEmail());
-            return "home";
+            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            return "mypage";
         } else {
             return "redirect:/member/login";
         }
@@ -71,7 +71,7 @@ public class MemberController {
         String checkResult = memberService.nicknameCheck(memberNickname);
         return checkResult;
     }
-    // 회원 목록 보기
+    // 회원 목록 보기 추후에 관리자 권한으로만 갈 수 있게하기
     @GetMapping("memberList")
     public String memberList(Model model){
         List<MemberDTO> memberDTOList = memberService.findMemberList(model);
@@ -79,6 +79,33 @@ public class MemberController {
         return "memberList";
     }
 
+    @GetMapping("update")
+    public String updateForm(Model model , HttpSession session){
+        // 세션에 저장된 이메일 가져오기
+        String loginEmail = (String) session.getAttribute("loginEmail");
+        MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
+        model.addAttribute("member",memberDTO);
 
+        return "update";
+
+    }
+
+    @PostMapping("update")
+    public String update (@ModelAttribute MemberDTO memberDTO){
+        boolean result = memberService.update(memberDTO);
+        if (result) {
+            return "redirect:/member?memberIdx=" + memberDTO.getMemberIdx();
+        } else {
+            return "home";
+        }
+    }
+
+    @GetMapping
+    public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model){
+        MemberDTO memberDTO = memberService.findByIdx(memberIdx);
+        model.addAttribute("member",memberDTO);
+        return "mypage";
+
+    }
 
 }

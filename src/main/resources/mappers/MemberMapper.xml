@@ -11,7 +11,10 @@
     </insert>
 
     <select id="login" parameterType="member" resultType="member">
-        select * from member where memberEmail = #{memberEmail} and memberPassword = #{memberPassword}
+        select *
+        from member
+        where memberEmail = #{memberEmail}
+          and memberPassword = #{memberPassword}
     </select>
 
     <select id="findByMemberEmail" parameterType="String" resultType="member">
@@ -25,9 +28,30 @@
         where memberNickname = #{memberNickname}
     </select>
 
-
     <select id="findMemberList" resultType="member">
         select * from member order by memberRegdate desc
+    </select>
+
+    <update id="update" parameterType="member">
+        update member
+        set memberEmail = #{memberEmail},
+            memberPassword = #{memberPassword},
+            memberNickname = #{memberNickname},
+            memberGender = #{memberGender},
+            memberPhonenumber = #{memberPhonenumber},
+            memberSchool = #{memberSchool},
+            memberGradeCode = #{memberGradeCode},
+            memberSubjectCode = #{memberSubjectCode},
+            memberRegionCode = #{memberRegionCode}
+        where memberIdx = #{memberIdx}
+    </update>
+
+    <select id="findByIdx" parameterType="int" resultType="member">
+        select memberIdx, memberEmail, memberPassword,
+               memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
+               memberSubjectCode, memberRegionCode
+        from member
+        where memberIdx = #{memberIdx}
     </select>
 
 

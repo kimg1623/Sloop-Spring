@@ -10,9 +10,13 @@ public interface MemberRepository {
 
     MemberDTO login(MemberDTO memberDTO);
 
-    MemberDTO findByMemberEmail(String memberEmail);
+    MemberDTO findByMemberEmail(String loginEmail);
 
     List<MemberDTO> findMemberList(Model model);
 
     MemberDTO findByMemberNickname(String memberNickname);
+
+    int update(MemberDTO memberDTO);
+
+    MemberDTO findByIdx(int memberIdx);
 }

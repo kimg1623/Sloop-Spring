@@ -21,14 +21,14 @@
         <tr>
             <td>${member.memberIdx}</td>
             <td>
-                <a href="/member?id=${member.memberIdx}">${member.memberEmail}</a>
+                <a href="/member?memberIdx=${member.memberIdx}">${member.memberEmail}</a>
             </td>
             <td>${member.memberPassword}</td>
             <td>${member.memberNickname}</td>
             <td>${member.memberRegdate}</td>
             <td>${member.memberPhonenumber}</td>
             <td>
-                <a href="/member?id=${member.memberIdx}">조회</a>
+                <a href="/member?memberIdx=${member.memberIdx}">조회</a>
             </td>
             <td>
                 <button onclick="deleteMember('${member.memberIdx}')">삭제</button>
