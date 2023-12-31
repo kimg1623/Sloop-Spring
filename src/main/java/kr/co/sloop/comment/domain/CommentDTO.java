@@ -1,5 +1,20 @@
 package kr.co.sloop.comment.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+import java.sql.Timestamp;
+
+@Getter
+@Setter
+@ToString
 public class CommentDTO {
-    // 공작소에는 Sample까지만 있지만 뒤에 DTO 붙여서 작업해주세요.
+    private Long id;
+    private String commentWriter;
+    private String commentContents;
+    private Long boardId;
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss", timezone="Asia/Seoul") // ajax 날짜 깨짐 수정
+    private Timestamp commentCreatedTime;
 }

@@ -1,39 +1,51 @@
 package kr.co.sloop.comment.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import kr.co.sloop.comment.service.CommentService;
+import kr.co.sloop.comment.domain.CommentDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import java.util.List;
 
-/**
- * Handles requests for the application home page.
- */
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/comment")
 public class CommentController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(CommentController.class);
-	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
-	@RequestMapping
-	public String home(Locale locale, Model model) {
-		logger.info("Welcome Sampleeeeeeee! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "comment/comment"; // String으로 반환할 때 jsp 파일이 저장된 위치부터 지정해야 함. return "{폴더명}/{jsp파일명}";
+
+	private final CommentService commentService;
+
+	@PostMapping("/save")
+	public @ResponseBody List<CommentDTO> save(@ModelAttribute CommentDTO commentDTO) {
+		System.out.println("commentDTO = " + commentDTO);
+		commentService.save(commentDTO);
+		// 해당 게시글에 작성된 댓글 리스트를 가져옴
+		List<CommentDTO> commentDTOList = commentService.findAll(commentDTO.getBoardId());
+		return commentDTOList;
 	}
-	
+
+	@PostMapping("/update")
+	public @ResponseBody CommentDTO update(@ModelAttribute CommentDTO commentDTO) {
+		commentService.update(commentDTO);
+		// 수정된 댓글 정보 반환
+		CommentDTO updatedCommentDTO = commentService.findById(commentDTO.getId());
+		return updatedCommentDTO;
+	}
+
+	@PostMapping("/delete")
+	public @ResponseBody List<CommentDTO> delete(@RequestParam Long commentId, @RequestParam Long boardId) {
+		commentService.delete(commentId);
+		// 해당 게시글에 작성된 댓글 리스트를 가져옴
+		List<CommentDTO> commentDTOList = commentService.findAll(boardId);
+		return commentDTOList;
+	}
+
+	@GetMapping("/list")
+	public @ResponseBody List<CommentDTO> getCommentList(@RequestParam Long boardId, @RequestParam(defaultValue = "1") int page) {
+		int pageSize = 10; // 한 페이지에 보여줄 댓글 수
+		int offset = (page - 1) * pageSize; // 페이지의 시작 인덱스
+
+		List<CommentDTO> commentDTOList = commentService.findPagedComments(boardId, offset, pageSize);
+		return commentDTOList;
+	}
 }
