@@ -28,8 +28,8 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public MemberDTO findByMemberEmail(String memberEmail) {
-        return sql.selectOne("Member.findByMemberEmail", memberEmail);
+    public MemberDTO findByMemberEmail(String loginEmail) {
+        return sql.selectOne("Member.findByMemberEmail", loginEmail);
     }
 
     @Override
@@ -41,4 +41,10 @@ public class MemberRepositoryImpl implements MemberRepository {
     public MemberDTO findByMemberNickname(String memberNickname) {
         return sql.selectOne("Member.findByMemberNickname",memberNickname);
     }
+
+
+
+
+
+
 }

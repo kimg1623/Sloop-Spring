@@ -15,4 +15,7 @@ public interface MemberService {
     List<MemberDTO> findMemberList(Model model);
 
     String nicknameCheck(String memberNickname);
+
+
+
 }

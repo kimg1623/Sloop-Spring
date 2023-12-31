@@ -15,4 +15,5 @@ public interface MemberRepository {
     List<MemberDTO> findMemberList(Model model);
 
     MemberDTO findByMemberNickname(String memberNickname);
+
 }

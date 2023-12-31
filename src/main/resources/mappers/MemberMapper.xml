@@ -11,7 +11,10 @@
     </insert>
 
     <select id="login" parameterType="member" resultType="member">
-        select * from member where memberEmail = #{memberEmail} and memberPassword = #{memberPassword}
+        select *
+        from member
+        where memberEmail = #{memberEmail}
+          and memberPassword = #{memberPassword}
     </select>
 
     <select id="findByMemberEmail" parameterType="String" resultType="member">
@@ -24,7 +27,6 @@
         from  member
         where memberNickname = #{memberNickname}
     </select>
-
 
     <select id="findMemberList" resultType="member">
         select * from member order by memberRegdate desc

@@ -50,8 +50,8 @@ public class MemberController {
 
         boolean loginResult = memberService.login(memberDTO);
         if (loginResult) {
-            session.setAttribute("memberEmail", memberDTO.getMemberEmail());
-            return "home";
+            session.setAttribute("loginEmail", memberDTO.getMemberEmail());
+            return "mypage";
         } else {
             return "redirect:/member/login";
         }
@@ -71,7 +71,7 @@ public class MemberController {
         String checkResult = memberService.nicknameCheck(memberNickname);
         return checkResult;
     }
-    // 회원 목록 보기
+    // 회원 목록 보기 추후에 관리자 권한으로만 갈 수 있게하기
     @GetMapping("memberList")
     public String memberList(Model model){
         List<MemberDTO> memberDTOList = memberService.findMemberList(model);
