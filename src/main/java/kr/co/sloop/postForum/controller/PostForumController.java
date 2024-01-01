@@ -149,7 +149,6 @@ public class PostForumController {
             throws ServletException, IOException {
 
         //서버에 저장된 이미지 경로
-        //String path = "/Users/thegreatjy/Desktop/JavaStudy_github/Spring_Study/ckeditor/src/main/webapp/resources/uploads/";    // 저장된 이미지 경로
         String path = "/resources/uploads/";    // 이미지 경로 설정(폴더 자동 생성)
         System.out.println("path:" + path);
         String sDirPath = path + uid + "_" + fileName;
