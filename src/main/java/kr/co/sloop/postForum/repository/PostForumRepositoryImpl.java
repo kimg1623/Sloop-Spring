@@ -5,6 +5,8 @@ import lombok.RequiredArgsConstructor;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @RequiredArgsConstructor
 public class PostForumRepositoryImpl implements PostForumRepository{
@@ -29,5 +31,30 @@ public class PostForumRepositoryImpl implements PostForumRepository{
     public int selectMemberIdxByMemberEmail(String memberEmail) {
         Integer memberIdx = sql.selectOne("PostForum.selectMemberIdxByMemberEmail", memberEmail);
         return memberIdx;
+    }
+
+    @Override
+    public List<PostForumDTO> list(int boardIdx) {
+        return sql.selectList("PostForum.selectAllPostForumByBoardIdx", boardIdx);
+    }
+
+    @Override
+    public PostForumDTO findByPostIdx(int postIdx) {
+        return sql.selectOne("PostForum.findByPostIdx", postIdx);
+    }
+
+    @Override
+    public int update(PostForumDTO postForumDTO) {
+        return sql.update("PostForum.update", postForumDTO);
+    }
+
+    @Override
+    public int delete(int postIdx) {
+        return sql.delete("PostForum.delete", postIdx);
+    }
+
+    @Override
+    public void updatePostForumHits(int postIdx) {
+        sql.update("PostForum.updatePostForumHits", postIdx);
     }
 }

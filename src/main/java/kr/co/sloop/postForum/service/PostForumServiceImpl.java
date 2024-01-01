@@ -5,6 +5,9 @@ import kr.co.sloop.postForum.repository.PostForumRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PostForumServiceImpl implements PostForumService {
@@ -29,5 +32,50 @@ public class PostForumServiceImpl implements PostForumService {
 
         // 글 작성 성공
         return true;
+    }
+
+    // 글 목록 조회
+    @Override
+    public ArrayList<PostForumDTO> list(int boardIdx) {
+        List<PostForumDTO> postForumDTOList = postForumRepositoryImpl.list(boardIdx);
+
+        // List -> ArrayList
+        ArrayList<PostForumDTO> postForumDTOArrayList = new ArrayList<>(postForumDTOList);
+        return postForumDTOArrayList;
+    }
+
+    // postIdx로 글 정보 불러오기
+    @Override
+    public PostForumDTO findByPostIdx(int postIdx) {
+        PostForumDTO postForumDTO = postForumRepositoryImpl.findByPostIdx(postIdx);
+        return postForumDTO;
+    }
+
+    // 글 수정
+    @Override
+    public boolean update(PostForumDTO postForumDTO) {
+        int result = postForumRepositoryImpl.update(postForumDTO);
+
+        if(result == 1){    // 성공
+            return true;
+        }else{  // 실패
+            return false;
+        }
+    }
+
+    // 글 삭제
+    @Override
+    public void delete(int postIdx) {
+        int result = postForumRepositoryImpl.delete(postIdx);
+    }
+
+    // 글 상세 조회
+    @Override
+    public PostForumDTO detailForm(int postIdx) {
+        // 조회수 증가
+        postForumRepositoryImpl.updatePostForumHits(postIdx);
+
+        // postIdx로 글 정보 불러오기
+        return findByPostIdx(postIdx);
     }
 }
