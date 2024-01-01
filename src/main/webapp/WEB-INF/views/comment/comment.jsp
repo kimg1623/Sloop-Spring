@@ -1,148 +1,153 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8">
 	<title>댓글 페이지</title>
+	<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 	<style>
-		/* 댓글 스타일링 */
-		.comment-item {
-			margin-bottom: 10px;
-		}
 		.comment-info {
-			font-weight: bold;
-			margin-bottom: 5px;
+			display: flex;
+			align-items: center;
+			margin-bottom: 8px;
 		}
-		.comment-contents-textarea {
-			width: 300px;
-			height: 100px;
-			margin-bottom: 5px;
-		}
-		.comment-buttons button {
-			margin-right: 5px;
+
+		.comment-info p {
+			margin: 0;
+			margin-right: 16px;
 		}
 	</style>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script>
-		// 댓글 저장 함수
+		// 댓글 작성
 		function saveComment() {
-			var commentWriter = $("#commentWriter").val();
-			var commentContents = $("#commentContents").val();
-			var boardId = $("#boardId").val();
+			// 입력된 댓글 내용 가져오기
+			var replyContents = $("#replyContents").val();
+			// 입력된 댓글 내용이 비어있는 경우, 경고창 표시 후 함수 종료
+			if (replyContents.trim() === "") {
+				alert("댓글 내용을 입력해주세요.");
+				return;
+			}
 
+			// 서버로 댓글 데이터 전송
 			$.ajax({
+				url: "/comments",
 				type: "POST",
-				url: "/comment/save",
-				data: {
-					commentWriter: commentWriter,
-					commentContents: commentContents,
-					boardId: boardId
+				contentType: "application/json",
+				data: JSON.stringify({
+					replyContents: replyContents
+				}),
+				success: function() {
+					// 댓글 작성 후, 페이지 새로고침
+					location.reload();
 				},
-				success: function (data) {
-					// 댓글 저장 성공 시, 댓글 목록을 갱신하고 입력 필드 초기화
-					refreshCommentList(data);
-					$("#commentWriter").val("");
-					$("#commentContents").val("");
-				},
-				error: function (xhr, status, error) {
-					console.error(error);
+				error: function() {
+					alert("댓글 작성에 실패했습니다.");
 				}
 			});
 		}
 
-		// 댓글 수정 함수
-		function updateComment(commentId) {
-			var commentContents = $("#commentContents_" + commentId).val();
+		// 댓글 수정
+		function updateComment(replyIdx) {
+			// 수정할 댓글 내용 가져오기
+			var replyContents = $("#replyContents_" + replyIdx).val();
+			// 입력된 댓글 내용이 비어있는 경우, 경고창 표시 후 함수 종료
+			if (replyContents.trim() === "") {
+				alert("댓글 내용을 입력해주세요.");
+				return;
+			}
 
+			// 서버로 수정된 댓글 데이터 전송
 			$.ajax({
-				type: "POST",
-				url: "/comment/update",
-				data: {
-					id: commentId,
-					commentContents: commentContents
+				url: "/comments",
+				type: "PUT",
+				contentType: "application/json",
+				data: JSON.stringify({
+					replyIdx: replyIdx,
+					replyContents: replyContents
+				}),
+				success: function() {
+					// 댓글 수정 후, 페이지 새로고침
+					location.reload();
 				},
-				success: function (data) {
-					// 댓글 수정 성공 시, 해당 댓글 내용 갱신
-					$("#commentContents_" + commentId).val(data.commentContents);
-				},
-				error: function (xhr, status, error) {
-					console.error(error);
+				error: function() {
+					alert("댓글 수정에 실패했습니다.");
 				}
 			});
 		}
 
-		// 댓글 삭제 함수
-		function deleteComment(commentId, boardId) {
+		// 댓글 삭제
+		function deleteComment(replyIdx) {
+			// 서버로 삭제할 댓글 데이터 전송
 			$.ajax({
-				type: "POST",
-				url: "/comment/delete",
-				data: {
-					commentId: commentId,
-					boardId: boardId
+				url: "/comments/" + replyIdx,
+				type: "DELETE",
+				success: function() {
+					// 댓글 삭제 후, 페이지 새로고침
+					location.reload();
 				},
-				success: function (data) {
-					// 댓글 삭제 성공 시, 댓글 목록을 갱신
-					refreshCommentList(data);
-				},
-				error: function (xhr, status, error) {
-					console.error(error);
+				error: function() {
+					alert("댓글 삭제에 실패했습니다.");
 				}
 			});
 		}
 
-		// 댓글 목록 갱신 함수
-		function refreshCommentList(commentList) {
-			var commentListHtml = "";
-
-			$.each(commentList, function (index, comment) {
-				commentListHtml += "<div class='comment-item'>";
-				commentListHtml += "<div class='comment-info'>";
-				commentListHtml += "<span class='comment-writer'>" + comment.commentWriter + "</span>";
-				commentListHtml += "<span class='comment-created-time'>" + comment.commentCreatedTime + "</span>";
-				commentListHtml += "</div>";
-				commentListHtml += "<div class='comment-contents'>";
-				commentListHtml += "<textarea id='commentContents_" + comment.id + "' class='comment-contents-textarea'>" + comment.commentContents + "</textarea>";
-				commentListHtml += "</div>";
-				commentListHtml += "<div class='comment-buttons'>";
-				commentListHtml += "<button class='comment-update-button' onclick='updateComment(" + comment.id + ")'>수정</button>";
-				commentListHtml += "<button class='comment-delete-button' onclick='deleteComment(" + comment.id + ", " + comment.boardId + ")'>삭제</button>";
-				commentListHtml += "</div>";
-				commentListHtml += "</div>";
-			});
-
-			$("#commentList").html(commentListHtml);
+		// 작성 취소
+		function cancelComment() {
+			$("#replyContents").val(""); // 댓글 내용 입력 필드 초기화
+			$("#replyContents").attr("placeholder", "댓글을 입력해주세요."); // placeholder 수정
 		}
-
-		// 페이지 로드 시 초기 댓글 목록 요청
-		$(document).ready(function () {
-			$.ajax({
-				type: "GET",
-				url: "/comment/list",
-				success: function (data) {
-					refreshCommentList(data);
-				},
-				error: function (xhr, status, error) {
-					console.error(error);
-				}
-			});
-		});
 	</script>
 </head>
 <body>
 <h1>댓글 페이지</h1>
-<input type="hidden" id="boardId" value="게시글 아이디">
 
 <!-- 댓글 입력 폼 -->
-<div id="commentForm">
-	<input type="text" id="commentWriter" placeholder="작성자">
-	<textarea id="commentContents" placeholder="댓글 내용"></textarea>
-	<button onclick="saveComment()">댓글 작성</button>
-</div>
+<form onsubmit="event.preventDefault(); saveComment();">
+	<textarea id="replyContents" rows="3" cols="50" placeholder="댓글을 입력해주세요."></textarea>
+	<button type="submit">댓글 작성</button>
+	<button type="button" onclick="cancelComment();">작성 취소</button>
+</form>
 
 <!-- 댓글 목록 -->
-<div id="commentList">
-	<!-- 댓글 목록이 여기에 동적으로 추가됨 -->
-</div>
+<c:forEach var="comment" items="${comments}">
+	<div>
+		<!-- 댓글 내용 -->
+		<p>${comment.replyContents}</p>
+
+		<!-- 댓글 수정 폼 -->
+		<form id="updateForm_${comment.replyIdx}" onsubmit="event.preventDefault(); updateComment(${comment.replyIdx});" style="display: none;">
+			<textarea id="replyContents_${comment.replyIdx}" rows="3" cols="50">${comment.replyContents}</textarea>
+			<button type="submit">수정 완료</button>
+		</form>
+
+		<!-- 댓글 수정 버튼 -->
+		<button onclick="$('#updateForm_${comment.replyIdx}').toggle();">수정</button>
+
+		<!-- 댓글 삭제 버튼 -->
+		<button onclick="deleteComment(${comment.replyIdx});">삭제</button>
+
+		<!-- 댓글 정보 -->
+		<div class="comment-info">
+			<!-- 작성자 회원 ID -->
+			<p>작성자 회원 ID: ${comment.memberIdx}</p>
+
+			<!-- 작성 일시 -->
+			<p>작성 일시: ${comment.replyRegDate}</p>
+
+			<!-- 수정 일시 -->
+			<p>수정 일시: ${comment.replyEditDate}</p>
+		</div>
+
+		<!-- 댓글의 원 댓글의 ID -->
+		<p>원 댓글 ID: ${comment.replyGroup}</p>
+
+		<!-- 댓글의 댓글 내 순서 -->
+		<p>댓글 순서: ${comment.replyGroupOrder}</p>
+
+		<!-- 댓글 들여쓰기 -->
+		<p>댓글 들여쓰기: ${comment.replyGroupDepth}</p>
+	</div>
+</c:forEach>
 </body>
 </html>
