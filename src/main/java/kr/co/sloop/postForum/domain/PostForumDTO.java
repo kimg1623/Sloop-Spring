@@ -27,4 +27,6 @@ public class PostForumDTO {
 
     private String memberEmail; // 작성자 회원 email (DB postForum 테이블에 속성 존재하지 않음)
     private int boardIdx; // 게시판 idx (DB postForum 테이블에 속성 존재하지 않음)
+    private String memberNickname; // 작성자 회원 닉네임
+    private String categoryPostName; // 카테고리 설명 (카테고리 idx에 대응됨)
 }
