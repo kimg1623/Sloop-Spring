@@ -1,8 +1,6 @@
 package kr.co.sloop.postForum.controller;
 
 import kr.co.sloop.postForum.domain.PostForumDTO;
-import kr.co.sloop.postForum.repository.PostForumRepositoryImpl;
-import kr.co.sloop.postForum.service.PostForumService;
 import kr.co.sloop.postForum.service.PostForumServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
@@ -21,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.UUID;
 
 @Log4j
@@ -68,7 +67,8 @@ public class PostForumController {
         boolean result = postForumServiceImpl.write(postForumDTO);
 
         if(result){ // 글 작성 성공
-            return "redirect:/";
+            // 해당 글 상세 조회 페이지로 이동
+            return "redirect:/postforum/detail?postIdx=" + postForumDTO.getPostIdx();
         }else {     // 글 작성 실패
             return "postForum/write";
         }
@@ -196,7 +196,61 @@ public class PostForumController {
 
     // 글 목록 조회
     @GetMapping("/list")
-    public String list(){
+    public String list(Model model){
+        // 게시판 idx
+        // [*****] 쿼리 스트링으로 가져오도록 수정
+        // [*****] public String List(@RequestParam("boardIdx") int boardIdx)
+        int boardIdx = 3;
 
+        ArrayList<PostForumDTO> postForumDTOList = postForumServiceImpl.list(boardIdx);
+        model.addAttribute("postForumDTOList", postForumDTOList);
+        return "postForum/list";
+    }
+
+    // 글 상세 조회
+    @GetMapping("/detail")
+    public String detailForm(@RequestParam("postIdx") int postIdx, Model model){
+        // 글 정보 불러오기
+        PostForumDTO postForumDTO = postForumServiceImpl.detailForm(postIdx);
+        model.addAttribute("postForumDTO", postForumDTO);
+        return "postForum/detail";
+    }
+
+    // 글 수정하기 : 화면 출력
+    @GetMapping("/update")
+    public String updateForm(@RequestParam("postIdx") int postIdx, Model model){
+        PostForumDTO postForumDTO = postForumServiceImpl.findByPostIdx(postIdx);
+        model.addAttribute("postForumDTO", postForumDTO);
+        return "postForum/update";
+    }
+
+    // 글 수정하기
+    @PostMapping("/update")
+    public String update(@Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors){
+        log.info("update" + errors);
+        log.info("update" + postForumDTO);
+
+        // 객체 바인딩에 유효성 오류가 존재한다면, 작성 페이지로 돌아가서 오류 메세지를 출력한다.
+        if(errors.hasErrors()){
+            return "redirect:/postForum/update?postIdx=" + postForumDTO.getPostIdx();
+        }
+
+        // 글 수정하기
+        boolean result = postForumServiceImpl.update(postForumDTO);
+
+        if(result) { // 수정 성공
+            return "redirect:/postforum/detail?postIdx=" + postForumDTO.getPostIdx();
+        }else{ // 수정 실패
+            return "redirect:/postforum/list";
+        }
+    }
+
+    // 글 삭제하기
+    @GetMapping("/delete")
+    public String delete(@RequestParam("postIdx") int postIdx){
+        postForumServiceImpl.delete(postIdx);
+
+        // 삭제 후, 목록 조회 페이지로 돌아간다.
+        return "redirect:/postforum/list";
     }
 }
