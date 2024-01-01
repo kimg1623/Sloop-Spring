@@ -10,11 +10,11 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    void save(CommentDTO commentDTO);
+    void saveComment(CommentDTO commentDTO);
 
-    void update(CommentDTO commentDTO);
+    void updateComment(CommentDTO commentDTO);
 
-    void delete(CommentDTO commentDTO);
+    void deleteComment(CommentDTO commentDTO);
 
     List<CommentDTO> findAll(int postIdx);
 

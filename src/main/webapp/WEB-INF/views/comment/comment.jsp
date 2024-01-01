@@ -47,6 +47,51 @@
 			});
 		}
 
+		// 댓글 수정
+		function updateComment(replyIdx) {
+			// 수정할 댓글 내용 가져오기
+			var replyContents = $("#replyContents_" + replyIdx).val();
+			// 입력된 댓글 내용이 비어있는 경우, 경고창 표시 후 함수 종료
+			if (replyContents.trim() === "") {
+				alert("댓글 내용을 입력해주세요.");
+				return;
+			}
+
+			// 서버로 수정된 댓글 데이터 전송
+			$.ajax({
+				url: "/comments",
+				type: "PUT",
+				contentType: "application/json",
+				data: JSON.stringify({
+					replyIdx: replyIdx,
+					replyContents: replyContents
+				}),
+				success: function() {
+					// 댓글 수정 후, 페이지 새로고침
+					location.reload();
+				},
+				error: function() {
+					alert("댓글 수정에 실패했습니다.");
+				}
+			});
+		}
+
+		// 댓글 삭제
+		function deleteComment(replyIdx) {
+			// 서버로 삭제할 댓글 데이터 전송
+			$.ajax({
+				url: "/comments/" + replyIdx,
+				type: "DELETE",
+				success: function() {
+					// 댓글 삭제 후, 페이지 새로고침
+					location.reload();
+				},
+				error: function() {
+					alert("댓글 삭제에 실패했습니다.");
+				}
+			});
+		}
+
 		// 작성 취소
 		function cancelComment() {
 			$("#replyContents").val(""); // 댓글 내용 입력 필드 초기화

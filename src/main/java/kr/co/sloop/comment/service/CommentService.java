@@ -18,15 +18,15 @@ public class CommentService {
     }
 
     public void saveComment(CommentDTO commentDTO) {
-        commentRepository.save(commentDTO);
+        commentRepository.saveComment(commentDTO);
     }
 
     public void updateComment(CommentDTO commentDTO) {
-        commentRepository.update(commentDTO);
+        commentRepository.updateComment(commentDTO);
     }
 
     public void deleteComment(CommentDTO commentDTO) {
-        commentRepository.delete(commentDTO);
+        commentRepository.deleteComment(commentDTO);
     }
 
     public List<CommentDTO> getCommentsByPostId(int postIdx) {

@@ -17,16 +17,16 @@ public class CommentRepository {
         this.commentMapper = commentMapper;
     }
 
-    public void save(CommentDTO commentDTO) {
-        commentMapper.save(commentDTO);
+    public void saveComment(CommentDTO commentDTO) {
+        commentMapper.saveComment(commentDTO);
     }
 
-    public void update(CommentDTO commentDTO) {
-        commentMapper.update(commentDTO);
+    public void updateComment(CommentDTO commentDTO) {
+        commentMapper.updateComment(commentDTO);
     }
 
-    public void delete(CommentDTO commentDTO) {
-        commentMapper.delete(commentDTO);
+    public void deleteComment(CommentDTO commentDTO) {
+        commentMapper.deleteComment(commentDTO);
     }
 
     public List<CommentDTO> findAll(int postIdx) {
