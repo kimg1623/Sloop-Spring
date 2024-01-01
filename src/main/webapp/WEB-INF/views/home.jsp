@@ -13,6 +13,8 @@
 	<P>  The time on the server is ${serverTime}. </P>
 
 	<!-- 김지원 - 주석 아래로 작성 -->
+	<a href="/study">스터디그룹 리스트 /study</a><br>
+	<a href="/study/add">스터디그룹 생성 /study/add</a><br>
 
 	<!-- 박석은 - 주석 아래로 작성 -->
 
