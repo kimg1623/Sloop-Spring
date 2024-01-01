@@ -194,4 +194,9 @@ public class PostForumController {
         }
     }
 
+    // 글 목록 조회
+    @GetMapping("/list")
+    public String list(){
+
+    }
 }
