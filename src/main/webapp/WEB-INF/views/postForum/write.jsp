@@ -1,4 +1,3 @@
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: thegreatjy
@@ -6,12 +5,13 @@
   Time: 4:20 PM
   To change this template use File | Settings | File Templates.
 --%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>글 작성하기</title>
     <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-  <script src="/resources/ckeditor/ckeditor.js"></script>
+    <script src="/resources/ckeditor/ckeditor.js"></script>
   <!-- <script src="ckeditor.js"></script> -->
 </head>
 <body>
@@ -21,7 +21,7 @@
     <%--@elvariable id="postForumDTO" type="kr.co.sloop.postForum.domain.PostForumDTO"--%>
     <form:form modelAttribute="postForumDTO" method="post" action="/postforum/write">
         <!-- 글 제목 -->
-        <p><form:input path="postForumTitle" onfocus="this" placeholder="제목"/></p>
+        <p><form:input path="postForumTitle" autofocus="true" placeholder="제목"/></p>
         <p><form:errors path="postForumTitle"/> </p>
 
         <!-- 글 내용 (에디터) -->
