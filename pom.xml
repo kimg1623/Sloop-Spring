@@ -181,6 +181,11 @@
 			<version>1.16</version>
 		</dependency>
 
+		<!-- 김지원 - 주석 아래로 작성 -->
+
+		<!-- 박석은 - 주석 아래로 작성 -->
+
+		<!-- 이지연 - 주석 아래로 작성 -->
 		<!-- ckeditor -->
 		<!-- fileupload(사진 업로드) -->
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
@@ -224,6 +229,12 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.4.3.Final</version>
 		</dependency>
+
+		<!-- 이창규 - 주석 아래로 작성 -->
+
+		<!-- 차소영 - 주석 아래로 작성 -->
+
+		<!-- 최지혜 - 주석 아래로 작성 -->
 
 
 	</dependencies>

@@ -23,6 +23,11 @@
 	
 	<context:component-scan base-package="kr.co.sloop" />
 
+	<!-- 김지원 - 주석 아래로 작성 -->
+
+	<!-- 박석은 - 주석 아래로 작성 -->
+
+	<!-- 이지연 - 주석 아래로 작성 -->
 	<!-- ckeditor -->
 	<!-- 사진 업로드 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
@@ -32,5 +37,11 @@
 		<beans:constructor-arg value="/Users/thegreatjy/Documents"></beans:constructor-arg>
 	</beans:bean>
 	<resources mapping="/uploads/**" location="/resources/uploads/" />
+
+	<!-- 이창규 - 주석 아래로 작성 -->
+
+	<!-- 차소영 - 주석 아래로 작성 -->
+
+	<!-- 최지혜 - 주석 아래로 작성 -->
 	
 </beans:beans>
