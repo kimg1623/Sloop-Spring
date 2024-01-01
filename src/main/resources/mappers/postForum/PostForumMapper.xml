@@ -21,4 +21,38 @@
         where memberEmail = #{memberEmail}
     </select>
 
+    <select id="selectAllPostForumByBoardIdx" parameterType="int" resultType="postForum">
+        select f.postIdx, c.categoryPostName, f.postForumTitle, f.postForumRegDate, f.postForumHits, m.memberNickname
+        from postForum as f
+        join categoryPost as c on f.categoryPostIdx = c.categoryPostIdx
+        join member as m on f.memberIdx = m.memberIdx
+        join post as p on f.postIdx = p.postIdx
+        where p.boardIdx = #{boardIdx}
+    </select>
+
+    <select id="findByPostIdx" parameterType="int" resultType="postForum">
+        select f.postIdx, c.categoryPostName, f.postForumTitle, f.postForumContents, f.postForumRegDate, f.postForumHits, m.memberNickname, f.memberIdx
+        from postForum as f
+        join categoryPost as c on f.categoryPostIdx = c.categoryPostIdx
+        join member as m on f.memberIdx = m.memberIdx
+        join post as p on f.postIdx = p.postIdx
+        where f.postIdx = #{postIdx}
+    </select>
+
+    <update id="update" parameterType="postForum">
+        update postForum
+        set postForumTitle = #{postForumTitle},
+        postForumContents = #{postForumContents}
+        where postIdx = #{postIdx}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from post
+        where postIdx = #{postIdx}
+    </delete>
+
+    <update id="updatePostForumHits" parameterType="int">
+        update postForum
+        set postForumHits = postForumHits + 1
+    </update>
 </mapper>
