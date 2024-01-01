@@ -5,6 +5,7 @@
     <typeAliases>
         <!-- 김지원 - 주석 아래로 작성 -->
         <typeAlias type="kr.co.sloop.study.domain.StudyGroupDTO" alias="studyGroup"/>
+        <typeAlias type="kr.co.sloop.study.domain.CategoryGradeDTO" alias="categoryGrade"/>
 
         <!-- 박석은 - 주석 아래로 작성 -->
 

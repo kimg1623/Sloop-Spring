@@ -9,4 +9,9 @@
         SELECT * from studyGroup
     </select>
 
+    <!-- 학교학년 카테고리 가져오기 -->
+    <select id="getAllGradeName" resultType="categoryGrade">
+        select categoryGradeCode, categoryGradeName from categoryGrade
+    </select>
+
 </mapper>

@@ -9,6 +9,7 @@
 <table>
     <tr>
         <th>정렬번호</th>
+        <th>스터디그룹 이름</th>
         <th>스터디그룹 방식</th>
         <th>학년</th>
         <th>과목</th>
@@ -25,7 +26,7 @@
                 <a href="/study?studyGroupIdx=${studyGroup.studyGroupIdx}">${studyGroup.studyGroupName}</a>
             </td>
             <td>${studyGroup.studyGroupMethod}</td>
-            <td>${studyGroup.studyGroupGradeCode}</td>
+            <td>${studyGroup.studyGroupGradeCode}${studyGroup.studyGroupGrade}</td>
             <td>${studyGroup.studyGroupSubjectCode}</td>
             <td>${studyGroup.studyGroupRegionCode}</td>
             <td>${studyGroup.studyGroupNum}</td>
