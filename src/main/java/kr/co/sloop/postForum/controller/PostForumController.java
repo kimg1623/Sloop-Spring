@@ -35,6 +35,7 @@ public class PostForumController {
     @GetMapping("/write")
     public String writeForm(Model model){
         PostForumDTO postForumDTO = new PostForumDTO();
+        postForumDTO.setCategoryPostIdx(1);
         model.addAttribute("postForumDTO", postForumDTO);
         return "postForum/write";
     }
@@ -59,10 +60,6 @@ public class PostForumController {
         // @RequestParam("boardIdx") int boardIdx
         int boardIdx = 3;
         postForumDTO.setBoardIdx(3);
-
-        // 카테고리 기본 설정 [*****]
-        int categoryPostIdx = 1;
-        postForumDTO.setCategoryPostIdx(categoryPostIdx);
 
         boolean result = postForumServiceImpl.write(postForumDTO);
 
