@@ -24,4 +24,9 @@
         select categoryRegionCode, categoryRegionName from categoryRegion
     </select>
 
+    <insert id="insertNewStudyGroup" parameterType="studyGroup">
+        insert into studyGroup(studyGroupCode,studyGroupName,studyGroupMethod,studyGroupGradeCode,studyGroupSubjectCode,studyGroupRegionCode,studyGroupNum,studyGroupDuedate,studyGroupStartdate,studyGroupIntrotxt,studyGroupOImg)
+            values(#{studyGroupCode},#{studyGroupName},#{studyGroupMethod},#{studyGroupGradeCode},#{studyGroupSubjectCode},#{studyGroupRegionCode},#{studyGroupNum},#{studyGroupDuedate},#{studyGroupStartdate},#{studyGroupIntrotxt},#{studyGroupOImg});
+    </insert>
+
 </mapper>

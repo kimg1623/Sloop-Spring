@@ -16,4 +16,5 @@ public interface StudyGroupMapper {
     List<CategorySubjectDTO> getAllSubjectName(); // 과목 카테고리 이름(코드) 불러오기
     List<CategoryRegionDTO> getAllRegionName(); // 지역 카테고리 이름(코드) 불러오기
 
+    int insertNewStudyGroup(StudyGroupDTO studyGroupDTO); // 새 스터디 그룹 등록하기
 }

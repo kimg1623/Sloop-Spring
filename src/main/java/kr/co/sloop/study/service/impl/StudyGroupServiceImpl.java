@@ -22,4 +22,9 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     public List<StudyGroupDTO> getAllStudyGroupList() {
         return studyGroupRepository.getAllStudyGroupList();
     }
+
+    @Override
+    public int insertNewStudyGroup(StudyGroupDTO studyGroupDTO) {
+        return studyGroupRepository.insertNewStudyGroup(studyGroupDTO);
+    }
 }

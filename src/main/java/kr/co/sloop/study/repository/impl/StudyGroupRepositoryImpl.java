@@ -41,6 +41,12 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         return studyGroupList;
     }
 
+    @Override
+    public int insertNewStudyGroup(StudyGroupDTO studyGroupDTO) {
+        int result = studyGroupMapper.insertNewStudyGroup(studyGroupDTO);
+        return result;
+    }
+
     // 생성자에서 실행하도록 변경하기 fix 필요!
     private void getALlCategory() {
         getCategoryGrade();

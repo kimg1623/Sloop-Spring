@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface StudyGroupRepository {
     List<StudyGroupDTO> getAllStudyGroupList();
+
+    int insertNewStudyGroup(StudyGroupDTO studyGroupDTO);
 }
