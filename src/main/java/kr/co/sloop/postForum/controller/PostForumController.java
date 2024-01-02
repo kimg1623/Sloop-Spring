@@ -91,16 +91,16 @@ public class PostForumController {
             byte[] bytes = upload.getBytes();
 
             //이미지 경로 생성
-            System.out.println("\n\n ===== 현재 경로 : " + request.getContextPath());
+            log.info("\n\n ===== 현재 경로 : " + request.getContextPath());
             String path = "/resources/uploads/";    // 이미지 경로 설정(폴더 자동 생성)
 
             String ckUploadPath = path + uid + "_" + fileName;
             ckUploadPath = uploadPath + File.separator + "uploads" + File.separator + uid + "_" + fileName;
-            System.out.println("uploadPath : " + uploadPath);
-            System.out.println("ckUploadPath : " + ckUploadPath);
+            log.info("uploadPath : " + uploadPath);
+            log.info("ckUploadPath : " + ckUploadPath);
 
             File folder = new File(path);
-            System.out.println("path:" + path);    // 이미지 저장경로 console에 확인
+            log.info("path:" + path);    // 이미지 저장경로 console에 확인
             //해당 디렉토리 확인
             if (!folder.exists()) {
                 try {
