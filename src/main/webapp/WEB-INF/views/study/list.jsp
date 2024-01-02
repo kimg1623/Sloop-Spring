@@ -27,8 +27,8 @@
             </td>
             <td>${studyGroup.studyGroupMethod}</td>
             <td>${studyGroup.studyGroupGradeCode}${studyGroup.studyGroupGrade}</td>
-            <td>${studyGroup.studyGroupSubjectCode}</td>
-            <td>${studyGroup.studyGroupRegionCode}</td>
+            <td>${studyGroup.studyGroupSubjectCode}${studyGroup.studyGroupSubject}</td>
+            <td>${studyGroup.studyGroupRegionCode}${studyGroup.studyGroupRegion}</td>
             <td>${studyGroup.studyGroupNum}</td>
             <td>${studyGroup.studyGroupDuedate}</td>
             <td>${studyGroup.studyGroupStartdate}</td>

@@ -14,4 +14,14 @@
         select categoryGradeCode, categoryGradeName from categoryGrade
     </select>
 
+    <!-- 과목 카테고리 가져오기 -->
+    <select id="getAllSubjectName" resultType="categorySubject">
+        select categorySubjectCode, categorySubjectName from categorySubject
+    </select>
+
+    <!-- 지역 카테고리 가져오기 -->
+    <select id="getAllRegionName" resultType="categoryRegion">
+        select categoryRegionCode, categoryRegionName from categoryRegion
+    </select>
+
 </mapper>

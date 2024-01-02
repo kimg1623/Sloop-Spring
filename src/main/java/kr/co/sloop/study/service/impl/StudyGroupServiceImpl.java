@@ -1,10 +1,9 @@
-package kr.co.sloop.study.service;
+package kr.co.sloop.study.service.impl;
 
 
 import kr.co.sloop.study.domain.StudyGroupDTO;
-import kr.co.sloop.study.repository.impl.StudyGroupRepository;
-import kr.co.sloop.study.service.impl.StudyGroupService;
-import lombok.NoArgsConstructor;
+import kr.co.sloop.study.repository.StudyGroupRepository;
+import kr.co.sloop.study.service.StudyGroupService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -5,7 +5,11 @@
     <typeAliases>
         <!-- 김지원 - 주석 아래로 작성 -->
         <typeAlias type="kr.co.sloop.study.domain.StudyGroupDTO" alias="studyGroup"/>
+
+        <!-- 회원, 스터디에 사용되는 정보 카테고리 -->
         <typeAlias type="kr.co.sloop.study.domain.CategoryGradeDTO" alias="categoryGrade"/>
+        <typeAlias type="kr.co.sloop.study.domain.CategorySubjectDTO" alias="categorySubject"/>
+        <typeAlias type="kr.co.sloop.study.domain.CategoryRegionDTO" alias="categoryRegion"/>
 
         <!-- 박석은 - 주석 아래로 작성 -->
 

@@ -1,4 +1,4 @@
-package kr.co.sloop.study.service.impl;
+package kr.co.sloop.study.service;
 
 import kr.co.sloop.study.domain.StudyGroupDTO;
 
