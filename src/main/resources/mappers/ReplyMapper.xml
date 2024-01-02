@@ -1,26 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.sloop.reply.mapper.ReplyMapper">
-    <insert id="save" parameterType="kr.co.sloop.reply.domain.ReplyDTO">
-        INSERT INTO reply (replyIdx, postIdx, replyContents, memberIdx, replyRegDate, replyEditDate, replyGroup, replyGroupOrder, replyGroupDepth)
-        VALUES (#{replyIdx}, #{postIdx}, #{replyContents}, #{memberIdx}, #{replyRegDate}, #{replyEditDate}, #{replyGroup}, #{replyGroupOrder}, #{replyGroupDepth})
+<mapper namespace="Reply">
+    <insert id="save" parameterType="reply">
+        INSERT INTO reply(replyIdx, postIdx, replyContents, memberIdx, replyRegDate, replyEditDate, replyGroup, replyGroupOrder, replyGroupDepth)
+        VALUES(#{replyIdx}, #{postIdx}, #{replyContents}, #{memberIdx}, #{replyRegDate}, #{replyEditDate}, #{replyGroup}, #{replyGroupOrder}, #{replyGroupDepth})
     </insert>
 
-    <update id="update" parameterType="kr.co.sloop.reply.domain.ReplyDTO">
+    <select id="findAll" parameterType="int" resultType="reply">
+        SELECT *
+        FROM reply
+        WHERE postIdx = #{postIdx}
+    </select>
+
+    <update id="update" parameterType="reply">
         UPDATE reply
         SET replyContents = #{replyContents}, replyEditDate = #{replyEditDate}
         WHERE replyIdx = #{replyIdx}
     </update>
 
-    <delete id="delete" parameterType="kr.co.sloop.reply.domain.ReplyDTO">
+    <delete id="deleteReply" parameterType="int">
         DELETE FROM reply
         WHERE replyIdx = #{replyIdx}
     </delete>
 
-    <select id="findAll" parameterType="int" resultType="kr.co.sloop.reply.domain.ReplyDTO">
-        SELECT *
-        FROM reply
-        WHERE postIdx = #{postIdx}
-    </select>
 </mapper>

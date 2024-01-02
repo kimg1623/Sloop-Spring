@@ -2,36 +2,31 @@ package kr.co.sloop.reply.service;
 
 import kr.co.sloop.reply.domain.ReplyDTO;
 import kr.co.sloop.reply.repository.ReplyRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class ReplyService {
 
     private final ReplyRepository replyRepository;
 
-    @Autowired
-    public ReplyService(ReplyRepository replyRepository) {
-        this.replyRepository = replyRepository;
+    public void save(ReplyDTO replyDTO) {
+        replyRepository.save(replyDTO);
     }
 
-    public void saveReply(ReplyDTO replyDTO) {
-        replyRepository.saveReply(replyDTO);
+    public void update(ReplyDTO replyDTO) {
+        replyRepository.update(replyDTO);
     }
 
-    public void updateReply(ReplyDTO replyDTO) {
-        replyRepository.updateReply(replyDTO);
+    public void deleteReply(int replyIdx) {
+        replyRepository.deleteReply(replyIdx);
     }
 
-    public void deleteReply(ReplyDTO replyDTO) {
-        replyRepository.deleteReply(replyDTO);
-    }
-
-    public List<ReplyDTO> getRepliesByPostId(int postIdx) {
+    public List<ReplyDTO> findAll(int postIdx) {
         return replyRepository.findAll(postIdx);
     }
-
-
 }

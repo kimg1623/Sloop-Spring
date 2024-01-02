@@ -10,9 +10,9 @@ import java.util.List;
 @Mapper
 public interface ReplyMapper {
 
-    void saveReply(ReplyDTO replyDTO);
+    void save(ReplyDTO replyDTO);
 
-    void updateReply(ReplyDTO replyDTO);
+    void update(ReplyDTO replyDTO);
 
     void deleteReply(ReplyDTO replyDTO);
 
