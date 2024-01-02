@@ -53,11 +53,6 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public int deleteMember(String memberPassword) {
-        return sql.delete("Member.findByPassword", memberPassword);
-    }
-
-    @Override
     public int deleteById(int memberIdx) {
         return sql.delete("Member.deleteByUser",memberIdx);
     }

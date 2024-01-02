@@ -83,11 +83,6 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int deleteMember(String memberPassword) {
-        return memberRepository.deleteMember(memberPassword);
-    }
-
-    @Override
     public int deleteByUser(int memberIdx) {
         return memberRepository.deleteById(memberIdx);
     }

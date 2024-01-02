@@ -49,6 +49,6 @@
     </tr>
 </table>
 <a href="/member/logout">로그아웃</a><br>
-<a href="/member/">회원 탈퇴</a>
+<a href="/member/delete">회원 탈퇴</a>
 </body>
 </html>

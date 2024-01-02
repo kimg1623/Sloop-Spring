@@ -57,7 +57,7 @@
     </select>
 
     <delete id="deleteByUser" parameterType="int">
-        delete * from member where memberIdx = #{memberIdx}
+        delete from member where memberIdx = #{memberIdx}
     </delete>
 
 

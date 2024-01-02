@@ -110,15 +110,15 @@ public class MemberController {
         }
     }
 
-    // 회원 리스트에서 회원 정보 페이지로 이동
+    // 회원 리스트에서 회원 정보 페이지로 이동 -> 관리자의 기능 ( 회원페이지 페이징도 추후 진행 )
     @GetMapping
     public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model){
-        MemberDTO memberDTO = memberService.findByIdx(memberIdx);
+        MemberDTO memberDTO = memberService.findByIdx(memberIdx);   // memberIdx 파라미터 값을 가져온 뒤 해당 domain 정보를 불러온다.
         model.addAttribute("member",memberDTO);
         return "mypage";
     }
 
-    // 꼭 로그인 후 마이페이지로 이동
+    // 꼭 로그인 후 마이페이지로 이동 ( 회원의 기능 )
     @GetMapping("mypage")
     public String mypage(@ModelAttribute MemberDTO memberDTO , Model model , HttpSession session){
 
@@ -136,10 +136,7 @@ public class MemberController {
         }
 
     }
-
-
-
-
+    
     // 로그아웃 버튼 누를 시
     @GetMapping("/logout")
     public String logout(HttpSession session){

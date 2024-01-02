@@ -20,7 +20,5 @@ public interface MemberRepository {
 
     MemberDTO findByIdx(int memberIdx);
 
-    int deleteMember(String memberPassword);
-
     int deleteById(int memberIdx);
 }
