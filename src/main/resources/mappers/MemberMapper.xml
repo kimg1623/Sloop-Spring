@@ -18,7 +18,9 @@
     </select>
 
     <select id="findByMemberEmail" parameterType="String" resultType="member">
-        select memberEmail, memberPassword, memberNickname, memberPhonenumber
+        select memberIdx, memberEmail, memberPassword,
+               memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
+               memberSubjectCode, memberRegionCode
         from  member
         where memberEmail = #{loginEmail}
     </select>

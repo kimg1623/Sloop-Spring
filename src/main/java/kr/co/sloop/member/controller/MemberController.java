@@ -115,23 +115,31 @@ public class MemberController {
     public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model){
         MemberDTO memberDTO = memberService.findByIdx(memberIdx);
         model.addAttribute("member",memberDTO);
-        return "memberPage";
-
+        return "mypage";
     }
-    // 마이페이지로 이동
-    @GetMapping("mypage")
-    public String mypage(HttpSession session , Model model , MemberDTO memberDTO){
 
-        String getMemberEmail = (String) session.getAttribute("loginEmail");
-        memberDTO = memberService.findByIdx(memberDTO.getMemberIdx());
+    // 꼭 로그인 후 마이페이지로 이동
+    @GetMapping("mypage")
+    public String mypage(@ModelAttribute MemberDTO memberDTO , Model model , HttpSession session){
+
+        String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
+        memberDTO = memberService.findByMemberEmail(loginEmail);
         model.addAttribute("member",memberDTO);
 
-        if (getMemberEmail != null){
-            return "redirect:/member?memberIdx="+memberDTO.getMemberIdx();
-        } else {
-            return "login";
+        if (loginEmail != null ){
+
+            log.info("mypage data ........" + memberDTO);
+
+            return "redirect:/member?memberIdx="+memberDTO.getMemberIdx();  // 세션에 저장된 아이디에 맞는 마이페이지로 이동
+        } else{
+            return "loginForm"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
         }
+
     }
+
+
+
+
     // 로그아웃 버튼 누를 시
     @GetMapping("/logout")
     public String logout(HttpSession session){

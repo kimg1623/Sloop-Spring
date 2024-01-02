@@ -18,7 +18,6 @@
     <input type="button" value="수정" onclick="update()">
 
 </form>
-</div>
 </body>
 <script>
     const update = () => {
