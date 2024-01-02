@@ -4,6 +4,7 @@ import kr.co.sloop.postForum.domain.PostForumDTO;
 import kr.co.sloop.postForum.service.PostForumServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.UUID;
 
 @Log4j
@@ -28,7 +30,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class PostForumController {
     @Resource(name="uploadPath")
-    private String uploadPath;
+    private String uploadPath; // 업로드된 사진이 저장될 서버 경로 (디렉터리 경로)
     private final PostForumServiceImpl postForumServiceImpl;
 
     // 글 작성하기 : 화면 출력
@@ -75,27 +77,48 @@ public class PostForumController {
     @PostMapping("/upload-image")
     public void imageUpload(HttpServletRequest request,
                             HttpServletResponse response, MultipartHttpServletRequest multiFile
-            , @RequestParam MultipartFile upload) throws Exception {
-        // 랜덤 문자 생성
-        UUID uid = UUID.randomUUID();
-
+            , @RequestParam MultipartFile upload, @RequestParam(value="CKEditorFuncNum", required=false) String CKEditorFuncNum) throws Exception {
         OutputStream out = null;
         PrintWriter printWriter = null;
 
-        //인코딩
+        // response 인코딩
         response.setCharacterEncoding("utf-8");
         response.setContentType("text/html;charset=utf-8");
         try {
-            //파일 이름 가져오기
+            // 파일 이름 가져오기 (확장자 포함)
             String fileName = upload.getOriginalFilename();
+
+            // 파일 확장자 검사 [*****] window, mac 다른지 log를 통해 확인 필요
+            String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+            extension = extension.toLowerCase(); // 소문자로 변경
+
+            // 허용되는 이미지 확장자
+            String allowedExtensions = "(jpg|jpeg|gif|png)";
+
+            if(!extension.matches(allowedExtensions)){ // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우
+                printWriter=response.getWriter();
+                JSONObject json = new JSONObject();
+                json.put("uploaded", 0);
+                json.put("error", new JSONObject().put("message", "jpg, jpeg, gif, png 이미지 파일만 지원합니다."));
+                printWriter.println(json);
+                printWriter.flush(); //초기화
+                return;
+            }
+
+            if(fileName.length() > 63){ // 파일 이름이 63 초과 시, 0-62번째 문자까지만 저장. (DB에 저장할 수 있는 파일명은 100자까지, 100 - 37(uuid_)만큼 저장 가능)
+                fileName = fileName.substring(0, 62);
+            }
             byte[] bytes = upload.getBytes();
 
             //이미지 경로 생성
             log.info("\n\n ===== 현재 경로 : " + request.getContextPath());
             String path = "/resources/uploads/";    // 이미지 경로 설정(폴더 자동 생성)
 
-            String ckUploadPath = path + uid + "_" + fileName;
-            ckUploadPath = uploadPath + File.separator + "uploads" + File.separator + uid + "_" + fileName;
+            // uuid 생성 (36자)
+            UUID uuid = UUID.randomUUID();
+
+            // ckeditor로 첨부한 이미지가 저장될 풀 경로 (서버경로/uploads/uuid_파일이름) [*****] -> 서버경로/스터디그룹idx/postForum/uuid_파일이름)
+            String ckUploadPath = uploadPath + File.separator + "uploads" + File.separator + uuid + "_" + fileName;
             log.info("uploadPath : " + uploadPath);
             log.info("ckUploadPath : " + ckUploadPath);
 
@@ -111,16 +134,15 @@ public class PostForumController {
             }
             out = new FileOutputStream(ckUploadPath);
             out.write(bytes);
-            out.flush(); // outputStram에 저장된 데이터를 전송하고 초기화
+            out.flush(); // outputStream에 저장된 데이터를 전송하고 초기화
 
             String callback = request.getParameter("CKEditorFuncNum");
             printWriter = response.getWriter();
-            String fileUrl = "/postforum/ckImgSubmit?uid=" + uid + "&fileName=" + fileName; // 작성화면
+            String fileUrl = "/postforum/ckImgSubmit?uid=" + uuid + "&fileName=" + fileName; // 작성화면
 
             // 업로드시 메시지 출력
             printWriter.println("{\"filename\" : \"" + fileName + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
             printWriter.flush();
-
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -138,7 +160,7 @@ public class PostForumController {
         return;
     }
 
-    // 서버로 전송된 이미지 뿌려주기
+    // 서버로 전송된 이미지 가져오기
     @RequestMapping(value="/ckImgSubmit")
     public void ckSubmit(@RequestParam(value="uid") String uid
             , @RequestParam(value="fileName") String fileName
