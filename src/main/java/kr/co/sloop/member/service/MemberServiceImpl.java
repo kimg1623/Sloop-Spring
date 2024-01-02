@@ -82,5 +82,15 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByIdx(memberIdx);
     }
 
+    @Override
+    public int deleteMember(String memberPassword) {
+        return memberRepository.deleteMember(memberPassword);
+    }
+
+    @Override
+    public int deleteByUser(int memberIdx) {
+        return memberRepository.deleteById(memberIdx);
+    }
+
 
 }

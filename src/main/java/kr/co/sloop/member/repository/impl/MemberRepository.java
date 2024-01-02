@@ -19,4 +19,8 @@ public interface MemberRepository {
     int update(MemberDTO memberDTO);
 
     MemberDTO findByIdx(int memberIdx);
+
+    int deleteMember(String memberPassword);
+
+    int deleteById(int memberIdx);
 }
