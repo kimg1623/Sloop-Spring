@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="kr.co.sloop.comment.mapper.CommentMapper">
-
-    <insert id="save" parameterType="kr.co.sloop.comment.domain.CommentDTO">
+<mapper namespace="kr.co.sloop.reply.mapper.ReplyMapper">
+    <insert id="save" parameterType="kr.co.sloop.reply.domain.ReplyDTO">
         INSERT INTO reply (replyIdx, postIdx, replyContents, memberIdx, replyRegDate, replyEditDate, replyGroup, replyGroupOrder, replyGroupDepth)
         VALUES (#{replyIdx}, #{postIdx}, #{replyContents}, #{memberIdx}, #{replyRegDate}, #{replyEditDate}, #{replyGroup}, #{replyGroupOrder}, #{replyGroupDepth})
     </insert>
 
-    <update id="update" parameterType="kr.co.sloop.comment.domain.CommentDTO">
+    <update id="update" parameterType="kr.co.sloop.reply.domain.ReplyDTO">
         UPDATE reply
         SET replyContents = #{replyContents}, replyEditDate = #{replyEditDate}
         WHERE replyIdx = #{replyIdx}
     </update>
 
-    <delete id="delete" parameterType="kr.co.sloop.comment.domain.CommentDTO">
+    <delete id="delete" parameterType="kr.co.sloop.reply.domain.ReplyDTO">
         DELETE FROM reply
         WHERE replyIdx = #{replyIdx}
     </delete>
 
-    <select id="findAll" parameterType="int" resultType="kr.co.sloop.comment.domain.CommentDTO">
+    <select id="findAll" parameterType="int" resultType="kr.co.sloop.reply.domain.ReplyDTO">
         SELECT *
         FROM reply
         WHERE postIdx = #{postIdx}
     </select>
-
 </mapper>
