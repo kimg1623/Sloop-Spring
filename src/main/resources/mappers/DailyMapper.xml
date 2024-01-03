@@ -3,10 +3,52 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="kr.co.sloop.daily.mapper.DailyMapper">
-
-    <select id="getTime2" resultType="string">
-        SELECT CURRENT_DATE FROM dual
+<mapper namespace="Daily">
+<!--(초기화면)목록 출력-->
+    <select id="getAllDailyList" resultType="daily">
+        SELECT p.postIdx,p.postDailyTitle, p.postDailyContents, p.postDailyRegDate, p.postDailyHits, m.memberNickname
+        FROM postDaily as p
+        JOIN member as m ON p.memberIdx=m.memberIdx
+        ORDER BY postIdx DESC
     </select>
+<!-- 글작성 -->
+    <insert id="dailyWrite" parameterType="daily">
+        insert into postDaily(postIdx, postDailyTitle, postDailyContents,memberIdx)
+        values(#{postIdx},#{postDailyTitle}, #{postDailyContents},#{memberIdx})
+    </insert>
+
+<!--    post 용 -->
+    <insert id="insertPost" parameterType="daily">
+        insert into post(boardIdx)
+        values(#{boardIdx})
+        <selectKey resultType="int" keyProperty="postIdx" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+<!--    제목으로 검색 -->
+    <select id="getDailyListByTitle" parameterType="Long" resultType="daily">
+        SELECT postDailyTitle, memberIdx, postDailyRegDate, postDailyContents, postDailyHits
+        FROM postDaily WHERE postDailyTitle=#{postDailyTitle}
+    </select>
+
+<!--    상세보기-->
+    <select id="findByPostIdx" parameterType="int" resultType="daily">
+        SELECT p.postIdx, p.postDailyTitle, p.memberIdx, p.postDailyRegDate, p.postDailyContents, p.postDailyHits,  m.memberNickname
+        FROM postDaily as p
+        JOIN member as m ON p.memberIdx=m.memberIdx
+        WHERE postIdx=#{postIdx}
+    </select>
+
+<!--수정하기-->
+    <update id="update" parameterType="daily">
+        UPDATE postDaily SET postDailyTitle=#{postDailyTitle}, postDailyContents=#{postDailyContents}
+        where postIdx=#{postIdx}
+    </update>
+
+<!--삭제하기-->
+    <delete id="delete" parameterType="int">
+        DELETE FROM postDaily where postIdx=#{postIdx}
+    </delete>
 
 </mapper>
