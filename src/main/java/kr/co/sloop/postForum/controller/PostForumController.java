@@ -6,6 +6,7 @@ import kr.co.sloop.postForum.domain.PostForumDTO;
 import kr.co.sloop.postForum.service.PostForumServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.UUID;
 
-@Log4j
+@Log4j2
 @Controller
 @RequestMapping("/postforum")
 @RequiredArgsConstructor
