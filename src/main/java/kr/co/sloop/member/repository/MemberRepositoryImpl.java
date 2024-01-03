@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Repository
@@ -56,6 +57,8 @@ public class MemberRepositoryImpl implements MemberRepository {
     public int deleteById(int memberIdx) {
         return sql.delete("Member.deleteByUser",memberIdx);
     }
+
+
 
 
 }

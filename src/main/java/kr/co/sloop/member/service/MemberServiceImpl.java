@@ -8,6 +8,7 @@ import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -86,6 +87,7 @@ public class MemberServiceImpl implements MemberService {
     public int deleteByUser(int memberIdx) {
         return memberRepository.deleteById(memberIdx);
     }
+
 
 
 }
