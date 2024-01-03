@@ -3,6 +3,21 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="kr.co.sloop.comment.domain.CommentDTO" alias="CommentDTO"></typeAlias>
+
+<!--        &lt;!&ndash; 김지원 - 주석 아래로 작성 &ndash;&gt;-->
+<!--        <typeAlias type="kr.co.sloop.study.domain.StudyGroupDTO" alias="studyGroup"/>-->
+
+<!--        &lt;!&ndash; 박석은 - 주석 아래로 작성 &ndash;&gt;-->
+
+<!--        &lt;!&ndash; 이지연 - 주석 아래로 작성 &ndash;&gt;-->
+<!--        <typeAlias type="kr.co.sloop.postForum.domain.PostForumDTO" alias="postForum"/>-->
+
+<!--        &lt;!&ndash; 이창규 - 주석 아래로 작성 &ndash;&gt;-->
+<!--        <typeAlias type="kr.co.sloop.member.domain.MemberDTO" alias="member"/>-->
+
+        <!-- 차소영 - 주석 아래로 작성 -->
+        <typeAlias type="kr.co.sloop.reply.domain.ReplyDTO" alias="reply"></typeAlias>
+        <!-- 최지혜 - 주석 아래로 작성 -->
+
     </typeAliases>
 </configuration>
