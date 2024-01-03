@@ -3,7 +3,6 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-        <typeAlias type="kr.co.sloop.sample.domain.MemberDTO" alias="member"></typeAlias>
-<!--        <typeAlias type="kr.co.chunjae.dto.CommentDTO" alias="comment"></typeAlias>-->
+        <typeAlias type="kr.co.sloop.member.domain.MemberDTO" alias="member"/>
     </typeAliases>
 </configuration>

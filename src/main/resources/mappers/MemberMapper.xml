@@ -1,18 +1,64 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Member">
-
-
     <insert id="signup" parameterType="member">
         insert into member
-        (memberEmail,memberPassword,memberNickname,memberGender,memberRegdate,memberPhonenumber,
-        memberSchool,memberGradeCode,memberSubjectCode,memberRegionCode)
-        values
-        (#{memberEmail},#{memberPassword},#{memberNickname},#{memberGender},#{memberRegdate},#{memberPhonenumber},
-        #{memberSchool},#{memberGradeCode},#{memberSubjectCode},#{memberRegionCode})
+                (memberEmail,memberPassword,memberNickname,memberGender,memberPhonenumber,memberSchool,
+                 memberGradeCode,memberSubjectCode,memberRegionCode)
+        values (#{memberEmail},#{memberPassword},#{memberNickname},#{memberGender},
+                #{memberPhonenumber},#{memberSchool},#{memberGradeCode},#{memberSubjectCode},#{memberRegionCode})
     </insert>
+
+    <select id="login" parameterType="member" resultType="member">
+        select *
+        from member
+        where memberEmail = #{memberEmail}
+          and memberPassword = #{memberPassword}
+    </select>
+
+    <select id="findByMemberEmail" parameterType="String" resultType="member">
+        select memberIdx, memberEmail, memberPassword,
+               memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
+               memberSubjectCode, memberRegionCode
+        from  member
+        where memberEmail = #{loginEmail}
+    </select>
+    <select id="findByMemberNickname" parameterType="String" resultType="member">
+        select memberEmail, memberPassword, memberNickname, memberPhonenumber
+        from  member
+        where memberNickname = #{memberNickname}
+    </select>
+
+    <select id="findMemberList" resultType="member">
+        select * from member order by memberRegdate desc
+    </select>
+
+    <update id="update" parameterType="member">
+        update member
+        set memberEmail = #{memberEmail},
+            memberPassword = #{memberPassword},
+            memberNickname = #{memberNickname},
+            memberGender = #{memberGender},
+            memberPhonenumber = #{memberPhonenumber},
+            memberSchool = #{memberSchool},
+            memberGradeCode = #{memberGradeCode},
+            memberSubjectCode = #{memberSubjectCode},
+            memberRegionCode = #{memberRegionCode}
+        where memberIdx = #{memberIdx}
+    </update>
+
+    <select id="findByIdx" parameterType="int" resultType="member">
+        select memberIdx, memberEmail, memberPassword,
+               memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
+               memberSubjectCode, memberRegionCode
+        from member
+        where memberIdx = #{memberIdx}
+    </select>
+
+    <delete id="deleteByUser" parameterType="int">
+        delete from member where memberIdx = #{memberIdx}
+    </delete>
+
 
 </mapper>
