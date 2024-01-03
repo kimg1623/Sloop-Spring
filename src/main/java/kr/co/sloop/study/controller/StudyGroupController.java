@@ -3,6 +3,7 @@ package kr.co.sloop.study.controller;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.service.StudyGroupService;
 import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import java.util.Random;
 
 @Controller
 @RequestMapping("/study")
-@Log4j
+@Log4j2
 public class StudyGroupController {
 
 	@Autowired // 의존성 주입
