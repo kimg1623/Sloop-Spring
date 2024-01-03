@@ -42,6 +42,43 @@
     </tbody>
 </table>
 
+<!-- 페이징 -->
+<!-- [이전] -->
+<c:choose>
+    <%-- 현재 페이지가 1페이지면 이전 글자만 보여줌 --%>
+    <c:when test="${pageDTO.currentPage<=1}">
+        <span>[이전]</span>
+    </c:when>
+    <%-- 1페이지가 아닌 경우에는 [이전]을 클릭하면 현재 페이지보다 1 작은 페이지 요청 --%>
+    <c:otherwise>
+        <a href="/postforum/list?page=${pageDTO.currentPage-1}">[이전]</a>
+    </c:otherwise>
+</c:choose>
+
+<%--  for(int i=startPage; i<=endPage; i++)      --%>
+<c:forEach begin="${pageDTO.beginningPage}" end="${pageDTO.endingPage}" var="i" step="1">
+    <c:choose>
+        <%-- 요청한 페이지에 있는 경우 현재 페이지 번호는 텍스트만 보이게 --%>
+        <c:when test="${i == pageDTO.currentPage}">
+            <span>${i}</span>
+        </c:when>
+
+        <c:otherwise>
+            <a href="/postforum/list?page=${i}">${i}</a>
+        </c:otherwise>
+    </c:choose>
+</c:forEach>
+
+<c:choose>
+    <c:when test="${pageDTO.currentPage>=pageDTO.maxPage}">
+        <span>[다음]</span>
+    </c:when>
+    <c:otherwise>
+        <a href="/postforum/list?page=${pageDTO.currentPage+1}">[다음]</a>
+    </c:otherwise>
+</c:choose>
+
+
 <script>
     // 문서가 완전히 로드된 후에 스크립트를 실행하기 위해 jQuery의 document.ready() 함수를 사용
     $(document).ready(function() {
