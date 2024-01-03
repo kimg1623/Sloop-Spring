@@ -3,8 +3,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="Reply">
     <insert id="save" parameterType="reply">
-        INSERT INTO reply(replyIdx, postIdx, replyContents, memberIdx, replyRegDate, replyEditDate, replyGroup, replyGroupOrder, replyGroupDepth)
-        VALUES(#{replyIdx}, #{postIdx}, #{replyContents}, #{memberIdx}, #{replyRegDate}, #{replyEditDate}, #{replyGroup}, #{replyGroupOrder}, #{replyGroupDepth})
+        INSERT INTO reply(postIdx, replyContents, memberIdx/*, replyGroup, replyGroupOrder, replyGroupDepth*/)
+        VALUES(#{postIdx}, #{replyContents}, #{memberIdx}/*, #{replyGroup}, #{replyGroupOrder}, #{replyGroupDepth}*/)
     </insert>
 
     <select id="findAll" parameterType="int" resultType="reply">

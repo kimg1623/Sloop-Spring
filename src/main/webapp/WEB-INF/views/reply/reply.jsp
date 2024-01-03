@@ -10,9 +10,9 @@
 	<script>
 		// 댓글 작성
 		const replyWrite = () => {
+			const post = document.getElementById("postIdx").value;
 			const writer = document.getElementById("memberIdx").value;
 			const contents = document.getElementById("replyContents").value;
-			const post = '<%= request.getParameter("postIdx") %>';
 
 			// 입력된 댓글 내용이 비어있는 경우, 경고창 표시 후 함수 종료
 			if (contents.trim() === "") {
@@ -31,59 +31,34 @@
 				},
 				dataType: "json",
 				success: function(replyList) {
-					// 댓글 작성 후, 페이지 새로고침
+					// 댓글 작성 후, 페이지 업데이트
 					alert("댓글 작성에 성공했습니다.");
-					location.reload();
-
-					console.log("작성 성공");
-					console.log(replyList);
-
-					let output = "<table>";
-					output += "<tr><th>댓글번호</th>";
-					output += "<th>작성자</th>";
-					output += "<th>내용</th>";
-					output += "<th>작성시간</th>"
-					output += "<th>수정</th>";
-					output += "<th>삭제</th></tr>";
-					for(let i in replyList){
-						output += "<tr>";
-						output += "<td>"+replyList[i].replyIdx+"</td>";
-						output += "<td>"+replyList[i].memberIdx+"</td>";
-						output += "<td>"+replyList[i].replyContents+"</td>";
-						output += "<td>"+replyList[i].replyRegDate+"</td>";
-						output += "<td><button onclick=\"update("+replyList[i].replyIdx+", '"+replyList[i].memberIdx+"', '"+replyList[i].replyContents+"')\">수정</button></td>";
-						output += "<td><button onclick=\"delete("+replyList[i].replyIdx+", "+replyList[i].postIdx+")\">삭제</button></td>";
-						output += "</tr>";
-					}
-					output += "</table>";
-					document.getElementById('reply-list').innerHTML = output;
-					document.getElementById('memberIdx').value='';
-					document.getElementById('replyContents').value='';
+					displayReplyList(replyList); // 수정된 댓글 목록을 표시하는 함수 호출
+					cancelReply(); // 입력 필드 초기화
 				},
-				error: function() {
-
+				error: function () {
 					alert("댓글 작성에 실패했습니다.");
-
 					console.log("작성 실패");
 				}
 			});
 		}
 
 		// 댓글 수정
-		const update= (replyIdx, memberIdx, replyContents) => {
+		const update = (replyIdx, memberIdx, replyContents) => {
 			// 댓글 수정 폼을 동적으로 생성하여 출력
 			let form = "<form id='updateForm'>";
-			form += "<input type='text' id='updateWriter' value='"+memberIdx+"'>";
-			form += "<input type='text' id='updateContents' value='"+replyContents+"'>";
-			form += "<button type='button' onclick='updateAction("+replyIdx+")'>수정 완료</button>";
+			form += "<input type='text' id='updateWriter' value='" + memberIdx + "'>";
+			form += "<input type='text' id='updateContents' value='" + replyContents + "'>";
+			form += "<button type='button' onclick='updateAction(" + replyIdx + ")'>수정 완료</button>";
 			form += "</form>";
 			document.getElementById('reply-list').innerHTML = form;
 		}
+
 		const updateAction = (replyIdx) => {
 			// 수정된 댓글 정보를 가져와서 수정 작업 수행
-			const writer = document.getElementById("memberIdx").value;
-			const contents = document.getElementById("replyContents").value;
-			const post = '<%= request.getParameter("postIdx") %>';
+			const writer = document.getElementById("updateWriter").value;
+			const contents = document.getElementById("updateContents").value;
+			const post = document.getElementById("postIdx").value;
 			$.ajax({
 				type: "post",
 				url: "/reply/update",
@@ -95,30 +70,12 @@
 				},
 				dataType: "json",
 				success: function(replyList) {
-					console.log("수정성공");
+					console.log("수정 성공");
 					console.log(replyList);
-					let output = "<table>";
-					output += "<tr><th>댓글번호</th>";
-					output += "<th>작성자</th>";
-					output += "<th>내용</th>";
-					output += "<th>작성시간</th>";
-					output += "<th>수정</th>";
-					output += "<th>삭제</th></tr>";
-					for(let i in replyList){
-						output += "<tr>";
-						output += "<td>"+replyList[i].replyIdx+"</td>";
-						output += "<td>"+replyList[i].memberIdx+"</td>";
-						output += "<td>"+replyList[i].replyContents+"</td>";
-						output += "<td>"+replyList[i].replyRegDate+"</td>";
-						output += "<td><button onclick=\"update("+replyList[i].id+", '"+replyList[i].memberIdx+"', '"+replyList[i].replyContents+"')\">수정</button></td>";
-						output += "<td><button onclick=\"delete("+replyList[i].id+", "+replyList[i].postIdx+")\">삭제</button></td>";
-						output += "</tr>";
-					}
-					output += "</table>";
-					document.getElementById('reply-list').innerHTML = output;
+					displayReplyList(replyList); // 수정된 댓글 목록을 표시하는 함수 호출
 				},
 				error: function() {
-					console.log("실패");
+					console.log("수정 실패");
 				}
 			});
 		}
@@ -134,45 +91,45 @@
 				},
 				dataType: "json",
 				success: function(replyList) {
-					console.log("삭제성공");
+					console.log("삭제 성공");
 					console.log(replyList);
-					let output = "<table>";
-					output += "<tr><th>댓글번호</th>";
-					output += "<th>작성자</th>";
-					output += "<th>내용</th>";
-					output += "<th>작성시간</th>";
-					output += "<th>수정</th>";
-					output += "<th>삭제</th></tr>";
-					for (let i in replyList) {
-						output += "<tr>";
-						output += "<td>" + replyList[i].replyIdx + "</td>";
-						output += "<td>" + replyList[i].memberIdx + "</td>";
-						output += "<td>" + replyList[i].replyContents + "</td>";
-						output += "<td>" + replyList[i].replyRegDate + "</td>";
-						output += "<td><button onclick=\"update(" + replyList[i].id + ", '" + replyList[i].memberIdx + "', '" + replyList[i].replyContents + "')\">수정</button></td>";
-						output += "<td><button onclick=\"deleteReply(" + replyList[i].id + ", " + replyList[i].postIdx + ")\">삭제</button></td>";
-						output += "</tr>";
-					}
-					output += "</table>";
-					document.getElementById('reply-list').innerHTML = output;
+					displayReplyList(replyList); // 삭제된 댓글 목록을 표시하는 함수 호출
 				},
 				error: function() {
-					console.log("실패");
+					console.log("삭제 실패");
 				}
 			});
 		}
-		// 작성 취소
-		function cancelReply() {
-			$("#memberIdx").val(""); // 댓글 작성자 입력 필드 초기화
-			$("#memberIdx").attr("placeholder", "작성자"); // placeholder 수정
-			$("#replyContents").val(""); // 댓글 내용 입력 필드 초기화
-			$("#replyContents").attr("placeholder", "댓글을 입력해주세요."); // placeholder 수정
+
+		// 댓글 목록을 표시하는 함수
+		const displayReplyList = (replyList) => {
+			let output = "<table>";
+			output += "<tr><th>댓글번호</th>";
+			output += "<th>작성자</th>";
+			output += "<th>내용</th>";
+			output += "<th>작성시간</th>";
+			output += "<th>수정</th>";
+			output += "<th>삭제</th></tr>";
+			for (let i in replyList){
+				output += "<tr>";
+				output += "<td>" + replyList[i].replyIdx + "</td>";
+				output += "<td>" + replyList[i].memberIdx + "</td>";
+				output += "<td>" + replyList[i].replyContents + "</td>";
+				output += "<td>" + replyList[i].replyRegDate + "</td>";
+				output += "<td><button onclick=\"update(" + replyList[i].replyIdx + ", '" + replyList[i].memberIdx + "', '" + replyList[i].replyContents + "')\">수정</button></td>";
+				output += "<td><button onclick=\"deleteReply(" + replyList[i].replyIdx + ", " + replyList[i].postIdx + ")\">삭제</button></td>";
+				output += "</tr>";
+			}
+			output += "</table>";
+			document.getElementById('reply-list').innerHTML = output;
 		}
 
-
+		// 작성 취소
+		const cancelReply = () => {
+			document.getElementById("memberIdx").value = ''; // 댓글 작성자 입력 필드 초기화
+			document.getElementById("replyContents").value = ''; // 댓글 내용 입력 필드 초기화
+		}
 	</script>
-
-
 </head>
 <body>
 <h1>댓글 페이지</h1>
@@ -180,6 +137,7 @@
 <!-- 댓글 입력 폼 -->
 <div>
 	<input type="text" id="memberIdx" placeholder="작성자">
+	<input type="text" id="postIdx" placeholder="postIdx">
 	<input type="text" id="replyContents" placeholder="댓글을 입력해주세요.">
 	<button id="reply-write-btn" onclick="replyWrite()">댓글 작성</button>
 	<button type="button" onclick="cancelReply();">작성 취소</button>
@@ -187,31 +145,33 @@
 
 <!-- 댓글 목록 -->
 <div id = "reply-list">
-	<table>
-		<tr>
-			<th>댓글번호</th>
-			<th>작성자</th>
-			<th>내용</th>
-			<th>작성시간</th>
-			<th>수정</th>
-			<th>삭제</th>
-		</tr>
-		<c:forEach items="${replyList}" var="reply">
-			<tr>
-				<td>${reply.replyIdx}</td>
-				<td>${reply.memberIdx}</td>
-				<td>${reply.replyContents}</td>
-				<td>${reply.replyRegDate}</td>
-				<td><button onclick="update(${reply.replyIdx}, '${reply.memberIdx}', '${reply.replyContents}')">수정</button></td>
-				<td><button onclick="delete(${reply.replyIdx}, ${reply.postIdx})">삭제</button></td>
-			</tr>
-		</c:forEach>
-	</table>
+	<c:choose>
+		<c:when test="${empty replyList}">
+			<p>댓글이 없습니다.</p>
+		</c:when>
+		<c:otherwise>
+			<table>
+				<tr>
+					<th>댓글번호</th>
+					<th>작성자</th>
+					<th>내용</th>
+					<th>작성시간</th>
+					<th>수정</th>
+					<th>삭제</th>
+				</tr>
+				<c:forEach items="${replyList}" var="reply">
+					<tr>
+						<td>${reply.replyIdx}</td>
+						<td>${reply.memberIdx}</td>
+						<td>${reply.replyContents}</td>
+						<td>${reply.replyRegDate}</td>
+						<td><button onclick="update(${reply.replyIdx}, '${reply.memberIdx}', '${reply.replyContents}')">수정</button></td>
+						<td><button onclick="deleteReply(${reply.replyIdx}, ${reply.postIdx})">삭제</button></td>
+					</tr>
+				</c:forEach>
+			</table>
+		</c:otherwise>
+	</c:choose>
 </div>
-
-<!-- 댓글이 없을 경우 표시-->
-<c:if test="${empty reply}">
-	<p>댓글이 없습니다.</p>
-</c:if>
 </body>
 </html>
