@@ -1,5 +1,7 @@
 package kr.co.sloop.postForum.controller;
 
+import kr.co.sloop.post.domain.PageDTO;
+import kr.co.sloop.post.service.PageServiceImpl;
 import kr.co.sloop.postForum.domain.PostForumDTO;
 import kr.co.sloop.postForum.service.PostForumServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +34,7 @@ public class PostForumController {
     @Resource(name="uploadPath")
     private String uploadPath; // 업로드된 사진이 저장될 서버 경로 (디렉터리 경로)
     private final PostForumServiceImpl postForumServiceImpl;
+    private final PageServiceImpl pageServiceImpl; // 페이징
 
     // 글 작성하기 : 화면 출력
     @GetMapping("/write")
@@ -213,15 +216,22 @@ public class PostForumController {
     }
 
     // 글 목록 조회
+    // postforum/list?page=*
     @GetMapping("/list")
-    public String list(Model model){
+    public String list(@RequestParam(value = "page", defaultValue = "1", required = false) int page, Model model){
         // 게시판 idx
         // [*****] 쿼리 스트링으로 가져오도록 수정
         // [*****] public String List(@RequestParam("boardIdx") int boardIdx)
         int boardIdx = 3;
 
-        ArrayList<PostForumDTO> postForumDTOList = postForumServiceImpl.list(boardIdx);
+        // 페이징
+        PageDTO pageDTO = pageServiceImpl.pagingInitialize(page, boardIdx);
+
+        log.info("+++++" + pageDTO);
+
+        ArrayList<PostForumDTO> postForumDTOList = postForumServiceImpl.list(boardIdx, page);
         model.addAttribute("postForumDTOList", postForumDTOList);
+        model.addAttribute("pageDTO", pageDTO);
         return "postForum/list";
     }
 

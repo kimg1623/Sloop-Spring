@@ -5,9 +5,10 @@ import kr.co.sloop.postForum.domain.PostForumDTO;
 import java.util.ArrayList;
 
 public interface PostForumService {
-    public boolean write(PostForumDTO postForumDTO);
+    boolean write(PostForumDTO postForumDTO);
 
-    ArrayList<PostForumDTO> list(int boardIdx);
+    // 글 목록 조회
+    ArrayList<PostForumDTO> list(int boardIdx, int page);
 
     PostForumDTO findByPostIdx(int postIdx);
 
