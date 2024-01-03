@@ -14,8 +14,15 @@
         <!--접근 제한 설정-->
         <security:intercept-url pattern="/member/login" access="permitAll()"/>
         <security:intercept-url pattern="/member/mypage" access="hasRole('ROLE_MEMBER')"/>
+        <security:intercept-url pattern="/memberList" access="hasRole('ROLE_ADMIN')"/>
     </security:http>
+    <!--권한 부여-->
     <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="qwe123@naver.com" password="{noop}1234" authorities="ROLE_MEMBER"/>
 
+            </security:user-service>
+        </security:authentication-provider>
     </security:authentication-manager>
 </beans>
