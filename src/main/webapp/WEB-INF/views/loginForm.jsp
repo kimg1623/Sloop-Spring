@@ -9,5 +9,6 @@
     <input type="text" name="memberPassword" placeholder="비밀번호"><br>
     <input type="submit" value="로그인">
 </form>
+<a href="/member/signup">회원가입하러가기</a>
 </body>
 </html>
