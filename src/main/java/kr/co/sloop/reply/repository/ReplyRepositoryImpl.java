@@ -28,6 +28,7 @@ public class ReplyRepositoryImpl implements ReplyRepository {
         sql.delete("Reply.deleteReply", replyIdx);
     }
 
+    // postIdx 게시물에 해당하는 모든 댓글 목록 조회
     @Override
     public List<ReplyDTO> findAll(int postIdx) {
         return sql.selectList("Reply.findAll", postIdx);
