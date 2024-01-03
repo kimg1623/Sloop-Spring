@@ -3,6 +3,7 @@ package kr.co.sloop.member.repository.impl;
 import kr.co.sloop.member.domain.MemberDTO;
 import org.springframework.ui.Model;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public interface MemberRepository {
@@ -19,4 +20,8 @@ public interface MemberRepository {
     int update(MemberDTO memberDTO);
 
     MemberDTO findByIdx(int memberIdx);
+
+    int deleteById(int memberIdx);
+
+
 }

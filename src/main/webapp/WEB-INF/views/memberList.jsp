@@ -40,7 +40,7 @@
 <script>
     const deleteMember = (memberIdx) => {
         console.log(memberIdx);
-        location.href = "/member/delete?id="+memberIdx;
+        location.href = "/member/delete?memberIdx="+memberIdx;
     }
 </script>
 </html>
