@@ -27,7 +27,13 @@
         </tr>
         <tr>
             <td>작성일</td>
-            <td><c:out value="${postForumDTO.postForumRegDate}"/></td>
+            <td>
+                <c:out value="${postForumDTO.postForumRegDate}"/>
+                <!-- 수정일시가 존재한다면 (edited) 표시 -->
+                <c:if test="${not empty postForumDTO.postForumEditDate}">
+                    <c:out value="(edited)" />
+                </c:if>
+            </td>
         </tr>
         <tr>
             <td>조회수</td>

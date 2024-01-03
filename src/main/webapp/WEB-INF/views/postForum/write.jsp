@@ -20,6 +20,19 @@
 <div class="mb-3">
     <%--@elvariable id="postForumDTO" type="kr.co.sloop.postForum.domain.PostForumDTO"--%>
     <form:form modelAttribute="postForumDTO" method="post" action="/postforum/write">
+        <!-- 카테고리 -->
+        <form:radiobutton path="categoryPostIdx" id="categoryPostDaily" name="categoryPostIdx" value="1" />
+        <label for="categoryPostDaily">일상</label>
+
+        <form:radiobutton path="categoryPostIdx" id="categoryPostHobby" name="categoryPostIdx" value="2" />
+        <label for="categoryPostDaily">취미</label>
+
+        <form:radiobutton path="categoryPostIdx" id="categoryPostWorry" name="categoryPostIdx" value="3" />
+        <label for="categoryPostDaily">고민</label>
+
+        <form:radiobutton path="categoryPostIdx" id="categoryPostCareer" name="categoryPostIdx" value="4" />
+        <label for="categoryPostDaily">진로</label>
+
         <!-- 글 제목 -->
         <p><form:input path="postForumTitle" autofocus="true" placeholder="제목"/></p>
         <p><form:errors path="postForumTitle"/> </p>
@@ -31,7 +44,7 @@
             var ckeditor_config = {
                 width: "100%",
                 height:"400px",
-                image_previewText: '이건어디에',
+                image_previewText: '',
                 resize_enabled : false,
                 enterMode : CKEDITOR.ENTER_BR,
                 shiftEnterMode : CKEDITOR.ENTER_P,
