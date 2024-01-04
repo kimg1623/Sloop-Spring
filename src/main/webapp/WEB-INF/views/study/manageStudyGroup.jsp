@@ -47,6 +47,8 @@
 <body>
 
     <h1 class="display-3">스터디 관리</h1>
+    <h3>스터디 그룹명: ${studyGroup.studyGroupName}</h3>
+    <h3>스터디 그룹코드: ${studyGroup.studyGroupCode}</h3>
 
 
 <%--    <div class="container">--%>
