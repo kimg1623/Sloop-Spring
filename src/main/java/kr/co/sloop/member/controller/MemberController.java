@@ -4,7 +4,7 @@ package kr.co.sloop.member.controller;
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
-@Log4j2
+@Log4j
 public class MemberController {
 
     private final MemberService memberService;

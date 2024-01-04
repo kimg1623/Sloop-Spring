@@ -3,7 +3,7 @@ package kr.co.sloop.member.repository;
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.repository.impl.MemberRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.log4j.Log4j;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-@Log4j2
+@Log4j
 public class MemberRepositoryImpl implements MemberRepository {
 
     private final SqlSessionTemplate sql;
