@@ -9,6 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -26,5 +27,15 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     @Override
     public int insertNewStudyGroup(StudyGroupDTO studyGroupDTO) {
         return studyGroupRepository.insertNewStudyGroup(studyGroupDTO);
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getSecondCategoryRegionMap() {
+        return studyGroupRepository.getSecondCategoryRegionMap();
+    }
+
+    @Override
+    public StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode) {
+        return studyGroupRepository.getStudyGroupByGroupCode(studyGroupCode);
     }
 }

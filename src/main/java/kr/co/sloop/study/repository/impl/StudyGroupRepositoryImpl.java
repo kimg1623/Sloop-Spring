@@ -12,6 +12,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -45,6 +46,16 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
     public int insertNewStudyGroup(StudyGroupDTO studyGroupDTO) {
         int result = studyGroupMapper.insertNewStudyGroup(studyGroupDTO);
         return result;
+    }
+
+    @Override
+    public List<HashMap<String, Object>> getSecondCategoryRegionMap() {
+        return null;
+    }
+
+    @Override
+    public StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode) {
+        return studyGroupMapper.selectStudyGroupByGroupCode(studyGroupCode);
     }
 
     // 생성자에서 실행하도록 변경하기 fix 필요!

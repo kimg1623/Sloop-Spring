@@ -29,4 +29,8 @@
             values(#{studyGroupCode},#{studyGroupName},#{studyGroupMethod},#{studyGroupGradeCode},#{studyGroupSubjectCode},#{studyGroupRegionCode},#{studyGroupNum},#{studyGroupDuedate},#{studyGroupStartdate},#{studyGroupIntrotxt},#{studyGroupOImg});
     </insert>
 
+    <select id="selectStudyGroupByGroupCode" parameterType="String" resultType="studyGroup">
+        select * from studyGroup where studyGroupCode=#{studyGroupCode}
+    </select>
+
 </mapper>

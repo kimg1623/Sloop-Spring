@@ -1,19 +1,22 @@
 package kr.co.sloop.study.controller;
 
+import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.service.StudyGroupService;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Random;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.Option;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
 
 @Controller
 @RequestMapping("/study")
@@ -32,10 +35,13 @@ public class StudyGroupController {
 
 	@GetMapping("/add")
 	public String requestAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO, Model model){
+
+		model.addAttribute("categoryGradeList1", null);
 		return "study/addStudyGroup";
 	}
 
 	@PostMapping("/add")
+	@ResponseBody
 	public String submitAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO){
 		studyGroupDTO.setStudyGroupCode(getRandomStudyGroupCode());
 		log.info("StudyGroupDTO=====>"+studyGroupDTO);
@@ -45,6 +51,50 @@ public class StudyGroupController {
 		else
 			return "study/list";
 	}
+
+	@RequestMapping(value = "/{studyGroupCode}", method = RequestMethod.GET)
+	public String requestStudyGroup(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
+		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
+		model.addAttribute("studyGroup", studyGroupDTO);
+		return "study/home";
+	}
+
+
+
+	// 카테고리 ajax 불러오기
+//	@RequestMapping(value = "/{option1}", produces = "application/json; charset=UTF-8", method= RequestMethod.GET)
+//	@ResponseBody
+//	public void get_option1(HttpServletResponse res, @PathVariable String option1) throws IOException {
+//
+//		List<Option> options = studyGroupService.findOption1(option1);
+//		List<String> optionList = new ArrayList();
+//
+//		for (int i = 0; i < options.size(); i++) {
+//			optionList.add(options.get(i).getOption1());
+//		}
+//
+//		JSONArray jsonArray = new JSONArray();
+//		for (int i = 0; i < optionList.size(); i++) {
+//			jsonArray.put(optionList.get(i));
+//		}
+//
+//		PrintWriter pw = res.getWriter();
+//		pw.print(jsonArray.toString());
+//		pw.flush();
+//		pw.close();
+//	}
+	public static JSONObject convertMapToJson(HashMap<String,Object> map){
+        
+        JSONObject json = new JSONObject();
+        for(Map.Entry<String, Object>entry:map.entrySet()){
+            String key = entry.getKey();
+            Object value = entry.getValue();
+            json.put(key, value);
+        }
+        return json;
+    }
+	
+
 
 	public String getRandomStudyGroupCode(){
 		Random rnd =new Random();
