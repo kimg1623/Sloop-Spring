@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="DEBUG">
+	<Properties>
+		<!--HH:mm:ss.SSS-->
+		<Property name="LOG_PATTERN">%style{%d{HH:mm:ss}}{cyan} %highlight{[%-5p]}{FATAL=red, ERROR=magenta, WARN=yellow, INFO=green, DEBUG=blue} - [%t] %style{class:}{yellow} %-20c{3} %style{=>}{yellow} %style{method:}{yellow} %M(line: %L) %style{>>}{yellow} %m%n%ex</Property>
+	</Properties>
+
+	<!-- Appenders -->
+	<Appenders>
+		<Console name="console" target="SYSTEM_OUT">
+			<PatternLayout pattern="${LOG_PATTERN}"  disableAnsi="false"/>
+		</Console>
+	</Appenders>
+
+	<!-- Loggers -->
+	<Loggers>
+
+		<!--MyBatis Log-->
+		<Logger name="jdbc.audit" level="WARN" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+		<Logger name="jdbc.connection" level="WARN" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+		<Logger name="jdbc.resultset" level="WARN" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+		<Logger name="jdbc.resultsettable" level="INFO" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+		<Logger name="jdbc.sqlonly" level="WARN" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+		<Logger name="jdbc.sqltiming" level="INFO" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+
+		<!-- 3rdparty Log -->
+		<Logger name="org.springframework" level="INFO" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+
+		<!-- Application Log -->
+		<Logger name="kr.co" level="INFO" additivity="false">
+			<AppenderRef ref="console"/>
+		</Logger>
+
+		<!-- Root Logger -->
+		<root level="INFO" additivity="false">
+			<AppenderRef ref="console"/>
+		</root>
+
+	</Loggers>
+</configuration>
