@@ -59,6 +59,13 @@ public class StudyGroupController {
 		return "study/home";
 	}
 
+	@RequestMapping(value = "/{studyGroupCode}/manage", method = RequestMethod.GET)
+	public String requestStudyGroupSetting(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
+		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
+		model.addAttribute("studyGroup", studyGroupDTO);
+		return "study/manageStudyGroup";
+	}
+
 
 
 	// 카테고리 ajax 불러오기

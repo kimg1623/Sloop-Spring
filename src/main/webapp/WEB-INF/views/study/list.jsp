@@ -6,7 +6,7 @@
 </head>
 <body>
 <h1>스터디 그룹 전체 리스트 보기</h1>
-<table>
+<table border="1px solid">
     <tr>
         <th>정렬번호</th>
         <th>스터디그룹 이름</th>
@@ -23,7 +23,7 @@
         <tr>
             <td>${studyGroup.studyGroupIdx}</td>
             <td>
-                <a href="/study?studyGroupIdx=${studyGroup.studyGroupIdx}">${studyGroup.studyGroupName}</a>
+                <a href="/study/${studyGroup.studyGroupCode}">${studyGroup.studyGroupName}</a>
             </td>
             <td>${studyGroup.studyGroupMethod}</td>
             <td>${studyGroup.studyGroupGradeCode}${studyGroup.studyGroupGrade}</td>
@@ -33,12 +33,6 @@
             <td>${studyGroup.studyGroupDuedate}</td>
             <td>${studyGroup.studyGroupStartdate}</td>
             <td>${studyGroup.studyGroupHits}</td>
-            <td>
-                <a href="/study?studyGroupIdx=${studyGroup.studyGroupIdx}">조회</a>
-            </td>
-            <td>
-<%--                <button onclick="deleteMember('${studyGroup.studyGroupIdx}')">삭제</button>--%>
-            </td>
         </tr>
     </c:forEach>
 </table>
