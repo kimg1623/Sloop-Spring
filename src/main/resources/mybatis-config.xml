@@ -3,6 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
+
         <!-- 김지원 - 주석 아래로 작성 -->
         <typeAlias type="kr.co.sloop.study.domain.StudyGroupDTO" alias="studyGroup"/>
 
@@ -17,6 +18,9 @@
         <!-- 차소영 - 주석 아래로 작성 -->
 
         <!-- 최지혜 - 주석 아래로 작성 -->
+
+
+       
 
     </typeAliases>
 </configuration>
