@@ -22,7 +22,7 @@
 	<!-- 이지연 - 주석 아래로 작성 -->
 
 	<!-- 이창규 - 주석 아래로 작성 -->
- 	<a href="/member/login">로그인</a><br>
+  	<a href="/member/login">로그인</a><br>
 	<a href="/member/signup">회원가입</a>
 	<a href="/member/memberList">회원리스트</a>
 	<a href="/member/mypage">마이페이지</a>
