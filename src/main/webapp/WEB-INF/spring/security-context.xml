@@ -8,21 +8,55 @@
 		 http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!--빈등록-->
-
+    <!--CustomAccessDeniedHandler-->
+    <!--<bean id="customAccessDenied" class="kr.co.chunjae.security.CustomAccessDeniedHandler"/>
+    &lt;!&ndash;CustomLoginSuccessHandler&ndash;&gt;
+    <bean id="customLoginSuccess" class="kr.co.chunjae.security.CustomLoginSuccessHandler"/>
+    &lt;!&ndash;CustomNoOpPasswordEncoder&ndash;&gt;
+    &lt;!&ndash;Bcrypt 쓰면 안씀&ndash;&gt;
+    <bean id="customPasswordEncoder" class="kr.co.chunjae.security.CustomNoOpPasswordEncoder"/>
+    &lt;!&ndash;BCryptPasswordEncoder&ndash;&gt;
+    &lt;!&ndash;비밀번호 암호화&ndash;&gt;
+    <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    &lt;!&ndash;CustomUserDetailsService&ndash;&gt;
+    &lt;!&ndash;데이터베이스 통신&ndash;&gt;
+    <bean id="customUserDetailsService" class="kr.co.chunjae.security.CustomUserDetailsService"/>-->
     <security:http>
         <!--<security:form-login/>-->
         <!--접근 제한 설정-->
         <security:intercept-url pattern="/member/login" access="permitAll()"/>
         <security:intercept-url pattern="/member/mypage" access="hasRole('ROLE_MEMBER')"/>
         <security:intercept-url pattern="/memberList" access="hasRole('ROLE_ADMIN')"/>
+
+        <!--Implement로 error메세지 출력할때 ( Bean에 등록해서 사용 )-->
+        <!--<security:access-denied-handler ref="customAccessDenied"/>-->
+
+        <!--logout-success-url 아님 주의!! 이게 없으면 POST 방식으로 전송을 하지 못함.-->
+        <!-- 커스텀 로그인 폼-->
+        <!--<security:form-login login-page="/member/login" authentication-success-handler-ref="customLoginSuccess"/>-->
+        <!--로그아웃 페이지로 이동-->
+        <!--지정하지 않으면 customLogout의 form 속성에서 action 값을 다른 값으로 써야한다. (기본값 : logout)-->
+        <security:logout logout-url="/customLogout" invalidate-session="true"/>
+
+        <!--csrf 공격 방어하기위해 사용-->
+        <security:csrf disabled="true"/>
     </security:http>
     <!--권한 부여-->
     <security:authentication-manager>
+        <!--DB연결 할 때 필요-->
+        <!--<security:authentication-provider user-service-ref="customUserDetailsService">-->
         <security:authentication-provider>
+            <!--DB datasource 매핑-->
+            <!--<security:jdbc-user-service data-source-ref="dataSource">-->
+            <!--사용 후 아래 없어도됨.-->
             <security:user-service>
                 <security:user name="qwe123@naver.com" password="{noop}1234" authorities="ROLE_MEMBER"/>
 
+
             </security:user-service>
+
+            <!--DB에 저장할 때 encoder-->
+            <!--<security:password-encoder ref="bcryptPasswordEncoder"/>-->
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>
