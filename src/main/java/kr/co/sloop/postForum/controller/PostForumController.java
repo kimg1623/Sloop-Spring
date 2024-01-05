@@ -59,7 +59,7 @@ public class PostForumController {
 
         // 로그인 되어 있는 사용자 email을 세션에서 가져온다. [*****]
         // String memberEmail = (String) session.getAttribute("memberEmail");
-        String memberEmail = "test@test.com";
+        String memberEmail = (String)session.getAttribute("loginEmail");
         postForumDTO.setMemberEmail(memberEmail);
 
         // 게시판 idx(boardIdx)를 쿼리 스트링을 통해 가져와야 한다. [*****]
