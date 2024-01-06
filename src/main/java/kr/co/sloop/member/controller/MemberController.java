@@ -46,6 +46,7 @@ public class MemberController {
 
 
     // form method = post 로 데이터 받아옴
+    // login 성공시 세션에 "loginEmail" & 게시판Idx 추가
     @PostMapping("/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
 
