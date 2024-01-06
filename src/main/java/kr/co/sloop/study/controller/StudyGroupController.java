@@ -26,6 +26,9 @@ public class StudyGroupController {
 	@Autowired // 의존성 주입
 	private StudyGroupService studyGroupService;
 
+	/*
+	 * 메인페이지에 보여줄 모든 스터디 그룹에 대한 정보 요청 처리
+	 */
 	@RequestMapping // 메서드 수준의 @RequestMapping -> method 속성 기본값=GET
 	public String requestStudyGroupList(Model model){ // 웹 요청 처리할 메서드
 		List<StudyGroupDTO> list = studyGroupService.getAllStudyGroupList();
@@ -33,6 +36,9 @@ public class StudyGroupController {
 		return "study/list"; // view
 	}
 
+	/*
+	 * 스터디 그룹 개설 : 화면 처리
+	 */
 	@GetMapping("/add")
 	public String requestAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO, Model model){
 
@@ -40,6 +46,9 @@ public class StudyGroupController {
 		return "study/addStudyGroup";
 	}
 
+	/*
+	 * 스터디 그룹 개설
+	 */
 	@PostMapping("/add")
 	@ResponseBody
 	public String submitAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO){
@@ -52,14 +61,22 @@ public class StudyGroupController {
 			return "study/list";
 	}
 
-	@RequestMapping(value = "/{studyGroupCode}", method = RequestMethod.GET)
+	/**
+	 * 스터디 그룹 Code로 세부정보 요청 처리
+	 * URI : /study/{studyGroupCode}
+	 */
+	@GetMapping("/{studyGroupCode}")
 	public String requestStudyGroup(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
 		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
 		model.addAttribute("studyGroup", studyGroupDTO);
 		return "study/home";
 	}
 
-	@RequestMapping(value = "/{studyGroupCode}/manage", method = RequestMethod.GET)
+	/**
+	 * 스터디 그룹 관리 페이지 호출
+	 * URI : /study/{studyGroupCode}
+	 */
+	@GetMapping("/{studyGroupCode}/manage")
 	public String requestStudyGroupSetting(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
 		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
 		model.addAttribute("studyGroup", studyGroupDTO);
@@ -103,6 +120,10 @@ public class StudyGroupController {
 	
 
 
+	/*
+	 * 스터디 그룹 코드 난수 생성 메서드
+	 *  usage: 스터디 그룹 개설시 사용
+	 */
 	public String getRandomStudyGroupCode(){
 		Random rnd =new Random();
 		StringBuffer buf =new StringBuffer();
