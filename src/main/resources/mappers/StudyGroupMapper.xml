@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sloop.study.mapper.StudyGroupMapper">
+
+    <select id="getAllStudyGroupList" resultType="studyGroup">
+        SELECT * from studyGroup
+    </select>
+
+    <!-- 학교학년 카테고리 가져오기 -->
+    <select id="getAllGradeName" resultType="categoryGrade">
+        select categoryGradeCode, categoryGradeName from categoryGrade
+    </select>
+
+    <!-- 과목 카테고리 가져오기 -->
+    <select id="getAllSubjectName" resultType="categorySubject">
+        select categorySubjectCode, categorySubjectName from categorySubject
+    </select>
+
+    <!-- 지역 카테고리 가져오기 -->
+    <select id="getAllRegionName" resultType="categoryRegion">
+        select categoryRegionCode, categoryRegionName from categoryRegion
+    </select>
+
+    <insert id="insertNewStudyGroup" parameterType="studyGroup">
+        insert into studyGroup(studyGroupCode,studyGroupName,studyGroupMethod,studyGroupGradeCode,studyGroupSubjectCode,studyGroupRegionCode,studyGroupNum,studyGroupDuedate,studyGroupStartdate,studyGroupIntrotxt,studyGroupOImg)
+            values(#{studyGroupCode},#{studyGroupName},#{studyGroupMethod},#{studyGroupGradeCode},#{studyGroupSubjectCode},#{studyGroupRegionCode},#{studyGroupNum},#{studyGroupDuedate},#{studyGroupStartdate},#{studyGroupIntrotxt},#{studyGroupOImg});
+    </insert>
+
+    <select id="selectStudyGroupByGroupCode" parameterType="String" resultType="studyGroup">
+        select * from studyGroup where studyGroupCode=#{studyGroupCode}
+    </select>
+
+</mapper>
