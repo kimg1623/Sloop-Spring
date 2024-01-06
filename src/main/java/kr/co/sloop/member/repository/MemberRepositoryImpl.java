@@ -8,7 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpSession;
+
 import java.util.List;
 
 @Repository
