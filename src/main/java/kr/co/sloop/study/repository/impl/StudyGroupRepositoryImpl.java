@@ -21,8 +21,6 @@ import java.util.Map;
 @Log4j2
 public class StudyGroupRepositoryImpl implements StudyGroupRepository {
 
-    private final SqlSessionTemplate sql;
-    @Autowired
     private final StudyGroupMapper studyGroupMapper;
 
     // 카테고리 코드:이름 저장
