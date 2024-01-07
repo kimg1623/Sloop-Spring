@@ -49,7 +49,7 @@
     </select>
 
     <select id="findByPostIdx" parameterType="int" resultType="postForum">
-        select f.postIdx, c.categoryPostName, f.postForumTitle, f.postForumContents, f.postForumRegDate, f.postForumEditDate, f.postForumHits, m.memberNickname, f.memberIdx
+        select f.postIdx, c.categoryPostName, f.postForumTitle, f.postForumContents, f.postForumRegDate, f.postForumEditDate, f.postForumHits, m.memberNickname, f.memberIdx, m.memberEmail
         from postForum as f
         join categoryPost as c on f.categoryPostIdx = c.categoryPostIdx
         join member as m on f.memberIdx = m.memberIdx
