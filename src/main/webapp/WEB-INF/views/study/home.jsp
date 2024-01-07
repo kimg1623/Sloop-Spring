@@ -21,7 +21,7 @@
         <a href="#">자유게시판</a><br>
         <a href="#">인증게시판</a><br>
         <a href="#">과제게시판</a><br>
-        <a href="/study/${studyGroup.studyGroupCode}/manage">스터디 관리</a><br>
+        <a href="/study/${studyGroup.studyGroupCode}/manage">스터디 설정</a><br>
     </div>
 
 </body>

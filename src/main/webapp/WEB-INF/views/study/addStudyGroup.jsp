@@ -128,8 +128,6 @@
                 </div>
             </fieldset>
         </form:form>
-        <hr>
-
     </div>
 </body>
 </html>
