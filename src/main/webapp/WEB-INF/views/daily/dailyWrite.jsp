@@ -4,7 +4,6 @@
 
 <html>
 <head>
-    <link href="<c:url value="/src/main/webapp/resources/css/bootstrap.min.css"/>" rel="stylesheet">
     <title>공부인증 게시글 작성</title>
 </head>
 <body>
@@ -12,29 +11,36 @@
 
     <form action="/daily/write" method="post">
         <fieldset>
-            <div class="form-group row">
+            <div>
                 <label class="col-sm-2 control-label">제목</label>
-                <div class="col-sm-3">
+                <div>
                     <input type="text" name="postDailyTitle" placeholder="제목" class="form-control" autofocus>
                 </div>
             </div>
 
-            <div class="form-group row">
+            <div>
                 <label class="col-sm-2 control-label">내용</label>
-                <div class="col-sm-5">
+                <div>
                     <textarea name="postDailyContents" cols="30" rows="10" placeholder="내용을 입력하세요" class="form-control"></textarea>
                 </div>
             </div>
 
-            <div class="form-group row">
-                <div class="col-sm-offset-2 col-sm-10">
-                    <input type="submit" class="btn btn-primary" value="글쓰기"/>
+            <form name="fileForm" action="/daily/write/file" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" />
+                <input type="text" name="src" />
+                <input type="submit" value="파일저장" />
+            </form>
+            <!--다중일때 multiple="multiple"-->
+
+            <div>
+                <div>
+                    <input type="submit"  value="글쓰기"/>
                 </div>
             </div>
         </fieldset>
     </form>
 
-    <button class="btn btn-primary" onclick="listFn()">목록</button>
+    <button  onclick="listFn()">목록</button>
 
 
 </body>

@@ -13,10 +13,9 @@
     <div class="col-md-12">
         <h3>${daily.postDailyTitle}</h3>
 
-        <p><b>memberIdx</b> : ${daily.memberIdx}
-
-        <p><b>작성일자</b> : ${daily.postDailyRegDate}
         <p><b>닉네임</b> : ${daily.memberNickname}
+        <p><b>일자</b> : ${empty daily.postDailyEditDate?daily.postDailyRegDate:daily.postDailyEditDate}</p>
+
         <p><b>글내용</b> : ${daily.postDailyContents}
 
         <p><b>조회수</b> : ${daily.postDailyHits}
@@ -25,8 +24,8 @@
         <p>
 
 <%--        <a href="/daily/update?postIdx=" + postIdx; class="btn btn-primary">수정</a>--%>
-        <button class="btn btn-primary" onclick="updateFn()">글수정</button>
-        <button class="btn btn-primary" onclick="deleteFn()">글삭제</button>
+        <button class="btn btn-primary" onclick="updateFn()">수정</button>
+        <button class="btn btn-primary" onclick="deleteFn()">삭제</button>
         <button class="btn btn-primary" onclick="listFn()">목록</button>
     </div>
 </div>
@@ -34,15 +33,16 @@
 
 </body>
 <script>
+    //목록
     const listFn = () => {
-        const page = '${page}';
-
         location.href = "/daily";
     }
+    //글수정
     const updateFn = () => {
         const postIdx = '${daily.postIdx}';
         location.href = "/daily/update?postIdx=" + postIdx;
     }
+    //글삭제
     const deleteFn = () => {
         const postIdx = '${daily.postIdx}';
         location.href = "/daily/delete?postIdx=" + postIdx;

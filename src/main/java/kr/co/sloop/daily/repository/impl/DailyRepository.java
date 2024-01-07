@@ -21,9 +21,12 @@ public interface DailyRepository {
     DailyDTO findByPostIdx(int postIdx);
 
     //수정하기
-    void update(DailyDTO dailyDTO);
+    int update(DailyDTO dailyDTO);
 
     //삭제하기
     void delete(int postIdx);
+
+    //조회수
+    void updateViewCnt(int postIdx);
 }
 
