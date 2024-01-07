@@ -102,18 +102,22 @@ public class PostForumController {
             // 허용되는 이미지 확장자
             String allowedExtensions = "(jpg|jpeg|gif|png)";
 
-            if(!extension.matches(allowedExtensions)){ // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우
-                printWriter=response.getWriter();
-                JSONObject json = new JSONObject();
-                json.put("uploaded", 0);
-                json.put("error", new JSONObject().put("message", "jpg, jpeg, gif, png 이미지 파일만 지원합니다."));
-                printWriter.println(json);
+            // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우, 오류 메세지 반환
+            if(!extension.matches(allowedExtensions)){
+                printWriter = response.getWriter();
+                printWriter.println(createJSON(0, new String[]{"jpg, jpeg, gif, png 이미지 파일만 지원합니다."}));
                 printWriter.flush(); //초기화
                 return;
             }
 
             // 첨부 파일 용량 검사
-            // upload.getSize()
+            // 10MB 초과하는 이미지 업로드 시, 오류 메세지 반환
+            if(upload.getSize() > 10000000){
+                printWriter = response.getWriter();
+                printWriter.println(createJSON(0, new String[]{"10MB 이하의 이미지 파일만 첨부할 수 있습니다."}));
+                printWriter.flush(); //초기화
+                return;
+            }
 
             if(fileName.length() > 63){ // 파일 이름이 63 초과 시, 0-62번째 문자까지만 저장. (DB에 저장할 수 있는 파일명은 100자까지, 100 - 37(uuid_)만큼 저장 가능)
                 fileName = fileName.substring(0, 62);
@@ -151,7 +155,10 @@ public class PostForumController {
             String fileUrl = "/postforum/ckImgSubmit?uid=" + uuid + "&fileName=" + fileName; // 작성화면
 
             // 업로드시 메시지 json 출력
-            printWriter.println("{\"filename\" : \"" + fileName + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
+            String[] message = {fileName, fileUrl};
+
+            // printWriter.println("{\"filename\" : \"" + fileName + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
+            printWriter.println(createJSON(1, message));
             printWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -223,7 +230,7 @@ public class PostForumController {
     }
 
     // 글 목록 조회
-    //postforum/list?page={현재페이지}&searchType={검색유형}&keyword={검색어}
+    // /postforum/list?page={현재페이지}&searchType={검색유형}&keyword={검색어}
     @GetMapping("/list")
     public String list(@RequestParam(value = "page", defaultValue = "1", required = false) int page,
                        @RequestParam(value = "searchType", defaultValue = "0", required = false) int searchType,
@@ -240,7 +247,6 @@ public class PostForumController {
         // 검색 + 페이징을 위한 객체
         SearchDTO searchDTO = searchServiceImpl.initialize(boardIdx, page, searchType, keyword, 3);
         model.addAttribute("searchDTO", searchDTO);
-        log.info("++++++++++" + searchDTO.getSearchType());
 
         // 글 목록 조회 + 겸색 + 페이징
         ArrayList<PostForumDTO> postForumDTOList = postForumServiceImpl.list(searchDTO);
@@ -294,5 +300,20 @@ public class PostForumController {
 
         // 삭제 후, 목록 조회 페이지로 돌아간다.
         return "redirect:/postforum/list";
+    }
+
+    // json 객체 생성
+    public JSONObject createJSON(int uploaded, String[] message){
+        JSONObject json = new JSONObject();
+
+        json.put("uploaded", uploaded);
+        if(uploaded == 0) { // 업로드 실패
+            json.put("error", new JSONObject().put("message", message[0]));
+        }else{ // 업로드 성공
+            json.put("fileName", message[0]);
+            json.put("url", message[1]);
+        }
+
+        return json;
     }
 }
