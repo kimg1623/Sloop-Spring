@@ -1,18 +1,17 @@
 package kr.co.sloop.postForum.repository;
 
+import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.postForum.domain.PostForumDTO;
 import kr.co.sloop.postForum.mapper.PostForumMapper;
 import lombok.RequiredArgsConstructor;
-import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
 public class PostForumRepositoryImpl implements PostForumRepository{
-    private final SqlSessionTemplate sql;
+    // private final SqlSessionTemplate sql;
     private final PostForumMapper postForumMapper;
 
     // postForum 테이블에 글 등록
@@ -40,9 +39,9 @@ public class PostForumRepositoryImpl implements PostForumRepository{
     }
 
     @Override
-    public List<PostForumDTO> list(HashMap<String, Integer> map) {
+    public List<PostForumDTO> list(SearchDTO searchDTO) {
         // return sql.selectList("PostForum.selectAllPostForumByBoardIdx", boardIdx);
-        return postForumMapper.selectAllPostForumByBoardIdx(map);
+        return postForumMapper.selectAllPostForumByBoardIdx(searchDTO);
     }
 
     @Override
@@ -67,5 +66,10 @@ public class PostForumRepositoryImpl implements PostForumRepository{
     public void updatePostForumHits(int postIdx) {
         // sql.update("PostForum.updatePostForumHits", postIdx);
         postForumMapper.updatePostForumHits(postIdx);
+    }
+
+    @Override
+    public int searchAndCountPostsByBoardIdx(SearchDTO boardIdx) {
+        return postForumMapper.searchAndCountPostsByBoardIdx(boardIdx);
     }
 }

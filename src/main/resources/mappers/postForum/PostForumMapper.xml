@@ -21,15 +21,31 @@
         where memberEmail = #{memberEmail}
     </select>
 
-    <select id="selectAllPostForumByBoardIdx" parameterType="HashMap" resultType="postForum">
+    <select id="selectAllPostForumByBoardIdx" parameterType="search" resultType="postForum">
         select f.postIdx, c.categoryPostName, f.postForumTitle, f.postForumRegDate, f.postForumHits, m.memberNickname
         from postForum as f
         join categoryPost as c on f.categoryPostIdx = c.categoryPostIdx
         join member as m on f.memberIdx = m.memberIdx
         join post as p on f.postIdx = p.postIdx
         where p.boardIdx = #{boardIdx}
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test = "searchType == 1">
+                    and f.postForumTitle like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 2">
+                    and f.postForumContents like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 3">
+                    and (f.postForumTitle like concat('%', #{keyword}, '%') or f.postForumContents like concat('%', #{keyword}, '%'))
+                </when>
+                <when test = "searchType == 4">
+                    and m.memberNickname like concat('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
         order by f.postForumRegDate desc
-        limit #{limit} offset #{offset}
+        limit #{postsPerPage} offset #{offset}
     </select>
 
     <select id="findByPostIdx" parameterType="int" resultType="postForum">
@@ -59,4 +75,28 @@
         set postForumHits = postForumHits + 1
         where postIdx = #{postIdx}
     </update>
+
+    <select id="searchAndCountPostsByBoardIdx" parameterType="search" resultType="int">
+        select count(f.postIdx)
+        from postForum as f
+        join member as m on f.memberIdx = m.memberIdx
+        join post as p on f.postIdx = p.postIdx
+        where p.boardIdx = #{boardIdx}
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test = "searchType == 1">
+                    and f.postForumTitle like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 2">
+                    and f.postForumContents like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 3">
+                    and (f.postForumTitle like concat('%', #{keyword}, '%') or f.postForumContents like concat('%', #{keyword}, '%'))
+                </when>
+                <when test = "searchType == 4">
+                    and m.memberNickname like concat('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+    </select>
 </mapper>

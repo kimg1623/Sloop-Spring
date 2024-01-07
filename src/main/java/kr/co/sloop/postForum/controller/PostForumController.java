@@ -1,7 +1,9 @@
 package kr.co.sloop.postForum.controller;
 
 import kr.co.sloop.post.domain.PageDTO;
+import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.service.PageServiceImpl;
+import kr.co.sloop.post.service.SearchServiceImpl;
 import kr.co.sloop.postForum.domain.PostForumDTO;
 import kr.co.sloop.postForum.service.PostForumServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +38,7 @@ public class PostForumController {
     private String uploadPath; // 업로드된 사진이 저장될 서버 경로 (디렉터리 경로)
     private final PostForumServiceImpl postForumServiceImpl;
     private final PageServiceImpl pageServiceImpl; // 페이징
+    private final SearchServiceImpl searchServiceImpl; // 페이징 + 검색
 
     // 글 작성하기 : 화면 출력
     @GetMapping("/write")
@@ -65,7 +68,7 @@ public class PostForumController {
         // 게시판 idx(boardIdx)를 쿼리 스트링을 통해 가져와야 한다. [*****]
         // @RequestParam("boardIdx") int boardIdx
         int boardIdx = 3;
-        postForumDTO.setBoardIdx(3);
+        postForumDTO.setBoardIdx(boardIdx);
 
         boolean result = postForumServiceImpl.write(postForumDTO);
 
@@ -109,6 +112,9 @@ public class PostForumController {
                 return;
             }
 
+            // 첨부 파일 용량 검사
+            // upload.getSize()
+
             if(fileName.length() > 63){ // 파일 이름이 63 초과 시, 0-62번째 문자까지만 저장. (DB에 저장할 수 있는 파일명은 100자까지, 100 - 37(uuid_)만큼 저장 가능)
                 fileName = fileName.substring(0, 62);
             }
@@ -144,7 +150,7 @@ public class PostForumController {
             printWriter = response.getWriter();
             String fileUrl = "/postforum/ckImgSubmit?uid=" + uuid + "&fileName=" + fileName; // 작성화면
 
-            // 업로드시 메시지 출력
+            // 업로드시 메시지 json 출력
             printWriter.println("{\"filename\" : \"" + fileName + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
             printWriter.flush();
         } catch (IOException e) {
@@ -217,22 +223,29 @@ public class PostForumController {
     }
 
     // 글 목록 조회
-    // postforum/list?page=*
+    //postforum/list?page={현재페이지}&searchType={검색유형}&keyword={검색어}
     @GetMapping("/list")
-    public String list(@RequestParam(value = "page", defaultValue = "1", required = false) int page, Model model){
+    public String list(@RequestParam(value = "page", defaultValue = "1", required = false) int page,
+                       @RequestParam(value = "searchType", defaultValue = "0", required = false) int searchType,
+                       @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
+                       Model model){
         // 게시판 idx
         // [*****] 쿼리 스트링으로 가져오도록 수정
         // [*****] public String List(@RequestParam("boardIdx") int boardIdx)
         int boardIdx = 3;
 
-        // 페이징
-        PageDTO pageDTO = pageServiceImpl.pagingInitialize(page, boardIdx);
+        // 검색어 앞뒤 공백 제거
+        keyword = keyword.trim();
 
-        log.info("+++++" + pageDTO);
+        // 검색 + 페이징을 위한 객체
+        SearchDTO searchDTO = searchServiceImpl.initialize(boardIdx, page, searchType, keyword, 3);
+        model.addAttribute("searchDTO", searchDTO);
+        log.info("++++++++++" + searchDTO.getSearchType());
 
-        ArrayList<PostForumDTO> postForumDTOList = postForumServiceImpl.list(boardIdx, page);
+        // 글 목록 조회 + 겸색 + 페이징
+        ArrayList<PostForumDTO> postForumDTOList = postForumServiceImpl.list(searchDTO);
         model.addAttribute("postForumDTOList", postForumDTOList);
-        model.addAttribute("pageDTO", pageDTO);
+
         return "postForum/list";
     }
 

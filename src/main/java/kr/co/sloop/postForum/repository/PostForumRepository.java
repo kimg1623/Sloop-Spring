@@ -1,5 +1,7 @@
 package kr.co.sloop.postForum.repository;
 
+import kr.co.sloop.post.domain.PageDTO;
+import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.postForum.domain.PostForumDTO;
 
 import java.util.HashMap;
@@ -14,7 +16,7 @@ public interface PostForumRepository {
 
     int selectMemberIdxByMemberEmail(String memberEmail);
 
-    List<PostForumDTO> list(HashMap<String, Integer> map);
+    List<PostForumDTO> list(SearchDTO searchDTO);
 
     PostForumDTO findByPostIdx(int postIdx);
 
@@ -23,4 +25,6 @@ public interface PostForumRepository {
     int delete(int postIdx);
 
     void updatePostForumHits(int postIdx);
+
+    int searchAndCountPostsByBoardIdx(SearchDTO boardIdx);
 }
