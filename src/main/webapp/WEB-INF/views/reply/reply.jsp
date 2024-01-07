@@ -130,6 +130,54 @@
 			document.getElementById("replyContents").value = ''; // 댓글 내용 입력 필드 초기화
 		}
 	</script>
+	<style>
+		/* 버튼 스타일 */
+		button {
+			background-color: #4287f5;
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			cursor: pointer;
+			border-radius: 20px;
+		}
+
+		/* 폼 스타일 */
+		input[type="text"] {
+			padding: 8px;
+			border: 1px solid lightgray;
+			border-radius: 4px;
+			outline: none;
+		}
+
+		input[type="text"]:hover {
+			border-color: blue;
+		}
+
+		/* 댓글 목록 테이블 스타일 */
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		th, td {
+			padding: 8px;
+			text-align: left;
+			border-bottom: 1px solid lightgray;
+		}
+
+		th {
+			background-color: lightgray;
+		}
+
+		/* 기타 스타일 */
+		h1 {
+			color: #4287f5;
+		}
+
+		p {
+			color: gray;
+		}
+	</style>
 </head>
 <body>
 <h1>댓글 페이지</h1>

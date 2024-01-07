@@ -3,7 +3,7 @@ package kr.co.sloop.reply.controller;
 import kr.co.sloop.reply.domain.ReplyDTO;
 import kr.co.sloop.reply.service.ReplyService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import org.json.HTTP;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,12 +13,12 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/reply")
-@Log4j
 public class ReplyController {
 
 	private final ReplyService replyService;
 
 	// 댓글 작성 폼 요청
+	// reply.jsp 로 이동
 	@GetMapping
 	public String requestCommentForm() {
 		return "reply/reply"; // jsp 페이지 경로
@@ -49,6 +49,19 @@ public class ReplyController {
 	public ResponseEntity<List<ReplyDTO>> deleteReply(@RequestParam int replyIdx, @RequestParam int postIdx) {
 		replyService.deleteReply(replyIdx);
 		List<ReplyDTO> replyDTOList = replyService.findAll(postIdx);
+		return ResponseEntity.ok(replyDTOList);
+	}
+
+	// 댓글 목록 조회
+	// @PathVariable 애너테이션을 사용하여 postIdx 값을 받아옴
+	@GetMapping(value = "/list/{postIdx}")
+	public ResponseEntity<List<ReplyDTO>> getReplyList(@PathVariable int postIdx) {
+
+		// replyService의 findAll() 메서드를 호출하여 postIdx에 해당하는 게시물의 모든 댓글 목록을 가져옴.
+		// 가져온 댓글 목록은 replyDTOList 변수에 저장
+		List<ReplyDTO> replyDTOList = replyService.findAll(postIdx);
+
+		// 댓글 목록 반환
 		return ResponseEntity.ok(replyDTOList);
 	}
 }
