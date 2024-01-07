@@ -29,7 +29,7 @@
             <td>작성일</td>
             <td>
                 <c:out value="${postForumDTO.postForumRegDate}"/>
-                <!-- 수정일시가 존재한다면 (edited) 표시 -->
+                <!-- 수정일시가 존재한다면 작성일 옆에 (edited) 표시 -->
                 <c:if test="${not empty postForumDTO.postForumEditDate}">
                     <c:out value="(edited)" />
                 </c:if>
@@ -47,8 +47,11 @@
         <p hidden="true">${postForumDTO.memberIdx}</p>
     </table>
     <button onclick="listFn()">목록</button>
-    <button onclick="updateFn()">수정</button>
-    <button onclick="deleteFn()">삭제</button>
+    <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
+    <c:if test="${postForumDTO.memberEmail == sessionScope.loginEmail}">
+        <button onclick="updateFn('${postForumDTO.postIdx}')">수정</button>
+        <button onclick="deleteFn('${postForumDTO.postIdx}')">삭제</button>
+    </c:if>
 
     <script>
         // 목록으로 돌아가기
@@ -57,14 +60,23 @@
         };
 
         // 글 수정하기
-        const updateFn = () => {
-            location.href = "/postforum/update?postIdx=" + "${postForumDTO.postIdx}";
-        }
+        const updateFn = (postIdx) => {
+            location.href = "/postforum/update?postIdx=" + postIdx;
+        };
 
         // 글 삭제하기
-        const deleteFn = () => {
-            location.href = "/postforum/delete?postIdx=" + "${postForumDTO.postIdx}";
-        }
+        const deleteFn = (postIdx) => {
+            // location.href = "/postforum/delete?postIdx=" + postIdx;
+
+            if (confirm("삭제하시겠습니까?") == true){
+                //true는 확인버튼을 눌렀을 때 코드 작성
+                console.log("완료되었습니다.");
+                location.href = "/postforum/delete?postIdx=" + postIdx;
+            }else{
+                // false는 취소버튼을 눌렀을 때, 취소됨
+                console.log("취소되었습니다");
+            }
+        };
     </script>
 </body>
 </html>
