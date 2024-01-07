@@ -9,7 +9,8 @@ public interface DailyService {
     List<DailyDTO> getAllDailyList();
 
     //공부인증 게시글 작성
-    int dailyWrite(DailyDTO dailyDTO);
+    boolean dailyWrite(DailyDTO dailyDTO);
+
 
     //제목으로 글 검색
     List<DailyDTO> getDailyListByTitle(String postDailyTitle);
@@ -18,8 +19,11 @@ public interface DailyService {
     DailyDTO findByPostIdx(int postIdx);
 
     //수정하기
-    void update(DailyDTO dailyDTO);
+    int update(DailyDTO dailyDTO);
 
     //삭제
     void delete(int postIdx);
+
+    //조회수
+    void updateViewCnt(int postIdx);
 }

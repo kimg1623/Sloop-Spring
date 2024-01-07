@@ -13,8 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DailyServiceImpl implements DailyService {
 
-    @Autowired
-    private DailyRepositoryImpl dailyRepository;
+
+    private final DailyRepositoryImpl dailyRepository;
 
     //공부인증 전체리스트 불러오기
     @Override
@@ -24,15 +24,22 @@ public class DailyServiceImpl implements DailyService {
 
     //공부인증 게시글 작성
     @Override
-    public int dailyWrite(DailyDTO dailyDTO) {
-        //임의
+    public boolean dailyWrite(DailyDTO dailyDTO) {
+
+        int result=0;
+        //임의, 수정해야함
         dailyDTO.setMemberIdx(1);
-        int result;
+        dailyDTO.setBoardIdx(1);
+        //post 에 작성
         result=dailyRepository.insertPost(dailyDTO);
+        if(result != 1) return false;
 
-       return dailyRepository.dailyWrite(dailyDTO);
+        // daily 글 작성
+        result = dailyRepository.dailyWrite(dailyDTO);
+        if (result != 1) return false;
+
+       return true;
     }
-
 
 
     //제목으로 글 검색
@@ -51,13 +58,19 @@ public class DailyServiceImpl implements DailyService {
 
     //수정하기
     @Override
-    public void update(DailyDTO dailyDTO) {
-        dailyRepository.update(dailyDTO);
+    public int update(DailyDTO dailyDTO) {
+       return  dailyRepository.update(dailyDTO);
     }
 
     //삭제
     @Override
     public void delete(int postIdx) {
         dailyRepository.delete(postIdx);
+    }
+
+    //조회수
+    @Override
+    public void updateViewCnt(int postIdx) {
+        dailyRepository.updateViewCnt(postIdx);
     }
 }

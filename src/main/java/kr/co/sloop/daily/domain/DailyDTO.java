@@ -1,5 +1,6 @@
 package kr.co.sloop.daily.domain;
 
+import kr.co.sloop.post.domain.PostDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @ToString
-public class DailyDTO {
+public class DailyDTO extends PostDTO {
 
     private int postIdx;               //게시글 idx
     private String postDailyTitle;     //제목
@@ -19,6 +20,7 @@ public class DailyDTO {
     private String postDailyEditDate;  //수정일시
     private int postDailyHits;         //조회수
 
-    private String memberNickname; //작성자 회원 닉네임
+    private String memberNickname; //작성자 닉네임
     private int boardIdx;          //게시판idx
+    private String memberEmail;    //작성자 이메일
 }
