@@ -4,7 +4,7 @@ import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.repository.impl.MemberRepository;
 import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Log4j
+@Log4j2
 public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;

@@ -3,14 +3,25 @@
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
     <typeAliases>
-
         <!-- 김지원 - 주석 아래로 작성 -->
+
         <typeAlias type="kr.co.sloop.study.domain.StudyGroupDTO" alias="studyGroup"/>
+
+        <!-- 회원, 스터디에 사용되는 정보 카테고리 -->
+        <typeAlias type="kr.co.sloop.study.domain.CategoryGradeDTO" alias="categoryGrade"/>
+        <typeAlias type="kr.co.sloop.study.domain.CategorySubjectDTO" alias="categorySubject"/>
+        <typeAlias type="kr.co.sloop.study.domain.CategoryRegionDTO" alias="categoryRegion"/>
+
+
 
         <!-- 박석은 - 주석 아래로 작성 -->
 
         <!-- 이지연 - 주석 아래로 작성 -->
+
         <typeAlias type="kr.co.sloop.postForum.domain.PostForumDTO" alias="postForum"/>
+        <typeAlias type="kr.co.sloop.post.domain.PostDTO" alias="post"/>
+
+
 
         <!-- 이창규 - 주석 아래로 작성 -->
         <typeAlias type="kr.co.sloop.member.domain.MemberDTO" alias="member"/>
@@ -20,7 +31,6 @@
         <!-- 최지혜 - 주석 아래로 작성 -->
 
 
-       
 
     </typeAliases>
 </configuration>
