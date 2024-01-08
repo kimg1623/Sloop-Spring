@@ -2,9 +2,11 @@ package kr.co.sloop.postForum.service;
 
 import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.postForum.domain.PostForumDTO;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 
+@Service
 public interface PostForumService {
     boolean write(PostForumDTO postForumDTO);
 

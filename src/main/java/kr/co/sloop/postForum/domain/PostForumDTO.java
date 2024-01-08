@@ -10,6 +10,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
+// 자유 게시판의 게시글
 @Getter
 @Setter
 @ToString

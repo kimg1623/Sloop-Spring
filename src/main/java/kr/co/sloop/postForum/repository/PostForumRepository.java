@@ -3,10 +3,12 @@ package kr.co.sloop.postForum.repository;
 import kr.co.sloop.post.domain.PageDTO;
 import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.postForum.domain.PostForumDTO;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
 
+@Repository
 public interface PostForumRepository {
     public int insertPostForum(PostForumDTO postForumDTO);
 
