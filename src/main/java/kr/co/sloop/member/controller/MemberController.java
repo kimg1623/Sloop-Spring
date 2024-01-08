@@ -4,7 +4,7 @@ package kr.co.sloop.member.controller;
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/member")
 @RequiredArgsConstructor
-@Log4j
+@Log4j2
 public class MemberController {
 
     private final MemberService memberService;
@@ -46,6 +46,7 @@ public class MemberController {
 
 
     // form method = post 로 데이터 받아옴
+    // login 성공시 세션에 "loginEmail" & 게시판Idx 추가
     @PostMapping("/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
 
