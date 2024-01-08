@@ -11,7 +11,6 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class DailyRepositoryImpl implements DailyRepository {
-
     private final SqlSessionTemplate sql;
 
     //공부인증 전체리스트 불러오기
@@ -20,10 +19,10 @@ public class DailyRepositoryImpl implements DailyRepository {
         return sql.selectList("Daily.getAllDailyList");
     }
 
-    //공부인증 게시글 작성
+    // 공부인증 게시글 작성
     @Override
     public int dailyWrite(DailyDTO dailyDTO) {
-        return sql.insert("Daily.dailyWrite",dailyDTO);
+        return sql.insert("Daily.dailyWrite", dailyDTO);
     }
 
     //post용

@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PostRepository {
     int countAllPostsByBoardIdx(int boardIdx);
+    int selectMemberIdxByMemberEmail(String memberEmail);
 }

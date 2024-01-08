@@ -51,13 +51,13 @@ public class DailyController {
 		log.info("----dailyWritePost-----");
 		log.info(dailyDTO);
 
-		//로그인되어있는 email Session 가져오기
-//		String memberEmail = (String)session.getAttribute("loginEmail");
-//		int boardIdx = (int) session.getAttribute("boardIdx");
-//		dailyDTO.setMemberEmail(memberEmail);
-//		dailyDTO.setBoardIdx(boardIdx);
-
-
+		// 로그인되어있는 email Session 가져오기
+		String memberEmail = (String)session.getAttribute("loginEmail");
+		// int boardIdx = (int) session.getAttribute("boardIdx");
+		// 수정
+		int boardIdx = 4;
+		dailyDTO.setMemberEmail(memberEmail);
+		dailyDTO.setBoardIdx(boardIdx);
 
 		boolean dailyWriteResult = dailyService.dailyWrite(dailyDTO);
 

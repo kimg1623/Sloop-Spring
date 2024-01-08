@@ -15,4 +15,10 @@ public class PostRepositoryImpl implements PostRepository{
     public int countAllPostsByBoardIdx(int boardIdx) {
         return postMapper.countAllPostsByBoardIdx(boardIdx);
     }
+
+    // memberEmail로 memberIdx 찾기
+    @Override
+    public int selectMemberIdxByMemberEmail(String memberEmail) {
+        return postMapper.selectMemberIdxByMemberEmail(memberEmail);
+    }
 }
