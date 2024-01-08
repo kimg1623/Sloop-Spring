@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface PostMapper {
 
     int countAllPostsByBoardIdx(int boardIdx);
+    int selectMemberIdxByMemberEmail(String memberEmail);
 }

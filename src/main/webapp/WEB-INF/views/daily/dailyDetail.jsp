@@ -20,13 +20,15 @@
 
         <p><b>조회수</b> : ${daily.postDailyHits}
 
-        <br>
+            <br>
         <p>
 
-<%--        <a href="/daily/update?postIdx=" + postIdx; class="btn btn-primary">수정</a>--%>
-        <button class="btn btn-primary" onclick="updateFn()">수정</button>
-        <button class="btn btn-primary" onclick="deleteFn()">삭제</button>
-        <button class="btn btn-primary" onclick="listFn()">목록</button>
+            <!--본인일때만 수정삭제 보이게 -->
+            <c:if test="${daily.memberEmail == sessionScope.loginEmail}">
+            <button class="btn btn-primary" onclick="updateFn()">수정</button>
+            <button class="btn btn-primary" onclick="deleteFn()">삭제</button>
+            </c:if>
+            <button class="btn btn-primary" onclick="listFn()">목록</button>
     </div>
 </div>
 

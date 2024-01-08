@@ -4,20 +4,20 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="Daily">
-<!--(초기화면)목록 출력-->
+    <!--(초기화면)목록 출력-->
     <select id="getAllDailyList" resultType="daily">
         SELECT p.postIdx,p.postDailyTitle, p.postDailyContents, p.postDailyRegDate, p.postDailyEditDate, p.postDailyHits, m.memberNickname
         FROM postDaily as p
         JOIN member as m ON p.memberIdx=m.memberIdx
         ORDER BY postIdx DESC
     </select>
-<!-- 글작성 -->
+    <!-- 글작성 -->
     <insert id="dailyWrite" parameterType="daily">
-        insert into postDaily(postIdx, postDailyTitle, postDailyContents,memberIdx)
+        insert into postDaily(postIdx, postDailyTitle, postDailyContents, memberIdx)
         values(#{postIdx},#{postDailyTitle}, #{postDailyContents},#{memberIdx})
     </insert>
 
-<!--    post 용 -->
+    <!--    post 용 -->
     <insert id="insertPost" parameterType="daily">
         insert into post(boardIdx)
         values(#{boardIdx})
@@ -26,14 +26,14 @@
         </selectKey>
     </insert>
 
-<!--    제목으로 검색 -->
+    <!--    제목으로 검색 -->
     <select id="getDailyListByTitle" parameterType="String" resultType="daily">
         SELECT postDailyTitle, memberIdx, postDailyRegDate, postDailyContents, postDailyHits
         FROM postDaily
-        WHERE postDailyTitle LIKE CONCAT('%',#{postDailyKeyword},'%')
+        WHERE postDailyTitle LIKE CONCAT('%',#{postDailyTitle},'%')
     </select>
 
-<!--    상세보기-->
+    <!--    상세보기-->
     <select id="findByPostIdx" parameterType="int" resultType="daily">
         SELECT p.postIdx, p.postDailyTitle, p.memberIdx, p.postDailyRegDate, p.postDailyEditDate, p.postDailyContents, p.postDailyHits,  m.memberNickname
         FROM postDaily as p
@@ -41,20 +41,20 @@
         WHERE postIdx=#{postIdx}
     </select>
 
-<!--수정하기-->
+    <!--수정하기-->
     <update id="update" parameterType="daily">
         UPDATE postDaily
         SET postDailyTitle=#{postDailyTitle}, postDailyContents=#{postDailyContents}, postDailyEditDate= now()
         WHERE postIdx=#{postIdx}
     </update>
 
-<!--삭제하기-->
+    <!--삭제하기-->
     <delete id="delete" parameterType="int">
         DELETE FROM postDaily
         WHERE postIdx=#{postIdx}
     </delete>
 
-<!--조회수 카운트-->
+    <!--조회수 카운트-->
     <update id="updateViewCnt" parameterType="int">
         UPDATE postDaily
         set postDailyHits = postDailyHits+1
