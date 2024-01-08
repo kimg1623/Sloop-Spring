@@ -13,6 +13,8 @@ public interface StudyGroupRepository {
 
     int create4boards(int studyGroupIdx);
 
+    int insertMemberForGrantLeader(int studyGroupIdx, String memberIdx);
+
     List<HashMap<String, Object>> getSecondCategoryRegionMap();
 
     StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode);

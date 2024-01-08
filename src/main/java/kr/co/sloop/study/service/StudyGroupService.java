@@ -2,6 +2,7 @@ package kr.co.sloop.study.service;
 
 import kr.co.sloop.study.domain.StudyGroupDTO;
 
+import javax.servlet.http.HttpSession;
 import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.Map;
 public interface StudyGroupService {
     List<StudyGroupDTO> getAllStudyGroupList();
 
-    boolean insertNewStudyGroup(StudyGroupDTO studyGroupDTO);
+    boolean insertNewStudyGroup(StudyGroupDTO studyGroupDTO, String memberIdx);
 
     List<HashMap<String, Object>> getSecondCategoryRegionMap();
 

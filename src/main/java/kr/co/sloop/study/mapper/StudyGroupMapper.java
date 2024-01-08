@@ -20,6 +20,7 @@ public interface StudyGroupMapper {
 
     int insertNewStudyGroup(StudyGroupDTO studyGroupDTO); // 새 스터디 그룹 등록하기
     int create4boards(int studyGroupIdx); // 스터디그룹 개설 시 게시판 4개 생성
+    int insertMemberForGrantLeader(Map<String, String> studyGroupAndMemberIdx); // 멤버를 스터디 그룹의 리더 권한을 부여하는 insert 동작
 
     StudyGroupDTO selectStudyGroupByGroupCode(String studyGroupCode); // 스터디 그룹 code로 불러오기
 
@@ -29,4 +30,6 @@ public interface StudyGroupMapper {
     List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx); // 스터디 그룹 코드로 게시판 idx 가져오기
 
     int deleteGroupByGroupCode(String studyGroupCode); // 스터디 그룹 코드로 스터디 그룹 삭제
+
+
 }

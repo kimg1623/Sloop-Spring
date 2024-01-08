@@ -33,12 +33,16 @@
         </selectKey>
     </insert>
 
-    <insert id="create4boards" parameterType="Map"> <!-- 나중에 BoardMapper로 옮기기 -->
+    <insert id="create4boards" parameterType="int"> <!-- 나중에 BoardMapper로 옮기기 -->
         insert into board(studyGroupIdx, categoryBoardIdx)
                  values (#{studyGroupIdx}, 1),
                         (#{studyGroupIdx}, 2),
                         (#{studyGroupIdx}, 3),
                         (#{studyGroupIdx}, 4)
+    </insert>
+
+    <insert id="insertMemberForGrantLeader" parameterType="Map">
+        insert into studyMem values (#{studyGroupIdx}, #{memberIdx}, 'ROLE_STUDY_LEADER')
     </insert>
 
     <select id="selectStudyGroupByGroupCode" parameterType="String" resultType="studyGroup">

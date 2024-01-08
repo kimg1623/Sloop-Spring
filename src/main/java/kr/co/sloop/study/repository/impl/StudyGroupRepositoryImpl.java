@@ -52,6 +52,16 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         return studyGroupMapper.create4boards(studyGroupIdx);
     }
 
+    // 스터디 그룹 생성 후 해당 회원에게 ROLE_STUDY_LEADER 권한 부여
+    @Override
+    public int insertMemberForGrantLeader(int studyGroupIdx, String memberIdx) {
+
+        Map<String, String> studyGroupAndMemberIdx = new HashMap<String, String>();
+        studyGroupAndMemberIdx.put("studyGroupIdx",String.valueOf(studyGroupIdx));
+        studyGroupAndMemberIdx.put("memberIdx",memberIdx);
+        return studyGroupMapper.insertMemberForGrantLeader(studyGroupAndMemberIdx);
+    }
+
     @Override
     public List<HashMap<String, Object>> getSecondCategoryRegionMap() {
         return null;

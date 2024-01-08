@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -51,10 +52,11 @@ public class StudyGroupController {
 	 */
 	@PostMapping("/add")
 	@ResponseBody
-	public String submitAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO){
+	public String submitAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO, HttpSession session){
 		studyGroupDTO.setStudyGroupCode(getRandomStudyGroupCode());
-		log.info("StudyGroupDTO=====>"+studyGroupDTO);
-		boolean result = studyGroupService.insertNewStudyGroup(studyGroupDTO); // insert into studyGroup + make 4 Boards
+		String memberIdx = (String)session.getAttribute("loginMemberIdx");
+		log.info("memberIdx=====>"+memberIdx);
+		boolean result = studyGroupService.insertNewStudyGroup(studyGroupDTO, memberIdx); // insert into studyGroup + make 4 Boards + grant ROLE_STUDY_LEADER
 		if(result == true)
 			return "redirect:/study/"+studyGroupDTO.getStudyGroupCode(); // 스터디 그룹의 메인 페이지
 		else
