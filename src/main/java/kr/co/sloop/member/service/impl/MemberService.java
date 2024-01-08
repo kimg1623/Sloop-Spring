@@ -5,11 +5,12 @@ import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 public interface MemberService {
     int signup(MemberDTO memberDTO);
 
-    boolean login(MemberDTO memberDTO);
+    Map<String, String> login(MemberDTO memberDTO);
 
     String emailCheck(String memberEmail);
 
