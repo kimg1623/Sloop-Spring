@@ -104,6 +104,22 @@ public class StudyGroupController {
 		}
 	}
 
+	/**
+	 * 스터디 그룹 폐쇄: 스터디 설정 호출
+	 * URI : /study/${studyGroupCode}/delete
+	 */
+	@GetMapping("/{studyGroupCode}/delete")
+	public String requestDeleteStudyGroup(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
+		// 스터디 리더일 때만 폐쇄 가능하도록 로그인한 세션과 비교할 수 있는 코드 필요
+		int result = studyGroupService.deleteGroupByGroupCode(studyGroupCode);
+		if(result > 0)
+			return "redirect:/study"; // 나중에 동작 확인한 뒤에 redirect URI 변경 예정
+		else
+			return "study/"+studyGroupCode+"/infoForm";
+	}
+
+
+
 
 
 	// 카테고리 ajax 불러오기

@@ -21,4 +21,6 @@ public interface StudyGroupService {
     int updateStudyGroup(StudyGroupDTO studyGroupDTO);
 
     List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx);
+
+    int deleteGroupByGroupCode(String studyGroupCode);
 }

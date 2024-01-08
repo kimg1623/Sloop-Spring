@@ -72,6 +72,11 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         return studyGroupMapper.getBoardIdxsByGroupCode(studyGroupIdx);
     }
 
+    @Override
+    public int deleteGroupByGroupCode(String studyGroupCode) {
+        return studyGroupMapper.deleteGroupByGroupCode(studyGroupCode);
+    }
+
 
     // 생성자에서 실행하도록 변경하기 fix 필요!
     private void getALlCategory() {

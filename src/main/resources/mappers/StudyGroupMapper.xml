@@ -65,4 +65,8 @@
             where studyGroupIdx=#{studyGroupIdx}
     </update>
 
+    <delete id="deleteGroupByGroupCode" parameterType="String">
+        delete from studyGroup where studyGroupCode=#{studyGroupCode}
+    </delete>
+
 </mapper>

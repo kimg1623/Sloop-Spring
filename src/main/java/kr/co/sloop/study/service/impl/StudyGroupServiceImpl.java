@@ -63,4 +63,9 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     public List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx) {
         return studyGroupRepository.getBoardIdxsByGroupCode(studyGroupIdx);
     }
+
+    @Override
+    public int deleteGroupByGroupCode(String studyGroupCode) {
+        return studyGroupRepository.deleteGroupByGroupCode(studyGroupCode);
+    }
 }

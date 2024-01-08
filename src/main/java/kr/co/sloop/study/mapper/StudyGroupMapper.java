@@ -27,4 +27,6 @@ public interface StudyGroupMapper {
 
 
     List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx); // 스터디 그룹 코드로 게시판 idx 가져오기
+
+    int deleteGroupByGroupCode(String studyGroupCode); // 스터디 그룹 코드로 스터디 그룹 삭제
 }

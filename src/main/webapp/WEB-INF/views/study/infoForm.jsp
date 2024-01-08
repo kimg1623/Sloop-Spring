@@ -6,6 +6,20 @@
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <title>스터디 관리</title>
+    <style>
+        .alert-message{
+            animation-name: fadeOut;
+            animation-delay: 5000ms;
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 100%;
+            }
+            to {
+                opacity: 0%;
+            }
+        }
+    </style>
     <script>
         $('document').ready(function() {
             var grade0 = ["학교 선택","초등학교","중학교","고등학교"];
@@ -42,6 +56,12 @@
 
 
         })
+
+        function onDelete(){
+            if(confirm("정말로 폐쇄하시겠습니까?"))
+                location.href='/study/${studyGroupCode}/delete';
+            else;
+        }
     </script>
 </head>
 <body>
@@ -80,11 +100,11 @@
                 <div class="form-group row">
                     <label class="col-sm-2 control-label">학년</label>
                     <div class="col-sm-3">
-<%--                        <form:select path="studyGroupGradeCode">--%>
-<%--                            <form:option value="100">초등학교</form:option>--%>
-<%--                            <form:option value="200">중학교</form:option>--%>
-<%--                            <form:option value="300">고등학교</form:option>--%>
-<%--                        </form:select>--%>
+                        <form:select path="studyGroupGradeCode">
+                            <form:option value="100">초등학교</form:option>
+                            <form:option value="200">중학교</form:option>
+                            <form:option value="300">고등학교</form:option>
+                        </form:select>
 
                     </div>
                 </div>
@@ -143,20 +163,9 @@
                 ${resultMessage} - 5초 뒤 사라지게 css 적용 예정
             </c:if>
         </div>
-        <style>
-            .alert-message{
-                animation-name: fadeOut;
-                animation-delay: 5000ms;
-            }
-            @keyframes fadeOut {
-                from {
-                    opacity: 100%;
-                }
-                to {
-                    opacity: 0%;
-                }
-            }
-        </style>
+        <div>
+            스터디 그룹 폐쇄하기 <input type="button" value="그룹 폐쇄" onclick="onDelete()">
+        </div>
     </div>
 </body>
 </html>
