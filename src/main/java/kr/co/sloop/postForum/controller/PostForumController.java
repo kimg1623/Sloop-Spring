@@ -1,13 +1,12 @@
 package kr.co.sloop.postForum.controller;
 
-import kr.co.sloop.post.domain.PageDTO;
+import kr.co.sloop.common.AlertUtils;
 import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.service.PageServiceImpl;
 import kr.co.sloop.post.service.SearchServiceImpl;
 import kr.co.sloop.postForum.domain.PostForumDTO;
 import kr.co.sloop.postForum.service.PostForumServiceImpl;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -26,7 +25,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.UUID;
 
 @Log4j2
@@ -274,30 +272,50 @@ public class PostForumController {
 
     // 글 수정하기
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors){
-        log.info("update" + errors);
-        log.info("update" + postForumDTO);
+    public String update(@Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors, HttpSession session, HttpServletResponse response){
+        // 로그인 된 회원과 글 작성자가 동일한지 검사
+        if(!postForumDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
+            // 동일하지 않다면 수정하지 않고 글 목록 페이지로 리다이렉트
+            return "redirect:/postforum/list";
+        }
 
         // 객체 바인딩에 유효성 오류가 존재한다면, 작성 페이지로 돌아가서 오류 메세지를 출력한다.
         if(errors.hasErrors()){
             return "redirect:/postForum/update?postIdx=" + postForumDTO.getPostIdx();
         }
 
-        // 글 수정하기
-        boolean result = postForumServiceImpl.update(postForumDTO);
+        try {
+            // 글 수정하기
+            boolean result = postForumServiceImpl.update(postForumDTO);
 
-        if(result) { // 수정 성공
-            return "redirect:/postforum/detail?postIdx=" + postForumDTO.getPostIdx();
-        }else{ // 수정 실패
+            if (result) { // 수정 성공
+                return "redirect:/postforum/detail?postIdx=" + postForumDTO.getPostIdx();
+            } else { // 수정 실패
+                AlertUtils.alertAndBackPage(response, "수정에 실패하였습니다.");
+                return "redirect:/postforum/list";
+            }
+        }catch (Exception e){
             return "redirect:/postforum/list";
         }
     }
 
     // 글 삭제하기
     @GetMapping("/delete")
-    public String delete(@RequestParam("postIdx") int postIdx){
-        postForumServiceImpl.delete(postIdx);
+    public String delete(@RequestParam("postIdx") int postIdx, HttpSession session, HttpServletResponse response){
+        try {
+            // 로그인 된 회원과 글 작성자가 동일한지 검사
+            String writerEmail = postForumServiceImpl.findWriterEmailByPostIdx(postIdx);
+            if (!writerEmail.equals(session.getAttribute("loginEmail"))) {
+                // 동일하지 않다면 삭제하지 않고 글 목록 페이지로 리다이렉트
+                AlertUtils.alertAndMovePage(response, "본인의 글만 삭제할 수 있습니다.", "/postforum/list");
+                return "";
+            }
 
+            postForumServiceImpl.delete(postIdx);
+        }catch (Exception e){
+            // 목록 조회 페이지로 돌아간다.
+            return "redirect:/postforum/list";
+        }
         // 삭제 후, 목록 조회 페이지로 돌아간다.
         return "redirect:/postforum/list";
     }
