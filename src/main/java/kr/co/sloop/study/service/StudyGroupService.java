@@ -5,6 +5,7 @@ import kr.co.sloop.study.domain.StudyGroupDTO;
 import javax.swing.text.html.Option;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public interface StudyGroupService {
     List<StudyGroupDTO> getAllStudyGroupList();
@@ -18,4 +19,6 @@ public interface StudyGroupService {
     StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode);
 
     int updateStudyGroup(StudyGroupDTO studyGroupDTO);
+
+    List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx);
 }

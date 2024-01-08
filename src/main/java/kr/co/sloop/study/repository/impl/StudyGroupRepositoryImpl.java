@@ -67,6 +67,11 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         return studyGroupMapper.updateStudyGroup(studyGroupDTO);
     }
 
+    @Override
+    public List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx) {
+        return studyGroupMapper.getBoardIdxsByGroupCode(studyGroupIdx);
+    }
+
 
     // 생성자에서 실행하도록 변경하기 fix 필요!
     private void getALlCategory() {

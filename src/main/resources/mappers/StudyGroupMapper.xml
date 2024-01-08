@@ -5,6 +5,7 @@
 
 <mapper namespace="kr.co.sloop.study.mapper.StudyGroupMapper">
 
+
     <select id="getAllStudyGroupList" resultType="studyGroup">
         SELECT * from studyGroup
     </select>
@@ -32,7 +33,7 @@
         </selectKey>
     </insert>
 
-    <insert id="create4boards" parameterType="Map">
+    <insert id="create4boards" parameterType="Map"> <!-- 나중에 BoardMapper로 옮기기 -->
         insert into board(studyGroupIdx, categoryBoardIdx)
                  values (#{studyGroupIdx}, 1),
                         (#{studyGroupIdx}, 2),
@@ -42,6 +43,12 @@
 
     <select id="selectStudyGroupByGroupCode" parameterType="String" resultType="studyGroup">
         select * from studyGroup where studyGroupCode=#{studyGroupCode}
+    </select>
+
+    <select id="getBoardIdxsByGroupCode" parameterType="int" resultType="java.util.HashMap">
+        select boardIdx, c.categoryBoardIdx cidx, c.categoryBoard categoryName
+        from board b left join categoryboard c on b.categoryBoardIdx = c.categoryBoardIdx
+        where studyGroupIdx=#{studyGroupIdx}
     </select>
 
     <update id="updateStudyGroup" parameterType="studyGroup">

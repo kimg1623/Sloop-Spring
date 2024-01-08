@@ -1,6 +1,5 @@
 package kr.co.sloop.study.controller;
 
-import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.service.StudyGroupService;
 import lombok.extern.log4j.Log4j;
@@ -48,7 +47,7 @@ public class StudyGroupController {
 	}
 
 	/*
-	 * 스터디 그룹 개설
+	 * 스터디 그룹 개설 : DB insert
 	 */
 	@PostMapping("/add")
 	@ResponseBody
@@ -69,7 +68,9 @@ public class StudyGroupController {
 	@GetMapping("/{studyGroupCode}")
 	public String requestStudyGroup(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
 		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
+		List<HashMap<String,String>> groupBoardIdxs = studyGroupService.getBoardIdxsByGroupCode(studyGroupDTO.getStudyGroupIdx());
 		model.addAttribute("studyGroup", studyGroupDTO);
+		model.addAttribute("groupBoardIdxs", groupBoardIdxs);
 		return "study/home";
 	}
 

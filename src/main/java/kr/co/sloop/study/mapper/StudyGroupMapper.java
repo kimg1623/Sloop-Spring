@@ -7,7 +7,9 @@ import kr.co.sloop.study.domain.StudyGroupDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface StudyGroupMapper {
@@ -24,4 +26,5 @@ public interface StudyGroupMapper {
     int updateStudyGroup(StudyGroupDTO studyGroupDTO); // 스터디 그룹 정보 수정
 
 
+    List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx); // 스터디 그룹 코드로 게시판 idx 가져오기
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -56,5 +57,10 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     @Override
     public int updateStudyGroup(StudyGroupDTO studyGroupDTO) {
         return studyGroupRepository.updateStudyGroup(studyGroupDTO);
+    }
+
+    @Override
+    public List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx) {
+        return studyGroupRepository.getBoardIdxsByGroupCode(studyGroupIdx);
     }
 }
