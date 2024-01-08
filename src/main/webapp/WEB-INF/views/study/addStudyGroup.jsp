@@ -23,9 +23,7 @@
             });
 
 
-
             // 시/도 선택시 구/군 설정
-
             $("select[name^=sido]").change(function() {
                 var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
                 var $gugun = $(this).next(); // 선택영역 군구 객체

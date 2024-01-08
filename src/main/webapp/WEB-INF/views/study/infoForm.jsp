@@ -47,13 +47,13 @@
 <body>
 
     <h1 class="display-3">스터디 관리</h1>
-    <h3>스터디 그룹명: ${studyGroup.studyGroupName}</h3>
-    <h3>스터디 그룹코드: ${studyGroup.studyGroupCode}</h3>
-
+    <p>
+    스터디 정보를 수정하거나 구성원을 관리할 수 있습니다.
+    </p>
 
     <div class="container">
         <p>
-            <a href="/study/${StudyGroup.studyGroupCode}/manage/info">스터디 정보</a>
+            <a href="/study/${StudyGroup.studyGroupCode}/manage/info">스터디 정보</a> |
             <a href="/study/${StudyGroup.studyGroupCode}/manage/members">스터디 구성원</a>
         </p>
         <form:form modelAttribute="StudyGroup" class="form-horizontal" method="post" action="/study/${StudyGroup.studyGroupCode}/manage/info">
