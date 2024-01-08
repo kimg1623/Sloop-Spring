@@ -21,7 +21,7 @@
 <%--        <c:forEach items="${groupBoardIdxs}" var="boardIdxMap">--%>
         <a href="/study/${studyGroup.studyGroupCode}/notice/${groupBoardIdxs[0].boardIdx}">${groupBoardIdxs[0].categoryName}</a><br>
         <a href="/study/${studyGroup.studyGroupCode}/assign/${groupBoardIdxs[1].boardIdx}">${groupBoardIdxs[1].categoryName}</a><br>
-        <a href="/study/${studyGroup.studyGroupCode}/postform/${groupBoardIdxs[2].boardIdx}">${groupBoardIdxs[2].categoryName}</a><br>
+        <a href="/study/${studyGroup.studyGroupCode}/postforum/${groupBoardIdxs[2].boardIdx}">${groupBoardIdxs[2].categoryName}</a><br>
         <a href="/study/${studyGroup.studyGroupCode}/daily/${groupBoardIdxs[3].boardIdx}">${groupBoardIdxs[3].categoryName}</a><br>
 <%--        <a href="#">자유게시판</a><br>--%>
 <%--        <a href="#">인증게시판</a><br>--%>

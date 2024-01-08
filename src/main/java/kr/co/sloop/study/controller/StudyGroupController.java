@@ -106,7 +106,7 @@ public class StudyGroupController {
 
 	/**
 	 * 스터디 그룹 폐쇄: 스터디 설정 호출
-	 * URI : /study/${studyGroupCode}/delete
+	 * URI : /study/{studyGroupCode}/delete
 	 */
 	@GetMapping("/{studyGroupCode}/delete")
 	public String requestDeleteStudyGroup(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
