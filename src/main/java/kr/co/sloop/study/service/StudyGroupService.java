@@ -9,7 +9,7 @@ import java.util.List;
 public interface StudyGroupService {
     List<StudyGroupDTO> getAllStudyGroupList();
 
-    int insertNewStudyGroup(StudyGroupDTO studyGroupDTO);
+    boolean insertNewStudyGroup(StudyGroupDTO studyGroupDTO);
 
     List<HashMap<String, Object>> getSecondCategoryRegionMap();
 

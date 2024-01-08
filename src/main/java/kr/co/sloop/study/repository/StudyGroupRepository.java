@@ -10,9 +10,12 @@ public interface StudyGroupRepository {
 
     int insertNewStudyGroup(StudyGroupDTO studyGroupDTO);
 
+    int create4boards(int studyGroupIdx);
+
     List<HashMap<String, Object>> getSecondCategoryRegionMap();
 
     StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode);
 
     int updateStudyGroup(StudyGroupDTO studyGroupDTO);
+
 }

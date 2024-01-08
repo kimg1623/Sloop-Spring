@@ -46,6 +46,12 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         return result;
     }
 
+    // 스터디 그룹 생성 후 기본 게시판 4개 생성
+    @Override
+    public int create4boards(int studyGroupIdx) {
+        return studyGroupMapper.create4boards(studyGroupIdx);
+    }
+
     @Override
     public List<HashMap<String, Object>> getSecondCategoryRegionMap() {
         return null;
@@ -60,6 +66,7 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
     public int updateStudyGroup(StudyGroupDTO studyGroupDTO) {
         return studyGroupMapper.updateStudyGroup(studyGroupDTO);
     }
+
 
     // 생성자에서 실행하도록 변경하기 fix 필요!
     private void getALlCategory() {

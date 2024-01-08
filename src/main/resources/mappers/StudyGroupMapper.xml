@@ -27,6 +27,17 @@
     <insert id="insertNewStudyGroup" parameterType="studyGroup">
         insert into studyGroup(studyGroupCode,studyGroupName,studyGroupMethod,studyGroupGradeCode,studyGroupSubjectCode,studyGroupRegionCode,studyGroupNum,studyGroupDuedate,studyGroupStartdate,studyGroupIntrotxt,studyGroupOImg)
             values(#{studyGroupCode},#{studyGroupName},#{studyGroupMethod},#{studyGroupGradeCode},#{studyGroupSubjectCode},#{studyGroupRegionCode},#{studyGroupNum},#{studyGroupDuedate},#{studyGroupStartdate},#{studyGroupIntrotxt},#{studyGroupOImg});
+        <selectKey resultType="int" keyProperty="studyGroupIdx" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <insert id="create4boards" parameterType="Map">
+        insert into board(studyGroupIdx, categoryBoardIdx)
+                 values (#{studyGroupIdx}, 1),
+                        (#{studyGroupIdx}, 2),
+                        (#{studyGroupIdx}, 3),
+                        (#{studyGroupIdx}, 4)
     </insert>
 
     <select id="selectStudyGroupByGroupCode" parameterType="String" resultType="studyGroup">

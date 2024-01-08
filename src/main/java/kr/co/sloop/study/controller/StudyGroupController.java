@@ -55,8 +55,8 @@ public class StudyGroupController {
 	public String submitAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO){
 		studyGroupDTO.setStudyGroupCode(getRandomStudyGroupCode());
 		log.info("StudyGroupDTO=====>"+studyGroupDTO);
-		int result = studyGroupService.insertNewStudyGroup(studyGroupDTO);
-		if(result == 1)
+		boolean result = studyGroupService.insertNewStudyGroup(studyGroupDTO); // insert into studyGroup + make 4 Boards
+		if(result == true)
 			return "redirect:/study/"+studyGroupDTO.getStudyGroupCode(); // 스터디 그룹의 메인 페이지
 		else
 			return "study/list";

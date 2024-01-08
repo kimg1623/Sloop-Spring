@@ -25,8 +25,22 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
-    public int insertNewStudyGroup(StudyGroupDTO studyGroupDTO) {
-        return studyGroupRepository.insertNewStudyGroup(studyGroupDTO);
+    public boolean insertNewStudyGroup(StudyGroupDTO studyGroupDTO) {
+        int result = 0;
+        // 그룹 생성
+        result = studyGroupRepository.insertNewStudyGroup(studyGroupDTO);
+        if(result != 1)
+            return false;  // 실패
+
+        // StudyGroupDTO 객체의 studyGroupIdx 속성값에 auto_increment PK 값이 이미 들어있음
+        // 게시판 4개 생성
+        result = studyGroupRepository.create4boards(studyGroupDTO.getStudyGroupIdx());
+        if (result < 1)
+            return false; // 게시판 생성 실패
+
+        // 성공
+        return true;
+
     }
 
     @Override
