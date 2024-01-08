@@ -1,8 +1,8 @@
 -- 회원 member --
 insert into member(memberIdx, memberEmail, memberPassword, memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode, memberSubjectCode, memberRegionCode)
-values(1, "test", "test", "test", "test", "test", "test", "test", "test", "test");
+values(1, "test", "test", "test1", "test", "test", "test", "test", "test", "test");
 insert into member(memberIdx, memberEmail, memberPassword, memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode, memberSubjectCode, memberRegionCode)
-values(2, "test@test.com", "test", "test", "test", "test", "test", "test", "test", "test");
+values(2, "test@test.com", "test2", "test2", "test2", "test2", "test2", "test2", "test2", "test2");
 
 -- 학교학년 카테고리 categoryGrade --
 insert into categoryGrade(categoryGradeTier, categoryGradeName, categoryGradeCode) values (1, '초등', '100');
@@ -83,7 +83,7 @@ insert into board(boardIdx, studyGroupIdx, categoryBoardIdx) values(3, 1, 3); --
 insert into board(boardIdx, studyGroupIdx, categoryBoardIdx) values(4, 1, 4); -- 공부 인증 게시판 --
 
 -- 게시글의 카테고리  categoryPost --
-insert into categoryPost(categoryPostIdx, categoryPostName, categoryBoardIdx) values(1, "일상", 3);
+insert into categoryPost(categoryPostIdx, categoryPostName, categoryBoardIdx) values(1, '일상', 3);
 insert into categoryPost(categoryPostIdx, categoryPostName, categoryBoardIdx) values(2, "취미", 3);
 insert into categoryPost(categoryPostIdx, categoryPostName, categoryBoardIdx) values(3, "고민", 3);
 insert into categoryPost(categoryPostIdx, categoryPostName, categoryBoardIdx) values(4, "진로", 3);
