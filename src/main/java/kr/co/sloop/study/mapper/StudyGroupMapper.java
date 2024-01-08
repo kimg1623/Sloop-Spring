@@ -19,4 +19,6 @@ public interface StudyGroupMapper {
     int insertNewStudyGroup(StudyGroupDTO studyGroupDTO); // 새 스터디 그룹 등록하기
 
     StudyGroupDTO selectStudyGroupByGroupCode(String studyGroupCode); // 스터디 그룹 code로 불러오기
+
+    int updateStudyGroup(StudyGroupDTO studyGroupDTO); // 스터디 그룹 정보 수정
 }

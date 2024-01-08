@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.html.Option;
@@ -73,14 +74,33 @@ public class StudyGroupController {
 	}
 
 	/**
-	 * 스터디 그룹 관리 페이지 호출
-	 * URI : /study/{studyGroupCode}
+	 * 스터디 그룹 관리 페이지: 스터디 설정 호출
+	 * URI : /study/{studyGroupCode}/info
 	 */
-	@GetMapping("/{studyGroupCode}/manage")
-	public String requestStudyGroupSetting(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
+	@GetMapping("/{studyGroupCode}/manage/info")
+	public String requestStudyGroupInfo(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
 		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
-		model.addAttribute("studyGroup", studyGroupDTO);
-		return "study/manageStudyGroup";
+		model.addAttribute("StudyGroup", studyGroupDTO);
+		return "study/infoForm";
+	}
+
+	/**
+	 * 스터디 설정 수정
+	 * URI : /study/{studyGroupCode}/info
+	 */
+	@PostMapping("/{studyGroupCode}/manage/info")
+	public String submitUpdateStudyGroupForm(@PathVariable("studyGroupCode") String studyGroupCode,
+											 @ModelAttribute("StudyGroup") StudyGroupDTO studyGroupDTO,
+											 RedirectAttributes RA){
+		int result = studyGroupService.updateStudyGroup(studyGroupDTO);
+		if(result == 1) {
+			RA.addFlashAttribute("resultMessage","수정을 완료했습니다."); // redirect로 넘길경우 model로 attribute를 넘기면 자동으로 쿼리로 변경되어 넘어감
+			return "redirect:/study/" + studyGroupDTO.getStudyGroupCode() + "/manage/info"; // 그룹 정보 수정 뒤에 동일한 페이지로 redirect
+		}
+		else {
+			log.info("스터디 그룹 정보 수정 오류");
+			return "redirect:/study/" + studyGroupDTO.getStudyGroupCode() + "/manage/info"; // alert 띄울 수 있도록 경고 전송
+		}
 	}
 
 

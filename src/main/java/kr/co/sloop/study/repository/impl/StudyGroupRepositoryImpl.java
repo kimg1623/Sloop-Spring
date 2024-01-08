@@ -56,6 +56,11 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         return studyGroupMapper.selectStudyGroupByGroupCode(studyGroupCode);
     }
 
+    @Override
+    public int updateStudyGroup(StudyGroupDTO studyGroupDTO) {
+        return studyGroupMapper.updateStudyGroup(studyGroupDTO);
+    }
+
     // 생성자에서 실행하도록 변경하기 fix 필요!
     private void getALlCategory() {
         getCategoryGrade();

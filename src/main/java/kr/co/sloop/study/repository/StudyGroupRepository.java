@@ -13,4 +13,6 @@ public interface StudyGroupRepository {
     List<HashMap<String, Object>> getSecondCategoryRegionMap();
 
     StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode);
+
+    int updateStudyGroup(StudyGroupDTO studyGroupDTO);
 }

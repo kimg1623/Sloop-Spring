@@ -16,4 +16,6 @@ public interface StudyGroupService {
     // List<Option> findOption1(String option1);
 
     StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode);
+
+    int updateStudyGroup(StudyGroupDTO studyGroupDTO);
 }

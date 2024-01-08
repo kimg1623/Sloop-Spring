@@ -38,4 +38,9 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     public StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode) {
         return studyGroupRepository.getStudyGroupByGroupCode(studyGroupCode);
     }
+
+    @Override
+    public int updateStudyGroup(StudyGroupDTO studyGroupDTO) {
+        return studyGroupRepository.updateStudyGroup(studyGroupDTO);
+    }
 }

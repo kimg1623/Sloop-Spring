@@ -33,4 +33,18 @@
         select * from studyGroup where studyGroupCode=#{studyGroupCode}
     </select>
 
+    <update id="updateStudyGroup" parameterType="studyGroup">
+        update studyGroup set
+            studyGroupName=#{studyGroupName},
+            studyGroupMethod=#{studyGroupMethod},
+            studyGroupSubjectCode=#{studyGroupSubjectCode},
+            studyGroupRegionCode=#{studyGroupRegionCode},
+            studyGroupNum=#{studyGroupNum},
+            studyGroupDuedate=#{studyGroupDuedate},
+            studyGroupStartdate=#{studyGroupStartdate},
+            studyGroupIntrotxt=#{studyGroupIntrotxt},
+            studyGroupOImg=#{studyGroupOImg}
+            where studyGroupIdx=#{studyGroupIdx}
+    </update>
+
 </mapper>
