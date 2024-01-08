@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: kjw85
@@ -17,11 +18,11 @@
     <br>
     <div>
         <h2>메뉴</h2>
-        <a href="#">공지사항</a><br>
-        <a href="#">자유게시판</a><br>
-        <a href="#">인증게시판</a><br>
-        <a href="#">과제게시판</a><br>
-        <a href="/study/${studyGroup.studyGroupCode}/manage">스터디 관리</a><br>
+        <a href="/study/${studyGroup.studyGroupCode}/notice/${groupBoardIdxs[0].boardIdx}">${groupBoardIdxs[0].categoryName}</a><br>
+        <a href="/study/${studyGroup.studyGroupCode}/assign/${groupBoardIdxs[1].boardIdx}">${groupBoardIdxs[1].categoryName}</a><br>
+        <a href="/study/${studyGroup.studyGroupCode}/postforum/${groupBoardIdxs[2].boardIdx}">${groupBoardIdxs[2].categoryName}</a><br>
+        <a href="/study/${studyGroup.studyGroupCode}/daily/${groupBoardIdxs[3].boardIdx}">${groupBoardIdxs[3].categoryName}</a><br>
+        <a href="/study/${studyGroup.studyGroupCode}/manage/info">스터디 관리</a><br>
     </div>
 
 </body>

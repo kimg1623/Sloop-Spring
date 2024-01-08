@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -29,12 +31,16 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public boolean login(MemberDTO memberDTO) {
+    public Map<String, String> login(MemberDTO memberDTO) {
         MemberDTO loginMember = memberRepository.login(memberDTO);
         if (loginMember != null){
-            return true;
+            Map<String, String> loginSessionMap = new HashMap<String, String>();
+            loginSessionMap.put("loginEmail", loginMember.getMemberEmail());
+            loginSessionMap.put("loginMemberIdx", String.valueOf(loginMember.getMemberIdx())); // 지원 추가
+            loginSessionMap.put("loginMemberNickname", loginMember.getMemberNickname());
+            return loginSessionMap;
         } else {
-            return false;
+            return null;
         }
     }
 
