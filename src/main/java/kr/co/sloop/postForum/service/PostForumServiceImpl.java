@@ -82,4 +82,10 @@ public class PostForumServiceImpl implements PostForumService {
         // postIdx로 글 정보 불러오기
         return findByPostIdx(postIdx);
     }
+
+    // postIdx 글 작성자 email 조회
+    @Override
+    public String findWriterEmailByPostIdx(int postIdx) {
+        return postForumRepositoryImpl.findWriterEmailByPostIdx(postIdx);
+    }
 }

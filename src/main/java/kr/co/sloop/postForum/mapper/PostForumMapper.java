@@ -18,6 +18,6 @@ public interface PostForumMapper {
     int update(PostForumDTO postForumDTO);
     int delete(int postIdx);
     int updatePostForumHits(int postIdx);
-
     int searchAndCountPostsByBoardIdx(SearchDTO boardIdx);
+    String findWriterEmailByPostIdx(int postIdx);
 }

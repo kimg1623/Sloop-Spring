@@ -18,4 +18,6 @@ public interface PostForumService {
     void delete(int postIdx);
 
     PostForumDTO detailForm(int postIdx);
+
+    String findWriterEmailByPostIdx(int postIdx);
 }

@@ -27,4 +27,6 @@ public interface PostForumRepository {
     void updatePostForumHits(int postIdx);
 
     int searchAndCountPostsByBoardIdx(SearchDTO boardIdx);
+
+    String findWriterEmailByPostIdx(int postIdx);
 }

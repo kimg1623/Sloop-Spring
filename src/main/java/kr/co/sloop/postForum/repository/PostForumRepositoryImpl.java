@@ -72,4 +72,9 @@ public class PostForumRepositoryImpl implements PostForumRepository{
     public int searchAndCountPostsByBoardIdx(SearchDTO boardIdx) {
         return postForumMapper.searchAndCountPostsByBoardIdx(boardIdx);
     }
+
+    @Override
+    public String findWriterEmailByPostIdx(int postIdx) {
+        return postForumMapper.findWriterEmailByPostIdx(postIdx);
+    }
 }
