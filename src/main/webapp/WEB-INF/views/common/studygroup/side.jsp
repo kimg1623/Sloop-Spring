@@ -20,7 +20,8 @@
   <title>사이드 메뉴</title>
 </head>
 <body>
-<h2>스터디 그룹명: ${studyGroup.studyGroupName}</h2>
+<h3>스터디 그룹명</h3>
+<h2><a href="/study/${studyGroup.studyGroupCode}">${studyGroup.studyGroupName}</a></h2>
 -----------------------------------
 <br>
 <div>

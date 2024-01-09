@@ -18,7 +18,7 @@
 
    <definition name="study/infoForm" extends="studyGroupLayout">
       <put-attribute name="title" value="슬룹 Sloop" />
-      <put-attribute name="body" value="/WEB-INF/views/study/home.jsp" />
+      <put-attribute name="body" value="/WEB-INF/views/study/infoForm.jsp" />
    </definition>
 
 
