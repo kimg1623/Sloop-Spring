@@ -20,6 +20,8 @@
 
         <typeAlias type="kr.co.sloop.postForum.domain.PostForumDTO" alias="postForum"/>
         <typeAlias type="kr.co.sloop.post.domain.PostDTO" alias="post"/>
+        <typeAlias type="kr.co.sloop.post.domain.PageDTO" alias="page"/>
+        <typeAlias type="kr.co.sloop.post.domain.SearchDTO" alias="search"/>
 
 
 

@@ -250,3 +250,4 @@ drop table if exists categoryRegion;
 drop table if exists categorySubject;
 drop table if exists categoryGrade;
 drop table if exists member;
+*/
