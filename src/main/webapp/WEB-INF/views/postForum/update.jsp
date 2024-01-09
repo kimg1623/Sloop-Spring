@@ -36,6 +36,8 @@
         <!-- hidden -->
         <!-- 작성자 idx -->
         <p><form:hidden path="memberIdx"/></p>
+        <!-- 작성자 email -->
+        <p><form:hidden path="memberEmail"/></p>
         <!-- 작성자 닉네임 -->
         <p><form:hidden path="memberNickname"/></p>
         <!-- postIdx -->
