@@ -20,4 +20,7 @@ public class NoticeRepositoryImpl implements NoticeRepository {
   public List<NoticeDTO> findAllNoticeList(Model model) {
     return noticeMapper.findAllNoticeList(model);
   }
+
+
+
 }

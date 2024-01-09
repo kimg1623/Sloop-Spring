@@ -21,4 +21,6 @@ public class NoticeServiceImpl implements NoticeService {
   public List<NoticeDTO> findAllNoticeList(Model model) {
     return noticeRepository.findAllNoticeList(model);
   }
+
+
 }

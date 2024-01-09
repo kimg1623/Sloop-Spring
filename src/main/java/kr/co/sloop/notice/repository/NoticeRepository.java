@@ -10,4 +10,5 @@ public interface NoticeRepository {
 
   List<NoticeDTO> findAllNoticeList(Model model);
 
+
 }

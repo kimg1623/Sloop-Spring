@@ -7,6 +7,11 @@
 
 
 	<select id="findAllNoticeList" resultType="notice">
-		select * from notice
+		select * from postNotice
 	</select>
+
+	<insert id="noticeWrite" parameterType="notice">
+		insert into postNotice (postNoticeTitle, postNoticeContents, memberIdx, postNoticeEditDate, postNoticeHits , categoryPostIdx , postNoticePinned)
+		values (#{postNoticeTitle}, #{postNoticeContents} , #{memberIdx} , #{postNoticeEditDate} , #{postNoticeHits} , #{categoryPostIdx} , #{postNoticePinned})
+	</insert>
 </mapper>
