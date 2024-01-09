@@ -124,7 +124,7 @@ create table assignment(
                            assignmentIdx int not null AUTO_INCREMENT comment '과제 idx',
                            assignmentBeginDate datetime comment '시작일시',
                            assignmentEndDate datetime comment '마감일시',
-                           assignmentScore bit comment '만점 점수',
+                           assignmentScore TINYINT UNSIGNED comment '만점 점수',
                            PRIMARY KEY (assignmentIdx)
 );
 
@@ -149,7 +149,7 @@ create table postAssignment(
 create table assignmentMember(
                                  assignmentIdx int not null comment '과제 idx',
                                  memberIdx int not null comment '회원 idx',
-                                 assignmentMemberScore bit null comment '회원의 과제 점수',
+                                 assignmentMemberScore TINYINT UNSIGNED null comment '회원의 과제 점수',
                                  Foreign Key (assignmentIdx) REFERENCES assignment(assignmentIdx),
                                  Foreign Key (memberIdx) REFERENCES member(memberIdx),
                                  PRIMARY KEY (assignmentIdx, memberIdx)
@@ -245,7 +245,7 @@ drop table if exists board;
 drop table if exists categoryBoard;
 
 drop table if exists studyMem;
-drop table if exists studygroup;
+drop table if exists studyGroup;
 drop table if exists categoryRegion;
 drop table if exists categorySubject;
 drop table if exists categoryGrade;
