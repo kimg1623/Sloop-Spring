@@ -2,7 +2,7 @@
 insert into member(memberIdx, memberEmail, memberPassword, memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode, memberSubjectCode, memberRegionCode)
 values(1, "test", "test", "test1", "test", "test", "test", "test", "test", "test");
 insert into member(memberIdx, memberEmail, memberPassword, memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode, memberSubjectCode, memberRegionCode)
-values(2, "test@test.com", "test2", "test2", "test2", "test2", "test2", "test2", "test2", "test2");
+values(2, "test2", "test2", "test2", "test2", "test2", "test2", "test2", "test2", "test2");
 
 -- 학교학년 카테고리 categoryGrade --
 insert into categoryGrade(categoryGradeTier, categoryGradeName, categoryGradeCode) values (1, '초등', '100');
