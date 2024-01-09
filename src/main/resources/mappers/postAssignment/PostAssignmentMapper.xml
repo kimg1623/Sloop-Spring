@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sloop.postAssignment.mapper.PostAssignmentMapper">
+    <!-- 글 목록 조회 -->
+    <select id="selectAllPostForumByBoardIdx" parameterType="search" resultType="postAssignment">
+        select pa.postIdx, pa.postAssignmentTitle, pa.postAssignmentRegDate, pa.postAssignmentHits, m.memberNickname, a.assignmentEndDate
+        from postAssignment as pa
+        join member as m on pa.memberIdx = m.memberIdx
+        join post as p on pa.postIdx = p.postIdx
+        join assignment as a on a.assignmentIdx = pa.assignmentIdx
+        where p.boardIdx = #{boardIdx}
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test = "searchType == 1">
+                    and pa.postAssignmentTitle like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 2">
+                    and pa.postAssignmentContents like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 3">
+                    and (pa.postAssignmentTitle like concat('%', #{keyword}, '%') or pa.postAssignmentContents like concat('%', #{keyword}, '%'))
+                </when>
+                <when test = "searchType == 4">
+                    and m.memberNickname like concat('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+        order by pa.postAssignmentRegDate desc
+        limit #{postsPerPage} offset #{offset}
+    </select>
+
+    <!-- 전체 글 개수 조회 -->
+    <select id="searchAndCountPostsByBoardIdx" parameterType="search" resultType="int">
+        select count(pa.postIdx)
+        from postAssignment as pa
+        join member as m on pa.memberIdx = m.memberIdx
+        join post as p on pa.postIdx = p.postIdx
+        where p.boardIdx = #{boardIdx}
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test = "searchType == 1">
+                    and pa.postAssignmentTitle like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 2">
+                    and pa.postAssignmentContents like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 3">
+                    and (pa.postAssignmentTitle like concat('%', #{keyword}, '%') or pa.postAssignmentContents like concat('%', #{keyword}, '%'))
+                </when>
+                <when test = "searchType == 4">
+                    and m.memberNickname like concat('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+    </select>
+</mapper>
