@@ -1,11 +1,12 @@
 package kr.co.sloop.postForum.controller;
 
-import kr.co.sloop.post.domain.PageDTO;
+import kr.co.sloop.common.AlertUtils;
+import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.service.PageServiceImpl;
+import kr.co.sloop.post.service.SearchServiceImpl;
 import kr.co.sloop.postForum.domain.PostForumDTO;
 import kr.co.sloop.postForum.service.PostForumServiceImpl;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,6 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.UUID;
 
 @Log4j2
@@ -36,6 +36,7 @@ public class PostForumController {
     private String uploadPath; // 업로드된 사진이 저장될 서버 경로 (디렉터리 경로)
     private final PostForumServiceImpl postForumServiceImpl;
     private final PageServiceImpl pageServiceImpl; // 페이징
+    private final SearchServiceImpl searchServiceImpl; // 페이징 + 검색
 
     // 글 작성하기 : 화면 출력
     @GetMapping("/write")
@@ -65,7 +66,7 @@ public class PostForumController {
         // 게시판 idx(boardIdx)를 쿼리 스트링을 통해 가져와야 한다. [*****]
         // @RequestParam("boardIdx") int boardIdx
         int boardIdx = 3;
-        postForumDTO.setBoardIdx(3);
+        postForumDTO.setBoardIdx(boardIdx);
 
         boolean result = postForumServiceImpl.write(postForumDTO);
 
@@ -99,12 +100,19 @@ public class PostForumController {
             // 허용되는 이미지 확장자
             String allowedExtensions = "(jpg|jpeg|gif|png)";
 
-            if(!extension.matches(allowedExtensions)){ // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우
-                printWriter=response.getWriter();
-                JSONObject json = new JSONObject();
-                json.put("uploaded", 0);
-                json.put("error", new JSONObject().put("message", "jpg, jpeg, gif, png 이미지 파일만 지원합니다."));
-                printWriter.println(json);
+            // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우, 오류 메세지 반환
+            if(!extension.matches(allowedExtensions)){
+                printWriter = response.getWriter();
+                printWriter.println(createJSON(0, new String[]{"jpg, jpeg, gif, png 이미지 파일만 지원합니다."}));
+                printWriter.flush(); //초기화
+                return;
+            }
+
+            // 첨부 파일 용량 검사
+            // 10MB 초과하는 이미지 업로드 시, 오류 메세지 반환
+            if(upload.getSize() > 10000000){
+                printWriter = response.getWriter();
+                printWriter.println(createJSON(0, new String[]{"10MB 이하의 이미지 파일만 첨부할 수 있습니다."}));
                 printWriter.flush(); //초기화
                 return;
             }
@@ -144,8 +152,11 @@ public class PostForumController {
             printWriter = response.getWriter();
             String fileUrl = "/postforum/ckImgSubmit?uid=" + uuid + "&fileName=" + fileName; // 작성화면
 
-            // 업로드시 메시지 출력
-            printWriter.println("{\"filename\" : \"" + fileName + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
+            // 업로드시 메시지 json 출력
+            String[] message = {fileName, fileUrl};
+
+            // printWriter.println("{\"filename\" : \"" + fileName + "\", \"uploaded\" : 1, \"url\":\"" + fileUrl + "\"}");
+            printWriter.println(createJSON(1, message));
             printWriter.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -217,22 +228,28 @@ public class PostForumController {
     }
 
     // 글 목록 조회
-    // postforum/list?page=*
+    // /postforum/list?page={현재페이지}&searchType={검색유형}&keyword={검색어}
     @GetMapping("/list")
-    public String list(@RequestParam(value = "page", defaultValue = "1", required = false) int page, Model model){
+    public String list(@RequestParam(value = "page", defaultValue = "1", required = false) int page,
+                       @RequestParam(value = "searchType", defaultValue = "0", required = false) int searchType,
+                       @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
+                       Model model){
         // 게시판 idx
         // [*****] 쿼리 스트링으로 가져오도록 수정
         // [*****] public String List(@RequestParam("boardIdx") int boardIdx)
         int boardIdx = 3;
 
-        // 페이징
-        PageDTO pageDTO = pageServiceImpl.pagingInitialize(page, boardIdx);
+        // 검색어 앞뒤 공백 제거
+        keyword = keyword.trim();
 
-        log.info("+++++" + pageDTO);
+        // 검색 + 페이징을 위한 객체
+        SearchDTO searchDTO = searchServiceImpl.initialize(boardIdx, page, searchType, keyword, 3);
+        model.addAttribute("searchDTO", searchDTO);
 
-        ArrayList<PostForumDTO> postForumDTOList = postForumServiceImpl.list(boardIdx, page);
+        // 글 목록 조회 + 겸색 + 페이징
+        ArrayList<PostForumDTO> postForumDTOList = postForumServiceImpl.list(searchDTO);
         model.addAttribute("postForumDTOList", postForumDTOList);
-        model.addAttribute("pageDTO", pageDTO);
+
         return "postForum/list";
     }
 
@@ -255,31 +272,66 @@ public class PostForumController {
 
     // 글 수정하기
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors){
-        log.info("update" + errors);
-        log.info("update" + postForumDTO);
+    public String update(@Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors, HttpSession session, HttpServletResponse response){
+        // 로그인 된 회원과 글 작성자가 동일한지 검사
+        if(!postForumDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
+            // 동일하지 않다면 수정하지 않고 글 목록 페이지로 리다이렉트
+            return "redirect:/postforum/list";
+        }
 
         // 객체 바인딩에 유효성 오류가 존재한다면, 작성 페이지로 돌아가서 오류 메세지를 출력한다.
         if(errors.hasErrors()){
             return "redirect:/postForum/update?postIdx=" + postForumDTO.getPostIdx();
         }
 
-        // 글 수정하기
-        boolean result = postForumServiceImpl.update(postForumDTO);
+        try {
+            // 글 수정하기
+            boolean result = postForumServiceImpl.update(postForumDTO);
 
-        if(result) { // 수정 성공
-            return "redirect:/postforum/detail?postIdx=" + postForumDTO.getPostIdx();
-        }else{ // 수정 실패
+            if (result) { // 수정 성공
+                return "redirect:/postforum/detail?postIdx=" + postForumDTO.getPostIdx();
+            } else { // 수정 실패
+                AlertUtils.alertAndBackPage(response, "수정에 실패하였습니다.");
+                return "redirect:/postforum/list";
+            }
+        }catch (Exception e){
             return "redirect:/postforum/list";
         }
     }
 
     // 글 삭제하기
     @GetMapping("/delete")
-    public String delete(@RequestParam("postIdx") int postIdx){
-        postForumServiceImpl.delete(postIdx);
+    public String delete(@RequestParam("postIdx") int postIdx, HttpSession session, HttpServletResponse response){
+        try {
+            // 로그인 된 회원과 글 작성자가 동일한지 검사
+            String writerEmail = postForumServiceImpl.findWriterEmailByPostIdx(postIdx);
+            if (!writerEmail.equals(session.getAttribute("loginEmail"))) {
+                // 동일하지 않다면 삭제하지 않고 글 목록 페이지로 리다이렉트
+                AlertUtils.alertAndMovePage(response, "본인의 글만 삭제할 수 있습니다.", "/postforum/list");
+                return "";
+            }
 
+            postForumServiceImpl.delete(postIdx);
+        }catch (Exception e){
+            // 목록 조회 페이지로 돌아간다.
+            return "redirect:/postforum/list";
+        }
         // 삭제 후, 목록 조회 페이지로 돌아간다.
         return "redirect:/postforum/list";
+    }
+
+    // json 객체 생성
+    public JSONObject createJSON(int uploaded, String[] message){
+        JSONObject json = new JSONObject();
+
+        json.put("uploaded", uploaded);
+        if(uploaded == 0) { // 업로드 실패
+            json.put("error", new JSONObject().put("message", message[0]));
+        }else{ // 업로드 성공
+            json.put("fileName", message[0]);
+            json.put("url", message[1]);
+        }
+
+        return json;
     }
 }

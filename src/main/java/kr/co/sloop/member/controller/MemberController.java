@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -50,11 +51,13 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
 
-        boolean loginResult = memberService.login(memberDTO);
-        if (loginResult) {
+        Map<String, String> loginResult = memberService.login(memberDTO);
+        if (loginResult != null) {
             log.info("로그인 성공");
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
-            return "home"; // 로그인 성공시 세션에 "loginEmail"이란 이름으로 저장 후 studyList or mypage 로 이동
+            session.setAttribute("loginMemberIdx", loginResult.get("loginMemberIdx")); // 지원 추가
+            session.setAttribute("loginMemberNickname", loginResult.get("loginMemberNickname")); // 지원 추가
+            return "redirect:/"; // 로그인 성공시 세션에 "loginEmail"이란 이름으로 저장 후 studyList or mypage 로  // 지원 수정
         } else {
             log.info("로그인 실패");
             return "redirect:/member/login";    // 로그인 실패시 다시 GetMapping 의 LoginForm으로 redirect
