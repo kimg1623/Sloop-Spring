@@ -24,7 +24,7 @@ public class MemberController {
     // signupForm.jsp 로 이동
     @GetMapping("/signup")
     public String signupForm(){
-        return "signupForm";
+        return "member/signupForm";
     }
 
     // signupForm.jsp -> form method = Post 로 데이터 받아옴
@@ -33,16 +33,16 @@ public class MemberController {
         int signupResult = memberService.signup(memberDTO);
 
         if (signupResult > 0){
-            return "signupSuccess"; // 회원가입 성공 시 이동
+            return "member/signupSuccess"; // 회원가입 성공 시 이동
         } else {
-            return "signupForm";    // 회원가입 실패 시 이동
+            return "member/signupForm";    // 회원가입 실패 시 이동
         }
     }
 
     // 회원가입 성공 후 로그인 하러 가기 버튼 클릭시 LoginForm.jsp 로 이동
     @GetMapping("/login")
     public String loginForm(){
-        return "loginForm";
+        return "member/loginForm";
     }
 
 
@@ -83,7 +83,7 @@ public class MemberController {
     public String memberList(Model model){
         List<MemberDTO> memberDTOList = memberService.findMemberList(model);
         model.addAttribute("memberList", memberDTOList);
-        return "memberList";    // 관리자 일 때 memberList 이동 가능
+        return "member/memberList";    // 관리자 일 때 memberList 이동 가능
     }
 
     // update.jsp의 Form 출력
@@ -94,7 +94,7 @@ public class MemberController {
         if (loginEmail != null) {
             MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
             model.addAttribute("member", memberDTO);
-            return "update";
+            return "member/update";
         } else {
             return "redirect:/member/login";
         }
@@ -119,7 +119,7 @@ public class MemberController {
     public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model){
         MemberDTO memberDTO = memberService.findByIdx(memberIdx);   // memberIdx 파라미터 값을 가져온 뒤 해당 domain 정보를 불러온다.
         model.addAttribute("member",memberDTO);
-        return "mypage";
+        return "member/mypage";
     }
 
     // 꼭 로그인 후 마이페이지로 이동 ( 회원의 기능 )
@@ -136,7 +136,7 @@ public class MemberController {
 
             return "redirect:/member?memberIdx="+memberDTO.getMemberIdx();  // 세션에 저장된 아이디에 맞는 마이페이지로 이동
         } else{
-            return "loginForm"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
+            return "member/loginForm"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
         }
 
     }
