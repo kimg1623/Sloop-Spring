@@ -61,8 +61,11 @@ public class PostAssignmentController {
     }
 
     @GetMapping("/test")
-    public String test(){
-        return "postAssignment/datepicker";
+    public String test(Model model){
+        PostAssignmentDTO postAssignmentDTO = new PostAssignmentDTO();
+        //postAssignmentDTO.setCategoryPostIdx(1);
+        model.addAttribute("postAssignmentDTO", postAssignmentDTO);
+        return "postAssignment/writeDateTimePicker";
     }
 
 }
