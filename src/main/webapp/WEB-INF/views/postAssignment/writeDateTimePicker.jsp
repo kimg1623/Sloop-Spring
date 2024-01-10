@@ -22,7 +22,7 @@
     <script src="/resources/dateTimePicker/datetimepicker-master/build/jquery.datetimepicker.full.min.js"></script>
 
     <script>
-        // 선택할 수 있는 시간
+        // date time picker 선택할 수 있는 시각
         let allowTimesList = [
             '00:00', '00:10', '00:20', '00:30', '00:40', '00:50',
             '01:00', '01:10', '01:20', '01:30', '01:40', '01:50',
@@ -50,15 +50,53 @@
             '23:00', '23:10', '23:20', '23:30', '23:40', '23:50'
         ];
 
+        // date time picker 기본 설정
         function DatetimepickerDefaults(opts) {
             return $.extend({}, {
                 locale: 'kr',
-                format: 'Y-M-D H:m',
+                format: 'Y-m-d H:i',
                 inline: false,
                 sideBySide: true,
                 allowTimes: allowTimesList
             }, opts);
         };
+
+        // 기본 실행 함수
+        $(function () {
+            // allowTimesList 목록 중에서 현재 시각보다 크거나 같은 가장 가까운 시각을 지정한다.
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            month = String(month).padStart(2, "0");
+            let date = today.getDate();
+            date = String(date).padStart(2, "0");
+
+            let defaultEndDate = year + "-" + month+ "-" + date;
+            let hor = today.getHours();
+            let min = Math.ceil(today.getMinutes()/10) * 10; // 현재 분을 10의 자리에서 올림
+            // 60분을 넘어가면 안 됨
+            min = min % 60;
+            if(min == 0){
+                hor = hor + 1;
+            }
+            hor = String(hor).padStart(2, "0"); // 0 padding
+            min = String(min).padStart(2, "0"); // 0 padding
+            let time = hor+":"+min; // 현재 시각
+            console.log(defaultEndDate + " " + time);
+            // 과제 마감일시 date time picker
+            // 최소 날짜와 시간을 현재 시각으로 설정한다.
+            $('#assignmentEndDate_input').datetimepicker(
+                DatetimepickerDefaults({
+                    minDate: 0,
+                    defaultTime: time,
+                    formatTime:'H:i'
+                })
+            );
+
+            // 과제 마감일시 기본 설정
+            document.getElementById("assignmentEndDate_input").value = defaultEndDate + " " + time;
+            // $('#assignmentEndDate_input').value(defaultEndDate + " " + time);
+        });
 
         /*
         // 과제 시작일시
@@ -76,8 +114,6 @@
             }
         });
          */
-
-
         // 과제 마감일시
         /*
         $('#assignmentEndDate_input').datetimepicker({
@@ -94,34 +130,6 @@
             }
         );
          */
-
-        $(function () {
-            // 과제 시작일시
-            $('#assignmentBeginDate_input').datetimepicker(
-                DatetimepickerDefaults({
-                    minDate: 0,
-                    onShow: function (ct) {
-                        this.setOptions({
-                            maxDate: jQuery('#assignmentEndDate_input').val() ? jQuery('#assignmentEndDate_input').val() : false
-                        })
-                    }
-                })
-            );
-
-
-            // 과제 마감일시
-            $('#assignmentEndDate_input').datetimepicker(
-                DatetimepickerDefaults({
-                    onShow: function (ct) {
-                        this.setOptions({
-                            minDate: jQuery('#assignmentBeginDate_input').val() ? jQuery('#assignmentBeginDate_input').val() : 0
-                        })
-                    }
-                })
-            );
-
-
-        });
     </script>
 
 </head>
@@ -172,17 +180,19 @@
 
 
         <!-- 과제 -->
+        <%--
         <!-- 과제 시작일시 -->
         <label for="assignmentBeginDate">시작일시</label>
         <div id="assignmentBeginDate">
             <input id="assignmentBeginDate_input" class="assignmentBeginDate_input" type="text"/>
         </div>
-
+        --%>
         <!-- 과제 마감일시 -->
         <label for="assignmentEndDate">마감일시</label>
         <div id="assignmentEndDate">
-            <input id="assignmentEndDate_input" class="assignmentEndDate_input" type="text"/>
+            <form:input path="assignmentEndDateString" id="assignmentEndDate_input" class="assignmentEndDate_input" type="text"/>
         </div>
+        <!-- <input type="button" onclick="console.log($('#assignmentEndDate_input').val())"> -->
 
         <!-- 과제 만점 점수 설정 -->
         <p><form:input path="assignmentScore" type="number" id="assignmentScore" name="assignmentScore"
@@ -196,7 +206,5 @@
         <input type="submit" value="작성하기">
     </form:form>
 </div>
-
-
 </body>
 </html>

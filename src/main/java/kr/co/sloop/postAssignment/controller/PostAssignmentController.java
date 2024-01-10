@@ -5,14 +5,11 @@ import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.service.SearchServiceImpl;
 import kr.co.sloop.postAssignment.domain.PostAssignmentDTO;
 import kr.co.sloop.postAssignment.service.PostAssignmentService;
-import kr.co.sloop.postForum.domain.PostForumDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 
@@ -55,11 +52,21 @@ public class PostAssignmentController {
     @GetMapping("/write")
     public String writeForm(Model model){
         PostAssignmentDTO postAssignmentDTO = new PostAssignmentDTO();
-        //postAssignmentDTO.setCategoryPostIdx(1);
         model.addAttribute("postAssignmentDTO", postAssignmentDTO);
         return "postAssignment/write";
     }
 
+    // 글 작성하기
+    @PostMapping("/write")
+    public String write(@ModelAttribute("postAssignmentDTO") PostAssignmentDTO postAssignmentDTO){
+        log.info(postAssignmentDTO);
+
+
+        return "redirect:/postassignment/list";
+        // return "redirect:postassignment/detail?postIdx=" + postIdx;
+    }
+
+    // 실험 페이지
     @GetMapping("/test")
     public String test(Model model){
         PostAssignmentDTO postAssignmentDTO = new PostAssignmentDTO();
