@@ -53,12 +53,11 @@
 
         CKEDITOR.replace("postForumContents", ckeditor_config);
 
-        //이미지 업로드가 끝나고 실행하는 함수
+        // 이미지 업로드가 끝나고 실행하는 함수
         CKEDITOR.on( 'dialogDefinition', function( ev ) {
             // Take the dialog name and its definition from the event data.
             let dialogName = ev.data.name;
             let dialogDefinition = ev.data.definition;
-
 
             let uploadTab = dialogDefinition.getContents( 'Upload' );
             let uploadButton = uploadTab.get('uploadButton');

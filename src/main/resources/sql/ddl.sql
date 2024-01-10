@@ -68,7 +68,7 @@ create table studyGroup(
 create table studyMem (
                           studyGroupIdx		int		not null comment '스터디그룹 index',
                           memberIdx		int		not null comment '회원 index',
-                          studyMemRole	varchar(10) not null comment '스터디 그룹 내 권한',
+                          studyMemRole	varchar(20) not null comment '스터디 그룹 내 권한',
                           FOREIGN KEY (studyGroupIdx) REFERENCES studyGroup(studyGroupIdx) on update CASCADE on delete cascade,
                           FOREIGN KEY (memberIdx) REFERENCES member(memberIdx) on update CASCADE on delete cascade
 );
@@ -250,3 +250,4 @@ drop table if exists categoryRegion;
 drop table if exists categorySubject;
 drop table if exists categoryGrade;
 drop table if exists member;
+*/
