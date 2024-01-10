@@ -32,7 +32,7 @@
 				dataType: "json",
 				success: function(replyList) {
 					// 댓글 작성 후, 페이지 업데이트
-					alert("댓글 작성에 성공했습니다.");
+					alert("댓글을 작성했습니다.");
 					displayReplyList(replyList); // 수정된 댓글 목록을 표시하는 함수 호출
 					cancelReply(); // 입력 필드 초기화
 				},
@@ -70,18 +70,22 @@
 				},
 				dataType: "json",
 				success: function(replyList) {
+					alert("댓글을 수정했습니다.");
 					console.log("수정 성공");
 					console.log(replyList);
 					displayReplyList(replyList); // 수정된 댓글 목록을 표시하는 함수 호출
 				},
 				error: function() {
+					alert("댓글 수정에 실패했습니다.");
 					console.log("수정 실패");
 				}
 			});
 		}
 
 		const deleteReply = (replyIdx, postIdx) => {
-			// 댓글 삭제 작업을 수행
+			// 삭제 전에 팝업을 띄우고 사용자의 선택에 따라 작업을 수행
+			if (confirm("댓글을 삭제하시겠습니까?")) {
+				// 사용자가 확인을 선택한 경우 삭제 작업 수행
 			$.ajax({
 				type: "post",
 				url: "/reply/delete",
@@ -91,14 +95,20 @@
 				},
 				dataType: "json",
 				success: function(replyList) {
+					alert("댓글을 삭제했습니다.");
 					console.log("삭제 성공");
 					console.log(replyList);
 					displayReplyList(replyList); // 삭제된 댓글 목록을 표시하는 함수 호출
 				},
 				error: function() {
+					alert("댓글 삭제에 실패했습니다.");
 					console.log("삭제 실패");
 				}
 			});
+			} else {
+				// 사용자가 취소를 선택한 경우 아무 작업도 수행하지 않음
+				console.log("삭제 취소");
+			}
 		}
 
 		// 댓글 목록을 표시하는 함수
@@ -130,6 +140,54 @@
 			document.getElementById("replyContents").value = ''; // 댓글 내용 입력 필드 초기화
 		}
 	</script>
+	<style>
+		/* 버튼 스타일 */
+		button {
+			background-color: #4287f5;
+			color: white;
+			border: none;
+			padding: 8px 16px;
+			cursor: pointer;
+			border-radius: 20px;
+		}
+
+		/* 폼 스타일 */
+		input[type="text"] {
+			padding: 8px;
+			border: 1px solid lightgray;
+			border-radius: 4px;
+			outline: none;
+		}
+
+		input[type="text"]:hover {
+			border-color: blue;
+		}
+
+		/* 댓글 목록 테이블 스타일 */
+		table {
+			border-collapse: collapse;
+			width: 100%;
+		}
+
+		th, td {
+			padding: 8px;
+			text-align: left;
+			border-bottom: 1px solid lightgray;
+		}
+
+		th {
+			background-color: lightgray;
+		}
+
+		/* 기타 스타일 */
+		h1 {
+			color: #4287f5;
+		}
+
+		p {
+			color: gray;
+		}
+	</style>
 </head>
 <body>
 <h1>댓글 페이지</h1>
@@ -142,7 +200,7 @@
 	<button id="reply-write-btn" onclick="replyWrite()">댓글 작성</button>
 	<button type="button" onclick="cancelReply();">작성 취소</button>
 </div>
-
+<br>
 <!-- 댓글 목록 -->
 <div id = "reply-list">
 	<c:choose>

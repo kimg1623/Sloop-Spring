@@ -35,7 +35,7 @@
 	<!-- ckeditor 통해 업로드된 사진의 저장 경로 -->
 	<!-- 윈도우 경로 수정 필수 -->
 	<beans:bean class="java.lang.String" id="uploadPath">
-		<beans:constructor-arg value="/Users/thegreatjy/Documents"></beans:constructor-arg>
+		<beans:constructor-arg value="/Users/SAMSUNG/Desktop/Practice/upload"></beans:constructor-arg>
 	</beans:bean>
 	<resources mapping="/uploads/**" location="/resources/uploads/" />
 
