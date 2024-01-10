@@ -19,7 +19,7 @@
         padding: 5px;
         margin-bottom: 5px;
         border: 0px solid #bcbcbc;
-         background-color: lightgreen;
+          background-color: #458dfc;
       }
       #sidebar-left {
         width: 15%;

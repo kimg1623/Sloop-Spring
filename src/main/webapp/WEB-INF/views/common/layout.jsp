@@ -16,24 +16,11 @@
         border: 0px solid #bcbcbc;
       }
       #header {
-        padding: 5px;
-        margin-bottom: 5px;
-        border: 0px solid #bcbcbc;
-         background-color: lightgreen;
-      }
-      #sidebar-left {
-        width: 15%;
-        height:700px;
-        padding: 5px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        float: left;
-         background-color: yellow;
-        border: 0px solid #bcbcbc;
-        font-size:10px;
+          background-color: #458dfc;
+          height: 68px;
       }
       #content {
-        width: 75%;
+        width: 100%;
         padding: 5px;
         margin-right: 5px;
         float: left;
