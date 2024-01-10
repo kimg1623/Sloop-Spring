@@ -1,5 +1,6 @@
 package kr.co.sloop.member.service.impl;
 
+
 import kr.co.sloop.member.domain.MemberDTO;
 import org.springframework.ui.Model;
 
@@ -10,16 +11,17 @@ import java.util.Map;
 public interface MemberService {
     int signup(MemberDTO memberDTO);
 
+
     Map<String, String> login(MemberDTO memberDTO);
 
-    String emailCheck(String memberEmail);
 
     List<MemberDTO> findMemberList(Model model);
 
     String nicknameCheck(String memberNickname);
 
-
     MemberDTO findByMemberEmail(String loginEmail);
+
+    String emailCheck(String memberEmail);
 
     boolean update(MemberDTO memberDTO);
 
@@ -28,4 +30,7 @@ public interface MemberService {
     int deleteByUser(int memberIdx);
 
 
+
+
+    /* int signup(RegisterFormDTO registerFormDTO);*/
 }

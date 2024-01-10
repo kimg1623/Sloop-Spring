@@ -5,154 +5,21 @@
 
 <mapper namespace="kr.co.sloop.notice.mapper.NoticeMapper">
 
-	<!-- 공지사항 저장 -->
-	<insert id="insertNotice" parameterType="kr.co.sloop.notice.domain.NoticeDTO">
-		/* Query > kr.co.sloop.notice.mapper.NoticeMapper.insertNotice */
-		<!-- 저장하기전에 공지사항번호 발췌 -->
-		<selectKey resultType="Integer" keyProperty="postIdx" order="BEFORE">
-			SELECT IFNULL(MAX(postIdx), 0) + 1 FROM postNotice;
+
+	<select id="findAllNoticeList" resultType="notice">
+		select * from postNotice
+	</select>
+
+	<insert id="insertPost" parameterType="notice">
+		insert into post(boardIdx)
+		values (#{boardIdx})
+		<selectKey resultType="int" keyProperty="postIdx" order="AFTER">
+			select last_insert_id();
 		</selectKey>
-		INSERT INTO postNotice
-		(
-		postIdx /*공지사항 키*/
-		, postNoticeTitle /*공지사항 제목*/
-		, postNoticeContents /*공지사항 내용*/
-		, memberIdx /*회원 키*/
-		, postNoticeRegDate /*등록일*/
-		, postNoticeHits /*조회수*/
-		, categoryPostIdx /*카테고리 키*/
-		, postNoticePinned /*상단 고정여부*/
-		)
-		VALUES
-		(
-		#{postIdx}
-		, #{postNoticeTitle}
-		, #{postNoticeContents}
-		, #{memberIdx}
-		, NOW()
-		, 0
-		, #{categoryPostIdx}
-		, #{postNoticePinned}
-		)
 	</insert>
 
-	<!-- 공지사항 수정 -->
-	<update id="updateNotice" parameterType="kr.co.sloop.notice.domain.NoticeDTO">
-		/* Query > kr.co.sloop.notice.mapper.NoticeMapper.updateNotice */
-		UPDATE postNotice
-		SET
-			postNoticeTitle = #{postNoticeTitle}
-		  , postNoticeContents = #{postNoticeContents}
-		  , categoryPostIdx = #{categoryPostIdx}
-		  , postNoticeEditDate = NOW()
-		  , postNoticePinned= #{postNoticePinned}
-		WHERE postIdx = #{postIdx}
-	</update>
-
-	<!-- 공지사항 삭제 -->
-	<delete id="deleteNotice" parameterType="kr.co.sloop.notice.domain.NoticeDTO">
-		/* Query > kr.co.sloop.notice.mapper.NoticeMapper.deleteNotice */
-		DELETE FROM postNotice
-		WHERE postIdx = #{postIdx}
-	</delete>
-
-
-	<!--
-    [MySQL]
-    title like CONCAT('%',#{keyword},'%')
-    [Oracle]
-    title like '%' || #{keyword} || '%'
-    [MSSQL]
-    title like '%' + #{keyword} + '%'
-    -->
-
-	<!--검색 조건 쿼리 -->
-	<sql id="schSql">
-		<where>
-			<if test=" searchType != null and searchType != '' ">
-				<if test="searchType == 'title' ">
-					AND A.postNoticeTitle LIKE CONCAT('%',#{searchTxt},'%')
-				</if>
-				<if test="searchType == 'content' ">
-					AND A.postNoticeContents LIKE CONCAT('%',#{searchTxt},'%')
-				</if>
-				<if test="searchType == 'all' ">
-					AND ( A.postNoticeContents LIKE CONCAT('%',#{searchTxt},'%') OR A.postNoticeTitle LIKE CONCAT('%',#{searchTxt},'%') )
-				</if>
-			</if>
-		</where>
-	</sql>
-
-
-	<select id="selectListNoticePaging" parameterType="kr.co.sloop.notice.domain.NoticeDTO" resultType="kr.co.sloop.notice.domain.NoticeDTO">
-		/* Query > kr.co.sloop.notice.mapper.NoticeMapper.selectListNoticePaging */
-		SELECT
-		A.postIdx /*공지사항 키*/
-		, A.postNoticeTitle /*공지사항 제목*/
-		, A.postNoticeContents /*공지사항 내용*/
-		, A.memberIdx /*회원 키*/
-		, A.postNoticeRegDate /*등록일*/
-		, A.postNoticeHits /*조회수*/
-		, A.categoryPostIdx /*카테고리 키*/
-		, (SELECT categoryPostName FROM categoryPost B WHERE B.categoryPostIdx = A.categoryPostIdx) AS categoryPostName /*카테고리 명*/
-		, A.postNoticePinned /*상단 고정여부*/
-		FROM
-		(
-		SELECT
-		postIdx /*공지사항 키*/
-		, postNoticeTitle /*공지사항 제목*/
-		, postNoticeContents /*공지사항 내용*/
-		, memberIdx /*회원 키*/
-		, postNoticeHits /*조회수*/
-		, categoryPostIdx /*카테고리 키*/
-		, postNoticePinned /*상단 고정여부*/
-		, DATE_FORMAT(postNoticeRegDate, '%Y-%m-%d') AS postNoticeRegDate /*등록일*/
-		, DATE_FORMAT(postNoticeEditDate, '%Y-%m-%d') AS postNoticeEditDate /*수정일*/
-		FROM postNotice /*공지사항 테이블*/
-		WHERE 1=1
-		) AS A
-		<include refid="schSql" />
-		ORDER BY A.postNoticePinned DESC, A.postIdx DESC
-		LIMIT #{startIndex}, #{row}
-	</select>
-
-	<!-- 페이징 적용 공지사항 총 카운트 -->
-	<select id="selectNoticeCnt" parameterType="kr.co.sloop.notice.domain.NoticeDTO" resultType="Integer">
-		/* Query > kr.co.sloop.notice.mapper.NoticeMapper.selectNoticeCnt */
-		SELECT
-		COUNT(*) AS CNT
-		FROM postNotice A /*공지사항 테이블*/
-		<include refid="schSql" />
-	</select>
-
-
-	<!-- 공지사항상세조회 -->
-	<select id="selectDetailNotice" parameterType="kr.co.sloop.notice.domain.NoticeDTO" resultType="kr.co.sloop.notice.domain.NoticeDTO">
-		/* Query > kr.co.sloop.notice.mapper.NoticeMapper.selectDetailNotice */
-		SELECT
-			postIdx /*공지사항 키*/
-			 , postNoticeTitle /*공지사항 제목*/
-			 , postNoticeContents /*공지사항 내용*/
-			 , memberIdx /*회원 키*/
-			 , DATE_FORMAT(postNoticeRegDate, '%Y-%m-%d') AS postNoticeRegDate /*등록일*/
-			 , DATE_FORMAT(postNoticeEditDate, '%Y-%m-%d') AS postNoticeEditDate /*수정일*/
-			 , postNoticeHits /*조회수*/
-			 , A.categoryPostIdx /*카테고리 키*/
-			 , postNoticePinned /*상단 고정여부*/
-			 , (SELECT categoryPostName FROM categoryPost B WHERE B.categoryPostIdx = A.categoryPostIdx) AS categoryPostName /*카테고리 명*/
-			 , ( SELECT postIdx FROM postNotice WHERE postIdx <![CDATA[<]]> #{postIdx} ORDER BY postIdx DESC LIMIT 1 ) AS prevPostIdx /*이전 게시물번호*/
-			 , ( SELECT postIdx FROM postNotice WHERE postIdx <![CDATA[>]]> #{postIdx} ORDER BY postIdx ASC LIMIT 1 ) AS nextPostIdx /*다음 게시물번호*/
-		FROM postNotice A
-		WHERE postIdx = #{postIdx}
-	</select>
-
-	<!-- 조회수 증가 -->
-	<update id="updatePostNoticeHits" parameterType="Integer">
-		/* Query > kr.co.sloop.notice.mapper.NoticeMapper.updatePostNoticeHits */
-		UPDATE postNotice
-		SET
-			postNoticeHits = IFNULL(postNoticeHits, 0) + 1
-		WHERE
-			postIdx = ${postIdx}
-	</update>
+	<insert id="insertNoticeWrite" parameterType="notice">
+		insert into postNotice (postIdx,postNoticeTitle, postNoticeContents, memberIdx, postNoticeEditDate, postNoticeHits , categoryPostIdx , postNoticePinned)
+		values (#{postIdx},#{postNoticeTitle}, #{postNoticeContents} , #{memberIdx} , #{postNoticeEditDate} , #{postNoticeHits} , #{categoryPostIdx} , #{postNoticePinned})
+	</insert>
 </mapper>

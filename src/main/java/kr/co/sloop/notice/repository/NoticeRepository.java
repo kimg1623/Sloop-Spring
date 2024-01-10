@@ -1,14 +1,17 @@
-package kr.co.sloop.notice.mapper;
+package kr.co.sloop.notice.repository;
+
 
 import kr.co.sloop.notice.domain.NoticeDTO;
-import org.apache.ibatis.annotations.Mapper;
 import org.springframework.ui.Model;
 
 import java.util.List;
 
-@Mapper
-public interface NoticeMapper {
+public interface NoticeRepository {
+
   List<NoticeDTO> findAllNoticeList(Model model);
+
+
   int insertPost(NoticeDTO noticeDTO);
+
   int insertNoticeWrite(NoticeDTO noticeDTO);
 }
