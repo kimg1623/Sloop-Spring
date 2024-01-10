@@ -9,5 +9,4 @@ public interface NoticeService {
   List<NoticeDTO> findAllNoticeList(Model model);
 
 
-  boolean noticeWrite(NoticeDTO noticeDTO);
 }

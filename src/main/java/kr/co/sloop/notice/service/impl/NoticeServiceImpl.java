@@ -14,7 +14,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @Log4j2
 public class NoticeServiceImpl implements NoticeService {
-
   private final NoticeRepository noticeRepository;
 
 
@@ -22,25 +21,6 @@ public class NoticeServiceImpl implements NoticeService {
   public List<NoticeDTO> findAllNoticeList(Model model) {
     return noticeRepository.findAllNoticeList(model);
   }
-
-  @Override
-  public boolean noticeWrite(NoticeDTO noticeDTO) {
-    int noticeWriteResult = 0;
-    // 1. Post 글 등록
-    noticeWriteResult = noticeRepository.insertPost(noticeDTO);
-    if (noticeWriteResult != 1) return false; // 글 등록 실패
-
-    // 2. Notice 글 작성
-    noticeWriteResult = noticeRepository.insertNoticeWrite(noticeDTO);
-    if (noticeWriteResult != 1) return false; // 글 작성 실패
-
-    // 글 작성 성공
-    return true;
-
-  }
-
-
-
 
 
 }

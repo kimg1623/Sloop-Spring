@@ -22,7 +22,7 @@
     <p>전화번호 : <input type="text" name="memberPhonenumber" placeholder="핸드폰번호" required></p>
     <p>회원대분류 :
         <select name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required>
-            <option value="1">선택하세요.</option>
+            <option>선택하세요.</option>
             <option value="초등학생">초등학생</option>
             <option value="중학생">중학생</option>
             <option value="고등학생">고등학생</option>
