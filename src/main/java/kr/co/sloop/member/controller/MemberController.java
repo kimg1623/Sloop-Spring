@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -23,7 +24,7 @@ public class MemberController {
     // signupForm.jsp 로 이동
     @GetMapping("/signup")
     public String signupForm(){
-        return "signupForm";
+        return "member/signupForm";
     }
 
     // signupForm.jsp -> form method = Post 로 데이터 받아옴
@@ -32,16 +33,16 @@ public class MemberController {
         int signupResult = memberService.signup(memberDTO);
 
         if (signupResult > 0){
-            return "signupSuccess"; // 회원가입 성공 시 이동
+            return "member/signupSuccess"; // 회원가입 성공 시 이동
         } else {
-            return "signupForm";    // 회원가입 실패 시 이동
+            return "member/signupForm";    // 회원가입 실패 시 이동
         }
     }
 
     // 회원가입 성공 후 로그인 하러 가기 버튼 클릭시 LoginForm.jsp 로 이동
     @GetMapping("/login")
     public String loginForm(){
-        return "loginForm";
+        return "member/loginForm";
     }
 
 
@@ -50,11 +51,13 @@ public class MemberController {
     @PostMapping("/login")
     public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
 
-        boolean loginResult = memberService.login(memberDTO);
-        if (loginResult) {
+        Map<String, String> loginResult = memberService.login(memberDTO);
+        if (loginResult != null) {
             log.info("로그인 성공");
             session.setAttribute("loginEmail", memberDTO.getMemberEmail());
-            return "home"; // 로그인 성공시 세션에 "loginEmail"이란 이름으로 저장 후 studyList or mypage 로 이동
+            session.setAttribute("loginMemberIdx", loginResult.get("loginMemberIdx")); // 지원 추가
+            session.setAttribute("loginMemberNickname", loginResult.get("loginMemberNickname")); // 지원 추가
+            return "redirect:/"; // 로그인 성공시 세션에 "loginEmail"이란 이름으로 저장 후 studyList or mypage 로  // 지원 수정
         } else {
             log.info("로그인 실패");
             return "redirect:/member/login";    // 로그인 실패시 다시 GetMapping 의 LoginForm으로 redirect
@@ -80,7 +83,7 @@ public class MemberController {
     public String memberList(Model model){
         List<MemberDTO> memberDTOList = memberService.findMemberList(model);
         model.addAttribute("memberList", memberDTOList);
-        return "memberList";    // 관리자 일 때 memberList 이동 가능
+        return "member/memberList";    // 관리자 일 때 memberList 이동 가능
     }
 
     // update.jsp의 Form 출력
@@ -91,7 +94,7 @@ public class MemberController {
         if (loginEmail != null) {
             MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
             model.addAttribute("member", memberDTO);
-            return "update";
+            return "member/update";
         } else {
             return "redirect:/member/login";
         }
@@ -116,7 +119,7 @@ public class MemberController {
     public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model){
         MemberDTO memberDTO = memberService.findByIdx(memberIdx);   // memberIdx 파라미터 값을 가져온 뒤 해당 domain 정보를 불러온다.
         model.addAttribute("member",memberDTO);
-        return "mypage";
+        return "member/mypage";
     }
 
     // 꼭 로그인 후 마이페이지로 이동 ( 회원의 기능 )
@@ -133,7 +136,7 @@ public class MemberController {
 
             return "redirect:/member?memberIdx="+memberDTO.getMemberIdx();  // 세션에 저장된 아이디에 맞는 마이페이지로 이동
         } else{
-            return "loginForm"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
+            return "member/loginForm"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
         }
 
     }

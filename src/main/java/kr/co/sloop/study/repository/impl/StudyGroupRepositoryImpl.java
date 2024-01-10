@@ -21,8 +21,6 @@ import java.util.Map;
 @Log4j2
 public class StudyGroupRepositoryImpl implements StudyGroupRepository {
 
-    private final SqlSessionTemplate sql;
-    @Autowired
     private final StudyGroupMapper studyGroupMapper;
 
     // 카테고리 코드:이름 저장
@@ -48,6 +46,22 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         return result;
     }
 
+    // 스터디 그룹 생성 후 기본 게시판 4개 생성
+    @Override
+    public int create4boards(int studyGroupIdx) {
+        return studyGroupMapper.create4boards(studyGroupIdx);
+    }
+
+    // 스터디 그룹 생성 후 해당 회원에게 ROLE_STUDY_LEADER 권한 부여
+    @Override
+    public int insertMemberForGrantLeader(int studyGroupIdx, String memberIdx) {
+
+        Map<String, String> studyGroupAndMemberIdx = new HashMap<String, String>();
+        studyGroupAndMemberIdx.put("studyGroupIdx",String.valueOf(studyGroupIdx));
+        studyGroupAndMemberIdx.put("memberIdx",memberIdx);
+        return studyGroupMapper.insertMemberForGrantLeader(studyGroupAndMemberIdx);
+    }
+
     @Override
     public List<HashMap<String, Object>> getSecondCategoryRegionMap() {
         return null;
@@ -57,6 +71,22 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
     public StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode) {
         return studyGroupMapper.selectStudyGroupByGroupCode(studyGroupCode);
     }
+
+    @Override
+    public int updateStudyGroup(StudyGroupDTO studyGroupDTO) {
+        return studyGroupMapper.updateStudyGroup(studyGroupDTO);
+    }
+
+    @Override
+    public List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx) {
+        return studyGroupMapper.getBoardIdxsByGroupCode(studyGroupIdx);
+    }
+
+    @Override
+    public int deleteGroupByGroupCode(String studyGroupCode) {
+        return studyGroupMapper.deleteGroupByGroupCode(studyGroupCode);
+    }
+
 
     // 생성자에서 실행하도록 변경하기 fix 필요!
     private void getALlCategory() {
