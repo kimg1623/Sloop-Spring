@@ -1,6 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
 <html>
 <head>
 	<title>Home</title>
@@ -11,7 +10,12 @@
 	</h1>
 
 
-	<P>  The time on the server is ${serverTime}. </P>
+	<P>
+		<h3>로그인 정보</h3>
+		loginEmail = ${sessionScope.loginEmail}<br>
+		loginMemberIdx = ${sessionScope.loginMemberIdx}<br>
+		loginMemberNickname = ${sessionScope.loginMemberNickname}<br>
+	</P>
 
 	<!-- 김지원 - 주석 아래로 작성 -->
 	<a href="/study">스터디그룹 리스트 /study</a><br>
