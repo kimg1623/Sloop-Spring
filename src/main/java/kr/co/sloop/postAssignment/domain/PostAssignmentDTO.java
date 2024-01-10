@@ -33,5 +33,6 @@ public class PostAssignmentDTO extends PostDTO {
 
     private Timestamp assignmentBeginDate;  // 과제 시작일시
     private Timestamp assignmentEndDate;    // 과제 마감일시
-    private int assignmentScore;    // 과제 만점 점수
+    private String assignmentEndDateString; // 과제 마감일시 문자열 형식
+    private Integer assignmentScore;    // 과제 만점 점수
 }
