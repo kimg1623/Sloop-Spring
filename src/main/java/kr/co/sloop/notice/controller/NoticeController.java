@@ -47,7 +47,6 @@ public class NoticeController {
 	@GetMapping("/write")
 	public String noticeWriteForm(Model model){
 
-
 		NoticeDTO noticeDTO = new NoticeDTO();
 		model.addAttribute("noticeDTO", noticeDTO);
 		return "notice/noticeWriteForm";
@@ -56,11 +55,9 @@ public class NoticeController {
 	@PostMapping("/write")
 	public String noticeWrite(@Valid @ModelAttribute("noticeDTO") NoticeDTO noticeDTO , BindingResult errors , HttpSession session){
 
-
 		if (errors.hasErrors()){
 			return "notice/noticeWriteForm";
 		}
-
 
 		/** 세션에서 이메일 , memberIdx 값 불러옴 */
 		String memberEmail = (String)session.getAttribute("loginEmail");
@@ -75,16 +72,12 @@ public class NoticeController {
 		// 서비스단의 로직을 수행하고 값을 넘겨받음.
 		boolean result = noticeService.noticeWrite(noticeDTO);
 
-
-
 		if (result){
 			return "redirect:/notice/noticeList";
 		} else {
 			return "member/loginForm";
 		}
-
-
-
 	}
+
 
 }
