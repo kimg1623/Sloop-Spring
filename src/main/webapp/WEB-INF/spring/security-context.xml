@@ -50,7 +50,7 @@
             <!--<security:jdbc-user-service data-source-ref="dataSource">-->
             <!--사용 후 아래 없어도됨.-->
             <security:user-service>
-                <security:user name="qwe123@naver.com" password="{noop}1234" authorities="ROLE_MEMBER"/>
+                <!--<security:user name="qwe123@naver.com" password="{noop}1234" authorities="ROLE_MEMBER"/>-->
 
 
             </security:user-service>
