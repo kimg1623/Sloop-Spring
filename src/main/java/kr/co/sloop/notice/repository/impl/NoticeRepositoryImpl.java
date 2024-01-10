@@ -21,6 +21,15 @@ public class NoticeRepositoryImpl implements NoticeRepository {
     return noticeMapper.findAllNoticeList(model);
   }
 
+  @Override
+  public int insertPost(NoticeDTO noticeDTO) {
+    return noticeMapper.insertPost(noticeDTO);
+  }
+
+  @Override
+  public int insertNoticeWrite(NoticeDTO noticeDTO) {
+    return noticeMapper.insertNoticeWrite(noticeDTO);
+  }
 
 
 }
