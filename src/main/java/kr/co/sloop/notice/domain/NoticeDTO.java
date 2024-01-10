@@ -16,4 +16,9 @@ public class NoticeDTO {
   private int categoryPostIdx;   // '카테고리 idx'
   private int postNoticePinned;   // '상단 고정 여부'
 
+  /** DB컬럼에 존재하지 않는 데이터 */
+
+  private String memberEmail;
+  private int boardIdx;
+
 }
