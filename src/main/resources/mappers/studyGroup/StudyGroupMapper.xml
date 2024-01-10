@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.sloop.study.mapper.StudyGroupMapper">
+
+
+    <select id="getAllStudyGroupList" resultType="studyGroup">
+        SELECT * from studyGroup
+    </select>
+
+    <!-- 학교학년 카테고리 가져오기 -->
+    <select id="getAllGradeName" resultType="categoryGrade">
+        select categoryGradeCode, categoryGradeName from categoryGrade
+    </select>
+
+    <!-- 과목 카테고리 가져오기 -->
+    <select id="getAllSubjectName" resultType="categorySubject">
+        select categorySubjectCode, categorySubjectName from categorySubject
+    </select>
+
+    <!-- 지역 카테고리 가져오기 -->
+    <select id="getAllRegionName" resultType="categoryRegion">
+        select categoryRegionCode, categoryRegionName from categoryRegion
+    </select>
+
+    <insert id="insertNewStudyGroup" parameterType="studyGroup">
+        insert into studyGroup(studyGroupCode,studyGroupName,studyGroupMethod,studyGroupGradeCode,studyGroupSubjectCode,studyGroupRegionCode,studyGroupNum,studyGroupDuedate,studyGroupStartdate,studyGroupIntrotxt,studyGroupOImg)
+            values(#{studyGroupCode},#{studyGroupName},#{studyGroupMethod},#{studyGroupGradeCode},#{studyGroupSubjectCode},#{studyGroupRegionCode},#{studyGroupNum},#{studyGroupDuedate},#{studyGroupStartdate},#{studyGroupIntrotxt},#{studyGroupOImg});
+        <selectKey resultType="int" keyProperty="studyGroupIdx" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <insert id="create4boards" parameterType="int"> <!-- 나중에 BoardMapper로 옮기기 -->
+        insert into board(studyGroupIdx, categoryBoardIdx)
+                 values (#{studyGroupIdx}, 1),
+                        (#{studyGroupIdx}, 2),
+                        (#{studyGroupIdx}, 3),
+                        (#{studyGroupIdx}, 4)
+    </insert>
+
+    <insert id="insertMemberForGrantLeader" parameterType="Map">
+        insert into studyMem values (#{studyGroupIdx}, #{memberIdx}, 'ROLE_STUDY_LEADER')
+    </insert>
+
+    <select id="selectStudyGroupByGroupCode" parameterType="String" resultType="studyGroup">
+        select * from studyGroup where studyGroupCode=#{studyGroupCode}
+    </select>
+
+    <select id="getBoardIdxsByGroupCode" parameterType="int" resultType="java.util.HashMap">
+        select boardIdx, c.categoryBoardIdx cidx, c.categoryBoard categoryName
+        from board b left join categoryboard c on b.categoryBoardIdx = c.categoryBoardIdx
+        where studyGroupIdx=#{studyGroupIdx}
+    </select>
+
+    <update id="updateStudyGroup" parameterType="studyGroup">
+        update studyGroup set
+            studyGroupName=#{studyGroupName},
+            studyGroupMethod=#{studyGroupMethod},
+            studyGroupSubjectCode=#{studyGroupSubjectCode},
+            studyGroupRegionCode=#{studyGroupRegionCode},
+            studyGroupNum=#{studyGroupNum},
+            studyGroupDuedate=#{studyGroupDuedate},
+            studyGroupStartdate=#{studyGroupStartdate},
+            studyGroupIntrotxt=#{studyGroupIntrotxt},
+            studyGroupOImg=#{studyGroupOImg}
+            where studyGroupIdx=#{studyGroupIdx}
+    </update>
+
+    <delete id="deleteGroupByGroupCode" parameterType="String">
+        delete from studyGroup where studyGroupCode=#{studyGroupCode}
+    </delete>
+
+</mapper>

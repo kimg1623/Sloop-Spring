@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
 	<title>Title</title>
@@ -10,7 +11,12 @@
 	</h1>
 
 
-	<P>  The time on the server is ${serverTime}. </P>
+	<P>
+		<h3>로그인 정보</h3>
+		loginEmail = ${sessionScope.loginEmail}<br>
+		loginMemberIdx = ${sessionScope.loginMemberIdx}<br>
+		loginMemberNickname = ${sessionScope.loginMemberNickname}<br>
+	</P>
 
 	<!-- 김지원 - 주석 아래로 작성 -->
 	<a href="/study">스터디그룹 리스트 /study</a><br>
@@ -19,6 +25,7 @@
 	<!-- 박석은 - 주석 아래로 작성 -->
 
 	<!-- 이지연 - 주석 아래로 작성 -->
+	<a href="/postforum/list">자유 게시판</a><br>
 
 	<!-- 이창규 - 주석 아래로 작성 -->
   	<a href="/member/login">로그인</a><br>

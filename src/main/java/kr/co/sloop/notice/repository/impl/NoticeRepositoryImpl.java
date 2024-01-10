@@ -1,24 +1,23 @@
-package kr.co.sloop.notice.service.impl;
+package kr.co.sloop.notice.repository.impl;
 
 import kr.co.sloop.notice.domain.NoticeDTO;
+import kr.co.sloop.notice.mapper.NoticeMapper;
 import kr.co.sloop.notice.repository.NoticeRepository;
-import kr.co.sloop.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 
 import java.util.List;
 
-@Service
+@Repository
 @RequiredArgsConstructor
 @Log4j2
-public class NoticeServiceImpl implements NoticeService {
-  private final NoticeRepository noticeRepository;
-
+public class NoticeRepositoryImpl implements NoticeRepository {
+  private final NoticeMapper noticeMapper;
 
   @Override
   public List<NoticeDTO> findAllNoticeList(Model model) {
-    return noticeRepository.findAllNoticeList(model);
+    return noticeMapper.findAllNoticeList(model);
   }
 }

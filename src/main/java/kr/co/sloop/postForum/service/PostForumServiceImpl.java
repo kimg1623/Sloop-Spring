@@ -1,13 +1,13 @@
 package kr.co.sloop.postForum.service;
 
 import kr.co.sloop.post.domain.PageDTO;
+import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.postForum.domain.PostForumDTO;
 import kr.co.sloop.postForum.repository.PostForumRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -38,12 +38,10 @@ public class PostForumServiceImpl implements PostForumService {
 
     // 글 목록 조회
     @Override
-    public ArrayList<PostForumDTO> list(int boardIdx, int page) {
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("boardIdx", boardIdx);
-        map.put("limit", PageDTO.postsPerPage); // 페이지 당 글 개수
-        map.put("offset", (page - 1) * PageDTO.postsPerPage); // (현재 페이지 - 1) * 페이지 당 글 개수
-        List<PostForumDTO> postForumDTOList = postForumRepositoryImpl.list(map);
+    public ArrayList<PostForumDTO> list(SearchDTO searchDTO) {
+        searchDTO.setOffset((searchDTO.getPage() - 1) * PageDTO.postsPerPage); // // (현재 페이지 - 1) * 페이지 당 글 개수
+
+        List<PostForumDTO> postForumDTOList = postForumRepositoryImpl.list(searchDTO);
 
         // List -> ArrayList
         ArrayList<PostForumDTO> postForumDTOArrayList = new ArrayList<>(postForumDTOList);
@@ -83,5 +81,11 @@ public class PostForumServiceImpl implements PostForumService {
 
         // postIdx로 글 정보 불러오기
         return findByPostIdx(postIdx);
+    }
+
+    // postIdx 글 작성자 email 조회
+    @Override
+    public String findWriterEmailByPostIdx(int postIdx) {
+        return postForumRepositoryImpl.findWriterEmailByPostIdx(postIdx);
     }
 }
