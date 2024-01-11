@@ -14,6 +14,5 @@ public interface NoticeRepository {
   NoticeDTO findByPostIdx(int postIdx);
   int updateNotice(NoticeDTO noticeDTO);
   void updateNoticeHits(int postIdx);
-
   int searchAndCountPostsByBoardIdx(NoticeSearchDTO boardIdx);
 }

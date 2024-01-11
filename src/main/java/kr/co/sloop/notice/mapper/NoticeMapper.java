@@ -10,14 +10,9 @@ import java.util.ArrayList;
 public interface NoticeMapper {
   int insertPost(NoticeDTO noticeDTO);
   int insertNoticeWrite(NoticeDTO noticeDTO);
-
   NoticeDTO findByPostIdx(int postIdx);
-
   int updateNotice(NoticeDTO noticeDTO);
-
   void updateNoticeHits(int postIdx);
-
   ArrayList<NoticeDTO> selectAllNoticeByBoardIdx(NoticeSearchDTO noticeSearchDTO);
-
   int searchAndCountPostsByBoardIdx(NoticeSearchDTO boardIdx);
 }

@@ -14,7 +14,5 @@ public interface NoticeService {
   boolean noticeWrite(NoticeDTO noticeDTO);
   NoticeDTO findByPostIdx(int postIdx);
   boolean updateNotice(NoticeDTO noticeDTO);
-
-
   NoticeSearchDTO initialize(int boardIdx, int page, int searchType, String keyword, int boardType);
 }
