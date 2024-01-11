@@ -4,6 +4,7 @@ import kr.co.sloop.post.domain.PostDTO;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -39,6 +40,6 @@ public class PostAssignmentDTO extends PostDTO {
 
     // 과제 객체 1개
     private AssignmentDTO assignment; // 과제
-    // 첨부파일 객체 list
-    private List<AssignmentDTO> assignmentList; // 첨부파일 여러 개
+    // 첨부파일 list
+    private List<MultipartFile> multipartFileList; // 첨부파일 여러 개
 }
