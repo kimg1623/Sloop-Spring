@@ -38,6 +38,7 @@ public class NoticeRepositoryImpl implements NoticeRepository {
 
   @Override
   public int updateNotice(NoticeDTO noticeDTO) {
+    log.info("aaaaa"+noticeDTO);
     return noticeMapper.updateNotice(noticeDTO);
   }
 

@@ -113,13 +113,14 @@ public class NoticeController {
 														 HttpSession session){
 		// 로그인된 회원과 글 작성자가 동일한지 검사
 
-		if (!noticeDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
+
+		/*if (!noticeDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
 			// 동일하지 않다면 리스트로 리다이렉트
 			return "redirect:/notice/list";
-		}
+		}*/
 			// 글 수정하기
 		boolean result = noticeService.updateNotice(noticeDTO);
-
+		log.info("==========DTOOOOOO" + noticeDTO);
 		if (result){ // 수정 성공
 
 			return "redirect:/notice/detail?postIdx=" + noticeDTO.getPostIdx();

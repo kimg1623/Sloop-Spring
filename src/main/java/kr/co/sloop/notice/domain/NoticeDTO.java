@@ -1,8 +1,11 @@
 package kr.co.sloop.notice.domain;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Data
 public class NoticeDTO {
@@ -10,8 +13,8 @@ public class NoticeDTO {
   private String postNoticeTitle;  // '제목'
   private String postNoticeContents;  //  '내용'
   private int memberIdx;   // '작성자 회원 idx'
-  private Date postNoticeRegDate;  //  '작성일시'
-  private Date postNoticeEditDate;  // '수정일시'
+  private Timestamp postNoticeRegDate;  //  '작성일시'
+  private Timestamp postNoticeEditDate;  // '수정일시'
   private int postNoticeHits;   // '조회수'
   private int categoryPostIdx;   // '카테고리 idx'
   private int postNoticePinned;   // '상단 고정 여부'
