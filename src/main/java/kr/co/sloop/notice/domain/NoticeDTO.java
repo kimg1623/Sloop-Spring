@@ -19,6 +19,7 @@ public class NoticeDTO {
   /** DB컬럼에 존재하지 않는 데이터 */
 
   private String memberEmail;
+  private String memberNickname;
   private int boardIdx;
-
+  private String categoryPostName;
 }
