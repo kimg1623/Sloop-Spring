@@ -1,3 +1,4 @@
+<%--
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -23,7 +24,7 @@
     <tbody>
         <c:forEach items="${noticeList}" var="notice">
             <tr>
-                <td>${notice.postIdx}</td>
+                <td><a href="/notice/detail?postIdx=${notice.postIdx}">${notice.postIdx}</a></td>
                 <td>${notice.postNoticeTitle}</td>
                 <td>${notice.postNoticeContents}</td>
                 <td>${notice.memberIdx}</td>
@@ -36,6 +37,8 @@
         </c:forEach>
     </tbody>
 </table>
+<a href="/notice/write">글쓰기</a>
 
 </body>
 </html>
+--%>
