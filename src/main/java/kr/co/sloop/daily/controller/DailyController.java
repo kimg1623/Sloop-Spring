@@ -1,6 +1,7 @@
 package kr.co.sloop.daily.controller;
 
 import kr.co.sloop.daily.domain.DailyDTO;
+import kr.co.sloop.daily.domain.PageDTO;
 import kr.co.sloop.daily.service.impl.DailyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -26,12 +27,28 @@ public class DailyController {
 	private final DailyService dailyService;
 
 	//공부 인증게시판 첫화면-전체 리스트
-	@GetMapping({"","/"})
-	public String getDailyList(Model model){
-		List<DailyDTO> dailylist = dailyService.getAllDailyList();
-		model.addAttribute("dailyList", dailylist);
-		//공부인증 첫화면 jsp
+//	@GetMapping({"","/"})
+//	public String getDailyList(Model model){
+//		List<DailyDTO> dailylist = dailyService.getAllDailyList();
+//		model.addAttribute("dailyList", dailylist);
+//		//공부인증 첫화면 jsp
+//		return "daily/dailyList";
+//	}
+
+	// 페이징 리스트(O)
+	@GetMapping({"","/","/list"})
+	public String paging(Model model, @RequestParam(value = "page",required = false,defaultValue = "1") int page){
+
+		log.info("page"+page);
+		List<DailyDTO> pagingDailyList = dailyService.pageList(page);
+		System.out.println("pagingDailyList"+pagingDailyList);
+		PageDTO pageDTO = dailyService.pagingParam(page);
+
+		model.addAttribute("dailyList", pagingDailyList);
+		model.addAttribute("paging",pageDTO);
+
 		return "daily/dailyList";
+
 	}
 
 
@@ -64,7 +81,7 @@ public class DailyController {
 		if(dailyWriteResult){
 			//정상적으로 처리
 			///글 작성했을 때 페이지 목록으로 가도록 수정
-			return "redirect:/daily";
+			return "redirect:/daily/list";
 		}else{
 			//실패
 			return "daily/dailyWrite";
@@ -125,7 +142,6 @@ public class DailyController {
 		return "daily/dailyUpdate";
 	}
 
-
 	@PostMapping("/update")
 	public String update(@ModelAttribute DailyDTO dailyDTO){
 		int dailyUpdateResult = dailyService.update(dailyDTO);
@@ -133,10 +149,10 @@ public class DailyController {
 //		model.addAttribute("daily",dailyDTO);
 		if(dailyUpdateResult>0){
 			//수정 성공
-			return "redirect:/daily";  //해당되는 게시물로 수정해야함
+			return "redirect:/daily/list";  //해당되는 게시물로 수정해야함
 		}else{
 			//수정 실패
-			return "redirect:/daily"; // 리스트
+			return "redirect:/daily/list"; // 리스트
 		}
 
 	}
@@ -162,7 +178,7 @@ public class DailyController {
 	@GetMapping("/delete")
 	public String delete(@RequestParam("postIdx") int postIdx){
 		dailyService.delete(postIdx);
-		return "redirect:/daily/";
+		return "redirect:/daily/list";
 	}
 
 
