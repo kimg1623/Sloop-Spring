@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 @Controller
@@ -59,7 +60,10 @@ public class PostAssignmentController {
     // 글 작성하기
     @PostMapping("/write")
     public String write(@ModelAttribute("postAssignmentDTO") PostAssignmentDTO postAssignmentDTO){
-        log.info(postAssignmentDTO);
+        // 문자열 -> sql.Timestamp 형식으로 변환
+        Timestamp assignmentEndDate = Timestamp.valueOf(postAssignmentDTO.getAssignmentEndDateString() + ":00");
+        postAssignmentDTO.setAssignmentEndDate(assignmentEndDate);
+
 
 
         return "redirect:/postassignment/list";
@@ -72,7 +76,7 @@ public class PostAssignmentController {
         PostAssignmentDTO postAssignmentDTO = new PostAssignmentDTO();
         //postAssignmentDTO.setCategoryPostIdx(1);
         model.addAttribute("postAssignmentDTO", postAssignmentDTO);
-        return "postAssignment/writeDateTimePicker";
+        return "postAssignment/write_datepicker";
     }
 
 }

@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 // 과제 게시판의 게시글
 @Getter
@@ -35,4 +36,9 @@ public class PostAssignmentDTO extends PostDTO {
     private Timestamp assignmentEndDate;    // 과제 마감일시
     private String assignmentEndDateString; // 과제 마감일시 문자열 형식
     private Integer assignmentScore;    // 과제 만점 점수
+
+    // 과제 객체 1개
+    private AssignmentDTO assignment; // 과제
+    // 첨부파일 객체 list
+    private List<AssignmentDTO> assignmentList; // 첨부파일 여러 개
 }
