@@ -25,18 +25,8 @@ public class NoticeController {
 
 	private final NoticeService noticeService;
 
-	@GetMapping("/noticeList")
+	@GetMapping("/list")
 	public String noticeList(Model model, NoticeDTO noticeDTO , HttpSession session){
-
-		/** 세션에서 이메일 , memberIdx 값 불러옴 */
-		String memberEmail = (String)session.getAttribute("loginEmail");
-		int memberIdx = Integer.parseInt((String) session.getAttribute("loginMemberIdx"));
-		/** 추후에 PathVariable 값과 동일하게 세팅
-		 * 현재는 편의상 1로 direct로 설정 후 집어넣음*/
-
-		// noticeDTO 에 해당 변수값을 set 해준다.
-		noticeDTO.setMemberEmail(memberEmail);
-		noticeDTO.setMemberIdx(memberIdx);
 
 		List<NoticeDTO> noticeList	= noticeService.findAllNoticeList(model);
 		model.addAttribute("noticeList" , noticeList);
