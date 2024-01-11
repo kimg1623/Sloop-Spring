@@ -7,6 +7,19 @@
 
 
 	<select id="findAllNoticeList" resultType="notice">
-		select * from notice
+		select * from postNotice
 	</select>
+
+	<insert id="insertPost" parameterType="notice">
+		insert into post(boardIdx)
+		values (#{boardIdx})
+		<selectKey resultType="int" keyProperty="postIdx" order="AFTER">
+			select last_insert_id();
+		</selectKey>
+	</insert>
+
+	<insert id="insertNoticeWrite" parameterType="notice">
+		insert into postNotice (postIdx,postNoticeTitle, postNoticeContents, memberIdx, postNoticeEditDate, postNoticeHits , categoryPostIdx , postNoticePinned)
+		values (#{postIdx},#{postNoticeTitle}, #{postNoticeContents} , #{memberIdx} , #{postNoticeEditDate} , #{postNoticeHits} , #{categoryPostIdx} , #{postNoticePinned})
+	</insert>
 </mapper>

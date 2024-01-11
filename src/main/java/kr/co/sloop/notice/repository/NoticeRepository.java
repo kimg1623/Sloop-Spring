@@ -10,4 +10,8 @@ public interface NoticeRepository {
 
   List<NoticeDTO> findAllNoticeList(Model model);
 
+
+  int insertPost(NoticeDTO noticeDTO);
+
+  int insertNoticeWrite(NoticeDTO noticeDTO);
 }
