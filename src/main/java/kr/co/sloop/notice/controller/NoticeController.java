@@ -1,6 +1,7 @@
 package kr.co.sloop.notice.controller;
 
 
+import kr.co.sloop.common.AlertUtils;
 import kr.co.sloop.notice.domain.NoticeDTO;
 import kr.co.sloop.notice.service.NoticeService;
 import kr.co.sloop.post.domain.SearchDTO;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.List;
@@ -70,7 +72,7 @@ public class NoticeController {
 		boolean result = noticeService.noticeWrite(noticeDTO);
 
 		if (result){
-			return "redirect:/notice/noticeList";
+			return "redirect:/notice/list";
 		} else {
 			return "member/loginForm";
 		}
@@ -79,21 +81,52 @@ public class NoticeController {
 	/** 공지 게시글 상세 조회 폼 */
 	@GetMapping("detail")
 	public String detail(@RequestParam("postIdx") int postIdx , Model model){
-		NoticeDTO noticeDTO = noticeService.findByPostIdx(postIdx);
+
+
+		NoticeDTO noticeDTO = noticeService.detailNotice(postIdx);
+
 		model.addAttribute("noticeDTO" , noticeDTO);
 		/** 본인(관리자) 게시물 */
-
 
 		/** 누구나 볼 수 있는 게시물 */
 
 		return "notice/detail";
 
-
-
-
-
 	}
 
+	@GetMapping("update")
+	public String updateNoticeForm(@RequestParam("postIdx") int postIdx , HttpSession session , Model model ){
+
+		String getNickname = (String) session.getAttribute("loginMemberNickname");
+
+		if (getNickname != null) {
+			NoticeDTO noticeDTO = noticeService.findByPostIdx(postIdx);
+			model.addAttribute("noticeDTO" , noticeDTO);
+			return "notice/updateForm";
+		} else {
+			return "member/loginForm";
+		}
+	}
+
+	@PostMapping("update")
+	public String updateNotice(@ModelAttribute("noticeDTO") NoticeDTO noticeDTO ,
+														 HttpSession session){
+		// 로그인된 회원과 글 작성자가 동일한지 검사
+
+		if (!noticeDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
+			// 동일하지 않다면 리스트로 리다이렉트
+			return "redirect:/notice/list";
+		}
+			// 글 수정하기
+		boolean result = noticeService.updateNotice(noticeDTO);
+
+		if (result){ // 수정 성공
+
+			return "redirect:/notice/detail?postIdx=" + noticeDTO.getPostIdx();
+		} else { // 수정 실패
+			return "redirect:/notice/list";
+		}
+	}
 
 
 }

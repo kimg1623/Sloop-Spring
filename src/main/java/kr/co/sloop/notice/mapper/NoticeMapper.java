@@ -13,4 +13,8 @@ public interface NoticeMapper {
   int insertNoticeWrite(NoticeDTO noticeDTO);
 
   NoticeDTO findByPostIdx(int postIdx);
+
+  int updateNotice(NoticeDTO noticeDTO);
+
+  void updateNoticeHits(int postIdx);
 }

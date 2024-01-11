@@ -7,9 +7,10 @@ import java.util.List;
 
 public interface NoticeService {
   List<NoticeDTO> findAllNoticeList(Model model);
-
-
+  NoticeDTO detailNotice(int postIdx);
   boolean noticeWrite(NoticeDTO noticeDTO);
+  NoticeDTO findByPostIdx(int postIdx);
+  boolean updateNotice(NoticeDTO noticeDTO);
 
-  NoticeDTO findByPostIdx(int memberIdx);
+
 }

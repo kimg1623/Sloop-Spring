@@ -9,11 +9,10 @@ import java.util.List;
 public interface NoticeRepository {
 
   List<NoticeDTO> findAllNoticeList(Model model);
-
-
   int insertPost(NoticeDTO noticeDTO);
-
   int insertNoticeWrite(NoticeDTO noticeDTO);
-
   NoticeDTO findByPostIdx(int postIdx);
+  int updateNotice(NoticeDTO noticeDTO);
+  void updateNoticeHits(int postIdx);
+
 }

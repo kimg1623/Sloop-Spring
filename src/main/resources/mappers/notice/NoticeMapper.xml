@@ -31,4 +31,20 @@
 		join post as p on n.postIdx = p.postIdx
 		where n.postIdx = #{postIdx}
 	</select>
+
+	<update id="updateNotice" parameterType="notice">
+		update postNotice
+		set postNoticeTitle = #{postNoticeTitle},
+			postNoticeContents = #{postNoticeContents},
+			postNoticePinned = #{postNoticePinned},
+			categoryPostIdx = #{categoryPostIdx}
+		where postIdx = #{postIdx}
+	</update>
+
+	<update id="updateNoticeHits" parameterType="int">
+		update postNotice
+		set	postNoticeHits = postNoticeHits + 1
+		where postIdx = #{postIdx}
+
+	</update>
 </mapper>

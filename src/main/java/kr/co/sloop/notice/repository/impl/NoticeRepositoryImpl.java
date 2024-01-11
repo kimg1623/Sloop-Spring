@@ -36,5 +36,15 @@ public class NoticeRepositoryImpl implements NoticeRepository {
     return noticeMapper.findByPostIdx(postIdx);
   }
 
+  @Override
+  public int updateNotice(NoticeDTO noticeDTO) {
+    return noticeMapper.updateNotice(noticeDTO);
+  }
+
+  @Override
+  public void updateNoticeHits(int postIdx) {
+    noticeMapper.updateNoticeHits(postIdx);
+  }
+
 
 }

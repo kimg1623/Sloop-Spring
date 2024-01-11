@@ -40,9 +40,27 @@ public class NoticeServiceImpl implements NoticeService {
   }
 
   @Override
-  public NoticeDTO findByPostIdx(int postIdx) {
-    return noticeRepository.findByPostIdx(postIdx);
+  public NoticeDTO detailNotice(int postIdx) {
 
+    noticeRepository.updateNoticeHits(postIdx);
+    return findByPostIdx(postIdx);
+
+  }
+
+  public NoticeDTO findByPostIdx(int postIdx){
+    NoticeDTO noticeDTO = noticeRepository.findByPostIdx(postIdx);
+    return noticeDTO;
+  }
+
+
+  @Override
+  public boolean updateNotice(NoticeDTO noticeDTO) {
+    int result = noticeRepository.updateNotice(noticeDTO);
+    if (result == 1){
+      return true;
+    } else {
+      return false;
+    }
   }
 
 
