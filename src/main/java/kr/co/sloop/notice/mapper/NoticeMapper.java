@@ -1,14 +1,13 @@
 package kr.co.sloop.notice.mapper;
 
 import kr.co.sloop.notice.domain.NoticeDTO;
+import kr.co.sloop.notice.domain.NoticeSearchDTO;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.ui.Model;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Mapper
 public interface NoticeMapper {
-  List<NoticeDTO> findAllNoticeList(Model model);
   int insertPost(NoticeDTO noticeDTO);
   int insertNoticeWrite(NoticeDTO noticeDTO);
 
@@ -17,4 +16,8 @@ public interface NoticeMapper {
   int updateNotice(NoticeDTO noticeDTO);
 
   void updateNoticeHits(int postIdx);
+
+  ArrayList<NoticeDTO> selectAllNoticeByBoardIdx(NoticeSearchDTO noticeSearchDTO);
+
+  int searchAndCountPostsByBoardIdx(NoticeSearchDTO boardIdx);
 }

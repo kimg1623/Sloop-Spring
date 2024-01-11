@@ -3,8 +3,10 @@ package kr.co.sloop.notice.controller;
 
 import kr.co.sloop.common.AlertUtils;
 import kr.co.sloop.notice.domain.NoticeDTO;
+import kr.co.sloop.notice.domain.NoticeSearchDTO;
 import kr.co.sloop.notice.service.NoticeService;
 import kr.co.sloop.post.domain.SearchDTO;
+import kr.co.sloop.post.service.SearchServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -26,16 +29,34 @@ public class NoticeController {
 	private final NoticeService noticeService;
 
 	/** 페이징과 검색도 함께 만든다. */
+
 	@GetMapping("/list")
-	public String noticeList(Model model, NoticeDTO noticeDTO , HttpSession session){
+	public String noticeList(@RequestParam(
+											value = "page", 		// 'page' 라는 이름의 http 요청 파라미터를 읽어온다
+											required = false , 	 	// 파라미터가 필수는 아니라는 뜻
+											defaultValue = "1") 	// 파라미터가 없거나 비어있을 경우 기본값은 1로 설정한다.
+								 			int page , 				// 그러고나서 page 변수에 값을 대입. 아래는 비슷한 주석이라 생략한다.
+							 @RequestParam(value = "searchType" , defaultValue = "0" , required = false) int searchType,
+							 @RequestParam(value = "keyword" , defaultValue = "" , required = false) String keyword,
+							 Model model){
 
-		List<NoticeDTO> noticeList	= noticeService.findAllNoticeList(model);
+		// 게시판 idx
+		int boardIdx = 1;
 
+		// 검색어 앞뒤 공백 제거
+		keyword = keyword.trim();
+
+		// 검색 + 페이징을 위한 객체
+		NoticeSearchDTO noticeSearchDTO = noticeService.initialize(boardIdx , page , searchType , keyword, 1);
+		model.addAttribute("noticeSearchDTO" , noticeSearchDTO);
+
+		// 글 목록 조회 + 검색 + 페이징
+		ArrayList<NoticeDTO> noticeList	= noticeService.findAllNoticeList(noticeSearchDTO);
 		/* JSP 에 noticeList 라는 변수명으로 넘겨준다. */
 		model.addAttribute("noticeList" , noticeList);
 
 
-		return "notice/noticeList";
+		return "notice/list";
 	}
 
 	// 공지사항 작성 폼 출력
@@ -114,10 +135,10 @@ public class NoticeController {
 		// 로그인된 회원과 글 작성자가 동일한지 검사
 
 
-		/*if (!noticeDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
+		if (!noticeDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
 			// 동일하지 않다면 리스트로 리다이렉트
 			return "redirect:/notice/list";
-		}*/
+		}
 			// 글 수정하기
 		boolean result = noticeService.updateNotice(noticeDTO);
 		log.info("==========DTOOOOOO" + noticeDTO);

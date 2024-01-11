@@ -1,3 +1,4 @@
+<%--
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -36,6 +37,8 @@
         </c:forEach>
     </tbody>
 </table>
+<a href="/notice/write">글쓰기</a>
 
 </body>
 </html>
+--%>

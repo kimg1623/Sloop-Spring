@@ -5,11 +5,56 @@
 
 <mapper namespace="kr.co.sloop.notice.mapper.NoticeMapper">
 
-
-	<select id="findAllNoticeList" resultType="notice">
-		select *
-		from postNotice
-		order by postNoticePinned desc ,postNoticeRegDate desc
+	<!--BoardIdx 로 공지사항 전체 글 조회 및 검색 기능 쿼리-->
+	<select id="selectAllNoticeByBoardIdx" parameterType="noticeSearch" resultType="notice">
+		select n.postIdx , c.categoryPostName , n.postNoticeTitle , n.postNoticeRegDate , n.postNoticeHits , m.memberNickname , n.postNoticePinned
+		from postNotice as n
+		join categoryPost as c on n.categoryPostIdx = c.categoryPostIdx
+		join member as m on n.memberIdx = m.memberIdx
+		join post as p on n.postIdx = p.postIdx
+		<if test='searchType != null and searchType != 0'>
+			<choose>
+				<when test="searchType == 1">
+					and n.postNoticeTitle like concat('%' , #{keyword} , '%')
+				</when>
+				<when test="searchType == 2">
+					and n.postNoticeContents like concat('%' , #{keyword} , '%')
+				</when>
+				<when test="searchType == 3">
+					and (n.postNoticeTitle like concat('%' , #{keyword} , '%') or n.postNoticeContents like concat('%' , #{keyword} , '%'))
+				</when>
+				<when test="searchType == 4">
+					and m.memberNickname like concat('%' , #{keyword} , '%')
+				</when>
+			</choose>
+		</if>
+		where p.boardIdx = 1
+		order by n.postNoticePinned desc , n.postNoticeRegDate desc
+		limit #{postsPerPage} offset #{offset}
+	</select>
+	<!--BoardIdx로 총 게시글 개수 구하는 쿼리-->
+	<select id="searchAndCountPostsByBoardIdx" parameterType="noticeSearch" resultType="int">
+		select count(n.postIdx)
+		from postNotice as n
+		join member as m on n.memberIdx = m.memberIdx
+		join post as p on n.postIdx = p.postIdx
+		where p.boardIdx = #{boardIdx}
+		<if test='searchType != null and searchType != 0'>
+			<choose>
+				<when test="searchType == 1">
+					and n.postNoticeTitle like concat('%' , #{keyword} , '%')
+				</when>
+				<when test="searchType == 2">
+					and n.postNoticeContents like concat('%' , #{keyword} , '%')
+				</when>
+				<when test="searchType == 3">
+					and (n.postNoticeTitle like concat('%' , #{keyword} , '%') or n.postNoticeContents like concat('%' , #{keyword} , '%'))
+				</when>
+				<when test="searchType == 4">
+					and m.memberNickname like concat('%' , #{keyword} , '%')
+				</when>
+			</choose>
+		</if>
 	</select>
 
 	<insert id="insertPost" parameterType="notice">
@@ -28,9 +73,9 @@
 	<select id="findByPostIdx" resultType="notice">
 		select n.postIdx , n.postNoticeTitle, n.postNoticeContents, n.postNoticeRegDate, n.memberIdx, n.postNoticeEditDate, n.postNoticeHits , n.categoryPostIdx , n.postNoticePinned , m.memberNickname , m.memberEmail , c.categoryPostName
 		from postnotice as n
-		join categoryPost as c on n.categoryPostIdx = c.categoryPostIdx
-		join member as m on n.memberIdx = m.memberIdx
-		join post as p on n.postIdx = p.postIdx
+				 join categoryPost as c on n.categoryPostIdx = c.categoryPostIdx
+				 join member as m on n.memberIdx = m.memberIdx
+				 join post as p on n.postIdx = p.postIdx
 		where n.postIdx = #{postIdx}
 	</select>
 
