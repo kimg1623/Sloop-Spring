@@ -28,6 +28,7 @@ public class NoticeRepositoryImpl implements NoticeRepository {
 
   @Override
   public int insertNoticeWrite(NoticeDTO noticeDTO) {
+    log.info("핀 값은========="+noticeDTO.getPostNoticePinned());
     return noticeMapper.insertNoticeWrite(noticeDTO);
   }
 

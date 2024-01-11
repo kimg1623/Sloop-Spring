@@ -7,7 +7,9 @@
 
 
 	<select id="findAllNoticeList" resultType="notice">
-		select * from postNotice
+		select *
+		from postNotice
+		order by postNoticePinned desc ,postNoticeRegDate desc
 	</select>
 
 	<insert id="insertPost" parameterType="notice">
@@ -37,6 +39,7 @@
 		set postNoticeTitle = #{postNoticeTitle},
 			postNoticeContents = #{postNoticeContents},
 			postNoticePinned = #{postNoticePinned},
+			postNoticeEditDate = now() ,
 			categoryPostIdx = #{categoryPostIdx}
 		where postIdx = #{postIdx}
 	</update>

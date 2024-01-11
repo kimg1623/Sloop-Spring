@@ -30,7 +30,8 @@
         <label for="categoryPostEvent">고민</label>
     </div>
     <div>
-        <form:checkbox path="postNoticePinned" id="postNoticePinned" name="postNoticePinned" value="1"/>
+        <form:checkbox path="postNoticePinned" name="postNoticePinned" id="postNoticePinned" value="1"/>
+        <form:hidden path="postNoticePinned" name="postNoticePinned" id="postNoticePinned_hidden" value="0"/>
         <label for="postNoticePinned">상단 고정</label>
     </div>
     <div>글 제목<br>
@@ -46,4 +47,9 @@
     </div>
 </form:form>
 </body>
+<script>
+    if(document.getElementById("input_check").checked) {
+        document.getElementById("input_check_hidden").disabled = true;
+    }
+</script>
 </html>
