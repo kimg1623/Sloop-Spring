@@ -10,4 +10,6 @@ public interface NoticeService {
 
 
   boolean noticeWrite(NoticeDTO noticeDTO);
+
+  NoticeDTO findByPostIdx(int memberIdx);
 }

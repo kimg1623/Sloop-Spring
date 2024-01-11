@@ -14,4 +14,6 @@ public interface NoticeRepository {
   int insertPost(NoticeDTO noticeDTO);
 
   int insertNoticeWrite(NoticeDTO noticeDTO);
+
+  NoticeDTO findByPostIdx(int postIdx);
 }

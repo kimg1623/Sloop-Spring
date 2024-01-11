@@ -39,8 +39,10 @@ public class NoticeServiceImpl implements NoticeService {
 
   }
 
-
-
+  @Override
+  public NoticeDTO findByPostIdx(int postIdx) {
+    return noticeRepository.findByPostIdx(postIdx);
+  }
 
 
 }

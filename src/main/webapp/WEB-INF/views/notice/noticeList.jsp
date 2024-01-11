@@ -23,7 +23,7 @@
     <tbody>
         <c:forEach items="${noticeList}" var="notice">
             <tr>
-                <td>${notice.postIdx}</td>
+                <td><a href="notice/detail?postIdx=${notice.postIdx}">${notice.postIdx}</a></td>
                 <td>${notice.postNoticeTitle}</td>
                 <td>${notice.postNoticeContents}</td>
                 <td>${notice.memberIdx}</td>

@@ -22,4 +22,10 @@
 		insert into postNotice (postIdx,postNoticeTitle, postNoticeContents, memberIdx, postNoticeEditDate, postNoticeHits , categoryPostIdx , postNoticePinned)
 		values (#{postIdx},#{postNoticeTitle}, #{postNoticeContents} , #{memberIdx} , #{postNoticeEditDate} , #{postNoticeHits} , #{categoryPostIdx} , #{postNoticePinned})
 	</insert>
+
+	<select id="findByPostIdx" resultType="notice">
+		select postIdx,postNoticeTitle, postNoticeContents, memberIdx, postNoticeEditDate, postNoticeHits , categoryPostIdx , postNoticePinned
+		from postNotice
+		where postIdx = #{postIdx}
+	</select>
 </mapper>

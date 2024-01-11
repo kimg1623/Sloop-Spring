@@ -3,15 +3,13 @@ package kr.co.sloop.notice.controller;
 
 import kr.co.sloop.notice.domain.NoticeDTO;
 import kr.co.sloop.notice.service.NoticeService;
+import kr.co.sloop.post.domain.SearchDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -25,15 +23,20 @@ public class NoticeController {
 
 	private final NoticeService noticeService;
 
+	/** 페이징과 검색도 함께 만든다. */
 	@GetMapping("/list")
 	public String noticeList(Model model, NoticeDTO noticeDTO , HttpSession session){
 
 		List<NoticeDTO> noticeList	= noticeService.findAllNoticeList(model);
+
+		/* JSP 에 noticeList 라는 변수명으로 넘겨준다. */
 		model.addAttribute("noticeList" , noticeList);
+
+
 		return "notice/noticeList";
 	}
 
-	// 공지사항 작성
+	// 공지사항 작성 폼 출력
 	@GetMapping("/write")
 	public String noticeWriteForm(Model model){
 
@@ -42,6 +45,10 @@ public class NoticeController {
 		return "notice/noticeWriteForm";
 	}
 
+	/** 공지사항 작성은
+	 * 1) 로그인이 되었는지(추후 권한부여해서 조건 추가 해야됨)
+	 * 2) 로그인된 사용자의 memberIdx 는 몇인지 세션에 의해 가져오고
+	 * 3) 게시판 은 공지게시판 ( 1 )에 작성 */
 	@PostMapping("/write")
 	public String noticeWrite(@Valid @ModelAttribute("noticeDTO") NoticeDTO noticeDTO , BindingResult errors , HttpSession session){
 
@@ -68,6 +75,25 @@ public class NoticeController {
 			return "member/loginForm";
 		}
 	}
+
+	/** 공지 게시글 상세 조회 폼 */
+	@GetMapping("detail")
+	public String detail(@RequestParam("postIdx") int postIdx , Model model){
+		NoticeDTO noticeDTO = noticeService.findByPostIdx(postIdx);
+		model.addAttribute("noticeDTO" , noticeDTO);
+		/** 본인(관리자) 게시물 */
+
+
+		/** 누구나 볼 수 있는 게시물 */
+
+		return "notice/detail";
+
+
+
+
+
+	}
+
 
 
 }
