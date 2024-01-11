@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 @RequiredArgsConstructor
@@ -60,4 +61,16 @@ public class DailyRepositoryImpl implements DailyRepository {
     public void updateViewCnt(int postIdx) {
         sql.update("Daily.updateViewCnt",postIdx);
     }
+
+    //페이징
+    @Override
+    public List<DailyDTO> pageList(Map<String, Integer> pagingParams) {
+        return sql.selectList("Daily.pagingDailyList",pagingParams);
+    }
+
+    //PageDTO 전체 글 개수 조회용
+    public int boardCount() {
+        return sql.selectOne("Daily.boardCount");
+    }
+
 }

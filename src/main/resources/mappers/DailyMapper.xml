@@ -61,4 +61,19 @@
         WHERE postIdx=#{postIdx}
     </update>
 
+    <!--페이징-->
+    <!-- 내용 10자 이내 -->
+    <select id="pagingDailyList" parameterType="java.util.HashMap" resultType="daily">
+    SELECT p.postIdx,p.postDailyTitle, substring(p.postDailyContents, 1, 10) as postDailyContents , p.postDailyRegDate, p.postDailyEditDate, p.postDailyHits, m.memberNickname
+    FROM postDaily as p
+    JOIN member as m ON p.memberIdx=m.memberIdx
+    ORDER BY postIdx DESC limit #{start}, #{limit}
+    </select>
+
+    <!-- 게시물Count -->
+    <select id="boardCount" resultType="Integer">
+    SELECT count(postIdx) FROM postDaily;
+    </select>
+
 </mapper>
+

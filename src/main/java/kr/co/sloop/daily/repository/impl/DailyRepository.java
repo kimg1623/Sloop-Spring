@@ -3,6 +3,7 @@ package kr.co.sloop.daily.repository.impl;
 import kr.co.sloop.daily.domain.DailyDTO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DailyRepository {
     //공부인증 전체리스트 불러오기
@@ -28,5 +29,10 @@ public interface DailyRepository {
 
     //조회수
     void updateViewCnt(int postIdx);
+
+    //페이징
+    List<DailyDTO> pageList(Map<String, Integer> pagingParams);
+
+
 }
 

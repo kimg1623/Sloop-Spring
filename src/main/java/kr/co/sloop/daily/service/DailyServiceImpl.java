@@ -1,6 +1,7 @@
 package kr.co.sloop.daily.service;
 
 import kr.co.sloop.daily.domain.DailyDTO;
+import kr.co.sloop.daily.domain.PageDTO;
 import kr.co.sloop.daily.repository.DailyRepositoryImpl;
 import kr.co.sloop.daily.service.impl.DailyService;
 import kr.co.sloop.post.repository.PostRepositoryImpl;
@@ -8,7 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -79,4 +82,50 @@ public class DailyServiceImpl implements DailyService {
     public void updateViewCnt(int postIdx) {
         dailyRepository.updateViewCnt(postIdx);
     }
+
+    //페이징
+    int pageLimit = 5; //한 페이지당 보여지는 글 개수 : 5
+    int blockLimit = 5; //하단에 보여지는 페이지 번호 개수
+
+    @Override
+    public List<DailyDTO> pageList(int page) {
+
+        int pagingStart = (page-1) * pageLimit;
+        Map<String, Integer> pagingParams = new HashMap<>();
+
+        pagingParams.put("start",pagingStart);
+        pagingParams.put("limit",pageLimit);
+        List<DailyDTO> pagingList = dailyRepository.pageList(pagingParams);
+
+        return pagingList;
+    }
+
+    //페이징-PageDTO
+    @Override
+    public PageDTO pagingParam(int page) {
+        // 전체 글 개수 조회
+        int boardCount = dailyRepository.boardCount();
+        // 전체 페이지 개수 계산
+        int maxPage = (int) (Math.ceil((double) boardCount / pageLimit));
+        // 시작 페이지 값 계산
+        int startPage = (((int)(Math.ceil((double) page / blockLimit))) - 1) * blockLimit + 1;
+        // 끝 페이지 값 계산
+
+        int endPage = startPage + blockLimit - 1;
+
+        if (endPage > maxPage) {
+            endPage = maxPage;
+        }
+
+        PageDTO pageDTO = new PageDTO();
+
+        pageDTO.setPage(page);
+        pageDTO.setMaxPage(maxPage);
+        pageDTO.setStartPage(startPage);
+        pageDTO.setEndPage(endPage);
+
+        return pageDTO;
+
+    }
+
 }
