@@ -1,6 +1,7 @@
 package kr.co.sloop.study.service.impl;
 
 
+import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.repository.StudyGroupRepository;
 import kr.co.sloop.study.service.StudyGroupService;
@@ -73,5 +74,9 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     @Override
     public int deleteGroupByGroupCode(String studyGroupCode) {
         return studyGroupRepository.deleteGroupByGroupCode(studyGroupCode);
+    }
+
+    public List<CategoryRegionDTO> getCategoryRegion2(){
+        return studyGroupRepository.getCategoryRegion2();
     }
 }

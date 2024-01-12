@@ -1,5 +1,6 @@
 package kr.co.sloop.study.controller;
 
+import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.service.StudyGroupService;
 import lombok.extern.log4j.Log4j;
@@ -7,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,9 +44,17 @@ public class StudyGroupController {
 	 */
 	@GetMapping("/add")
 	public String requestAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO, Model model){
-
-		model.addAttribute("categoryGradeList1", null);
 		return "study/addStudyGroup";
+	}
+	@PutMapping("/add")
+	public ResponseEntity<?> requestAddStudyGroupForm(){
+		List<CategoryRegionDTO> categoryRegionList = studyGroupService.getCategoryRegion2();
+		log.info(categoryRegionList);
+//		model.addAttribute("categoryRegionList", JSONArray.fromObject(categoryRegionList));
+		JSONArray jsonArray = new JSONArray(categoryRegionList);
+		log.info(jsonArray);
+		return ResponseEntity.ok(categoryRegionList);
+//		return "study/addStudyGroup";
 	}
 
 	/*
@@ -177,5 +187,7 @@ public class StudyGroupController {
 		System.out.println("buf = " + buf);
 		return buf.toString();
 	}
+
+
 	
 }
