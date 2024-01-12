@@ -53,5 +53,15 @@ public class NoticeRepositoryImpl implements NoticeRepository {
     return noticeMapper.searchAndCountPostsByBoardIdx(boardIdx);
   }
 
+  @Override
+  public String deletePostByPostIdx(int postIdx) {
+    return noticeMapper.deletePostByPostIdx(postIdx);
+  }
+
+  @Override
+  public String findMemberEmailByPostIdx(int postIdx) {
+    return noticeMapper.findMemberEmailByPostIdx(postIdx);
+  }
+
 
 }
