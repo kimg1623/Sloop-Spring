@@ -1,6 +1,7 @@
 package kr.co.sloop.member.repository;
 
 
+import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.mapper.MemberMapper;
 import kr.co.sloop.member.repository.impl.MemberRepository;
@@ -60,6 +61,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public int deleteByUser(int memberIdx) {
         return memberMapper.deleteByUser(memberIdx);
+    }
+
+    @Override
+    public AttachmentMemberDTO findImageByMemberIdx(int memberIdx) {
+        return memberMapper.findImageByMemberIdx(memberIdx);
     }
 
     /*@Override

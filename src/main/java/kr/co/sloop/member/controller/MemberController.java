@@ -1,6 +1,8 @@
 package kr.co.sloop.member.controller;
 
 
+import kr.co.sloop.common.AlertUtils;
+import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -88,12 +95,26 @@ public class MemberController {
 
     // update.jsp의 Form 출력
     @GetMapping("update")
-    public String updateForm(Model model , HttpSession session){
+    public String updateForm(Model model , HttpSession session , HttpServletResponse response,
+                             @RequestParam("memberIdx") int memberIdx) throws IOException {
         // 세션에 저장된 이메일 가져오기
+
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         if (loginEmail != null) {
+
+
+        /** 폴더 정의에 대한 메서드 */
+        /*private String getFolder() {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  //날짜의 형식
+            Date date = new Date(); // 오늘 날짜를 가져오는 인스턴스 생성
+            String str = sdf.format(date);  // 그걸 str 이라는 변수에 포맷을 통해 넣어줌
+            return str.replace("_", File.separator);  // _로 구분해주는 함수로 변환
+        }*/
+            AttachmentMemberDTO attachmentMemberDTO = memberService.findImageByMemberIdx(memberIdx);
             MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
+            log.info("파일 넘어옴?========" +attachmentMemberDTO);
             model.addAttribute("member", memberDTO);
+            model.addAttribute("uploadFile" , attachmentMemberDTO);
             return "member/update";
         } else {
             return "redirect:/member/login";
@@ -105,13 +126,14 @@ public class MemberController {
     
     // update.jsp 의 Form method = Post로 데이터 받아옴
     @PostMapping("update")
-    public String update (@ModelAttribute MemberDTO memberDTO){
+    public String update (@ModelAttribute MemberDTO memberDTO,
+                          HttpServletResponse response) throws IOException{
         boolean result = memberService.update(memberDTO);
         if (result) {
-            return "redirect:/member?memberIdx=" + memberDTO.getMemberIdx();    // update 성공시 redirect로 상세보기 화면 출력
-        } else {
-            return "redirect:/member/update";  // update 실패시 다시 수정할 수 있게 update.jsp로 정보 가져가면서 redirect 어케함?
+            AlertUtils.alertAndMovePage(response,"수정되었습니다." ,"redirect:/member?memberIdx=" + memberDTO.getMemberIdx() );// update 성공시 redirect로 상세보기 화면 출력
         }
+        return "redirect:/member/update";  // update 실패시 다시 수정할 수 있게 update.jsp로 정보 가져가면서 redirect 어케함?
+
     }
 
     // 회원 리스트에서 회원 정보 페이지로 이동 -> 관리자의 기능 ( 회원페이지 페이징도 추후 진행 )
@@ -158,6 +180,7 @@ public class MemberController {
             return "redirect:/member/mypage";
         }
     }
+
 
 
 }

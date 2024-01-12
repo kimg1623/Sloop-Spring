@@ -1,5 +1,6 @@
 package kr.co.sloop.member.repository.impl;
 
+import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import org.springframework.ui.Model;
 
@@ -24,7 +25,9 @@ public interface MemberRepository {
 
     int deleteByUser(int memberIdx);
 
+  AttachmentMemberDTO findImageByMemberIdx(int memberIdx);
 
-    /*int signup(RegisterFormDTO registerFormDTO);
+
+  /*int signup(RegisterFormDTO registerFormDTO);
 */
 }
