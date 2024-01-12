@@ -123,18 +123,25 @@ public class MemberController {
 
     }
     
-    
+    /** Post uploadAjax 작성칸 */
+
+
+    /** Post uploadAjax 작성끝*/
+
     // update.jsp 의 Form method = Post로 데이터 받아옴
     @PostMapping("update")
     public String update (@ModelAttribute MemberDTO memberDTO,
                           HttpServletResponse response) throws IOException{
         boolean result = memberService.update(memberDTO);
+
         if (result) {
+
             AlertUtils.alertAndMovePage(response,"수정되었습니다." ,"redirect:/member?memberIdx=" + memberDTO.getMemberIdx() );// update 성공시 redirect로 상세보기 화면 출력
         }
         return "redirect:/member/update";  // update 실패시 다시 수정할 수 있게 update.jsp로 정보 가져가면서 redirect 어케함?
 
     }
+
 
     // 회원 리스트에서 회원 정보 페이지로 이동 -> 관리자의 기능 ( 회원페이지 페이징도 추후 진행 )
     @GetMapping
