@@ -1,12 +1,14 @@
-package kr.co.sloop.member.repository.impl;
+package kr.co.sloop.member.mapper;
 
 import kr.co.sloop.member.domain.MemberDTO;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
-public interface MemberRepository {
+@Mapper
+public interface MemberMapper {
+
     int signup(MemberDTO memberDTO);
 
     MemberDTO login(MemberDTO memberDTO);
@@ -21,10 +23,13 @@ public interface MemberRepository {
 
     MemberDTO findByIdx(int memberIdx);
 
-
     int deleteByUser(int memberIdx);
 
+    /*LoginUserDTO.MemberVO adminLogin(MemberDTO memberDTO);
 
-    /*int signup(RegisterFormDTO registerFormDTO);
-*/
+    LoginUserDTO.MemberVO memberLogin(MemberDTO memberDTO);
+
+    int signup(RegisterFormDTO registerFormDTO);
+
+    MemberDTO findByUserName(String memberEmail);*/
 }
