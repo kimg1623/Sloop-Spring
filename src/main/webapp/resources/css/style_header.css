@@ -1,11 +1,37 @@
 body {
     font-size: .875rem;
 }
+/*
+    header 부분 스타일
+ */
+.header-a{
+    text-decoration: none;
+    color: rgba(255,255,255,.55);
+}
+.header-a:hover{
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.76);
+}
+.header-span{
+    color: rgba(255,255,255,.55);
+}
+.header-span:hover{
+    color: rgba(255,255,255,.55) !important;
+}
+.header-bg-color{
+    background-color: #458DFC;
+}
+
 
 .feather {
     width: 16px;
     height: 16px;
     vertical-align: text-bottom;
+}
+
+.logo-home{
+    width: auto;
+    height: 30px;
 }
 
 /*
@@ -93,7 +119,6 @@ body {
     background-color: rgba(255, 255, 255, .1);
     border-color: rgba(255, 255, 255, .1);
 }
-
 .form-control-dark:focus {
     border-color: transparent;
     box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
