@@ -8,45 +8,46 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <style>
-      #container {
-        width: 100%;
-        margin: 0px auto;
-          text-align:center;
-        border: 0px solid #bcbcbc;
-      }
-      #header {
-        padding: 5px;
-        margin-bottom: 5px;
-        border: 0px solid #bcbcbc;
-          background-color: #458dfc;
-      }
-      #sidebar-left {
-        width: 15%;
-        height:700px;
-        padding: 5px;
-        margin-right: 5px;
-        margin-bottom: 5px;
-        float: left;
-         background-color: yellow;
-        border: 0px solid #bcbcbc;
-        font-size:15px;
-      }
-      #content {
-        width: 75%;
-        padding: 5px;
-        margin-right: 5px;
-        float: left;
-        border: 0px solid #bcbcbc;
-      }
-      #footer {
-        clear: both;
-        padding: 5px;
-        border: 0px solid #bcbcbc;
-         background-color: lightblue;
-      }
-      
-    </style>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+      <style>
+          #container {
+              width: 100%;
+              margin: 0px auto;
+              text-align: center;
+              border: 0px solid #bcbcbc;
+          }
+          #header {
+              padding: 5px;
+              margin-bottom: 5px;
+              border: 0px solid #bcbcbc;
+              background-color: #458dfc;
+          }
+          #sidebar-left {
+              width: 15%;
+              height: 700px;
+              padding: 5px;
+              margin-right: 5px;
+              margin-bottom: 5px;
+              float: left;
+              background-color: yellow;
+              border: 0px solid #bcbcbc;
+              font-size: 15px;
+          }
+          #content {
+              width: 75%;
+              padding: 5px;
+              margin-right: 5px;
+              float: left;
+              border: 0px solid #bcbcbc;
+          }
+          #footer {
+              clear: both;
+              padding: 5px;
+              border: 0px solid #bcbcbc;
+              background-color: lightgray;
+          }
+
+      </style>
     <title><tiles:insertAttribute name="title" /></title>
   </head>
     <body>

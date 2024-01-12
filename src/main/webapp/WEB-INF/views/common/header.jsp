@@ -19,7 +19,7 @@
   <tr>
      <td width="15%">
 		<a href="/">
-			<img src="${contextPath}/resources/images/logo2.png"  />
+			<img src="${contextPath}/resources/images/logo3.png"  />
 		</a>
      </td>
 
