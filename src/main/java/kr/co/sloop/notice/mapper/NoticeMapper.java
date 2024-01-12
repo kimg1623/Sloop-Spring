@@ -15,4 +15,8 @@ public interface NoticeMapper {
   void updateNoticeHits(int postIdx);
   ArrayList<NoticeDTO> selectAllNoticeByBoardIdx(NoticeSearchDTO noticeSearchDTO);
   int searchAndCountPostsByBoardIdx(NoticeSearchDTO boardIdx);
+
+  String deletePostByPostIdx(int postIdx);
+
+  String findMemberEmailByPostIdx(int postIdx);
 }

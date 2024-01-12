@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,6 +147,27 @@ public class NoticeController {
 
 			return "redirect:/notice/detail?postIdx=" + noticeDTO.getPostIdx();
 		} else { // 수정 실패
+			return "redirect:/notice/list";
+		}
+	}
+
+	@GetMapping("delete")
+	public String delete(@RequestParam("postIdx") int postIdx ,
+											 HttpSession session ,
+											 HttpServletResponse response) throws IOException {
+
+		/*if (errors.hasErrors()) 유효성 검사 추가하고 넣기*/
+		String memberEmail = noticeService.findMemberEmailByPostIdx(postIdx);
+		String loginEmail = (String) session.getAttribute("loginEmail");
+		log.info("이메일====="+memberEmail);
+		log.info("세션이메일====="+loginEmail);
+		if (memberEmail.equals(loginEmail)){
+			log.info("조건문 들엉ㅁ? ============"+memberEmail+loginEmail);
+			AlertUtils.alertAndMovePage(response , "삭제하였습니다." , "/notice/list");
+
+			return noticeService.deletePostByPostIdx(postIdx);
+		} else {
+			/*AlertUtils.alertAndBackPage(response ,"삭제할 수 없습니다.");*/
 			return "redirect:/notice/list";
 		}
 	}
