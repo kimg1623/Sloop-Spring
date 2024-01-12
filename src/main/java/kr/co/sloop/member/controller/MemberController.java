@@ -145,7 +145,7 @@ public class MemberController {
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        return "logout";    // 로그아웃 페이지로 이동
+        return "member/logout";    // 로그아웃 페이지로 이동
     }
 
     // 회원 탈퇴 시

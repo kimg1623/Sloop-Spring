@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="Member">
+<mapper namespace="kr.co.sloop.member.mapper.MemberMapper">
+
     <insert id="signup" parameterType="member">
         insert into member
                 (memberEmail,memberPassword,memberNickname,memberGender,memberPhonenumber,memberSchool,
@@ -10,7 +11,7 @@
                 #{memberPhonenumber},#{memberSchool},#{memberGradeCode},#{memberSubjectCode},#{memberRegionCode})
     </insert>
 
-    <select id="login" parameterType="member" resultType="member">
+        <select id="login" parameterType="member" resultType="member">
         select *
         from member
         where memberEmail = #{memberEmail}
@@ -20,15 +21,24 @@
     <select id="findByMemberEmail" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode
+               memberSubjectCode, memberRegionCode , authority
         from  member
         where memberEmail = #{loginEmail}
     </select>
-    <select id="findByMemberNickname" parameterType="String" resultType="member">
+
+    <select id="findByUserName" parameterType="String" resultType="member">
+        select memberIdx, memberEmail, memberPassword,
+               memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
+               memberSubjectCode, memberRegionCode , authority
+        from  member
+        where memberEmail = #{username}
+    </select>
+
+    <!--<select id="findByMemberNickname" parameterType="String" resultType="kr.co.sloop.security.LoginUserDTO$MemberVO">
         select memberEmail, memberPassword, memberNickname, memberPhonenumber
         from  member
         where memberNickname = #{memberNickname}
-    </select>
+    </select>-->
 
     <select id="findMemberList" resultType="member">
         select * from member order by memberRegdate desc
@@ -51,7 +61,7 @@
     <select id="findByIdx" parameterType="int" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode
+               memberSubjectCode, memberRegionCode, authority
         from member
         where memberIdx = #{memberIdx}
     </select>
@@ -60,5 +70,29 @@
         delete from member where memberIdx = #{memberIdx}
     </delete>
 
+    <!--<select id="adminLogin" parameterType="member" resultType="kr.co.sloop.security.LoginUserDTO$MemberVO">
+        select memberIdx, memberEmail, memberPassword,
+               memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
+               memberSubjectCode, memberRegionCode, authority
+        from member
+        where memberEmail = #{memberEmail}
+          and memberPassword = #{memberPassword}
+    </select>-->
 
+    <!--<select id="memberLogin" parameterType="member" resultType="kr.co.sloop.security.LoginUserDTO$MemberVO">
+        select memberIdx, memberEmail, memberPassword,
+               memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
+               memberSubjectCode, memberRegionCode, authority
+        from member
+        where memberEmail = #{memberEmail}
+          and memberPassword = #{memberPassword}
+    </select>
+
+    <insert id="signup" parameterType="kr.co.sloop.security.RegisterFormDTO">
+        insert into member
+        (memberEmail,memberPassword,memberNickname,memberGender,memberPhonenumber,memberSchool,
+         memberGradeCode,memberSubjectCode,memberRegionCode)
+        values (#{memberEmail},#{memberPassword},#{memberNickname},#{memberGender},
+                #{memberPhonenumber},#{memberSchool},#{memberGradeCode},#{memberSubjectCode},#{memberRegionCode})
+    </insert>-->
 </mapper>

@@ -44,15 +44,8 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
-    @Override
-    public String emailCheck(String memberEmail) {
-        MemberDTO memberDTO = memberRepository.findByMemberEmail(memberEmail);
-        if (memberDTO == null) {
-            return "ok";
-        } else {
-            return "no";
-        }
-    }
+
+
 
     @Override
     public List<MemberDTO> findMemberList(Model model) {
@@ -74,6 +67,18 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findByMemberEmail(loginEmail);
     }
 
+
+
+    @Override
+    public String emailCheck(String memberEmail) {
+        MemberDTO memberDTO = memberRepository.findByMemberEmail(memberEmail);
+        if (memberDTO == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
+
     @Override
     public boolean update(MemberDTO memberDTO) {
         int result = memberRepository.update(memberDTO);
@@ -91,9 +96,18 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int deleteByUser(int memberIdx) {
-        return memberRepository.deleteById(memberIdx);
+        return memberRepository.deleteByUser(memberIdx);
     }
 
+    /*@Override
+    public int signup(RegisterFormDTO registerFormDTO) {
+
+        if (registerFormDTO.getMemberEmail() == null) {
+            return -1;
+        } else {
+            return memberRepository.signup(registerFormDTO);
+        }
+    }*/
 
 
 }
