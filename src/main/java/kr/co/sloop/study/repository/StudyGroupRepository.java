@@ -1,5 +1,6 @@
 package kr.co.sloop.study.repository;
 
+import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 
 import java.util.HashMap;
@@ -24,4 +25,6 @@ public interface StudyGroupRepository {
     List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx);
 
     int deleteGroupByGroupCode(String studyGroupCode);
+
+    List<CategoryRegionDTO> getCategoryRegion2();
 }
