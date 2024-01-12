@@ -17,15 +17,15 @@
 <body>
 <table border=0  width="100%">
   <tr>
-     <td>
+     <td width="15%">
 		<a href="/">
-            <h1>홈</h1>
-			<img src="${contextPath}/resources/image/duke_swing.gif"  />
+			<img src="${contextPath}/resources/images/logo3.png"  />
 		</a>
      </td>
-     <td>
-       <h1><font size=30>스프링실습 홈페이지!!</font></h1>
-     </td>
+
+      <td width="70%">
+      </td>
+
      
      <td>
        <!-- <a href="#"><h3>로그인</h3></a> -->
