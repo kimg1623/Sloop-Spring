@@ -15,4 +15,8 @@ public interface NoticeService {
   NoticeDTO findByPostIdx(int postIdx);
   boolean updateNotice(NoticeDTO noticeDTO);
   NoticeSearchDTO initialize(int boardIdx, int page, int searchType, String keyword, int boardType);
+
+  String deletePostByPostIdx(int postIdx);
+
+  String findMemberEmailByPostIdx(int postIdx);
 }

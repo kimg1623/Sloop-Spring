@@ -17,7 +17,7 @@
         <label for="categoryPostImportant">중요</label>
 
         <form:radiobutton path="categoryPostIdx" id="categoryPostEvent" name="categoryPostIdx" value="7" />
-        <label for="categoryPostEvent">고민</label>
+        <label for="categoryPostEvent">이벤트</label>
     </div>
     <div>
         <form:checkbox path="postNoticePinned" name="postNoticePinned" id="postNoticePinned" value="1"/>

@@ -1,5 +1,6 @@
 package kr.co.sloop.member.mapper;
 
+import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.ui.Model;
@@ -24,6 +25,8 @@ public interface MemberMapper {
     MemberDTO findByIdx(int memberIdx);
 
     int deleteByUser(int memberIdx);
+
+  AttachmentMemberDTO findImageByMemberIdx(int memberIdx);
 
     /*LoginUserDTO.MemberVO adminLogin(MemberDTO memberDTO);
 
