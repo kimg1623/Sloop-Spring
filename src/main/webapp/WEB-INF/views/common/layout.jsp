@@ -18,7 +18,7 @@
           text-align:center;
         border: 0px solid #bcbcbc;
       }
-      #header {
+      header {
           background-color: #458dfc;
           height: 68px;
       }
