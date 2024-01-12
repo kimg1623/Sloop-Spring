@@ -22,7 +22,7 @@
 
     <!-- 지역 카테고리 가져오기 -->
     <select id="getAllRegionName" resultType="categoryRegion">
-        select categoryRegionCode, categoryRegionName from categoryRegion
+        select categoryRegionTier, categoryRegionCode, categoryRegionName, categoryRegionParent from categoryRegion
     </select>
 
     <insert id="insertNewStudyGroup" parameterType="studyGroup">
