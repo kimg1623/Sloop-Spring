@@ -18,8 +18,7 @@
         <c:if test="${member.memberGender eq '여자'}"> checked ></c:if>
         <label for="female">여자</label>
     </p>
-    <%--<p>${member.memberProfile}</p>
-    <p><a href="#">프로필 변경하기</a></p>--%>
+
     핸드폰 번호: <input type="text" name="memberPhonenumber" value="${member.memberPhonenumber}" required><br>
     <p>회원대분류 :
         <select name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required>

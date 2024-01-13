@@ -6,6 +6,7 @@
 <body>
 <h1>${sessionScope.loginEmail}의 마이페이지 입니다.</h1>
 <a href="/member/update?memberIdx=${member.memberIdx}">회원 정보 수정</a><br>
+<a href="/member/profile?memberIdx=${member.memberIdx}">회원 프로필 수정</a><br>
 <table>
     <tr>
         <th>정렬번호</th>

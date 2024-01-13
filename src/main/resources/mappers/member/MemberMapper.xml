@@ -79,6 +79,10 @@
         where m.memberIdx = #{memberIdx}
     </select>
 
+    <insert id="uploadProfile" parameterType="member">
+        insert into member (memberProfile)
+        values memberIdx = #{memberIdx}
+    </insert>
 
 
     <!--Security-->

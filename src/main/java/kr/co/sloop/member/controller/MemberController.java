@@ -187,8 +187,18 @@ public class MemberController {
 
 /** 프로필 사진 업로드 */
     @GetMapping("/profile")
-    public String profileUploadForm(){
-        return "member/profile";
+    public String profileUploadForm(@ModelAttribute("member") MemberDTO memberDTO ,
+                                    @RequestParam("memberIdx") int memberIdx ,
+                                    HttpSession session){
+
+        String loginMemberIdx = (String) session.getAttribute("loginMemberIdx");
+
+
+        if (memberIdx == Integer.parseInt(loginMemberIdx)) {
+            memberService.findByIdx(memberIdx);
+            return "member/profile";
+        }
+        return "member/loginForm";
     }
 
 
@@ -196,17 +206,20 @@ public class MemberController {
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public String fileUpload(
             @RequestParam("article_file") List<MultipartFile> multipartFile
-            , HttpServletRequest request) {
+            , HttpServletRequest request , MemberDTO memberDTO) {
+        log.info("포스트업로드!!!!!!!!");
+        memberService.uploadProfile(multipartFile);
 
         String strResult = "{ \"result\":\"FAIL\" }";
         String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
         String fileRoot;
+
         try {
             // 파일이 있을때 탄다.
             if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
-
-                for(MultipartFile file:multipartFile) {
-                    fileRoot = contextRoot + "resources/upload/";
+                log.info("파일이 있음");
+                for(MultipartFile file : multipartFile) {
+                    fileRoot = contextRoot + "resources/upload/temp";
                     System.out.println(fileRoot);
 
                     String originalFileName = file.getOriginalFilename();	//오리지날 파일명
@@ -217,6 +230,8 @@ public class MemberController {
                     try {
                         InputStream fileStream = file.getInputStream();
                         FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+
+
 
                     } catch (Exception e) {
                         //파일삭제
@@ -230,9 +245,11 @@ public class MemberController {
             // 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
             else
                 strResult = "{ \"result\":\"OK\" }";
+            log.info("파일이 없음");
         }catch(Exception e){
             e.printStackTrace();
         }
         return strResult;
+
     }
 }

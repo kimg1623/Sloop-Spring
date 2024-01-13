@@ -11,6 +11,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -67,6 +68,14 @@ public class MemberRepositoryImpl implements MemberRepository {
     public AttachmentMemberDTO findImageByMemberIdx(int memberIdx) {
         return memberMapper.findImageByMemberIdx(memberIdx);
     }
+
+    @Override
+    public void uploadProfile(List<MultipartFile> multipartFile) {
+        memberMapper.uploadProfile(multipartFile);
+    }
+
+
+
 
     /*@Override
     public int signup(RegisterFormDTO registerFormDTO) {

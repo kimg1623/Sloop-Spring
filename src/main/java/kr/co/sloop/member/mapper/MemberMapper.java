@@ -4,6 +4,7 @@ import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -26,7 +27,12 @@ public interface MemberMapper {
 
     int deleteByUser(int memberIdx);
 
-  AttachmentMemberDTO findImageByMemberIdx(int memberIdx);
+    AttachmentMemberDTO findImageByMemberIdx(int memberIdx);
+
+    void uploadProfile(List<MultipartFile> multipartFile);
+
+
+
 
     /*LoginUserDTO.MemberVO adminLogin(MemberDTO memberDTO);
 

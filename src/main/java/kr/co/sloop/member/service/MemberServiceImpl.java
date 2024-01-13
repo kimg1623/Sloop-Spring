@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -104,6 +105,15 @@ public class MemberServiceImpl implements MemberService {
     public AttachmentMemberDTO findImageByMemberIdx(int memberIdx) {
         return memberRepository.findImageByMemberIdx(memberIdx);
     }
+
+    @Override
+    public void uploadProfile(List<MultipartFile> multipartFile) {
+        memberRepository.uploadProfile(multipartFile);
+    }
+
+
+
+
 
     /*@Override
     public int signup(RegisterFormDTO registerFormDTO) {
