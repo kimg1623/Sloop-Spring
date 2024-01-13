@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: thegreatjy
@@ -22,7 +23,7 @@
 </div>
 
 <%-- 글 목록, 페이징, 검색 --%>
-<table onclick="clickAssignment()">
+<table>
     <%-- 글 목록 --%>
     <c:choose>
         <%-- 글이 존재하지 않을 때에는 글 목록 출력 X --%>
@@ -35,7 +36,7 @@
         <c:otherwise>
             <c:forEach items="${postAssignmentDTOList}" var="postAssignment" varStatus="status">
                 <!-- 글 한 개의 영역 -->
-                <div class="postAssignment_${postAssignment.postIdx}"
+                <tbody class="postAssignment_${postAssignment.postIdx}"
                      onclick="clickAssignment(${postAssignment.postIdx})" style="cursor:pointer;">
                         <%-- 프로필 사진 [*****] --%>
                         <%--
@@ -49,7 +50,10 @@
                     </tr>
                     <%-- 글 작성일시 --%>
                     <tr>
-                        <td><c:out value="${postAssignment.postAssignmentRegDate}"/></td>
+                        <%-- <td><c:out value="${postAssignment.postAssignmentRegDate}"/></td> --%>
+                        <td>
+                            <fmt:formatDate value="${postAssignment.postAssignmentRegDate}" pattern="yyyy년 MM월 DD일 EE요일 hh시 mm분"/><br />
+                        </td>
                     </tr>
                     <%-- 글 제목 --%>
                     <tr>
@@ -57,7 +61,10 @@
                     </tr>
                     <%-- 과제 마감일시 --%>
                     <tr>
-                        <td><c:out value="${postAssignment.assignmentEndDate}"/></td>
+                        <%-- <td><c:out value="${postAssignment.assignmentEndDate}"/></td> --%>
+                        <td>
+                            <fmt:formatDate value="${postAssignment.assignmentEndDate}" pattern="yyyy년 MM월 DD일 EE요일 hh시 mm분"/><br />
+                        </td>
                     </tr>
                     <%-- 조회수 --%>
                     <tr>
@@ -69,7 +76,7 @@
                         <td></td>
                     </tr>
                     --%>
-                </div>
+                </tbody>
             </c:forEach>
         </c:otherwise>
     </c:choose>
@@ -144,7 +151,7 @@
 
 <script>
     // 글을 누르면 글 상세보기 페이지로 이동
-    let clickAssignment = (postIdx) => {
+    function clickAssignment(postIdx){
         location.href = "/postassignment/detail?postIdx=" + postIdx;
     };
 
