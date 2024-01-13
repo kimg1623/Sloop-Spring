@@ -1,18 +1,22 @@
 package kr.co.sloop.postAssignment.domain;
 
+import kr.co.sloop.attachment.domain.AttachmentDTO;
 import kr.co.sloop.post.domain.PostDTO;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 // 과제 게시판의 게시글
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class PostAssignmentDTO extends PostDTO {
     // PostDTO
     // private int postIdx; // 게시글 idx
@@ -42,4 +46,17 @@ public class PostAssignmentDTO extends PostDTO {
     private AssignmentDTO assignment; // 과제
     // 첨부파일 list
     private List<MultipartFile> multipartFileList; // 첨부파일 여러 개
+    // 첨부파일 객체 list
+    private List<AttachmentDTO> attachmentDTOList; // 첨부파일 객체 여러 개
+
+
+    public void addAttachmentToList(AttachmentDTO attachmentDTO){
+        // list 객체 생성
+        if(attachmentDTOList == null){
+            attachmentDTOList = new ArrayList<>();
+        }
+
+        attachmentDTOList.add(attachmentDTO);
+    }
+
 }
