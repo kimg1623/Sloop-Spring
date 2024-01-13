@@ -40,15 +40,14 @@
 
 	<!-- ckeditor -->
 	<!-- ckeditor 통해 업로드된 사진의 저장 경로 -->
-	<!-- 윈도우 경로 수정 필수 [*****] -->
 	<beans:bean class="java.lang.String" id="uploadPath">
-		<beans:constructor-arg value="/Users/thegreatjy/Documents"></beans:constructor-arg>
+		<beans:constructor-arg value="/Users/thegreatjy/Documents/sloop/postforum"></beans:constructor-arg>
 	</beans:bean>
 	<resources mapping="/uploads/**" location="/resources/uploads/" />
 
 	<!-- 과제 게시판 첨부파일 저장 경로 -->
 	<beans:bean class="java.lang.String" id="uploadPathForAssignment">
-		<beans:constructor-arg value="/Users/thegreatjy/Documents/assignment"></beans:constructor-arg>
+		<beans:constructor-arg value="/Users/thegreatjy/Documents/sloop/postassignment"></beans:constructor-arg>
 	</beans:bean>
 
 	<!-- 이창규 - 주석 아래로 작성 -->
