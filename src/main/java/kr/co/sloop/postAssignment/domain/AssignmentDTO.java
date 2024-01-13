@@ -16,4 +16,9 @@ public class AssignmentDTO {
     private Timestamp assignmentBeginDate;  // 시작일시
     private Timestamp assignmentEndDate;    // 마감일시
     private Integer assignmentScore;        // 만점 점수
+
+    public AssignmentDTO(Timestamp assignmentEndDate, Integer assignmentScore){
+        this.assignmentEndDate = assignmentEndDate;
+        this.assignmentScore = assignmentScore;
+    }
 }
