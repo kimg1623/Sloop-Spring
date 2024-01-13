@@ -205,10 +205,10 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public String fileUpload(
-            @RequestParam("article_file") List<MultipartFile> multipartFile
-            , HttpServletRequest request , MemberDTO memberDTO) {
+            @RequestParam("memberProfile") List<MultipartFile> multipartFile
+            , HttpServletRequest request) {
         log.info("포스트업로드!!!!!!!!");
-        memberService.uploadProfile(multipartFile);
+
 
         String strResult = "{ \"result\":\"FAIL\" }";
         String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
@@ -231,6 +231,7 @@ public class MemberController {
                         InputStream fileStream = file.getInputStream();
                         FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
 
+                        memberService.uploadProfile(savedFileName);
 
 
                     } catch (Exception e) {

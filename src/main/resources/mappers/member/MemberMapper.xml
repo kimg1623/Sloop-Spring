@@ -79,9 +79,9 @@
         where m.memberIdx = #{memberIdx}
     </select>
 
-    <insert id="uploadProfile" parameterType="member">
+    <insert id="uploadProfile" parameterType="String">
         insert into member (memberProfile)
-        values memberIdx = #{memberIdx}
+        values memberProfile = #{memberProfile}
     </insert>
 
 

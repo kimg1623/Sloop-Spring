@@ -70,8 +70,8 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public void uploadProfile(List<MultipartFile> multipartFile) {
-        memberMapper.uploadProfile(multipartFile);
+    public void uploadProfile(String savedFileName) {
+        memberMapper.uploadProfile(savedFileName);
     }
 
 

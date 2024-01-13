@@ -18,7 +18,6 @@
     <div>
         <h3>변경하려는 자</h3>
         <p>번호 = ${member.memberIdx}</p>
-        <p>이메일 = ${member.memberEmail}</p>
     </div>
     <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
 
@@ -119,7 +118,7 @@
         for (var x = 0; x < content_files.length; x++) {
             // 삭제 안한것만 담아 준다.
             if(!content_files[x].is_delete){
-                formData.append("article_file", content_files[x]);
+                formData.append("memberProfile", content_files[x]);
             }
         }
         /*

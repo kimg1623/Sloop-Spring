@@ -107,8 +107,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public void uploadProfile(List<MultipartFile> multipartFile) {
-        memberRepository.uploadProfile(multipartFile);
+    public void uploadProfile(String savedFileName) {
+        memberRepository.uploadProfile(savedFileName);
     }
 
 
