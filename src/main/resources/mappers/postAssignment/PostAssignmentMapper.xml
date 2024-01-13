@@ -54,4 +54,26 @@
             </choose>
         </if>
     </select>
+
+    <!-- postAssignment 테이블에 글 작성하기 -->
+    <insert id="insertPostAssignment" parameterType="postAssignment">
+        insert into postAssignment(postIdx, postAssignmentTitle, postAssignmentContents, memberIdx, assignmentIdx, postAssignmentGroup)
+        values(#{postIdx}, #{postAssignmentTitle}, #{postAssignmentContents}, #{memberIdx}, #{assignmentIdx}, #{postAssignmentGroup})
+    </insert>
+
+    <!-- postIdx에 해당하는 게시글 하나의 상세 조회 페이지를 위한 쿼리 -->
+    <select id="findByPostIdx" parameterType="int" resultType="postAssignment">
+        select pa.postAssignmentTitle, pa.postAssignmentContents, pa.memberIdx, pa.postAssignmentRegDate, pa.postAssignmentEditDate, pa.postAssignmentHits, pa.assignmentIdx, m.memberNickname, m.memberEmail, a.assignmentEndDate
+        from postAssignment as pa
+        join member as m on pa.memberIdx = m.memberIdx
+        join assignment as a on pa.assignmentIdx = a.assignmentIdx
+        where pa.postIdx = #{postIdx}
+    </select>
+
+    <!-- postIdx에 해당하는 게시글 조회수 1 증가 -->
+    <update id="updatePostAssignmentHits" parameterType="int">
+        update postAssignment
+        set postAssignmentHits = postAssignmentHits + 1
+        where postIdx = #{postIdx}
+    </update>
 </mapper>
