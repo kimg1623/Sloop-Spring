@@ -9,7 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>과제 게시판: 게시글 작성</title>
+    <title>과제 게시판: 게시글 작성 _ 첨부파일 + 달력 기능 구현</title>
     <!-- jquery cdn -->
     <!-- <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script> -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
@@ -20,8 +20,174 @@
     <link rel="stylesheet" href="/resources/dateTimePicker/datetimepicker-master/jquery.datetimepicker.css"/>
     <script src="/resources/dateTimePicker/datetimepicker-master/jquery.js"></script>
     <script src="/resources/dateTimePicker/datetimepicker-master/build/jquery.datetimepicker.full.min.js"></script>
+    <!-- bootstrap cdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
     <script>
+        // 기본 실행 함수
+        $(document).ready(function(){
+            // input file 파일 첨부시 fileCheck 함수 실행
+            $("#input_file").on("change", fileCheck);
+
+
+            /* datetimepicker */
+            settingDateTimePicker();
+
+        });
+
+        /* datetimepicker */
+        function settingDateTimePicker(){
+            // allowTimesList 목록 중에서 현재 시각보다 크거나 같은 가장 가까운 시각을 지정한다.
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            month = String(month).padStart(2, "0");
+            let date = today.getDate();
+            date = String(date).padStart(2, "0");
+
+            let defaultEndDate = year + "-" + month+ "-" + date;
+            let hor = today.getHours();
+            let min = Math.ceil(today.getMinutes()/10) * 10; // 현재 분을 10의 자리에서 올림
+            // 60분을 넘어가면 안 됨
+            min = min % 60;
+            if(min == 0){
+                hor = hor + 1;
+            }
+            hor = String(hor).padStart(2, "0"); // 0 padding
+            min = String(min).padStart(2, "0"); // 0 padding
+            let time = hor+":"+min; // 현재 시각
+            console.log(defaultEndDate + " " + time);
+            // 과제 마감일시 date time picker
+            // 최소 날짜와 시간을 현재 시각으로 설정한다.
+            $('#assignmentEndDate_input').datetimepicker(
+                DatetimepickerDefaults({
+                    minDate: 0,
+                    defaultTime: time,
+                    formatTime:'H:i'
+                })
+            );
+
+            // 과제 마감일시 기본 설정
+            document.getElementById("assignmentEndDate_input").value = defaultEndDate + " " + time;
+            // $('#assignmentEndDate_input').value(defaultEndDate + " " + time);
+        };
+
+
+        /* 파일 업로드 */
+
+        // 파일 현재 필드 숫자 totalCount랑 비교값
+        let fileCount = 0;
+        // 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
+        let totalCount = 10;
+        // 파일 고유넘버
+        let fileNum = 0;
+        // 첨부파일 배열
+        let content_files = new Array();
+
+        // 파일 개수, 크기, 확장자 검토 및 화면에 출력(업로드한 파일 목록 영역에)
+        function fileCheck(e) {
+            let files = e.target.files;
+
+            // 파일 배열 담기
+            let filesArr = Array.prototype.slice.call(files);
+
+            // 파일 개수 확인 및 제한
+            if (fileCount + filesArr.length > totalCount) {
+                alert('파일은 최대 '+totalCount+'개까지 업로드 할 수 있습니다.');
+                return;
+            } else {
+                fileCount = fileCount + filesArr.length;
+            }
+
+            // 각각의 파일 크기 확인과 제한 후, 배열 담기
+            filesArr.forEach(function (f) {
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    // 파일 크기 검사 (25MB 미만만 업로드 가능)
+                    if(f.size >= 2500000){
+                        alert("25MB 미만 파일만 첨부할 수 있습니다.");
+                        return;
+                    }
+
+                    // 파일 확장자 검사
+                    let fileName = f.name.toLowerCase();
+                    let extension = fileName.slice(fileName.lastIndexOf(".")+1).toLowerCase(); // 확장자
+                    let allowedExtensions = /(.*?)\.(xls|xlsx|txt|png|jpg|jpeg|html|htm|mpg|mp4|mp3|pdf|zip)$/;
+                    if(!fileName.match(allowedExtensions)){
+                        return;
+                    }
+
+                    content_files.push(f);
+
+                    // 화면에 출력
+                    $('#articlefileChange').append(
+                        '<div id="file' + fileNum + '" onclick="fileDelete(\'file' + fileNum + '\')">'
+                        + '<font style="font-size:12px">' + f.name + '</font>'
+                        + '<img src="/resources/images/postAssignment/minus.png" style="width:20px; height:auto; vertical-align: middle; cursor: pointer;"/>'
+                        + '<div/>'
+                    );
+                    fileNum ++;
+                };
+                reader.readAsDataURL(f);
+            });
+            // 파일 선택 버튼을 초기화 한다.
+            $("#input_file").val("");
+        };
+
+
+        // 파일 부분 삭제 함수
+        function fileDelete(fileNum){
+            let no = fileNum.replace(/[^0-9]/g, "");
+            content_files[no].is_delete = true;
+            $('#' + fileNum).remove();
+            fileCount --;
+        };
+
+        // 파일 업로드
+        function registerAction(){
+            let status = true;
+
+            let form = $("form")[0];
+            let formData = new FormData(form);
+            for (let x = 0; x < content_files.length; x++) {
+                // 삭제 안 한 것만 담아 준다.
+                if(!content_files[x].is_delete){
+                    formData.append("article_file", content_files[x]);
+                }
+            }
+
+            // 파일업로드 multiple ajax처리
+
+            $.ajax({
+                type: "POST",
+                enctype: "multipart/form-data",
+                url: "/postassignment/uploadAttachmentsUsingAjax",
+                data : formData,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    if(JSON.parse(data)['result'] == "TYPEERROR"){
+                        alert("허용되는 확장자는 xls,xlsx,txt,png,jpg,jpeg,html,htm,mpg,mp4,mp3,pdf,zip 입니다.");
+                        status = false;
+                        return false;
+                    }else {
+                        status = true;
+                        return true;
+                    }
+                },
+                error: function (data) {
+                    alert("서버 오류로 지연되고 있습니다. 잠시 후 다시 시도해 주시기 바랍니다.");
+                    status = false;
+                    return false;
+                }
+            });
+
+            return status;
+        };
+
+
+        /* 달력 - 과제 마감 일시 */
         // date time picker 선택할 수 있는 시각
         let allowTimesList = [
             '00:00', '00:10', '00:20', '00:30', '00:40', '00:50',
@@ -61,134 +227,15 @@
             }, opts);
         };
 
-        // 기본 실행 함수
-        $(function () {
-            /* datetimepicker */
-            // allowTimesList 목록 중에서 현재 시각보다 크거나 같은 가장 가까운 시각을 지정한다.
-            let today = new Date();
-            let year = today.getFullYear();
-            let month = today.getMonth() + 1;
-            month = String(month).padStart(2, "0");
-            let date = today.getDate();
-            date = String(date).padStart(2, "0");
-
-            let defaultEndDate = year + "-" + month+ "-" + date;
-            let hor = today.getHours();
-            let min = Math.ceil(today.getMinutes()/10) * 10; // 현재 분을 10의 자리에서 올림
-            // 60분을 넘어가면 안 됨
-            min = min % 60;
-            if(min == 0){
-                hor = hor + 1;
-            }
-            hor = String(hor).padStart(2, "0"); // 0 padding
-            min = String(min).padStart(2, "0"); // 0 padding
-            let time = hor+":"+min; // 현재 시각
-            console.log(defaultEndDate + " " + time);
-            // 과제 마감일시 date time picker
-            // 최소 날짜와 시간을 현재 시각으로 설정한다.
-            $('#assignmentEndDate_input').datetimepicker(
-                DatetimepickerDefaults({
-                    minDate: 0,
-                    defaultTime: time,
-                    formatTime:'H:i'
-                })
-            );
-
-            // 과제 마감일시 기본 설정
-            document.getElementById("assignmentEndDate_input").value = defaultEndDate + " " + time;
-            // $('#assignmentEndDate_input').value(defaultEndDate + " " + time);
-
-
-            /* 파일 업로드 */
-            // 업로드 첨부파일 미리보기 영역
-            let uploadAttachmentResult = $(".uploadAttachmentResult ul");
-
-            // json 데이터를 받아서 해당 파일의 이름을 페이지에 출력한다.
-            function showUploadedFile(uploadAttachmentResultsArray){
-                let str = "";
-
-                $(uploadAttachmentResultsArray).each(function(i, obj){
-                    str += "<li>" + obj.fileName + "</li>";
-                });
-
-                // 업로드 첨부파일 미리보기 영역에 파일 이름을 출력한다.
-                uploadAttachmentResult.append(str);
-            };
-
-            // 파일 업로드 버튼을 누르면 파일이 서버로 업로드 된다.
-            $("#uploadAttachmentBtn").on("click", function (e){
-                let formData = new FormData();
-                let inputFile = $("input[name='uploadFile']");
-                let files = inputFile[0].files;
-
-                console.log(files);
-
-                /* add filedate to formata */
-                for(let i = 0; i< files.length; i++){
-                    if(!checkExtension(files[i].name, files[i].size)) return false;
-
-                    formData.append("uploadFile", files[i]);
-                }
-
-                $.ajax({
-                    url: '/uploadAjaxAction',
-                    processData: false,
-                    contentType: false,
-                    data: formData,
-                    type: 'POST',
-                    success: function (){
-                        console.log();
-                        alert("Uploaded");
-                    },
-                    error: function(){
-                        console.log();
-                        alert("error");
-                    }
-                });
-            });
-        });
-
-        /*
-        // 과제 시작일시
-        $('#assignmentBeginDate_input').datetimepicker({
-            locale: 'ko',
-            format: 'YYYY-MM-DD HH:mm',
-            inline: false,
-            sideBySide: true,
-            allowTimes: allowTimesList,
-            minDate: 0,
-            onShow: function (ct) {
-                this.setOptions({
-                    maxDate: jQuery('#assignmentEndDate_input').val() ? jQuery('#assignmentEndDate_input').val() : false
-                })
-            }
-        });
-         */
-        // 과제 마감일시
-        /*
-        $('#assignmentEndDate_input').datetimepicker({
-                locale: 'ko',
-                format: 'YYYY-MM-DD HH:mm',
-                inline: false,
-                sideBySide: true,
-                allowTimes: allowTimesList,
-                onShow: function (ct) {
-                    this.setOptions({
-                        minDate: jQuery('#assignmentBeginDate_input').val() ? jQuery('#assignmentBeginDate_input').val() : false
-                    })
-                }
-            }
-        );
-         */
     </script>
 
 </head>
 <body>
 
 <!-- 글 작성 화면 -->
-<div class="mb-3">
+<div>
     <%--@elvariable id="postAssignmentDTO" type="kr.co.sloop.postAssignment.domain.PostAssignmentDTO"--%>
-    <form:form modelAttribute="postAssignmentDTO" method="post" action="/postassignment/write" enctype="multipart/form-data">
+    <form:form modelAttribute="postAssignmentDTO" method="post" onsubmit="return registerAction();" action="/postassignment/write" enctype="multipart/form-data">
         <!-- 글 제목 -->
         <p><form:input path="postAssignmentTitle" autofocus="true" placeholder="제목"/></p>
         <p><form:errors path="postAssignmentTitle"/></p>
@@ -198,7 +245,7 @@
                           name="postAssignmentContents" rows="3"></form:textarea></p>
         <p><form:errors path="postAssignmentContents"/></p>
         <script>
-            var ckeditor_config = {
+            let ckeditor_config = {
                 width: "100%",
                 height: "400px",
                 image_previewText: '',
@@ -221,48 +268,40 @@
 
                 uploadButton['filebrowser']['onSelect'] = function (fileUrl, errorMessage) {
 
-                }
-
+                };
             });
         </script>
 
-        <!-- 과제 -->
-        <%--
-        <!-- 과제 시작일시 -->
-        <label for="assignmentBeginDate">시작일시</label>
-        <div id="assignmentBeginDate">
-            <input id="assignmentBeginDate_input" class="assignmentBeginDate_input" type="text"/>
+        <!-- 첨부 파일 추가 -->
+        <input id="input_file" multiple="multiple" type="file" class="form-control">
+        <span style="font-size:10px; color: gray;">※ 첨부파일은 개당 25MB, 총 125MB까지 업로드 가능합니다.</span>
+
+        <!-- 업로드한 파일 목록 -->
+        <div class="data_file_txt" id="data_file_txt">
+            <!-- <span>첨부 파일</span> -->
+            <br />
+            <div id="articlefileChange">
+            </div>
         </div>
-        --%>
+
         <!-- 과제 마감일시 -->
         <label for="assignmentEndDate">마감일시</label>
         <div id="assignmentEndDate">
             <form:input path="assignmentEndDateString" id="assignmentEndDate_input" class="assignmentEndDate_input" type="text"/>
         </div>
-        <!-- <input type="button" onclick="console.log($('#assignmentEndDate_input').val())"> -->
 
         <!-- 과제 만점 점수 설정 -->
+        <label for="assignmentScore">만점 점수</label>
         <p><form:input path="assignmentScore" type="number" id="assignmentScore" name="assignmentScore"
                        rows="3"></form:input></p>
         <p><form:errors path="assignmentScore"/></p>
 
         <!-- 과제 대상 설정 -->
 
-
         <!-- 작성하기 버튼 -->
         <input type="submit" value="작성하기">
     </form:form>
 
-
-    <!-- 첨부파일 -->
-    <!-- 첨부파일 업로드 버튼 -->
-    <div class="uploadAttaachmentDiv">
-        <input type="file" name="attachments" multiple>
-    </div>
-    <!-- 업로드된 첨부파일 미리보기 -->
-    <div class="uploadAttachmentResult">
-        <ul></ul>
-    </div>
 </div>
 </body>
 </html>
