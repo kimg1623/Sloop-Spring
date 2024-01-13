@@ -7,18 +7,27 @@ import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import net.coobird.thumbnailator.Thumbnailator;
+import org.apache.commons.io.FileUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("/member")
@@ -102,14 +111,6 @@ public class MemberController {
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         if (loginEmail != null) {
 
-
-        /** 폴더 정의에 대한 메서드 */
-        /*private String getFolder() {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  //날짜의 형식
-            Date date = new Date(); // 오늘 날짜를 가져오는 인스턴스 생성
-            String str = sdf.format(date);  // 그걸 str 이라는 변수에 포맷을 통해 넣어줌
-            return str.replace("_", File.separator);  // _로 구분해주는 함수로 변환
-        }*/
             AttachmentMemberDTO attachmentMemberDTO = memberService.findImageByMemberIdx(memberIdx);
             MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
             log.info("파일 넘어옴?========" +attachmentMemberDTO);
@@ -122,11 +123,7 @@ public class MemberController {
 
 
     }
-    
-    /** Post uploadAjax 작성칸 */
 
-
-    /** Post uploadAjax 작성끝*/
 
     // update.jsp 의 Form method = Post로 데이터 받아옴
     @PostMapping("update")
@@ -188,6 +185,54 @@ public class MemberController {
         }
     }
 
+/** 프로필 사진 업로드 */
+    @GetMapping("/profile")
+    public String profileUploadForm(){
+        return "member/profile";
+    }
 
 
+    @ResponseBody
+    @RequestMapping(value = "/profile", method = RequestMethod.POST)
+    public String fileUpload(
+            @RequestParam("article_file") List<MultipartFile> multipartFile
+            , HttpServletRequest request) {
+
+        String strResult = "{ \"result\":\"FAIL\" }";
+        String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
+        String fileRoot;
+        try {
+            // 파일이 있을때 탄다.
+            if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
+
+                for(MultipartFile file:multipartFile) {
+                    fileRoot = contextRoot + "resources/upload/";
+                    System.out.println(fileRoot);
+
+                    String originalFileName = file.getOriginalFilename();	//오리지날 파일명
+                    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
+                    String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
+
+                    File targetFile = new File(fileRoot + savedFileName);
+                    try {
+                        InputStream fileStream = file.getInputStream();
+                        FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+
+                    } catch (Exception e) {
+                        //파일삭제
+                        FileUtils.deleteQuietly(targetFile);	//저장된 현재 파일 삭제
+                        e.printStackTrace();
+                        break;
+                    }
+                }
+                strResult = "{ \"result\":\"OK\" }";
+            }
+            // 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
+            else
+                strResult = "{ \"result\":\"OK\" }";
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return strResult;
+    }
 }

@@ -21,7 +21,7 @@
     <select id="findByMemberEmail" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode , authority
+               memberSubjectCode, memberRegionCode , authority , memberProfile
         from  member
         where memberEmail = #{loginEmail}
     </select>
@@ -29,7 +29,7 @@
     <select id="findByUserName" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode , authority
+               memberSubjectCode, memberRegionCode , authority , memberProfile
         from  member
         where memberEmail = #{username}
     </select>
@@ -55,13 +55,14 @@
             memberGradeCode = #{memberGradeCode},
             memberSubjectCode = #{memberSubjectCode},
             memberRegionCode = #{memberRegionCode}
+
         where memberIdx = #{memberIdx}
     </update>
 
     <select id="findByIdx" parameterType="int" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode, authority
+               memberSubjectCode, memberRegionCode, authority , memberProfile
         from member
         where memberIdx = #{memberIdx}
     </select>
