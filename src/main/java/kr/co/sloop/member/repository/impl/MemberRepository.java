@@ -30,6 +30,9 @@ public interface MemberRepository {
 
     void uploadProfile(String savedFileName);
 
+    /*void uploadProfileByIdx(int memberIdx);*/
+
+
 
 
 

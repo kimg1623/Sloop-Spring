@@ -74,6 +74,12 @@ public class MemberRepositoryImpl implements MemberRepository {
         memberMapper.uploadProfile(savedFileName);
     }
 
+    /*@Override
+    public void uploadProfileByIdx(int memberIdx) {
+        memberMapper.uploadProfileByIdx(memberIdx);
+    }*/
+
+
 
 
 

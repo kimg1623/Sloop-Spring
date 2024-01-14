@@ -48,6 +48,10 @@
         <th>지역</th>
         <td>${member.memberRegionCode}</td>
     </tr>
+    <tr>
+        <th>프로필 사진</th>
+        <td><img src="${pageContext.request.contextPath}/resources/upload/${member.memberProfile}"/></td>
+    </tr>
 </table>
 <a href="/member/logout">로그아웃</a><br>
 <a href="/member/delete">회원 탈퇴</a>

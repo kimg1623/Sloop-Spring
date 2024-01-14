@@ -82,7 +82,6 @@
     <update id="uploadProfile" parameterType="String">
         update member
         set memberProfile = #{memberProfile}
-        where memberIdx = #{memberIdx}
     </update>
 
 

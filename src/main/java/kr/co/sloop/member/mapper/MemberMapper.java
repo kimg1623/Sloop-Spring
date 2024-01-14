@@ -31,6 +31,8 @@ public interface MemberMapper {
 
     void uploadProfile(String savedFileName);
 
+/*    void uploadProfileByIdx(int memberIdx);*/
+
 
 
 

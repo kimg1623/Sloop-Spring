@@ -35,6 +35,10 @@ public interface MemberService {
 
     void uploadProfile(String savedFileName);
 
+/*    void uploadProfileByIdx(int memberIdx);*/
+
+
+
 
 
 

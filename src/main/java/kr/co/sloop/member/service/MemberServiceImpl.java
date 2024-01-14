@@ -109,7 +109,14 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void uploadProfile(String savedFileName) {
         memberRepository.uploadProfile(savedFileName);
+
     }
+
+/*    @Override
+    public void uploadProfileByIdx(int memberIdx) {
+        memberRepository.uploadProfileByIdx(memberIdx);
+    }*/
+
 
 
 

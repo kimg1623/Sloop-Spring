@@ -204,9 +204,8 @@ public class MemberController {
 
     @ResponseBody
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
-    public String fileUpload(
-            @RequestParam("memberProfile") List<MultipartFile> multipartFile
-            , HttpServletRequest request) {
+    public String fileUpload(@RequestParam("memberProfile") List<MultipartFile> multipartFile,
+                             HttpServletRequest request) {
         log.info("포스트업로드!!!!!!!!");
 
 
@@ -219,6 +218,7 @@ public class MemberController {
             if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
                 log.info("파일이 있음");
                 for(MultipartFile file : multipartFile) {
+
                     fileRoot = contextRoot + "resources/upload/temp";
                     System.out.println(fileRoot);
 
@@ -232,6 +232,7 @@ public class MemberController {
                         FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
 
                         memberService.uploadProfile(savedFileName);
+                        log.info("파일 저장 =====" + savedFileName);
 
 
                     } catch (Exception e) {
@@ -246,7 +247,6 @@ public class MemberController {
             // 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
             else
                 strResult = "{ \"result\":\"OK\" }";
-            log.info("파일이 없음");
         }catch(Exception e){
             e.printStackTrace();
         }
