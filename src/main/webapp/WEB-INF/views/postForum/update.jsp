@@ -55,7 +55,7 @@
             var ckeditor_config = {
                 width: "100%",
                 height:"400px",
-                image_previewText: '이건어디에',
+                image_previewText: '미리보기',
                 resize_enabled : false,
                 enterMode : CKEDITOR.ENTER_BR,
                 shiftEnterMode : CKEDITOR.ENTER_P,
