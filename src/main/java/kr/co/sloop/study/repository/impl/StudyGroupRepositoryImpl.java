@@ -118,4 +118,9 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         for(CategoryRegionDTO i : categoryRegionList)
             categoryRegionMap.put(i.getCategoryRegionCode(),i.getCategoryRegionName());
     }
+    // 지역 카테고리 테이블을 불러와서 categorySubjectMap 필드에 저장
+    public List<CategoryRegionDTO> getCategoryRegion2() {
+        List<CategoryRegionDTO> categoryRegionList = studyGroupMapper.getAllRegionName();
+        return categoryRegionList;
+    }
 }
