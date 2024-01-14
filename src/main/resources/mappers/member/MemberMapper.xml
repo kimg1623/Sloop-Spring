@@ -71,14 +71,6 @@
         delete from member where memberIdx = #{memberIdx}
     </delete>
 
-    <select id="findImageByMemberIdx" resultType="AttachmentMemberDTO">
-        select a.attachmentIdx , a.postIdx , a.attachmentOrgName , a.attachmentDirPath , a.attachmentName , a.attachmentThumbnail
-        from attachment as a
-                 join postNotice as n on a.postIdx = n.postIdx
-                 left join member as m on n.memberIdx = m.memberIdx
-        where m.memberIdx = #{memberIdx}
-    </select>
-
     <update id="uploadProfile" parameterType="member">
         update member
         set memberProfile = #{memberProfile}

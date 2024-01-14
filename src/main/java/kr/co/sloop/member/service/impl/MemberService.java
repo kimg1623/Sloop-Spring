@@ -1,7 +1,6 @@
 package kr.co.sloop.member.service.impl;
 
 
-import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,10 +29,6 @@ public interface MemberService {
     MemberDTO findByIdx(int memberIdx);
 
     int deleteByUser(int memberIdx);
-
-    AttachmentMemberDTO findImageByMemberIdx(int memberIdx);
-
-
 
         void uploadProfile(MemberDTO memberDTO);
 

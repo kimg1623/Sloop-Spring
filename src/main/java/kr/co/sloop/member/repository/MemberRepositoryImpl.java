@@ -1,7 +1,4 @@
 package kr.co.sloop.member.repository;
-
-
-import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.mapper.MemberMapper;
 import kr.co.sloop.member.repository.impl.MemberRepository;
@@ -65,12 +62,6 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public AttachmentMemberDTO findImageByMemberIdx(int memberIdx) {
-        return memberMapper.findImageByMemberIdx(memberIdx);
-    }
-
-
-    @Override
     public void uploadProfile(MemberDTO memberDTO) {
         memberMapper.uploadProfile(memberDTO);
     }
@@ -79,10 +70,6 @@ public class MemberRepositoryImpl implements MemberRepository {
     public void uploadProfileByIdx(int memberIdx) {
         memberMapper.uploadProfileByIdx(memberIdx);
     }*/
-
-
-
-
 
     /*@Override
     public int signup(RegisterFormDTO registerFormDTO) {

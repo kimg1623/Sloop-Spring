@@ -2,16 +2,11 @@ package kr.co.sloop.member.controller;
 
 
 import kr.co.sloop.common.AlertUtils;
-import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import net.coobird.thumbnailator.Thumbnailator;
 import org.apache.commons.io.FileUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -22,11 +17,9 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
-import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Controller
@@ -111,12 +104,11 @@ public class MemberController {
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         if (loginEmail != null) {
 
-            AttachmentMemberDTO attachmentMemberDTO = memberService.findImageByMemberIdx(memberIdx);
             MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
-            log.info("파일 넘어옴?========" +attachmentMemberDTO);
             model.addAttribute("member", memberDTO);
-            model.addAttribute("uploadFile" , attachmentMemberDTO);
+
             return "member/update";
+
         } else {
             return "redirect:/member/login";
         }
