@@ -38,14 +38,15 @@ public class MemberController {
 
     // signupForm.jsp -> form method = Post 로 데이터 받아옴
     @PostMapping("/signup")
-    public String signup(@ModelAttribute MemberDTO memberDTO){
+    public String signup(@ModelAttribute MemberDTO memberDTO , HttpServletResponse response) throws IOException{
         int signupResult = memberService.signup(memberDTO);
 
-        if (signupResult > 0){
-            return "member/signupSuccess"; // 회원가입 성공 시 이동
-        } else {
-            return "member/signupForm";    // 회원가입 실패 시 이동
+        if (signupResult > 0) {
+            AlertUtils.alertAndMovePage(response, "회원가입 되었습니다.", "login");// update 성공시 redirect로 상세보기 화면 출력
+            /*return "member/signupSuccess"; // 회원가입 성공 시 이동*/
         }
+        return "member/signupForm";    // 회원가입 실패 시 이동
+
     }
 
     // 회원가입 성공 후 로그인 하러 가기 버튼 클릭시 LoginForm.jsp 로 이동
@@ -168,13 +169,19 @@ public class MemberController {
 
     // 회원 탈퇴 시
     @GetMapping("/delete")
-    public String deleteByUser(@RequestParam ("memberIdx") int memberIdx){
+    public String deleteByUser(@RequestParam ("memberIdx") int memberIdx ,HttpSession session ,
+                               HttpServletResponse response) throws IOException{
+
+        int getMemberIdx = Integer.parseInt((String) session.getAttribute("loginMemberIdx"));
         int deleteResult = memberService.deleteByUser(memberIdx);
-        if (deleteResult > 0){
+
+        if (deleteResult > 0 ){     // 성공시
             return "home"; // 성공하면 home으로 이동
         } else {
             return "redirect:/member/mypage";
         }
+
+
     }
 
 /** 프로필 사진 업로드 */

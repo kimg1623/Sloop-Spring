@@ -97,6 +97,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int deleteByUser(int memberIdx) {
+
         return memberRepository.deleteByUser(memberIdx);
     }
 
