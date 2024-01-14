@@ -24,4 +24,6 @@ public class MemberDTO {
     private String memberGradeCode;        // '학년 카테고리 코드',
     private String memberSubjectCode;      // '과목 카테고리 코드',
     private String memberRegionCode;       // '지역 카테고리 코드',
+    private String memberProfile;            // 프로필사진
+
 }

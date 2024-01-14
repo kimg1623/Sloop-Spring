@@ -1,7 +1,4 @@
 package kr.co.sloop.member.repository;
-
-
-import kr.co.sloop.member.domain.AttachmentMemberDTO;
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.mapper.MemberMapper;
 import kr.co.sloop.member.repository.impl.MemberRepository;
@@ -11,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -64,9 +62,14 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public AttachmentMemberDTO findImageByMemberIdx(int memberIdx) {
-        return memberMapper.findImageByMemberIdx(memberIdx);
+    public void uploadProfile(MemberDTO memberDTO) {
+        memberMapper.uploadProfile(memberDTO);
     }
+
+    /*@Override
+    public void uploadProfileByIdx(int memberIdx) {
+        memberMapper.uploadProfileByIdx(memberIdx);
+    }*/
 
     /*@Override
     public int signup(RegisterFormDTO registerFormDTO) {
