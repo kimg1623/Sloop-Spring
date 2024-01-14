@@ -44,4 +44,10 @@ public class PostAssignmentRepositoryImpl implements PostAssignmentRepository{
     public void updatePostAssignmentHits(int postIdx) {
         postAssignmentMapper.updatePostAssignmentHits(postIdx);
     }
+
+    // postIdx로 작성자 email 조회
+    @Override
+    public String findWriterEmailByPostIdx(int postIdx) {
+        return postAssignmentMapper.findWriterEmailByPostIdx(postIdx);
+    }
 }

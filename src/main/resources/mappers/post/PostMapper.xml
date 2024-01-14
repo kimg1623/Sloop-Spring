@@ -17,4 +17,10 @@
             select last_insert_id();
         </selectKey>
     </insert>
+
+    <!-- post 글 삭제하기 -->
+    <delete id="delete" parameterType="int">
+        delete from post
+        where postIdx = #{postIdx}
+    </delete>
 </mapper>

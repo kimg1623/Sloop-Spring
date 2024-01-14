@@ -22,4 +22,10 @@ public class PostRepositoryImpl implements PostRepository{
     public int insertPost(PostDTO postDTO) {
         return postMapper.insertPost(postDTO);
     }
+
+    // post 테이블에서 글 삭제하기
+    @Override
+    public int delete(int postIdx) {
+        return postMapper.delete(postIdx);
+    }
 }

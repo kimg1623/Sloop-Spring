@@ -6,7 +6,6 @@ import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.service.SearchServiceImpl;
 import kr.co.sloop.postAssignment.domain.PostAssignmentDTO;
 import kr.co.sloop.postAssignment.service.PostAssignmentService;
-import kr.co.sloop.postForum.domain.PostForumDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
@@ -25,7 +24,6 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -361,7 +359,30 @@ public class PostAssignmentController {
 
 
     // 글 삭제하기
+    @GetMapping("/delete")
+    public String delete(@RequestParam("postIdx") int postIdx, HttpSession session, HttpServletResponse response){
+        try {
+            // 로그인 된 회원과 글 작성자가 동일한지 검사
+            String writerEmail = postAssignmentService.findWriterEmailByPostIdx(postIdx);
+            if (!writerEmail.equals(session.getAttribute("loginEmail"))) {
+                // 동일하지 않다면 삭제하지 않고 글 목록 페이지로 리다이렉트
+                AlertUtils.alertAndMovePage(response, "본인의 글만 삭제할 수 있습니다.", "/postassignment/list");
+                return "";
+            }
 
+            log.info("postIdx확인: " + postIdx);
+            boolean result = postAssignmentService.delete(postIdx);
+            log.info("result확인: " + result);
+            if(!result){ // 삭제 실패
+                AlertUtils.alert(response, "게시글 삭제를 실패하였습니다.");
+            }
+        }catch (Exception e){
+            // 목록 조회 페이지로 돌아간다.
+            return "redirect:/postassignment/list";
+        }
+        // 삭제 후, 목록 조회 페이지로 돌아간다.
+        return "redirect:/postassignment/list";
+    }
 
     // json 객체 생성
     public JSONObject createJSON(int uploaded, String[] message){

@@ -63,7 +63,7 @@
 
     <!-- postIdx에 해당하는 게시글 하나의 상세 조회 페이지를 위한 쿼리 -->
     <select id="findByPostIdx" parameterType="int" resultType="postAssignment">
-        select pa.postAssignmentTitle, pa.postAssignmentContents, pa.memberIdx, pa.postAssignmentRegDate, pa.postAssignmentEditDate, pa.postAssignmentHits, pa.assignmentIdx, m.memberNickname, m.memberEmail, a.assignmentEndDate
+        select pa.postIdx, pa.postAssignmentTitle, pa.postAssignmentContents, pa.memberIdx, pa.postAssignmentRegDate, pa.postAssignmentEditDate, pa.postAssignmentHits, pa.assignmentIdx, m.memberNickname, m.memberEmail, a.assignmentEndDate
         from postAssignment as pa
         join member as m on pa.memberIdx = m.memberIdx
         join assignment as a on pa.assignmentIdx = a.assignmentIdx
@@ -76,4 +76,13 @@
         set postAssignmentHits = postAssignmentHits + 1
         where postIdx = #{postIdx}
     </update>
+
+    <!-- postIdx 게시글의 작성자 email 조회 -->
+    <select id="findWriterEmailByPostIdx" parameterType="int" resultType="String">
+        select m.memberEmail
+        from postAssignment as pa
+        join member as m on m.memberIdx = pa.memberIdx
+        where pa.postIdx = #{postIdx}
+    </select>
+
 </mapper>

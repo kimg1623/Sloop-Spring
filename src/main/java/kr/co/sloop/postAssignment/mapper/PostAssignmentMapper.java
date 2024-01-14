@@ -18,4 +18,8 @@ public interface PostAssignmentMapper {
     PostAssignmentDTO findByPostIdx(int postIdx);
     // 조회수 증가
     void updatePostAssignmentHits(int postIdx);
+    // postIdx로 작성자 email 조회
+    String findWriterEmailByPostIdx(int postIdx);
+    // 글 삭제하기
+    void delete(int postIdx);
 }
