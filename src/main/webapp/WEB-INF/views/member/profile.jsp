@@ -22,7 +22,11 @@
             <h3>변경하려는 자</h3>
             <p>번호 = ${member.memberIdx}</p>
         </div>
+        <div class='uploadResult'>
+            <ul>
 
+            </ul>
+        </div>
         <button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 추가</button>
 
         <input id="input_file" multiple="multiple" type="file" style="display:none;">
@@ -136,7 +140,10 @@
             success: function (data) {
                 if(JSON.parse(data)['result'] == "OK"){
                     alert("파일업로드 성공");
-                    location.href("member/memberList")
+                    location.href = "/member?memberIdx=${member.memberIdx}";
+
+
+
                 } else
                     alert("서버내 오류로 처리가 지연되고있습니다. 잠시 후 다시 시도해주세요");
             },
@@ -145,6 +152,7 @@
                 return false;
             }
         });
+
         return false;
     }
 </script>

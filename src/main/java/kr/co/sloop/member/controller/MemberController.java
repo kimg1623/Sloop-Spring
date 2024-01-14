@@ -264,6 +264,7 @@ public class MemberController {
         }catch(Exception e){
             e.printStackTrace();
         }
+        log.info("strResult =======" +strResult);
         return strResult;
 
     }
