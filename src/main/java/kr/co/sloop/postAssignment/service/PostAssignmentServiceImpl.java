@@ -185,4 +185,7 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
             return false;
         }
     }
+
+    // 글 수정하기 [*****]
+
 }

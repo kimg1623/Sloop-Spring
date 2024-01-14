@@ -6,12 +6,14 @@ import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.service.SearchServiceImpl;
 import kr.co.sloop.postAssignment.domain.PostAssignmentDTO;
 import kr.co.sloop.postAssignment.service.PostAssignmentService;
+import kr.co.sloop.postForum.domain.PostForumDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -23,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -352,11 +355,52 @@ public class PostAssignmentController {
         return "postAssignment/detail";
     }
 
-    // 글 수정하기 : 화면 출력
+    // 글 수정하기 : 화면 출력 [*****]
+    @GetMapping("/update")
+    public String updateForm(@RequestParam("postIdx") int postIdx, Model model){
+        // PostAssignmentDTO postAssignmentDTO = postAssignmentService.updateForm(postIdx);
 
+        // assignmentEndDateString
+
+        // model.addAttribute("postAssignmentDTO", postAssignmentDTO);
+        return "postAssignment/update";
+    }
 
     // 글 수정하기
+    @PostMapping("/update")
+    public void update(@ModelAttribute("postAssignmentDTO") PostAssignmentDTO postAssignmentDTO, HttpSession session, HttpServletResponse response){
+        // 유효성 검사 @Valid BindingResult errors [*****]
 
+        // 로그인 된 회원과 글 작성자가 동일한지 검사
+        if(!postAssignmentDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
+            // 동일하지 않다면 수정하지 않고 글 목록 페이지로 리다이렉트
+            // return "redirect:/postassignment/list";
+        }
+
+        // 객체 바인딩에 유효성 오류가 존재한다면, 작성 페이지로 돌아가서 오류 메세지를 출력한다. [*****]
+        /*
+        if(errors.hasErrors()){
+            return "redirect:/postassignment/update?postIdx=" + postAssignmentDTO.getPostIdx();
+        }
+        */
+
+        try {
+            /* [*****]
+            // 글 수정하기
+            boolean result = postAssignmentService.update(postAssignmentDTO);
+
+            if (result) { // 수정 성공
+                return "redirect:/postassignment/detail?postIdx=" + postAssignmentDTO.getPostIdx();
+            } else { // 수정 실패
+                AlertUtils.alertAndBackPage(response, "수정에 실패하였습니다.");
+                return "redirect:/postassignment/list";
+            }
+
+             */
+        }catch (Exception e){
+            // return "redirect:/postassignment/list";
+        }
+    }
 
     // 글 삭제하기
     @GetMapping("/delete")
