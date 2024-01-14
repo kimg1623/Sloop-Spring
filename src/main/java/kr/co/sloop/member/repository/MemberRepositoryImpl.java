@@ -69,9 +69,10 @@ public class MemberRepositoryImpl implements MemberRepository {
         return memberMapper.findImageByMemberIdx(memberIdx);
     }
 
+
     @Override
-    public void uploadProfile(String savedFileName) {
-        memberMapper.uploadProfile(savedFileName);
+    public void uploadProfile(MemberDTO memberDTO) {
+        memberMapper.uploadProfile(memberDTO);
     }
 
     /*@Override

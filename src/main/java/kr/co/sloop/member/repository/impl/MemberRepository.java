@@ -28,7 +28,9 @@ public interface MemberRepository {
 
      AttachmentMemberDTO findImageByMemberIdx(int memberIdx);
 
-    void uploadProfile(String savedFileName);
+
+
+     void uploadProfile(MemberDTO memberDTO);
 
     /*void uploadProfileByIdx(int memberIdx);*/
 

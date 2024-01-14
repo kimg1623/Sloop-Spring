@@ -106,11 +106,13 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findImageByMemberIdx(memberIdx);
     }
 
-    @Override
-    public void uploadProfile(String savedFileName) {
-        memberRepository.uploadProfile(savedFileName);
 
+
+    @Override
+    public void uploadProfile(MemberDTO memberDTO) {
+        memberRepository.uploadProfile(memberDTO);
     }
+
 
 /*    @Override
     public void uploadProfileByIdx(int memberIdx) {

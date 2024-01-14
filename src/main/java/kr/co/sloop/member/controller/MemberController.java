@@ -205,7 +205,7 @@ public class MemberController {
     @ResponseBody
     @RequestMapping(value = "/profile", method = RequestMethod.POST)
     public String fileUpload(@RequestParam("memberProfile") List<MultipartFile> multipartFile,
-                             HttpServletRequest request) {
+                             HttpServletRequest request , HttpSession session) {
         log.info("포스트업로드!!!!!!!!");
 
 
@@ -213,13 +213,19 @@ public class MemberController {
         String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
         String fileRoot;
 
+        int memberIdx =Integer.parseInt((String) session.getAttribute("loginMemberIdx"));
+        MemberDTO memberDTO = memberService.findByIdx(memberIdx);
+        log.info("업로드 객체 안에 memberDTO 정보 불러오기" + memberDTO);
+
+
         try {
             // 파일이 있을때 탄다.
             if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
                 log.info("파일이 있음");
                 for(MultipartFile file : multipartFile) {
 
-                    fileRoot = contextRoot + "resources/upload/temp";
+
+                    fileRoot = contextRoot + "resources/upload/";
                     System.out.println(fileRoot);
 
                     String originalFileName = file.getOriginalFilename();	//오리지날 파일명
@@ -227,13 +233,21 @@ public class MemberController {
                     String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
 
                     File targetFile = new File(fileRoot + savedFileName);
+
+
+
+                    memberDTO.setMemberProfile(savedFileName);
+                    memberService.uploadProfile(memberDTO);
+                    log.info("파일 저장 =====" + savedFileName);
+                    log.info("타겟 파일 객체 ====" + targetFile);
+
+
+
+
+
                     try {
                         InputStream fileStream = file.getInputStream();
                         FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
-
-                        memberService.uploadProfile(savedFileName);
-                        log.info("파일 저장 =====" + savedFileName);
-
 
                     } catch (Exception e) {
                         //파일삭제

@@ -79,9 +79,10 @@
         where m.memberIdx = #{memberIdx}
     </select>
 
-    <update id="uploadProfile" parameterType="String">
+    <update id="uploadProfile" parameterType="member">
         update member
         set memberProfile = #{memberProfile}
+        where memberIdx = #{memberIdx}
     </update>
 
 
