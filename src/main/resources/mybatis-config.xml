@@ -24,6 +24,7 @@
         <typeAlias type="kr.co.sloop.post.domain.SearchDTO" alias="search"/>
         <typeAlias type="kr.co.sloop.postAssignment.domain.PostAssignmentDTO" alias="postAssignment"/>
         <typeAlias type="kr.co.sloop.postAssignment.domain.AssignmentDTO" alias="assignment"/>
+        <typeAlias type="kr.co.sloop.attachment.domain.AttachmentDTO" alias="attachment"/>
 
 
 
