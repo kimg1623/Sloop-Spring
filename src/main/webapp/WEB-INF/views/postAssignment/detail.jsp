@@ -48,8 +48,8 @@
         <tr>
             <td>첨부파일</td>
             <td>
-                <c:forEach items="${postAssignmentDTO.attachmentDTOList}" var="attachmentDTO">
-                    <ul><c:out value="${attachmentDTO.attachmentName}"/> </ul>
+                <c:forEach var="attachmentDTO" items="${postAssignmentDTO.attachmentDTOList}">
+                    <ul><a href="<c:url value='/attachment/download/${attachmentDTO.attachmentName}'/>"><c:out value="${attachmentDTO.attachmentOrgName}"/></a></ul>
                 </c:forEach>
             </td>
         </tr>
@@ -79,8 +79,7 @@
             // location.href = "/postassignment/delete?postIdx=" + postIdx;
 
             if (confirm("삭제하시겠습니까?") == true){
-                //true는 확인버튼을 눌렀을 때 코드 작성
-                console.log("완료되었습니다.");
+                // true는 확인버튼을 눌렀을 때 코드 작성
                 location.href = "/postassignment/delete?postIdx=" + postIdx;
             }else{
                 // false는 취소버튼을 눌렀을 때, 취소됨

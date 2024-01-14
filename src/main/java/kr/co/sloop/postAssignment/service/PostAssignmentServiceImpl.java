@@ -1,6 +1,7 @@
 package kr.co.sloop.postAssignment.service;
 
 import kr.co.sloop.attachment.domain.AttachmentDTO;
+import kr.co.sloop.attachment.repository.AttachmentRepository;
 import kr.co.sloop.post.domain.PageDTO;
 import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.repository.PostRepository;
@@ -30,6 +31,7 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
     private final PostAssignmentRepository postAssignmentRepository;
     private final PostRepository postRepository;
     private final AssignmentRepository assignmentRepository;
+    private final AttachmentRepository attachmentRepository;
     @Resource(name="uploadPathForAssignment")
     private String uploadPath; // 업로드된 첨부파일이 저장될 서버 경로 (디렉터리 경로)
 
@@ -76,7 +78,10 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
         // 첨부파일 list를 서버에 업로드 & postAssignmentDTO 멤버변수에 등록
         uploadResult = uploadAttachmentListToServer(postAssignmentDTO, multipartFileList);
         if(!uploadResult)   return false; // 첨부파일 업로드, 등록 실패
-        uploadAttachmentListToDBTable();
+
+        // 첨부파일 list를 attachment DB table에 삽입
+        uploadResult = uploadAttachmentListToDBTable(postAssignmentDTO.getAttachmentDTOList());
+        if(!uploadResult)   return false; // 첨부파일 insert 실패
 
         // 글 작성 성공
         return true;
@@ -128,9 +133,13 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
         return status;
     }
 
-    // 첨부파일 리스트를 첨부파일 DB 테이블에 삽입 [*****] boolean 리턴해야 함
-    public void uploadAttachmentListToDBTable(){
-
+    // 첨부파일 리스트를 첨부파일 DB 테이블에 삽입 [*****]
+    public boolean uploadAttachmentListToDBTable(List<AttachmentDTO> attachmentDTOList){
+        int result = attachmentRepository.uploadAttachmentListToDBTable(attachmentDTOList);
+        if(result == attachmentDTOList.size()){     // 모든 첨부파일 insert 성공
+            return true;
+        }
+        return false;   // insert 실패
     }
 
     // 글 상세조회
@@ -139,8 +148,13 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
         // 조회수 증가
         postAssignmentRepository.updatePostAssignmentHits(postIdx);
 
-        // postIdx로 글 정보 불러오기
-        return findByPostIdx(postIdx);
+        // postIdx로 글 정보 불러오기 (+ 과제 마감일시, 과제 idx)
+        PostAssignmentDTO postAssignmentDTO = findByPostIdx(postIdx);
+        // postIdx의 첨부파일 불러오기
+        List<AttachmentDTO> attachmentDTOList = findAttachmentByPostIdx(postIdx);
+        postAssignmentDTO.setAttachmentDTOList(attachmentDTOList);
+
+        return postAssignmentDTO;
     }
 
     // postIdx로 글 정보 불러오기
@@ -148,5 +162,27 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
     public PostAssignmentDTO findByPostIdx(int postIdx) {
         PostAssignmentDTO postAssignmentDTO = postAssignmentRepository.findByPostIdx(postIdx);
         return postAssignmentDTO;
+    }
+
+    // postIdx로 첨부파일 목록 불러오기
+    public List<AttachmentDTO> findAttachmentByPostIdx(int postIdx){
+        return attachmentRepository.findAttachmentByPostIdx(postIdx);
+    }
+
+    // postIdx로 작성자 email 조회
+    @Override
+    public String findWriterEmailByPostIdx(int postIdx) {
+        return postAssignmentRepository.findWriterEmailByPostIdx(postIdx);
+    }
+
+    // 글 삭제하기
+    @Override
+    public boolean delete(int postIdx) {
+        int result = postRepository.delete(postIdx);
+        if(result == 1){    // 성공
+            return true;
+        }else{  // 실패
+            return false;
+        }
     }
 }
