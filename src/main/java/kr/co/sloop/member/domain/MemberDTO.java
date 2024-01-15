@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.validation.annotation.Validated;
 
 import java.util.Date;
 
@@ -12,6 +13,7 @@ import java.util.Date;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
+@Validated
 public class MemberDTO {
     private int memberIdx;              // '회원 index',
     private String memberEmail;         // '회원 이메일',
