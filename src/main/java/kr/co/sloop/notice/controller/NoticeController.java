@@ -9,6 +9,7 @@ import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.service.SearchServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -68,9 +69,9 @@ public class NoticeController {
 	public String noticeWriteForm(Model model , @PathVariable("boardIdx") int boardIdx){
 
 		NoticeDTO noticeDTO = new NoticeDTO();
-		model.addAttribute("noticeDTO", noticeDTO);
 		noticeDTO.setBoardIdx(boardIdx);
-		return "notice/noticeWriteForm";
+		model.addAttribute("noticeDTO", noticeDTO);
+		return "notice/write";
 	}
 
 	/** 공지사항 작성은
@@ -82,7 +83,7 @@ public class NoticeController {
 							  @PathVariable("boardIdx") int boardIdx , HttpSession session){
 
 		if (errors.hasErrors()){
-			return "notice/noticeWriteForm";
+			return "notice/write";
 		}
 
 		/** 세션에서 이메일 , memberIdx 값 불러옴 */
@@ -107,11 +108,12 @@ public class NoticeController {
 
 	/** 공지 게시글 상세 조회 폼 */
 	@GetMapping("detail")
-	public String detail(@RequestParam("postIdx") int postIdx , Model model){
+	public String detail(@RequestParam("postIdx") int postIdx , Model model ,
+						 @PathVariable("boardIdx") int boardIdx){
 
 
 		NoticeDTO noticeDTO = noticeService.detailNotice(postIdx);
-
+		noticeDTO.setBoardIdx(boardIdx);
 		model.addAttribute("noticeDTO" , noticeDTO);
 		/** 본인(관리자) 게시물 */
 
