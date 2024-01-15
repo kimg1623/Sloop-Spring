@@ -9,7 +9,6 @@ import kr.co.sloop.postAssignment.domain.AssignmentDTO;
 import kr.co.sloop.postAssignment.domain.PostAssignmentDTO;
 import kr.co.sloop.postAssignment.repository.AssignmentRepository;
 import kr.co.sloop.postAssignment.repository.PostAssignmentRepository;
-import kr.co.sloop.postForum.domain.PostForumDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
@@ -20,6 +19,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.io.InputStream;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -76,21 +76,28 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
         if (result != 1) return false;  // 글 작성 실패
 
         // 첨부파일 list를 서버에 업로드 & postAssignmentDTO 멤버변수에 등록
-        uploadResult = uploadAttachmentListToServer(postAssignmentDTO, multipartFileList);
-        if(!uploadResult)   return false; // 첨부파일 업로드, 등록 실패
+        if(multipartFileList != null) {     // 첨부파일이 존재한다면 업로드 실행
+            uploadResult = uploadAttachmentListToServer(postAssignmentDTO, multipartFileList);
+            if (!uploadResult) return false; // 첨부파일 업로드, 등록 실패
 
-        // 첨부파일 list를 attachment DB table에 삽입
-        uploadResult = uploadAttachmentListToDBTable(postAssignmentDTO.getAttachmentDTOList());
-        if(!uploadResult)   return false; // 첨부파일 insert 실패
+            // 첨부파일 list를 attachment DB table에 삽입
+            uploadResult = uploadAttachmentListToDBTable(postAssignmentDTO.getAttachmentDTOList());
+            if(!uploadResult)   return false; // 첨부파일 insert 실패
+        }
 
         // 글 작성 성공
         return true;
     }
 
-    // 과제 마감일시 자료형 변경: 문자열 -> sql.Timestamp
+    // 과제 마감일시 자료형 변경: String -> sql.Timestamp
     public Timestamp stringToTimestamp(String timeString){
         // 뷰 jsp 페이지에서 초는 입력받지 않으므로 초를 추가하여 반환한다.
         return Timestamp.valueOf(timeString + ":00");
+    }
+
+    // 과제 마감일시 자료형 변경: sql.Timestamp -> String
+    public String timestampToString(Timestamp timestamp){
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm").format(timestamp);
     }
 
     // 첨부파일 리스트를 서버에 업로드
@@ -133,7 +140,7 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
         return status;
     }
 
-    // 첨부파일 리스트를 첨부파일 DB 테이블에 삽입 [*****]
+    // 첨부파일 리스트를 첨부파일 DB 테이블에 삽입
     public boolean uploadAttachmentListToDBTable(List<AttachmentDTO> attachmentDTOList){
         int result = attachmentRepository.uploadAttachmentListToDBTable(attachmentDTOList);
         if(result == attachmentDTOList.size()){     // 모든 첨부파일 insert 성공
@@ -179,13 +186,44 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
     @Override
     public boolean delete(int postIdx) {
         int result = postRepository.delete(postIdx);
-        if(result == 1){    // 성공
+        if(result != 0){    // 성공
             return true;
         }else{  // 실패
             return false;
         }
     }
 
-    // 글 수정하기 [*****]
+    // 글 수정하기: 글 정보 불러오기
+    @Override
+    public PostAssignmentDTO updateForm(int postIdx) {
+        // postIdx로 글 정보 불러오기 (+ 과제 마감일시, 과제 idx)
+        PostAssignmentDTO postAssignmentDTO = findByPostIdx(postIdx);
 
+        // 과제 마감일시 TimeStamp -> String 변환
+        String assignmentEndDateString = timestampToString(postAssignmentDTO.getAssignmentEndDate());
+        postAssignmentDTO.setAssignmentEndDateString(assignmentEndDateString);
+
+        // postIdx의 첨부파일 불러오기
+        List<AttachmentDTO> attachmentDTOList = findAttachmentByPostIdx(postIdx);
+        postAssignmentDTO.setAttachmentDTOList(attachmentDTOList);
+
+        return postAssignmentDTO;
+    }
+
+    // 글 수정하기
+    @Override
+    public boolean update(PostAssignmentDTO postAssignmentDTO) {
+        // 과제 마감일시 String -> Timestamp
+        Timestamp assignmentEndDate = stringToTimestamp(postAssignmentDTO.getAssignmentEndDateString());
+        postAssignmentDTO.setAssignmentEndDate(assignmentEndDate);
+
+        // 글 수정
+        int result = postAssignmentRepository.update(postAssignmentDTO);
+
+        if(result != 0){    // 성공
+            return true;
+        }else{  // 실패
+            return false;
+        }
+    }
 }

@@ -22,4 +22,6 @@ public interface PostAssignmentMapper {
     String findWriterEmailByPostIdx(int postIdx);
     // 글 삭제하기
     void delete(int postIdx);
+    // 글 수정하기
+    int update(PostAssignmentDTO postAssignmentDTO);
 }

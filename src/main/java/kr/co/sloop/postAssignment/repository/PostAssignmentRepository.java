@@ -20,4 +20,6 @@ public interface PostAssignmentRepository {
     void updatePostAssignmentHits(int postIdx);
     // postIdx로 작성자 email 조회
     String findWriterEmailByPostIdx(int postIdx);
+    // 글 수정하기
+    int update(PostAssignmentDTO postAssignmentDTO);
 }

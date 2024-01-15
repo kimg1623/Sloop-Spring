@@ -50,4 +50,10 @@ public class PostAssignmentRepositoryImpl implements PostAssignmentRepository{
     public String findWriterEmailByPostIdx(int postIdx) {
         return postAssignmentMapper.findWriterEmailByPostIdx(postIdx);
     }
+
+    // 글 수정하기
+    @Override
+    public int update(PostAssignmentDTO postAssignmentDTO) {
+        return postAssignmentMapper.update(postAssignmentDTO);
+    }
 }

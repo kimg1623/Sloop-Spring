@@ -28,4 +28,8 @@ public interface PostAssignmentService {
     String findWriterEmailByPostIdx(int postIdx);
     // 글 삭제하기
     boolean delete(int postIdx);
+    // 글 수정 페이지
+    PostAssignmentDTO updateForm(int postIdx);
+    // 글 수정하기
+    boolean update(PostAssignmentDTO postAssignmentDTO);
 }

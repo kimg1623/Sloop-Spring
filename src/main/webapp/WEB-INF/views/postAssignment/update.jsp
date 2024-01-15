@@ -39,39 +39,14 @@
 
         /* datetimepicker */
         function settingDateTimePicker(){
-            // allowTimesList 목록 중에서 현재 시각보다 크거나 같은 가장 가까운 시각을 지정한다.
-            let today = new Date();
-            let year = today.getFullYear();
-            let month = today.getMonth() + 1;
-            month = String(month).padStart(2, "0");
-            let date = today.getDate();
-            date = String(date).padStart(2, "0");
-
-            let defaultEndDate = year + "-" + month+ "-" + date;
-            let hor = today.getHours();
-            let min = Math.ceil(today.getMinutes()/10) * 10; // 현재 분을 10의 자리에서 올림
-            // 60분을 넘어가면 안 됨
-            min = min % 60;
-            if(min == 0){
-                hor = hor + 1;
-            }
-            hor = String(hor).padStart(2, "0"); // 0 padding
-            min = String(min).padStart(2, "0"); // 0 padding
-            let time = hor+":"+min; // 현재 시각
-            console.log(defaultEndDate + " " + time);
             // 과제 마감일시 date time picker
             // 최소 날짜와 시간을 현재 시각으로 설정한다.
             $('#assignmentEndDate_input').datetimepicker(
                 DatetimepickerDefaults({
                     minDate: 0,
-                    defaultTime: time,
                     formatTime:'H:i'
                 })
             );
-
-            // 과제 마감일시 기본 설정
-            document.getElementById("assignmentEndDate_input").value = defaultEndDate + " " + time;
-            // $('#assignmentEndDate_input').value(defaultEndDate + " " + time);
         };
 
 
@@ -165,30 +140,33 @@
             }
 
             // 파일업로드 multiple ajax처리
-
-            $.ajax({
-                type: "POST",
-                enctype: "multipart/form-data",
-                url: "/postassignment/uploadAttachmentsUsingAjax",
-                data : formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if(JSON.parse(data)['result'] == "TYPEERROR"){
-                        alert("허용되는 확장자는 xls,xlsx,txt,png,jpg,jpeg,html,htm,mpg,mp4,mp3,pdf,zip 입니다.");
+            // 파일이 첨부되었을 때만 ajax 요청
+            if(content_files.length > 0){
+                $.ajax({
+                    type: "POST",
+                    enctype: "multipart/form-data",
+                    url: "./uploadAttachmentsUsingAjax",
+                    data : formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if(JSON.parse(data)['result'] == "TYPEERROR"){
+                            alert("허용되는 확장자는 xls,xlsx,txt,png,jpg,jpeg,html,htm,mpg,mp4,mp3,pdf,zip 입니다.");
+                            status = false;
+                            return false;
+                        }else {
+                            status = true;
+                            return true;
+                        }
+                    },
+                    error: function (data) {
+                        alert(data);
+                        alert("서버 오류로 지연되고 있습니다. 잠시 후 다시 시도해 주시기 바랍니다.");
                         status = false;
                         return false;
-                    }else {
-                        status = true;
-                        return true;
                     }
-                },
-                error: function (data) {
-                    alert("서버 오류로 지연되고 있습니다. 잠시 후 다시 시도해 주시기 바랍니다.");
-                    status = false;
-                    return false;
-                }
-            });
+                });
+            }
 
             return status;
         };
@@ -242,7 +220,7 @@
 <!-- 글 작성 화면 -->
 <div>
     <%--@elvariable id="postAssignmentDTO" type="kr.co.sloop.postAssignment.domain.PostAssignmentDTO"--%>
-    <form:form modelAttribute="postAssignmentDTO" method="post" onsubmit="return registerAction();" action="/postassignment/write" enctype="multipart/form-data">
+    <form:form modelAttribute="postAssignmentDTO" method="post" onsubmit="return registerAction();" action="./update" enctype="multipart/form-data">
         <!-- hidden -->
         <!-- 작성자 idx -->
         <p><form:hidden path="memberIdx"/></p>
@@ -270,7 +248,7 @@
                 resize_enabled: false,
                 enterMode: CKEDITOR.ENTER_BR,
                 shiftEnterMode: CKEDITOR.ENTER_P,
-                filebrowserUploadUrl: "/postassignment/upload-image"
+                filebrowserUploadUrl: "./upload-image"
             };
 
             CKEDITOR.replace("postAssignmentContents", ckeditor_config);
@@ -291,8 +269,10 @@
         </script>
 
         <!-- 첨부 파일 추가 -->
+        <%--
         <input id="input_file" multiple="multiple" type="file" class="form-control">
         <span style="font-size:10px; color: gray;">※ 첨부파일은 개당 25MB, 총 125MB까지 업로드 가능합니다.</span>
+        --%>
 
         <!-- 업로드한 파일 목록 -->
         <div class="data_file_txt" id="data_file_txt">
@@ -300,9 +280,8 @@
             <br />
             <div id="articlefileChange">
                 <c:forEach var="attachmentDTO" items="${postAssignmentDTO.attachmentDTOList}" varStatus="fileNum">
-                    <div id="file_${fileNum.index}" onclick="fileDelete(${fileNum.index})">
+                    <div id="file_${fileNum.index}">
                         <font style="font-size:12px"><c:out value="${attachmentDTO.attachmentOrgName}"/> </font>
-                        <img src="/resources/images/postAssignment/minus.png" style="width:20px; height:auto; vertical-align: middle; cursor: pointer;"/>
                     </div>
                     <%-- <ul><a href="<c:url value='/attachment/download/${attachmentDTO.attachmentName}'/>"><c:out value="${attachmentDTO.attachmentOrgName}"/></a></ul> --%>
                 </c:forEach>
@@ -324,7 +303,7 @@
         <!-- 과제 대상 설정 -->
 
         <!-- 작성하기 버튼 -->
-        <input type="submit" value="작성하기">
+        <input type="submit" value="수정하기">
     </form:form>
 
 </div>

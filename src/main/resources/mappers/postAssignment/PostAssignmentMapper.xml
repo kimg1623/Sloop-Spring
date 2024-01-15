@@ -63,7 +63,7 @@
 
     <!-- postIdx에 해당하는 게시글 하나의 상세 조회 페이지를 위한 쿼리 -->
     <select id="findByPostIdx" parameterType="int" resultType="postAssignment">
-        select pa.postIdx, pa.postAssignmentTitle, pa.postAssignmentContents, pa.memberIdx, pa.postAssignmentRegDate, pa.postAssignmentEditDate, pa.postAssignmentHits, pa.assignmentIdx, m.memberNickname, m.memberEmail, a.assignmentEndDate
+        select pa.postIdx, pa.postAssignmentTitle, pa.postAssignmentContents, pa.memberIdx, pa.postAssignmentRegDate, pa.postAssignmentEditDate, pa.postAssignmentHits, pa.assignmentIdx, m.memberNickname, m.memberEmail, a.assignmentEndDate, a.assignmentScore
         from postAssignment as pa
         join member as m on pa.memberIdx = m.memberIdx
         join assignment as a on pa.assignmentIdx = a.assignmentIdx
@@ -85,4 +85,14 @@
         where pa.postIdx = #{postIdx}
     </select>
 
+    <!-- 글 수정하기 -->
+    <update id="update" parameterType="postAssignment">
+        UPDATE postAssignment as pa, assignment as a
+        set pa.postAssignmentTitle = #{postAssignmentTitle},
+        pa.postAssignmentContents = #{postAssignmentContents},
+        pa.postAssignmentEditDate = now(),
+        a.assignmentEndDate = #{assignmentEndDate},
+        a.assignmentScore = #{assignmentScore}
+        WHERE pa.postIdx = #{postIdx}
+    </update>
 </mapper>
