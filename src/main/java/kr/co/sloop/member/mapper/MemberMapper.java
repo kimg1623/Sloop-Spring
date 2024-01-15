@@ -19,7 +19,9 @@ public interface MemberMapper {
     int deleteByUser(int memberIdx);
     void uploadProfile(MemberDTO memberDTO);
 
-/*    void uploadProfileByIdx(int memberIdx);*/
+    MemberDTO findByMemberPhoneNumb(String memberPhonenumber);
+
+    /*    void uploadProfileByIdx(int memberIdx);*/
 
 
 

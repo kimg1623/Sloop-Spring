@@ -18,6 +18,8 @@ public interface MemberRepository {
     int deleteByUser(int memberIdx);
      void uploadProfile(MemberDTO memberDTO);
 
+    MemberDTO findByMemberPhoneNumb(String memberPhonenumber);
+
     /*void uploadProfileByIdx(int memberIdx);*/
     /*int signup(RegisterFormDTO registerFormDTO);
 */

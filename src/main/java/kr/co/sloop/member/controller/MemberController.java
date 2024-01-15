@@ -34,13 +34,21 @@ public class MemberController {
 
     // signupForm.jsp 로 이동
     @GetMapping("/signup")
-    public String signupForm(){
+    public String signupForm(Model model){
+        MemberDTO memberDTO = new MemberDTO();
+        model.addAttribute("memberDTO",memberDTO);
         return "member/signupForm";
     }
 
     // signupForm.jsp -> form method = Post 로 데이터 받아옴
     @PostMapping("/signup")
     public String signup(@Validated @ModelAttribute MemberDTO memberDTO , BindingResult errors , HttpServletResponse response) throws IOException{
+
+        if (errors.hasErrors()){
+            AlertUtils.alert(response , "회원가입에 실패하였습니다.");
+            return "member/signupForm";
+        }
+
         int signupResult = memberService.signup(memberDTO);
 
         if (signupResult > 0) {
@@ -87,8 +95,14 @@ public class MemberController {
     @PostMapping("/nickname-check")
     public @ResponseBody String nicknameCheck(@RequestParam("memberNickname") String memberNickname){
         log.info("memberNickname == "+memberNickname);
-        String checkResult = memberService.nicknameCheck(memberNickname);
-        return checkResult;
+        String checkResult2 = memberService.nicknameCheck(memberNickname);
+        return checkResult2;
+    }
+    @PostMapping("/phoneNumb-check")
+    public @ResponseBody String phoneNumbCheck(@RequestParam("memberPhonenumber") String memberPhonenumber){
+        log.info("memberPhonenumber == "+memberPhonenumber);
+        String checkResult3 = memberService.phoneNumbCheck(memberPhonenumber);
+        return checkResult3;
     }
     // 회원 목록 보기 추후에 관리자 권한으로만 갈 수 있게하기
     @GetMapping("memberList")
