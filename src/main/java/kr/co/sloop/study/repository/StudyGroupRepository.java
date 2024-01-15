@@ -22,9 +22,11 @@ public interface StudyGroupRepository {
 
     int updateStudyGroup(StudyGroupDTO studyGroupDTO);
 
-    List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx);
+    List<HashMap<String,String>> getBoardIdxsByGroupCode(String studyGroupCode);
 
     int deleteGroupByGroupCode(String studyGroupCode);
 
     List<CategoryRegionDTO> getCategoryRegion2();
+
+    String getGroupNameByGroupCode(String studyGroupCode);
 }

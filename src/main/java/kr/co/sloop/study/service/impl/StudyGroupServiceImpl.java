@@ -67,8 +67,8 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
-    public List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx) {
-        return studyGroupRepository.getBoardIdxsByGroupCode(studyGroupIdx);
+    public List<HashMap<String,String>> getBoardIdxsByGroupCode(String studyGroupCode) {
+        return studyGroupRepository.getBoardIdxsByGroupCode(studyGroupCode);
     }
 
     @Override
@@ -78,5 +78,10 @@ public class StudyGroupServiceImpl implements StudyGroupService {
 
     public List<CategoryRegionDTO> getCategoryRegion2(){
         return studyGroupRepository.getCategoryRegion2();
+    }
+
+    @Override
+    public String getGroupNameByGroupCode(String studyGroupCode) {
+        return studyGroupRepository.getGroupNameByGroupCode(studyGroupCode);
     }
 }
