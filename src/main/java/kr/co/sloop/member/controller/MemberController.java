@@ -9,6 +9,8 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -38,7 +40,7 @@ public class MemberController {
 
     // signupForm.jsp -> form method = Post 로 데이터 받아옴
     @PostMapping("/signup")
-    public String signup(@ModelAttribute MemberDTO memberDTO , HttpServletResponse response) throws IOException{
+    public String signup(@Validated @ModelAttribute MemberDTO memberDTO , BindingResult errors , HttpServletResponse response) throws IOException{
         int signupResult = memberService.signup(memberDTO);
 
         if (signupResult > 0) {
