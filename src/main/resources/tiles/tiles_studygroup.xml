@@ -20,10 +20,14 @@
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/study/infoForm.jsp" />
    </definition>
-
+   <!--notice-->
    <definition name="notice/list" extends="studyGroupLayout">
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/notice/list.jsp" />
+   </definition>
+   <definition name="notice/write" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/notice/noticeWriteForm.jsp" />
    </definition>
 
 

@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
@@ -64,10 +65,11 @@ public class NoticeController {
 
 	// 공지사항 작성 폼 출력
 	@GetMapping("/write")
-	public String noticeWriteForm(Model model){
+	public String noticeWriteForm(Model model , @PathVariable("boardIdx") int boardIdx){
 
 		NoticeDTO noticeDTO = new NoticeDTO();
 		model.addAttribute("noticeDTO", noticeDTO);
+		noticeDTO.setBoardIdx(boardIdx);
 		return "notice/noticeWriteForm";
 	}
 
@@ -76,7 +78,8 @@ public class NoticeController {
 	 * 2) 로그인된 사용자의 memberIdx 는 몇인지 세션에 의해 가져오고
 	 * 3) 게시판 은 공지게시판 ( 1 )에 작성 */
 	@PostMapping("/write")
-	public String noticeWrite(@Valid @ModelAttribute("noticeDTO") NoticeDTO noticeDTO , BindingResult errors , HttpSession session){
+	public String noticeWrite(@Validated @ModelAttribute("noticeDTO") NoticeDTO noticeDTO , BindingResult errors ,
+							  @PathVariable("boardIdx") int boardIdx , HttpSession session){
 
 		if (errors.hasErrors()){
 			return "notice/noticeWriteForm";
@@ -87,7 +90,7 @@ public class NoticeController {
 		int memberIdx = Integer.parseInt((String) session.getAttribute("loginMemberIdx"));
 		/** 추후에 PathVariable 값과 동일하게 세팅
 		 * 현재는 편의상 1로 direct로 설정 후 집어넣음*/
-		int boardIdx = 1;
+
 		// noticeDTO 에 해당 변수값을 set 해준다.
 		noticeDTO.setMemberEmail(memberEmail);
 		noticeDTO.setBoardIdx(boardIdx);
