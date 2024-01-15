@@ -1,15 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Footer</title>
-    <link rel="stylesheet" href="src/main/webapp/resources/css/style.css">
-
-</head>
-<body>
-
 <!-- footer -->
 <div class="footer_wrap">
     <footer>
@@ -19,7 +9,7 @@
         <div class="inner">
             <div class="company">
                 <a href="https://www.notion.so/geee1-kim/2-Project-2061031e0e3b45148829eac978ca199d?pvs=4" target="_blank">
-                    <h2 class="sub_logo"><img src="${pageContext.request.contextPath}/resources/images/sub_logo_01.png" alt="S-LOOP 노션"></h2>
+                    <h2 class="sub_logo"><img src="/resources/images/logo3.png" alt="S-LOOP 노션"></h2>
                 </a>
                 <a href="https://www.notion.so/geee1-kim/2-Project-2061031e0e3b45148829eac978ca199d?pvs=4" target="_blank" style="color: inherit">
                     <ul class="company_info">
@@ -36,7 +26,7 @@
             <td width="50%">
             <div class="company">
                 <a href="https://github.com/ChunjaeMomCh/MomChannel"  target="_blank">
-                    <h2 class="sub_logo"><img src="${pageContext.request.contextPath}/resources/images/sub_logo_02.png" alt="S-LOOP 깃허브"></h2>
+                    <h2 class="sub_logo"><img src="/resources/images/logo3.png" alt="S-LOOP 깃허브"></h2>
                 </a>
                 <a href="https://github.com/ChunjaeMomCh/MomChannel"  target="_blank">
                     <ul class="company_info">
@@ -52,6 +42,3 @@
         </table>
     </footer>
 </div>
-
-</body>
-</html>
