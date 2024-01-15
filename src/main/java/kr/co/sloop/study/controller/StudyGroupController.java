@@ -61,7 +61,6 @@ public class StudyGroupController {
 	 * 스터디 그룹 개설 : DB insert
 	 */
 	@PostMapping("/add")
-	@ResponseBody
 	public String submitAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO, HttpSession session){
 		studyGroupDTO.setStudyGroupCode(getRandomStudyGroupCode());
 		String memberIdx = (String)session.getAttribute("loginMemberIdx");
