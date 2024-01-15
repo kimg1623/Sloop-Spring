@@ -158,30 +158,32 @@
             }
 
             // 파일업로드 multiple ajax처리
-
-            $.ajax({
-                type: "POST",
-                enctype: "multipart/form-data",
-                url: "/postassignment/uploadAttachmentsUsingAjax",
-                data : formData,
-                processData: false,
-                contentType: false,
-                success: function (data) {
-                    if(JSON.parse(data)['result'] == "TYPEERROR"){
-                        alert("허용되는 확장자는 xls,xlsx,txt,png,jpg,jpeg,html,htm,mpg,mp4,mp3,pdf,zip 입니다.");
+            // 파일이 첨부되었을 때만 ajax 요청
+            if(content_files.length > 0){
+                $.ajax({
+                    type: "POST",
+                    enctype: "multipart/form-data",
+                    url: "./uploadAttachmentsUsingAjax",
+                    data : formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        if(JSON.parse(data)['result'] == "TYPEERROR"){
+                            alert("허용되는 확장자는 xls,xlsx,txt,png,jpg,jpeg,html,htm,mpg,mp4,mp3,pdf,zip 입니다.");
+                            status = false;
+                            return false;
+                        }else {
+                            status = true;
+                            return true;
+                        }
+                    },
+                    error: function (data) {
+                        alert("서버 오류로 지연되고 있습니다. 잠시 후 다시 시도해 주시기 바랍니다.");
                         status = false;
                         return false;
-                    }else {
-                        status = true;
-                        return true;
                     }
-                },
-                error: function (data) {
-                    alert("서버 오류로 지연되고 있습니다. 잠시 후 다시 시도해 주시기 바랍니다.");
-                    status = false;
-                    return false;
-                }
-            });
+                });
+            }
 
             return status;
         };
@@ -235,7 +237,7 @@
 <!-- 글 작성 화면 -->
 <div>
     <%--@elvariable id="postAssignmentDTO" type="kr.co.sloop.postAssignment.domain.PostAssignmentDTO"--%>
-    <form:form modelAttribute="postAssignmentDTO" method="post" onsubmit="return registerAction();" action="/postassignment/write" enctype="multipart/form-data">
+    <form:form modelAttribute="postAssignmentDTO" method="post" onsubmit="return registerAction();" action="./write" enctype="multipart/form-data">
         <!-- 글 제목 -->
         <p><form:input path="postAssignmentTitle" autofocus="true" placeholder="제목"/></p>
         <p><form:errors path="postAssignmentTitle"/></p>
@@ -252,7 +254,7 @@
                 resize_enabled: false,
                 enterMode: CKEDITOR.ENTER_BR,
                 shiftEnterMode: CKEDITOR.ENTER_P,
-                filebrowserUploadUrl: "/postassignment/upload-image"
+                filebrowserUploadUrl: "./upload-image"
             };
 
             CKEDITOR.replace("postAssignmentContents", ckeditor_config);
@@ -299,7 +301,7 @@
         <!-- 과제 대상 설정 -->
 
         <!-- 작성하기 버튼 -->
-        <input type="submit" value="작성하기">
+        <input type="submit" value="작성하기"/>
     </form:form>
 
 </div>
