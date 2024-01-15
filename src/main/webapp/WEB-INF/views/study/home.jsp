@@ -7,11 +7,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>Sloop슬룹</title>
-</head>
-<body>
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <h1>스터디 그룹 home</h1>
     <h2>스터디 그룹명: ${studyGroup.studyGroupName}</h2>
     -----------------------------------
@@ -25,5 +22,4 @@
         <a href="/study/${studyGroup.studyGroupCode}/manage/info">스터디 관리</a><br>
     </div>
 
-</body>
-</html>
+</main>
