@@ -1,15 +1,37 @@
+a {
+    text-decoration: none;
+    color: #000;
+}
 body {
     margin: 0 auto;
     font-size: .875rem;
-
-
 }
-
 .container-main{
     margin: 0 auto;
     width: 70%;
 }
-
-.card {
+.banner-img{
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+}
+.card-study {
     margin-bottom: 1rem;
+    transition: 0.5s ease;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 0.25rem;
+}
+.card-study:hover{
+    -webkit-transform: scale(1.02);
+    -ms-transform: scale(1.02);
+    transform: scale(1.02);
+    transition: 0.5s ease;
+}
+.bg-lightblue {
+    background-color: #BDD7EE;
+}
+.bg-lightorange {
+    background-color: #FBE5D6;
+}
+.bg-lightgreen {
+    background-color: #E2F0D9;
 }
