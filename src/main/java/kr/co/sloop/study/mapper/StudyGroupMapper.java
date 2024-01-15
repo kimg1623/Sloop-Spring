@@ -27,9 +27,10 @@ public interface StudyGroupMapper {
     int updateStudyGroup(StudyGroupDTO studyGroupDTO); // 스터디 그룹 정보 수정
 
 
-    List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx); // 스터디 그룹 코드로 게시판 idx 가져오기
+    List<HashMap<String,String>> getBoardIdxsByGroupCode(String studyGroupCode); // 스터디 그룹 코드로 게시판 idx 가져오기
 
     int deleteGroupByGroupCode(String studyGroupCode); // 스터디 그룹 코드로 스터디 그룹 삭제
 
 
+    String getGroupNameByGroupCode(String studyGroupCode); // 스터디 그룹 코드로 그룹 이름 가져오기
 }
