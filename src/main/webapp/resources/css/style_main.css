@@ -1,0 +1,15 @@
+body {
+    margin: 0 auto;
+    font-size: .875rem;
+
+
+}
+
+.container-main{
+    margin: 0 auto;
+    width: 70%;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
