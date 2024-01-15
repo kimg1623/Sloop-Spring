@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
@@ -7,28 +8,29 @@
     <title>S-loop 회원가입</title>
 </head>
 <body>
-<form action="/member/signup" method="post">
-    <p>이 메 일 : <input type="email" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()">
-                    <button type="button" name="check-Email" value="중복확인" onclick="emailCheck()">중복확인</button></p>
+<%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
+<form:form action="/member/signup" method="post" modelAttribute="memberDTO">
+    <p>이 메 일 : <form:input type="email" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()" path="memberEmail"/>
+                    <form:button type="button" name="check-Email" value="중복확인" onclick="emailCheck()">중복확인</form:button></p>
     <p id="check-result"></p>
-    <p>비밀번호 : <input type="password" name="memberPassword" placeholder="비밀번호" required></p>
-    <p>닉 네 임 : <input type="text" name="memberNickname" placeholder="닉네임" required></p>
+    <p>비밀번호 : <form:input type="password" name="memberPassword" placeholder="비밀번호" required></p>
+    <p>닉 네 임 : <form:input type="text" name="memberNickname" placeholder="닉네임" required></p>
     <p>성   별 :
-        <input type="radio" name="memberGender" id="male" value="남자">
+        <form:input type="radio" name="memberGender" id="male" value="남자">
         <label for="male">남자</label>
-        <input type="radio" name="memberGender" id="female" value="여자">
+        <form:input type="radio" name="memberGender" id="female" value="여자">
         <label for="female">여자</label>
     </p>
-    <p>전화번호 : <input type="text" name="memberPhonenumber" placeholder="핸드폰번호" required></p>
+    <p>전화번호 : <form:input type="text" name="memberPhonenumber" placeholder="핸드폰번호" required></p>
     <p>회원대분류 :
-        <select name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required>
+        <form:select path="memberGradeCode" name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required >
             <option>선택하세요.</option>
             <option value="초등학생">초등학생</option>
             <option value="중학생">중학생</option>
             <option value="고등학생">고등학생</option>
             <%--<option value="univ">대학생</option>--%>
             <%--<option value="normal">일반인</option>--%>
-        </select>
+        </form:select>
     </p>
     <p>회원소분류 :
         <select name="memberGradeCode" id="memberGradeCode_sub">
@@ -69,7 +71,7 @@
             <option value="choose">선택하세요.</option>
         </select></p>
     <input type="submit" value="회원가입">
-</form>
+</form:form>
 </body>
 <script type="text/javascript">
     // 이메일 입력값을 가져오고,
