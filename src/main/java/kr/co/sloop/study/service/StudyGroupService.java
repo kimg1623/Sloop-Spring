@@ -1,5 +1,6 @@
 package kr.co.sloop.study.service;
 
+import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 
 import javax.servlet.http.HttpSession;
@@ -24,4 +25,6 @@ public interface StudyGroupService {
     List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx);
 
     int deleteGroupByGroupCode(String studyGroupCode);
+
+    List<CategoryRegionDTO> getCategoryRegion2();
 }
