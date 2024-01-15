@@ -7,7 +7,7 @@
   request.setCharacterEncoding("UTF-8");
 %>
 <c:set var="contextPath"  value="${pageContext.request.contextPath}"  />
-
+<link href="/resources/css/style_studygroup.css" rel="stylesheet">
 <style>
     .no-underline{
         text-decoration:none;
@@ -18,74 +18,44 @@
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">
+                <a class="nav-title" aria-current="page" href="/study/${studyGroup.studyGroupCode}">
                     <span data-feather="home"></span>
-                    Dashboard
+                    ${studyGroup.studyGroupName}
+                </a>
+                <div class="sidebar-division-line"></div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/study/${studyGroup.studyGroupCode}/notice/${groupBoardIdxs[0].boardId}">
+                    <span data-feather="home"></span>
+                    ${groupBoardIdxs[0].categoryName}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/study/${studyGroup.studyGroupCode}/assign/${groupBoardIdxs[1].boardIdx}">
                     <span data-feather="file"></span>
-                    Orders
+                    ${groupBoardIdxs[1].categoryName}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/study/${studyGroup.studyGroupCode}/postforum/${groupBoardIdxs[2].boardIdx}">
                     <span data-feather="shopping-cart"></span>
-                    Products
+                    ${groupBoardIdxs[2].categoryName}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/study/${studyGroup.studyGroupCode}/daily/${groupBoardIdxs[3].boardIdx}">
                     <span data-feather="users"></span>
-                    Customers
+                    ${groupBoardIdxs[3].categoryName}
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="/study/${studyGroup.studyGroupCode}/manage/info">
                     <span data-feather="bar-chart-2"></span>
-                    Reports
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="layers"></span>
-                    Integrations
+                    스터디 관리
                 </a>
             </li>
         </ul>
 
-        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-            <span>Saved reports</span>
-            <a class="link-secondary" href="#" aria-label="Add a new report">
-                <span data-feather="plus-circle"></span>
-            </a>
-        </h6>
-        <ul class="nav flex-column mb-2">
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Current month
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Last quarter
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Social engagement
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file-text"></span>
-                    Year-end sale
-                </a>
-            </li>
-        </ul>
+
     </div>
 </nav>

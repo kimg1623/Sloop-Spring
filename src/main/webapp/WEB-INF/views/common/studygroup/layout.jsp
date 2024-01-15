@@ -40,7 +40,7 @@
     <tiles:insertAttribute name="header"/>
     <div id="container" class="container-fluid">
         <div class="row">
-            <div id="sidebar-left">
+            <div id="sidebar">
                 <tiles:insertAttribute name="side"/>
             </div>
             <div id="content">

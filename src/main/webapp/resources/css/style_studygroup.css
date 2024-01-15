@@ -1,0 +1,18 @@
+.sidebar .nav-title {
+    font-weight: 800;
+    color: #333;
+}
+.nav-title {
+    display: block;
+    font-size: 1.3rem;
+    padding: 0.5rem 0.3rem;
+    color: #333;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+    word-break: keep-all;
+}
+.sidebar-division-line {
+    border-top: 1px solid #b6b6b6;
+    margin: 10px auto;
+    width: 80%;
+}
