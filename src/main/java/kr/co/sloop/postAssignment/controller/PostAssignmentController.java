@@ -6,14 +6,11 @@ import kr.co.sloop.post.domain.SearchDTO;
 import kr.co.sloop.post.service.SearchServiceImpl;
 import kr.co.sloop.postAssignment.domain.PostAssignmentDTO;
 import kr.co.sloop.postAssignment.service.PostAssignmentService;
-import kr.co.sloop.postForum.domain.PostForumDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.io.FileUtils;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -22,10 +19,8 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +29,7 @@ import java.util.UUID;
 @Controller
 @Log4j2
 @RequiredArgsConstructor
-@RequestMapping("/postassignment")
+@RequestMapping("/study/{studyGroupCode}/postassignment/{boardIdx}")
 public class PostAssignmentController {
     private final PostAssignmentService postAssignmentService; // 과제 게시판 service
     private final SearchServiceImpl searchServiceImpl; // 페이징 + 검색
@@ -44,21 +39,16 @@ public class PostAssignmentController {
 
     // 글 목록 조회
     // /postassignment/list?page={현재페이지}&searchType={검색유형}&keyword={검색어}
-    @GetMapping("/list")
-    public String listForum(@RequestParam(value = "page", defaultValue = "1", required = false) int page,
+    @GetMapping({"", "/list"})
+    public String listForum(@PathVariable("boardIdx") int boardIdx,
+                            @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                             @RequestParam(value = "searchType", defaultValue = "0", required = false) int searchType,
                             @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
                             Model model){
-        // 게시판 idx
-        // [*****] 쿼리 스트링으로 가져오도록 수정
-        // [*****] public String List(@PathVariable("boardIdx") int boardIdx)
-        int boardIdx = 2;
-
         // 검색어 앞뒤 공백 제거
         keyword = keyword.trim();
 
         // 검색 + 페이징을 위한 객체
-        // boardType 2 [*****]
         SearchDTO searchDTO = searchServiceImpl.initialize(boardIdx, page, searchType, keyword, 2);
         model.addAttribute("searchDTO", searchDTO);
 
@@ -78,7 +68,8 @@ public class PostAssignmentController {
 
     // 글 작성하기
     @PostMapping("/write")
-    public String write(@ModelAttribute("postAssignmentDTO") PostAssignmentDTO postAssignmentDTO, HttpSession session){
+    public String write(@PathVariable("studyGroupCode") String studyGroupCode, @PathVariable("boardIdx") int boardIdx,
+                        @ModelAttribute("postAssignmentDTO") PostAssignmentDTO postAssignmentDTO, HttpSession session){
         log.info("postAssignmentDTO@@ : " + postAssignmentDTO);
         log.info("multipartFileList@@: " + multipartFileList);
 
@@ -88,9 +79,7 @@ public class PostAssignmentController {
         String loginMemberIdx = (String)session.getAttribute("loginMemberIdx");
         postAssignmentDTO.setMemberIdx(Integer.parseInt(loginMemberIdx));
 
-        // 게시판 idx(boardIdx)를 쿼리 스트링을 통해 가져와야 한다. [*****]
-        // @RequestParam("boardIdx") int boardIdx
-        int boardIdx = 2;
+        // 게시판 idx(boardIdx)
         postAssignmentDTO.setBoardIdx(boardIdx);
 
         // 첨부파일 DTO에 추가
@@ -101,56 +90,13 @@ public class PostAssignmentController {
 
         if(result){ // 글 작성 성공
             // 해당 글 상세 조회 페이지로 이동
-            // return "redirect:/postassignment/detail?postIdx=" + postForumDTO.getPostIdx();
-            return "redirect:/postassignment/list";
+            return "redirect:/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/detail?postIdx=" + postAssignmentDTO.getPostIdx();
         }else {     // 글 작성 실패
             return "postAssignment/write";
         }
 
         // return "redirect:/postassignment/list";
         // return "redirect:postassignment/detail?postIdx=" + postIdx;
-    }
-
-    // 파일업로드 샘플 코드 - 사용하지 않음
-    @ResponseBody
-    @PostMapping("/uploadAttachments")
-    public String fileUpload(
-            @RequestParam("article_file") List<MultipartFile> multipartFile
-            , HttpServletRequest request) {
-
-        String strResult = "{ \"result\":\"FAIL\" }";
-        String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-        String fileRoot;
-        try {
-            // 첨부파일이 있을 때
-            if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
-                for(MultipartFile file:multipartFile) {
-                    fileRoot = contextRoot + "resources/upload/";
-                    System.out.println("fileRoot" + fileRoot);
-
-                    String originalFileName = file.getOriginalFilename();	//오리지날 파일명
-                    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));	//파일 확장자
-                    String savedFileName = UUID.randomUUID() + extension;	//저장될 파일 명
-
-                    File targetFile = new File(fileRoot + savedFileName);
-                    try {
-                        InputStream fileStream = file.getInputStream();
-                        FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
-                    } catch (Exception e) {
-                        //파일삭제
-                        FileUtils.deleteQuietly(targetFile);	//저장된 현재 파일 삭제
-                        e.printStackTrace();
-                        break;
-                    }
-                }
-                strResult = "{ \"result\":\"OK\" }";
-            }else { // 첨부파일이 없을 때
-                strResult = "{ \"result\":\"OK\" }";
-            }
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        return strResult;
     }
 
     // 첨부파일들을 multipartFileList에 추가
@@ -160,10 +106,13 @@ public class PostAssignmentController {
     public String fileUploadUsingAjax (
             @RequestParam("article_file") List<MultipartFile> multipartFile, HttpServletResponse response) {
         String strResult = "{ \"result\":\"FAIL\" }";
+        log.info("수정 확인 1" + multipartFile);
 
         try {
             // 첨부파일이 있을 때
             if(multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
+                log.info("수정 확인 2" + multipartFile);
+
                 for(MultipartFile file:multipartFile) {
                     String originalFileName = file.getOriginalFilename();	//오리지날 파일명
                     String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);	//파일 확장자
@@ -185,10 +134,13 @@ public class PostAssignmentController {
                 multipartFileList.addAll(multipartFile);
 
                 strResult = "{ \"result\":\"OK\" }";
+                log.info("수정 확인 5" + strResult);
             }else { // 첨부파일이 없을 때
+                log.info("수정 확인 3" + multipartFile);
                 strResult = "{ \"result\":\"OK\" }";
             }
         }catch(Exception e){
+            log.info("수정 확인 4" + multipartFile);
             e.printStackTrace();
         }
         return strResult;
@@ -196,9 +148,12 @@ public class PostAssignmentController {
 
     // 글 작성하기 : ckeditor 이미지 업로드
     @PostMapping("/upload-image")
-    public void imageUpload(HttpServletRequest request,
-                            HttpServletResponse response, MultipartHttpServletRequest multiFile
-            , @RequestParam MultipartFile upload, @RequestParam(value="CKEditorFuncNum", required=false) String CKEditorFuncNum) throws Exception {
+    public void imageUpload(@PathVariable("studyGroupCode") String studyGroupCode,
+                            @PathVariable("boardIdx") int boardIdx,
+                            HttpServletRequest request,
+                            HttpServletResponse response, MultipartHttpServletRequest multiFile,
+                            @RequestParam MultipartFile upload,
+                            @RequestParam(value="CKEditorFuncNum", required=false) String CKEditorFuncNum) throws Exception {
         OutputStream out = null;
         PrintWriter printWriter = null;
 
@@ -209,7 +164,7 @@ public class PostAssignmentController {
             // 파일 이름 가져오기 (확장자 포함)
             String fileName = upload.getOriginalFilename();
 
-            // 파일 확장자 검사 [*****] window, mac 다른지 log를 통해 확인 필요
+            // 파일 확장자 검사
             String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
             extension = extension.toLowerCase(); // 소문자로 변경
 
@@ -245,7 +200,7 @@ public class PostAssignmentController {
             // uuid 생성 (36자)
             UUID uuid = UUID.randomUUID();
 
-            // ckeditor로 첨부한 이미지가 저장될 풀 경로 (서버경로/uploads/uuid_파일이름) [*****] -> 서버경로/스터디그룹idx/postForum/uuid_파일이름)
+            // ckeditor로 첨부한 이미지가 저장될 풀 경로 (sloop/postassignment/uploads/uuid_fileName)
             String ckUploadPath = uploadPath + File.separator + "uploads" + File.separator + uuid + "_" + fileName;
             log.info("uploadPath : " + uploadPath);
             log.info("ckUploadPath : " + ckUploadPath);
@@ -266,7 +221,7 @@ public class PostAssignmentController {
 
             String callback = request.getParameter("CKEditorFuncNum");
             printWriter = response.getWriter();
-            String fileUrl = "/postassignment/ckImgSubmit?uid=" + uuid + "&fileName=" + fileName; // 작성화면
+            String fileUrl =  "/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/ckImgSubmit?uid=" + uuid + "&fileName=" + fileName; // 작성화면
 
             // 업로드시 메시지 json 출력
             String[] message = {fileName, fileUrl};
@@ -355,26 +310,25 @@ public class PostAssignmentController {
         return "postAssignment/detail";
     }
 
-    // 글 수정하기 : 화면 출력 [*****]
+    // 글 수정하기 : 화면 출력
     @GetMapping("/update")
     public String updateForm(@RequestParam("postIdx") int postIdx, Model model){
-        // PostAssignmentDTO postAssignmentDTO = postAssignmentService.updateForm(postIdx);
+        PostAssignmentDTO postAssignmentDTO = postAssignmentService.updateForm(postIdx);
+        model.addAttribute("postAssignmentDTO", postAssignmentDTO);
 
-        // assignmentEndDateString
-
-        // model.addAttribute("postAssignmentDTO", postAssignmentDTO);
         return "postAssignment/update";
     }
 
     // 글 수정하기
     @PostMapping("/update")
-    public void update(@ModelAttribute("postAssignmentDTO") PostAssignmentDTO postAssignmentDTO, HttpSession session, HttpServletResponse response){
+    public String update(@PathVariable("studyGroupCode") String studyGroupCode, @PathVariable("boardIdx") int boardIdx,
+                         @ModelAttribute("postAssignmentDTO") PostAssignmentDTO postAssignmentDTO, HttpSession session, HttpServletResponse response){
         // 유효성 검사 @Valid BindingResult errors [*****]
 
         // 로그인 된 회원과 글 작성자가 동일한지 검사
         if(!postAssignmentDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
             // 동일하지 않다면 수정하지 않고 글 목록 페이지로 리다이렉트
-            // return "redirect:/postassignment/list";
+            return "redirect:/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/list";
         }
 
         // 객체 바인딩에 유효성 오류가 존재한다면, 작성 페이지로 돌아가서 오류 메세지를 출력한다. [*****]
@@ -385,47 +339,45 @@ public class PostAssignmentController {
         */
 
         try {
-            /* [*****]
             // 글 수정하기
             boolean result = postAssignmentService.update(postAssignmentDTO);
 
             if (result) { // 수정 성공
-                return "redirect:/postassignment/detail?postIdx=" + postAssignmentDTO.getPostIdx();
+                return "redirect:/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/detail?postIdx=" + postAssignmentDTO.getPostIdx();
             } else { // 수정 실패
                 AlertUtils.alertAndBackPage(response, "수정에 실패하였습니다.");
-                return "redirect:/postassignment/list";
+                return "redirect:/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/list";
             }
 
-             */
         }catch (Exception e){
-            // return "redirect:/postassignment/list";
+            return "redirect:/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/list";
         }
     }
 
     // 글 삭제하기
     @GetMapping("/delete")
-    public String delete(@RequestParam("postIdx") int postIdx, HttpSession session, HttpServletResponse response){
+    public String delete(@PathVariable("studyGroupCode") String studyGroupCode, @PathVariable("boardIdx") int boardIdx,
+                         @RequestParam("postIdx") int postIdx, HttpSession session, HttpServletResponse response){
         try {
             // 로그인 된 회원과 글 작성자가 동일한지 검사
             String writerEmail = postAssignmentService.findWriterEmailByPostIdx(postIdx);
             if (!writerEmail.equals(session.getAttribute("loginEmail"))) {
                 // 동일하지 않다면 삭제하지 않고 글 목록 페이지로 리다이렉트
-                AlertUtils.alertAndMovePage(response, "본인의 글만 삭제할 수 있습니다.", "/postassignment/list");
+                AlertUtils.alertAndMovePage(response, "본인의 글만 삭제할 수 있습니다.", "/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/list");
                 return "";
             }
 
-            log.info("postIdx확인: " + postIdx);
             boolean result = postAssignmentService.delete(postIdx);
-            log.info("result확인: " + result);
+
             if(!result){ // 삭제 실패
                 AlertUtils.alert(response, "게시글 삭제를 실패하였습니다.");
             }
         }catch (Exception e){
             // 목록 조회 페이지로 돌아간다.
-            return "redirect:/postassignment/list";
+            return "redirect:/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/list";
         }
         // 삭제 후, 목록 조회 페이지로 돌아간다.
-        return "redirect:/postassignment/list";
+        return "redirect:/study/" + studyGroupCode + "/postassignment/" + boardIdx + "/list";
     }
 
     // json 객체 생성

@@ -18,7 +18,7 @@
 <!-- 글 작성 화면 -->
 <div class="mb-3">
     <%--@elvariable id="postForumDTO" type="kr.co.sloop.postForum.domain.PostForumDTO"--%>
-    <form:form modelAttribute="postForumDTO" method="post" action="/postforum/update">
+    <form:form modelAttribute="postForumDTO" method="post" action="./update">
 
         <%--<!-- 카테고리 -->
         <form:radiobutton path="categoryPostIdx" id="categoryPostDaily" name="categoryPostIdx" value="1" checked="true" />
@@ -59,7 +59,7 @@
                 resize_enabled : false,
                 enterMode : CKEDITOR.ENTER_BR,
                 shiftEnterMode : CKEDITOR.ENTER_P,
-                filebrowserUploadUrl : "/postforum/upload-image"
+                filebrowserUploadUrl : "./upload-image"
             };
 
             CKEDITOR.replace("postForumContents", ckeditor_config);
@@ -82,7 +82,7 @@
         </script>
 
         <!-- 작성하기 버튼 -->
-        <input type="submit" value="전송"/>
+        <input type="submit" value="수정하기"/>
     </form:form>
 </div>
 </body>

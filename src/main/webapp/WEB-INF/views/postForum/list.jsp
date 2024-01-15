@@ -51,7 +51,7 @@
                         <%-- <td><c:out value="${status.index + 1}"/></td> --%>
                         <td><c:out value="${postForum.postIdx}"/></td>
                         <td><c:out value="${postForum.categoryPostName}"/></td>
-                        <td><a href="/postforum/detail?postIdx=${postForum.postIdx}"><c:out value="${postForum.postForumTitle}"/></a></td>
+                        <td><a href="./detail?postIdx=${postForum.postIdx}"><c:out value="${postForum.postForumTitle}"/></a></td>
                         <%-- <td><c:out value="${postForum.postForumTitle}"/></td> --%>
                         <td><c:out value="${postForum.memberNickname}"/></td>
                         <td><c:out value="${postForum.postForumRegDate}"/></td>
@@ -80,7 +80,7 @@
                         </c:when>
                         <%-- 1페이지가 아닌 경우에는 [이전]을 클릭하면 현재 페이지보다 1 작은 페이지 요청 --%>
                         <c:otherwise>
-                            <a href="/postforum/list?page=${searchDTO.page-1}&searchType=${searchDTO.searchType}&keyword=${searchDTO.keyword}">[이전]</a>
+                            <a href="./list?page=${searchDTO.page-1}&searchType=${searchDTO.searchType}&keyword=${searchDTO.keyword}">[이전]</a>
                         </c:otherwise>
                     </c:choose>
                         <%-- 페이징 번호 --%>
@@ -92,7 +92,7 @@
                             </c:when>
 
                             <c:otherwise>
-                                <a href="/postforum/list?page=${i}&searchType=${searchDTO.searchType}&keyword=${searchDTO.keyword}">${i}</a>
+                                <a href="./list?page=${i}&searchType=${searchDTO.searchType}&keyword=${searchDTO.keyword}">${i}</a>
                             </c:otherwise>
                         </c:choose>
                     </c:forEach>
@@ -102,7 +102,7 @@
                             <span>[다음]</span>
                         </c:when>
                         <c:otherwise>
-                            <a href="/postforum/list?page=${searchDTO.page+1}&searchType=${searchDTO.searchType}&keyword=${searchDTO.keyword}">[다음]</a>
+                            <a href="./list?page=${searchDTO.page+1}&searchType=${searchDTO.searchType}&keyword=${searchDTO.keyword}">[다음]</a>
                         </c:otherwise>
                     </c:choose>
                 </div>
@@ -137,15 +137,12 @@
 <script>
     // 문서가 완전히 로드된 후에 스크립트를 실행하기 위해 jQuery의 document.ready() 함수를 사용
     $(document).ready(function() {
-        $('table tbody tr').click(function() {
-            const hrefValue = $(this).find('a').attr('href');
-            window.location.href = hrefValue;
-        });
+
     });
 
     // 글 작성하기 버튼
     writeBtn = () => {
-        location.href = "/postforum/write";
+        location.href = "./write";
     };
 
     // 검색하기 버튼
@@ -164,7 +161,7 @@
             return false;
         }
 
-        location.href = '/postforum/list?page=1&searchType=' + searchType + '&keyword=' + keyword;
+        location.href = './list?page=1&searchType=' + searchType + '&keyword=' + keyword;
     };
 </script>
 </body>

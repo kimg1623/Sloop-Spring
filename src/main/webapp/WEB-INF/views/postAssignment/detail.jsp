@@ -66,12 +66,12 @@
     <script>
         // 목록으로 돌아가기
         const listFn = () => {
-            location.href = "/postassignment/list";
+            location.href = "./list";
         };
 
         // 글 수정하기
         const updateFn = (postIdx) => {
-            location.href = "/postassignment/update?postIdx=" + postIdx;
+            location.href = "./update?postIdx=" + postIdx;
         };
 
         // 글 삭제하기
@@ -80,7 +80,7 @@
 
             if (confirm("삭제하시겠습니까?") == true){
                 // true는 확인버튼을 눌렀을 때 코드 작성
-                location.href = "/postassignment/delete?postIdx=" + postIdx;
+                location.href = "./delete?postIdx=" + postIdx;
             }else{
                 // false는 취소버튼을 눌렀을 때, 취소됨
                 console.log("취소되었습니다");
