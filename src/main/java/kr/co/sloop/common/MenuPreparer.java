@@ -48,7 +48,9 @@ public class MenuPreparer implements ViewPreparer {
 
 
         //model.put("data", "data"); // 타일즈 방식의 데이터 세팅 방식
-        String studyGroupCode = (String)model.get("studyGroupCode");
+        String uriPath = (String)model.get("org.springframework.web.util.UrlPathHelper.PATH");
+        String [] vars = uriPath.split("/");
+        String studyGroupCode = vars[2];
         System.out.println("studyGroupCode"+studyGroupCode);
 
         if(studyGroupCode.equals(null)) // request에서 가져오는 title이 없을 시 title 설정해주기
