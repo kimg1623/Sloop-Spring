@@ -1,13 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<html>
-<head>
-    <title>List</title>
-    <!-- jquery cdn -->
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-</head>
-<body>
+
+<!-- jquery cdn -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <!-- 글 작성하기 버튼 -->
 <div id="writeBtn" name="writeBtn">
     <input type="button" value="글쓰기" onclick="writeBtn()"/>
@@ -160,5 +157,4 @@
         location.href = '/notice/list?page=1&searchType=' + searchType + '&keyword=' + keyword;
     };
 </script>
-</body>
-</html>
+</main>

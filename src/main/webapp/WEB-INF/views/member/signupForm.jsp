@@ -10,20 +10,20 @@
 <body>
 <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
 <form:form action="/member/signup" method="post" modelAttribute="memberDTO">
-    <p>이 메 일 : <form:input type="email" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()" path="memberEmail"/>
+    <p>이 메 일 : <form:input path="memberEmail" type="email" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()" />
                     <form:button type="button" name="check-Email" value="중복확인" onclick="emailCheck()">중복확인</form:button></p>
     <p id="check-result"></p>
-    <p>비밀번호 : <form:input type="password" name="memberPassword" placeholder="비밀번호" required></p>
-    <p>닉 네 임 : <form:input type="text" name="memberNickname" placeholder="닉네임" required></p>
+    <p>비밀번호 : <form:input path="memberPassword" type="password" name="memberPassword" placeholder="비밀번호" /></p>
+    <p>닉 네 임 : <form:input path="memberNickname" type="text" name="memberNickname" placeholder="닉네임" /></p>
     <p>성   별 :
-        <form:input type="radio" name="memberGender" id="male" value="남자">
+        <form:radiobutton path="memberGender" id="male" value="남자" />
         <label for="male">남자</label>
-        <form:input type="radio" name="memberGender" id="female" value="여자">
+        <form:radiobutton path="memberGender" id="female" value="여자" />
         <label for="female">여자</label>
     </p>
-    <p>전화번호 : <form:input type="text" name="memberPhonenumber" placeholder="핸드폰번호" required></p>
+    <p>전화번호 : <form:input path="memberPhonenumber" type="text" name="memberPhonenumber" placeholder="핸드폰번호" /></p>
     <p>회원대분류 :
-        <form:select path="memberGradeCode" name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required >
+        <form:select path="memberGradeCode" name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)">
             <option>선택하세요.</option>
             <option value="초등학생">초등학생</option>
             <option value="중학생">중학생</option>
@@ -32,21 +32,21 @@
             <%--<option value="normal">일반인</option>--%>
         </form:select>
     </p>
-    <p>회원소분류 :
-        <select name="memberGradeCode" id="memberGradeCode_sub">
+    <%--<p>회원소분류 :
+        <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
             <option value="choose">선택하세요.</option>
-        </select></p>
-    <p>학 교 명 : <input type="text" name="memberSchool" required></p>
+        </form:select></p>--%>
+    <p>학 교 명 : <form:input type="text" name="memberSchool" path="memberSchool"/></p>
     <p>관심 과목 :
-        <input type="checkbox" name="memberSubjectCode" value="국어">국어
-        <input type="checkbox" name="memberSubjectCode" value="영어">영어
-        <input type="checkbox" name="memberSubjectCode" value="수학">수학
-        <input type="checkbox" name="memberSubjectCode" value="사회">사회
-        <input type="checkbox" name="memberSubjectCode" value="과학">과학
-        <input type="checkbox" name="memberSubjectCode" value="기타">기타
+        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="국어"/>국어
+        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="영어"/>영어
+        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="수학"/>수학
+        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="사회"/>사회
+        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="과학"/>과학
+        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="기타"/>기타
     </p>
     <p>지역대분류 :
-        <select name="memberRegionCode" id="memberRegionCode" onchange="memberSigugunChange(this)" required>
+        <form:select path="memberRegionCode" name="memberRegionCode" id="memberRegionCode" onchange="memberSigugunChange(this)">
             <option>선택하세요.</option>
             <option value="900">서울특별시</option>
             <option value="200">경기도</option>
@@ -65,11 +65,11 @@
             <option value="600">대구광역시</option>
             <option value="1100">울산광역시</option>
             <option value="1500">제주특별자치도</option>
-        </select></p>
-    <p>지역소분류 :
+        </form:select></p>
+    <%--<p>지역소분류 :
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
-        </select></p>
+        </select></p>--%>
     <input type="submit" value="회원가입">
 </form:form>
 </body>

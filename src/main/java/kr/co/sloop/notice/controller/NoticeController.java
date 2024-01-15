@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Random;
 
 @Controller
-@RequestMapping("/study/{postIdx}/notice")
+@RequestMapping("/study/{studyGroupCode}/notice/{boardIdx}")
 @RequiredArgsConstructor
 @Log4j2
 public class NoticeController {
@@ -32,23 +32,23 @@ public class NoticeController {
 
 	/** 페이징과 검색도 함께 만든다. */
 
-	@GetMapping("/list/{postIdx}")
+	@GetMapping("/list")
 	public String noticeList(@RequestParam(
 											value = "page", 		// 'page' 라는 이름의 http 요청 파라미터를 읽어온다
 											required = false , 	 	// 파라미터가 필수는 아니라는 뜻
 											defaultValue = "1") 	// 파라미터가 없거나 비어있을 경우 기본값은 1로 설정한다.
 								 			int page , 				// 그러고나서 page 변수에 값을 대입. 아래는 비슷한 주석이라 생략한다.
-													 @PathVariable("postIdx") int postIdx,
+													 @PathVariable("boardIdx") int boardIdx,
 							 @RequestParam(value = "searchType" , defaultValue = "0" , required = false) int searchType,
 							 @RequestParam(value = "keyword" , defaultValue = "" , required = false) String keyword,
 							 Model model){
 
 		// 게시판 idx
-		int boardIdx = 1;
+
 
 		// 검색어 앞뒤 공백 제거
 		keyword = keyword.trim();
-		noticeService.findByPostIdx(postIdx);
+
 		// 검색 + 페이징을 위한 객체
 		NoticeSearchDTO noticeSearchDTO = noticeService.initialize(boardIdx , page , searchType , keyword, 1);
 		model.addAttribute("noticeSearchDTO" , noticeSearchDTO);
