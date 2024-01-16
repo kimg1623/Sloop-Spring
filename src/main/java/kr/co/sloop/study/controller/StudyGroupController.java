@@ -40,6 +40,16 @@ public class StudyGroupController {
 	}
 
 	/*
+	 * LMS페이지 접근을 위한 임시 페이지
+	 */
+	@GetMapping("/tmp")
+	public String requestStudyGroupListTmp(Model model){ // 웹 요청 처리할 메서드
+		List<StudyGroupDTO> list = studyGroupService.getAllStudyGroupList();
+		model.addAttribute("studyGroupList", list); // model 객체에 view에 전달할 정보 담는다.
+		return "study/listtmp"; // view
+	}
+
+	/*
 	 * 스터디 그룹에 대한 소개 확인하기
 	 */
 	@GetMapping("/introduce")

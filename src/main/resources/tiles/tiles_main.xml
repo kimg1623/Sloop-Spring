@@ -20,6 +20,11 @@
       <put-attribute name="body" value="/WEB-INF/views/study/list.jsp" />
    </definition>
 
+   <definition name="study/listtmp" extends="mainLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/study/listtmp.jsp" />
+   </definition>
+
    <definition name="study/addStudyGroup" extends="mainLayout">
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/study/addStudyGroup.jsp" />
