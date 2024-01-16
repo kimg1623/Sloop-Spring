@@ -116,13 +116,13 @@ public class NoticeController {
 
 
 		NoticeDTO noticeDTO = noticeService.detailNotice(postIdx);
-		noticeDTO.setBoardIdx(boardIdx);
+		/*noticeDTO.setBoardIdx(boardIdx);*/
 		model.addAttribute("noticeDTO" , noticeDTO);
 		/** 본인(관리자) 게시물 */
 
 		/** 누구나 볼 수 있는 게시물 */
 
-		return "study/detail";
+		return "notice/detail";
 
 	}
 

@@ -40,7 +40,7 @@
                     <tr class="postforum_${notice.postIdx}">
                         <td><c:out value="${notice.postIdx}"/></td>
                         <td><c:out value="${notice.categoryPostName}"/></td>
-                        <td><a href="/study/{studyGroupCode}/notice/{boardIdx}/detail?postIdx=${notice.postIdx}">
+                        <td><a href="/study/${studyGroupCode}/notice/${boardIdx}/detail?postIdx=${notice.postIdx}">
                             <c:out value="${notice.postNoticeTitle}"/></a></td>
                         <td><c:out value="${notice.memberNickname}"/></td>
                         <td><c:out value="${notice.postNoticeRegDate}"/></td>
