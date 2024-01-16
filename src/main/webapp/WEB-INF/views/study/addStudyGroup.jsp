@@ -19,6 +19,7 @@
                 url: "/study/add",
                 dataType: "json",
                 success: function(categoryRegionList) { // 지역 카테고리 JSONArray로 response
+                    console.log(categoryRegionList);
 
                     $.each(categoryRegionList, function(index, item){ // categoryRegionList 반복문 돌리기
                         if(item.categoryRegionTier == 1){ // 1단계 카테고리라면 sClassHtml = selectOption1_region의 option 으로 하기
