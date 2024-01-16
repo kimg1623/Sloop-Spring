@@ -28,7 +28,7 @@
 				</when>
 			</choose>
 		</if>
-		where p.boardIdx = 1
+		where p.boardIdx = #{boardIdx}
 		order by n.postNoticePinned desc , n.postNoticeRegDate desc
 		limit #{postsPerPage} offset #{offset}
 	</select>
