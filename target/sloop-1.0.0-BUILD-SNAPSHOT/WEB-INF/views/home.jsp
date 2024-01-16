@@ -2,9 +2,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
-	<title>Home</title>
+	<title>Title</title>
 </head>
 <body>
+<h1>Sloop-Spring 서버 연결</h1>
 	<h1>
 		Hello world!
 	</h1>
@@ -44,6 +45,7 @@
 	<h3>공지사항 게시판</h3><br>
 	<a href="/notice/list">공지사항리스트</a>
 	<!-- 차소영 - 주석 아래로 작성 -->
+	<a href="/reply">댓글 /reply</a>
 
 	<!-- 최지혜 - 주석 아래로 작성 -->
 

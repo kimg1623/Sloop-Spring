@@ -31,3 +31,5 @@ m
 =src/main/webapp/WEB-INF/spring/appServlet/servlet-context.xml,d\3\d3e54629b9a71e7b6b2949fb63e8fbc3314079cf
 ^
 .src/main/webapp/resources/css/style_header.css,3\6\36805a177707185bcbc826efd6ad3d3d45ba989f
+}
+Msrc/main/java/kr/co/sloop/study/repository/impl/StudyGroupRepositoryImpl.java,9\c\9cf81b264b831ea95e6dae14373028740b17325f
