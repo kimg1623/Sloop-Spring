@@ -20,8 +20,10 @@
 	<!-- 김지원 - 주석 아래로 작성 -->
 	<hr>
 	<h3>스터디 그룹</h3><br>
-	<a href="/study">스터디그룹 리스트 /study</a><br>
+	<a href="/study">스터디그룹 리스트 소개용 /study</a><br>
+
 	<a href="/study/add">스터디그룹 생성 /study/add</a><br>
+	<a href="/study/tmp">스터디그룹 리스트 LMS로 바로 들어가짐 /study</a><br>
 
 	<!-- 박석은 - 주석 아래로 작성 -->
 

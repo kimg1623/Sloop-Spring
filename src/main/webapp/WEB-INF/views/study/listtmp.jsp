@@ -26,7 +26,7 @@
             <c:forEach items="${studyGroupList}" var="studyGroup">
                 <div class="col-sm-3">
                     <div class="card-study">
-                        <a href="/study/introduce?group=${studyGroup.studyGroupCode}">
+                        <a href="/study/${studyGroup.studyGroupCode}">
                             <img src="${contextPath}/resources/images/thumbnail_01.png" class="card-img-top" alt="...">
                             <div class="card-body">
                                 <p class="card-badge">
@@ -34,15 +34,8 @@
                                     <span class="badge rounded-pill bg-lightorange text-dark">${studyGroup.studyGroupSubject}</span>
                                     <span class="badge rounded-pill bg-lightgreen text-dark">${studyGroup.studyGroupRegion}</span>
                                 </p>
-                                <h5 class="card-title">
-                                        ${studyGroup.studyGroupName}
-                                </h5>
-                                <p class="card-text">
-                                    모집 마감
-                                    <span class="badge rounded-pill bg-light text-dark">
-                                        <fmt:formatDate value="${studyGroup.studyGroupDuedate}" pattern="yyyy-MM-dd"></fmt:formatDate>
-                                    </span>
-                                </p>
+                                <h5 class="card-title">${studyGroup.studyGroupName}</h5>
+                                <p class="card-text">모집 마감 <span class="badge rounded-pill bg-light text-dark"><fmt:formatDate value="${studyGroup.studyGroupDuedate}" pattern="yyyy-MM-dd"></fmt:formatDate> </span></p>
 <%--                                <a href="#" class="btn btn-primary">Go somewhere</a>--%>
                             </div>
                         </a>

@@ -5,9 +5,10 @@
 
 <mapper namespace="kr.co.sloop.study.mapper.StudyGroupMapper">
 
-
+    <!-- 메인페이지에서 전체 스터디 그룹 카드 정보 가져오기 -->
     <select id="getAllStudyGroupList" resultType="studyGroup">
-        SELECT * from studyGroup
+        SELECT studyGroupName, studyGroupCode, studyGroupGradeCode, studyGroupSubjectCode, studyGroupRegionCode, studyGroupDuedate, studyGroupMethod from studyGroup
+        order by studyGroupIdx desc
     </select>
 
     <!-- 학교학년 카테고리 가져오기 -->
