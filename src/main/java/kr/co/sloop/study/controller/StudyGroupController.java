@@ -40,6 +40,16 @@ public class StudyGroupController {
 	}
 
 	/*
+	 * 스터디 그룹에 대한 소개 확인하기
+	 */
+	@GetMapping("/introduce")
+	public String requestStudyGroupIntroduce(@RequestParam("group") String groupCode, Model model){ // 웹 요청 처리할 메서드
+		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(groupCode);
+		model.addAttribute("studyGroup", studyGroupDTO); // model 객체에 view에 전달할 정보 담는다.
+		return "study/introduce"; // view
+	}
+
+	/*
 	 * 스터디 그룹 개설 : 화면 처리
 	 */
 	@GetMapping("/add")
