@@ -66,6 +66,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         memberMapper.uploadProfile(memberDTO);
     }
 
+    @Override
+    public MemberDTO findByMemberPhoneNumb(String memberPhonenumber) {
+        return memberMapper.findByMemberPhoneNumb(memberPhonenumber);
+    }
+
     /*@Override
     public void uploadProfileByIdx(int memberIdx) {
         memberMapper.uploadProfileByIdx(memberIdx);

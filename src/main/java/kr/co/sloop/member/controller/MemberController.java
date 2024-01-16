@@ -9,6 +9,8 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,13 +34,21 @@ public class MemberController {
 
     // signupForm.jsp 로 이동
     @GetMapping("/signup")
-    public String signupForm(){
+    public String signupForm(Model model){
+        MemberDTO memberDTO = new MemberDTO();
+        model.addAttribute("memberDTO",memberDTO);
         return "member/signupForm";
     }
 
     // signupForm.jsp -> form method = Post 로 데이터 받아옴
     @PostMapping("/signup")
-    public String signup(@ModelAttribute MemberDTO memberDTO , HttpServletResponse response) throws IOException{
+    public String signup(@Validated @ModelAttribute MemberDTO memberDTO , BindingResult errors , HttpServletResponse response) throws IOException{
+
+        if (errors.hasErrors()){
+            AlertUtils.alert(response , "회원가입에 실패하였습니다.");
+            return "member/signupForm";
+        }
+
         int signupResult = memberService.signup(memberDTO);
 
         if (signupResult > 0) {
@@ -51,7 +61,7 @@ public class MemberController {
 
     // 회원가입 성공 후 로그인 하러 가기 버튼 클릭시 LoginForm.jsp 로 이동
     @GetMapping("/login")
-    public String loginForm(){
+    public String loginForm(@ModelAttribute MemberDTO memberDTO){
         return "member/loginForm";
     }
 
@@ -59,7 +69,11 @@ public class MemberController {
     // form method = post 로 데이터 받아옴
     // login 성공시 세션에 "loginEmail" & 게시판Idx 추가
     @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+    public String login(@Validated @ModelAttribute MemberDTO memberDTO, BindingResult errors ,HttpSession session , HttpServletResponse response) throws IOException {
+
+        if (errors.hasGlobalErrors()){      // 해당 메서드 내의 에러발생시
+            AlertUtils.alertAndMovePage(response, "로그인 도중 에러발생!!", "login");
+        }
 
         Map<String, String> loginResult = memberService.login(memberDTO);
         if (loginResult != null) {
@@ -68,10 +82,9 @@ public class MemberController {
             session.setAttribute("loginMemberIdx", loginResult.get("loginMemberIdx")); // 지원 추가
             session.setAttribute("loginMemberNickname", loginResult.get("loginMemberNickname")); // 지원 추가
             return "redirect:/"; // 로그인 성공시 세션에 "loginEmail"이란 이름으로 저장 후 studyList or mypage 로  // 지원 수정
-        } else {
-            log.info("로그인 실패");
-            return "redirect:/member/login";    // 로그인 실패시 다시 GetMapping 의 LoginForm으로 redirect
-        }
+        } else{
+            AlertUtils.alertAndMovePage(response, "로그인에 실패하였습니다..","/member/login");
+        } return "redirect:/member/login";
     }
 
     // 이메일 중복확인 AJAX
@@ -85,8 +98,14 @@ public class MemberController {
     @PostMapping("/nickname-check")
     public @ResponseBody String nicknameCheck(@RequestParam("memberNickname") String memberNickname){
         log.info("memberNickname == "+memberNickname);
-        String checkResult = memberService.nicknameCheck(memberNickname);
-        return checkResult;
+        String checkResult2 = memberService.nicknameCheck(memberNickname);
+        return checkResult2;
+    }
+    @PostMapping("/phoneNumb-check")
+    public @ResponseBody String phoneNumbCheck(@RequestParam("memberPhonenumber") String memberPhonenumber){
+        log.info("memberPhonenumber == "+memberPhonenumber);
+        String checkResult3 = memberService.phoneNumbCheck(memberPhonenumber);
+        return checkResult3;
     }
     // 회원 목록 보기 추후에 관리자 권한으로만 갈 수 있게하기
     @GetMapping("memberList")
@@ -98,21 +117,20 @@ public class MemberController {
 
     // update.jsp의 Form 출력
     @GetMapping("update")
-    public String updateForm(Model model , HttpSession session , HttpServletResponse response,
+    public String updateForm(@ModelAttribute("memberDTO") MemberDTO memberDTO, HttpSession session , HttpServletResponse response,
                              @RequestParam("memberIdx") int memberIdx) throws IOException {
         // 세션에 저장된 이메일 가져오기
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         if (loginEmail != null) {
 
-            MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
-            model.addAttribute("member", memberDTO);
+            memberService.findByMemberEmail(loginEmail);
 
             return "member/update";
 
-        } else {
-            return "redirect:/member/login";
-        }
+        } else{
+            AlertUtils.alertAndMovePage(response, "로그인에 실패하였습니다..","/member/login");
+        } return "redirect:/member/login";
 
 
     }
@@ -143,7 +161,8 @@ public class MemberController {
 
     // 꼭 로그인 후 마이페이지로 이동 ( 회원의 기능 )
     @GetMapping("mypage")
-    public String mypage(@ModelAttribute MemberDTO memberDTO , Model model , HttpSession session){
+    public String mypage(@ModelAttribute MemberDTO memberDTO , Model model , HttpSession session ,
+                         HttpServletResponse response) throws IOException {
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         memberDTO = memberService.findByMemberEmail(loginEmail);
@@ -155,16 +174,15 @@ public class MemberController {
 
             return "redirect:/member?memberIdx="+memberDTO.getMemberIdx();  // 세션에 저장된 아이디에 맞는 마이페이지로 이동
         } else{
-            return "member/loginForm"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
-        }
-
+            AlertUtils.alertAndMovePage(response, "로그인 후 마이페이지로 이동하실 수 있습니다.","/member/login");
+        } return "redirect:/member/login";
     }
     
     // 로그아웃 버튼 누를 시
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
-        return "member/logout";    // 로그아웃 페이지로 이동
+        return "redirect:/";    // 로그아웃 페이지로 이동
     }
 
     // 회원 탈퇴 시
@@ -175,11 +193,15 @@ public class MemberController {
         int getMemberIdx = Integer.parseInt((String) session.getAttribute("loginMemberIdx"));
         int deleteResult = memberService.deleteByUser(memberIdx);
 
-        if (deleteResult > 0 ){     // 성공시
-            return "home"; // 성공하면 home으로 이동
+        boolean result = getMemberIdx == memberIdx;
+
+
+        if (deleteResult > 0 && result){     // 성공시
+            AlertUtils.alertAndMovePage(response,"회원 탈퇴 되었습니다..","/");
         } else {
-            return "redirect:/member/mypage";
-        }
+
+          AlertUtils.alertAndMovePage(response,"탈퇴에 실패하였습니다.","/member/mypage");
+        } return "redirect:/member/mypage";
 
 
     }
@@ -188,7 +210,8 @@ public class MemberController {
     @GetMapping("/profile")
     public String profileUploadForm(@ModelAttribute("member") MemberDTO memberDTO ,
                                     @RequestParam("memberIdx") int memberIdx ,
-                                    HttpSession session){
+                                    HttpSession session ,
+                                    HttpServletResponse response) throws IOException{
 
         String loginMemberIdx = (String) session.getAttribute("loginMemberIdx");
 
@@ -197,7 +220,8 @@ public class MemberController {
             memberService.findByIdx(memberIdx);
             return "member/profile";
         }
-        return "member/loginForm";
+        AlertUtils.alert(response, "로그인 후 프로필 사진을 수정할 수 있습니다.");
+        return "redirect:/member/login";
     }
 
 

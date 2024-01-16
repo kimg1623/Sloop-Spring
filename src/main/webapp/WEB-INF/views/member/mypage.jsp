@@ -54,6 +54,18 @@
     </tr>
 </table>
 <a href="/member/logout">로그아웃</a><br>
-<a href="/member/delete">회원 탈퇴</a>
+<button onclick="deleteMember('${member.memberIdx}')">회원 탈퇴</button>
 </body>
+<script>
+    const deleteMember = (memberIdx) => {
+
+        if (confirm("정말 삭제하시겠습니까?") == true){
+            console.log(memberIdx);
+            location.href = "/member/delete?memberIdx="+memberIdx;
+        } else {
+            return;
+        }
+
+    }
+</script>
 </html>
