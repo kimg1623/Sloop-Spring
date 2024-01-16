@@ -159,7 +159,8 @@ public class MemberController {
 
     // 꼭 로그인 후 마이페이지로 이동 ( 회원의 기능 )
     @GetMapping("mypage")
-    public String mypage(@ModelAttribute MemberDTO memberDTO , Model model , HttpSession session){
+    public String mypage(@ModelAttribute MemberDTO memberDTO , Model model , HttpSession session ,
+                         HttpServletResponse response) throws IOException {
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         memberDTO = memberService.findByMemberEmail(loginEmail);
@@ -171,7 +172,8 @@ public class MemberController {
 
             return "redirect:/member?memberIdx="+memberDTO.getMemberIdx();  // 세션에 저장된 아이디에 맞는 마이페이지로 이동
         } else{
-            return "member/loginForm"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
+            AlertUtils.alert(response, "로그인 후 마이페이지로 이동하실 수 있습니다.");
+            return "redirect:/member/login"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
         }
 
     }
@@ -204,7 +206,8 @@ public class MemberController {
     @GetMapping("/profile")
     public String profileUploadForm(@ModelAttribute("member") MemberDTO memberDTO ,
                                     @RequestParam("memberIdx") int memberIdx ,
-                                    HttpSession session){
+                                    HttpSession session ,
+                                    HttpServletResponse response) throws IOException{
 
         String loginMemberIdx = (String) session.getAttribute("loginMemberIdx");
 
@@ -213,7 +216,8 @@ public class MemberController {
             memberService.findByIdx(memberIdx);
             return "member/profile";
         }
-        return "member/loginForm";
+        AlertUtils.alert(response, "로그인 후 프로필 사진을 수정할 수 있습니다.");
+        return "redirect:/member/login";
     }
 
 
