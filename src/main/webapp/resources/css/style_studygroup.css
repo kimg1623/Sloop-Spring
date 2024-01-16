@@ -33,3 +33,16 @@
         width: 16.66666667%;
     }
 }
+
+/*
+    게시판 스타일 post - list
+ */
+.card{
+    margin-bottom: 10px;
+}
+.post-card{
+    font-size: 0.8rem;
+}
+.post-card-title{
+    font-size: 0.9rem;
+}
