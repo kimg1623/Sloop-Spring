@@ -16,16 +16,30 @@
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!--<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
-	</beans:bean>
+	</beans:bean>-->
 	
 	<context:component-scan base-package="kr.co.sloop" />
 
 	<!-- 김지원 - 주석 아래로 작성 -->
-
-	<!-- 박석은 - 주석 아래로 작성 -->
+	<!-- Tiles View Resolver Bean 등록 -->
+	<beans:bean id="viewResolver"
+				class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+	</beans:bean>
+	<!-- ViewPreparer를 위한 bean 등록 -->
+	<beans:bean id="menuPreparer" class="kr.co.sloop.common.MenuPreparer"></beans:bean>
+	<!-- Tiles Layout Configure File 등록 -->
+	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>classpath:tiles/*.xml</beans:value>
+			</beans:list>
+		</beans:property>
+		<beans:property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
+	</beans:bean>
 
 	<!-- 이지연 - 주석 아래로 작성 -->
 	<!-- ckeditor -->

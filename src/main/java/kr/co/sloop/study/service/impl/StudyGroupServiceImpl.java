@@ -1,6 +1,7 @@
 package kr.co.sloop.study.service.impl;
 
 
+import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.repository.StudyGroupRepository;
 import kr.co.sloop.study.service.StudyGroupService;
@@ -66,12 +67,21 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     }
 
     @Override
-    public List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx) {
-        return studyGroupRepository.getBoardIdxsByGroupCode(studyGroupIdx);
+    public List<HashMap<String,String>> getBoardIdxsByGroupCode(String studyGroupCode) {
+        return studyGroupRepository.getBoardIdxsByGroupCode(studyGroupCode);
     }
 
     @Override
     public int deleteGroupByGroupCode(String studyGroupCode) {
         return studyGroupRepository.deleteGroupByGroupCode(studyGroupCode);
+    }
+
+    public List<CategoryRegionDTO> getCategoryRegion2(){
+        return studyGroupRepository.getCategoryRegion2();
+    }
+
+    @Override
+    public String getGroupNameByGroupCode(String studyGroupCode) {
+        return studyGroupRepository.getGroupNameByGroupCode(studyGroupCode);
     }
 }

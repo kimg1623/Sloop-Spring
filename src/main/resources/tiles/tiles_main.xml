@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+   "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+   <definition name="mainLayout" template="/WEB-INF/views/common/layout.jsp">
+      <put-attribute name="title" value="" />
+      <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
+
+   <definition name="home" extends="mainLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/home.jsp" />
+   </definition>
+
+   <definition name="study/list" extends="mainLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/study/list.jsp" />
+   </definition>
+
+   <definition name="study/addStudyGroup" extends="mainLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/study/addStudyGroup.jsp" />
+   </definition>
+
+   <definition name="member/loginForm" extends="mainLayout">
+      <put-attribute name="title" value="로그인창" />
+      <put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp" />
+   </definition>
+
+   <definition name="member/signupForm" extends="mainLayout">
+      <put-attribute name="title" value="회원등록창" />
+      <put-attribute name="body" value="/WEB-INF/views/member/signupForm.jsp" />
+   </definition>
+
+   <definition name="member/memberList" extends="mainLayout">
+      <put-attribute name="title" value="회원목록창" />
+      <put-attribute name="body" value="/WEB-INF/views/member/memberList.jsp" />
+   </definition>
+
+   <definition name="member/mypage" extends="mainLayout">
+      <put-attribute name="title" value="회원상세창" />
+      <put-attribute name="body" value="/WEB-INF/views/member/mypage.jsp" />
+   </definition>
+
+   <definition name="logout" extends="mainLayout">
+      <put-attribute name="title" value="로그아웃" />
+      <put-attribute name="body" value="/WEB-INF/views/member/logout.jsp" />
+   </definition>
+
+
+
+
+
+</tiles-definitions>

@@ -29,7 +29,7 @@ import java.util.UUID;
 
 @Log4j2
 @Controller
-@RequestMapping("/postforum")
+@RequestMapping("/study/{studyGroupCode}/postforum/{boardIdx}")
 @RequiredArgsConstructor
 public class PostForumController {
     @Resource(name="uploadPath")
@@ -49,7 +49,7 @@ public class PostForumController {
 
     // 글 작성하기
     @PostMapping("/write")
-    public String write(@Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors, HttpSession session){
+    public String write(@PathVariable("boardIdx") int boardIdx, @Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors, HttpSession session){
         log.info(errors);
         log.info(postForumDTO);
 
@@ -58,14 +58,11 @@ public class PostForumController {
             return "postForum/write";
         }
 
-        // 로그인 되어 있는 사용자 email을 세션에서 가져온다. [*****]
-        // String memberEmail = (String) session.getAttribute("memberEmail");
+        // 로그인 되어 있는 사용자 email을 세션에서 가져온다.
         String memberEmail = (String)session.getAttribute("loginEmail");
         postForumDTO.setMemberEmail(memberEmail);
 
-        // 게시판 idx(boardIdx)를 쿼리 스트링을 통해 가져와야 한다. [*****]
-        // @RequestParam("boardIdx") int boardIdx
-        int boardIdx = 3;
+        // 게시판 idx(boardIdx)
         postForumDTO.setBoardIdx(boardIdx);
 
         boolean result = postForumServiceImpl.write(postForumDTO);
@@ -122,7 +119,7 @@ public class PostForumController {
             }
             byte[] bytes = upload.getBytes();
 
-            //이미지 경로 생성
+            // 이미지 경로 생성
             log.info("\n\n ===== 현재 경로 : " + request.getContextPath());
             String path = "/resources/uploads/";    // 이미지 경로 설정(폴더 자동 생성)
 
@@ -229,20 +226,17 @@ public class PostForumController {
 
     // 글 목록 조회
     // /postforum/list?page={현재페이지}&searchType={검색유형}&keyword={검색어}
-    @GetMapping("/list")
-    public String list(@RequestParam(value = "page", defaultValue = "1", required = false) int page,
+    @GetMapping({"", "/list"})
+    public String list(@PathVariable("boardIdx") int boardIdx,
+                       @RequestParam(value = "page", defaultValue = "1", required = false) int page,
                        @RequestParam(value = "searchType", defaultValue = "0", required = false) int searchType,
                        @RequestParam(value = "keyword", defaultValue = "", required = false) String keyword,
                        Model model){
-        // 게시판 idx
-        // [*****] 쿼리 스트링으로 가져오도록 수정
-        // [*****] public String List(@RequestParam("boardIdx") int boardIdx)
-        int boardIdx = 3;
-
         // 검색어 앞뒤 공백 제거
         keyword = keyword.trim();
 
         // 검색 + 페이징을 위한 객체
+        // boardType 3 [*****]
         SearchDTO searchDTO = searchServiceImpl.initialize(boardIdx, page, searchType, keyword, 3);
         model.addAttribute("searchDTO", searchDTO);
 
