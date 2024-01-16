@@ -61,7 +61,7 @@ public class MemberController {
 
     // 회원가입 성공 후 로그인 하러 가기 버튼 클릭시 LoginForm.jsp 로 이동
     @GetMapping("/login")
-    public String loginForm(){
+    public String loginForm(@ModelAttribute MemberDTO memberDTO){
         return "member/loginForm";
     }
 
@@ -69,7 +69,11 @@ public class MemberController {
     // form method = post 로 데이터 받아옴
     // login 성공시 세션에 "loginEmail" & 게시판Idx 추가
     @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session , HttpServletResponse response) throws IOException {
+    public String login(@Validated @ModelAttribute MemberDTO memberDTO, BindingResult errors ,HttpSession session , HttpServletResponse response) throws IOException {
+
+        if (errors.hasGlobalErrors()){      // 해당 메서드 내의 에러발생시
+            AlertUtils.alertAndMovePage(response, "로그인 도중 에러발생!!", "login");
+        }
 
         Map<String, String> loginResult = memberService.login(memberDTO);
         if (loginResult != null) {

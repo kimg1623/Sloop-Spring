@@ -1,25 +1,27 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>회원정보수정</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <title>S-loop 회원 정보 수정</title>
 </head>
 <body>
 <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
 <form:form action="/member/signup" method="post" modelAttribute="memberDTO">
-<p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" value="${memberDTO.memberEmail}" readonly="true"/>
+<p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" readonly="true"/>
 <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
-<p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" value="${memberDTO.memberNickname}" readonly="true"/></p>
+<p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" readonly="true"/></p>
 <p>성   별 :
     <form:radiobutton path="memberGender" id="male" value="남자" />
     <label for="male">남자</label>
     <form:radiobutton path="memberGender" id="female" value="여자" />
     <label for="female">여자</label>
 </p>
-<p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호"value="${memberDTO.memberPhonenumber}"/></p>
+<p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호"/></p>
 <p>회원대분류 :
-    <form:select path="memberGradeCode" value="${memberDTO.memberGradeCode}">
+    <form:select path="memberGradeCode">
         <form:option value="">선택하세요.</form:option>
         <form:option value="초등학생">초등학생</form:option>
         <form:option value="중학생">중학생</form:option>
@@ -30,17 +32,17 @@
         <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
             <option value="choose">선택하세요.</option>
         </form:select></p>--%>
-<p>학 교 명 : <form:input type="text" path="memberSchool" value="${memberDTO.memberSchool}" readonly="true"/></p>
+<p>학 교 명 : <form:input type="text" path="memberSchool" readonly="true"/></p>
 <p>관심 과목 :
-    <form:checkbox path="memberSubjectCode" value="${memberDTO.memberSubjectCode}"/>국어
-    <form:checkbox path="memberSubjectCode" value="${memberDTO.memberSubjectCode}"/>영어
-    <form:checkbox path="memberSubjectCode" value="${memberDTO.memberSubjectCode}"/>수학
-    <form:checkbox path="memberSubjectCode" value="${memberDTO.memberSubjectCode}"/>사회
-    <form:checkbox path="memberSubjectCode" value="${memberDTO.memberSubjectCode}"/>과학
-    <form:checkbox path="memberSubjectCode" value="${memberDTO.memberSubjectCode}"/>기타
+    <form:checkbox path="memberSubjectCode"/>국어
+    <form:checkbox path="memberSubjectCode"/>영어
+    <form:checkbox path="memberSubjectCode"/>수학
+    <form:checkbox path="memberSubjectCode"/>사회
+    <form:checkbox path="memberSubjectCode"/>과학
+    <form:checkbox path="memberSubjectCode"/>기타
 </p>
 <p>지역대분류 :
-    <form:select path="memberRegionCode" value="${memberDTO.memberRegionCode}">
+    <form:select path="memberRegionCode">
         <form:option value="">선택하세요.</form:option>
         <form:option value="900">서울특별시</form:option>
         <form:option value="200">경기도</form:option>
@@ -66,20 +68,12 @@
             <option value="choose">선택하세요.</option>
         </select></p>--%>
     <input type="button" value="수정" onclick="update()">
-
-</form>
+</form:form>
 </body>
-
 <script>
 
-
-
-
-
-
-
     const update = () => {
-        const passwordDB = '${member.memberPassword}';
+        const passwordDB = '${memberDTO.memberPassword}';
         const password = document.getElementById("memberPassword").value;
         if (passwordDB == password) {
             document.updateForm.submit();
