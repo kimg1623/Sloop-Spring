@@ -19,7 +19,7 @@
             <input type="submit" class="fadeIn fourth" value="Log In">
         </form>
 
-        <!-- Remind Passowrd -->
+        <!-- Remind Password -->
         <div id="formFooter">
             <a class="underlineHover" href="/member/signup">Sign Up</a>
         </div>

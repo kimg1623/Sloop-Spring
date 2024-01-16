@@ -47,6 +47,8 @@ h2 {
     width: 100%;
     min-height: 100%;
     padding: 20px;
+    margin-top: 100px;
+    margin-bottom: 100px;
 }
 
 #formContent {
@@ -90,7 +92,7 @@ h2.active {
 /* FORM TYPOGRAPHY*/
 
 input[type=button], input[type=submit], input[type=reset]  {
-    background-color: #56baed;
+    background-color: #458DFC;
     border: none;
     color: white;
     padding: 15px 80px;
