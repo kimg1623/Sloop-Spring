@@ -21,7 +21,10 @@ public interface MemberRepository {
 
     MemberDTO findByIdx(int memberIdx);
 
-    int deleteById(int memberIdx);
+
+    int deleteByUser(int memberIdx);
 
 
+    /*int signup(RegisterFormDTO registerFormDTO);
+*/
 }
