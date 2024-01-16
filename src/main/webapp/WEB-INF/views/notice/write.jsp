@@ -10,26 +10,28 @@
 <%--@elvariable id="noticeDTO" type="kr.co.sloop.notice.domain.NoticeDTO"--%>
 <form:form modelAttribute="noticeDTO" method="post" action="/study/${studyGroupCode}/notice/${boardIdx}/write">
     <div class="category_">카테고리 선택 :
-        <form:radiobutton path="categoryPostIdx" id="categoryPostNormal" name="categoryPostIdx" value="5"/>
+        <form:radiobutton path="categoryPostIdx" id="categoryPostNormal" value="5" required="true"/>
         <label for="categoryPostNormal">일반</label>
-
-        <form:radiobutton path="categoryPostIdx" id="categoryPostImportant" name="categoryPostIdx" value="6" />
+        <form:errors path="categoryPostIdx" cssStyle="color: red"/>
+        <form:radiobutton path="categoryPostIdx" id="categoryPostImportant" value="6" required="true"/>
         <label for="categoryPostImportant">중요</label>
-
-        <form:radiobutton path="categoryPostIdx" id="categoryPostEvent" name="categoryPostIdx" value="7" />
+        <form:errors path="categoryPostIdx" cssStyle="color: red"/>
+        <form:radiobutton path="categoryPostIdx" id="categoryPostEvent" value="7" required="true"/>
         <label for="categoryPostEvent">이벤트</label>
-    </div>
+            <form:errors path="categoryPostIdx" cssStyle="color: red"/>
     <div>
-        <form:checkbox path="postNoticePinned" name="postNoticePinned" id="postNoticePinned" value="1"/>
-        <form:hidden path="postNoticePinned" name="postNoticePinned" id="postNoticePinned_hidden" value="0"/>
+        <form:checkbox path="postNoticePinned" id="postNoticePinned" value="1"/>
+        <form:hidden path="postNoticePinned" id="postNoticePinned_hidden" value="0"/>
         <label for="postNoticePinned">상단 고정</label>
     </div>
     <div>글 제목<br>
-        <form:input path="postNoticeTitle" id="postNoticeTitle" name="postNoticeTitle" required="true"/>
+        <form:input path="postNoticeTitle" required="true" maxlength="100"/>
+        <form:errors path="postNoticeTitle" cssStyle="color: red"/>
     </div>
 
     <div>글 작성칸<br>
-        <form:textarea path="postNoticeContents" id="postNoticeContents" name="postNoticeContents" required="true"/>
+        <form:textarea path="postNoticeContents" required="true" maxlength="10000"/>
+        <form:errors path="postNoticeContents" cssStyle="color: red"/>
     </div>
 
     <div>
@@ -38,9 +40,6 @@
 </form:form>
 </body>
 <script>
-    if(document.getElementById("input_check").checked) {
-        document.getElementById("input_check_hidden").disabled = true;
-    }
 
     const currentURL = window.location.href;
 
