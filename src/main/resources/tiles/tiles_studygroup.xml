@@ -27,7 +27,26 @@
    </definition>
 
 
+   <!-- 지혜 -->
+   <definition name="daily/dailyList" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyList.jsp" />
+   </definition>
 
+   <definition name="daily/dailyWrite" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyWrite.jsp" />
+   </definition>
+
+   <definition name="daily/dailyUpdate" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyUpdate.jsp" />
+   </definition>
+
+   <definition name="daily/dailyDetail" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyDetail.jsp" />
+   </definition>
 
 
 

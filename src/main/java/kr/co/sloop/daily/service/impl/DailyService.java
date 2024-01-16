@@ -3,18 +3,19 @@ package kr.co.sloop.daily.service.impl;
 import kr.co.sloop.daily.domain.DailyDTO;
 import kr.co.sloop.daily.domain.PageDTO;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface DailyService {
     //공부인증 전체리스트 불러오기
-    List<DailyDTO> getAllDailyList();
+    //페이징
+    ArrayList<DailyDTO> pageList(PageDTO pageDTO);
+
+    //검색+페이징 객체
+    PageDTO initialize(int boardIdx, int page, int searchType, String keyword, int boardType);
 
     //공부인증 게시글 작성
     boolean dailyWrite(DailyDTO dailyDTO);
-
-
-    //제목으로 글 검색
-    List<DailyDTO> getDailyListByTitle(String postDailyTitle);
 
     //상세보기
     DailyDTO findByPostIdx(int postIdx);
@@ -27,11 +28,5 @@ public interface DailyService {
 
     //조회수
     void updateViewCnt(int postIdx);
-
-    //페이징
-    List<DailyDTO> pageList(int page);
-
-    //페이징-PageDTO
-    PageDTO pagingParam(int page);
 
 }
