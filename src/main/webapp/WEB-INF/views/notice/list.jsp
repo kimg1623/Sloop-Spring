@@ -20,6 +20,7 @@
         <th>작성자</th>
         <th>작성일</th>
         <th>조회수</th>
+        <th>상단고정</th>
     </tr>
     </thead>
 
@@ -45,6 +46,7 @@
                         <td><c:out value="${notice.memberNickname}"/></td>
                         <td><c:out value="${notice.postNoticeRegDate}"/></td>
                         <td><c:out value="${notice.postNoticeHits}"/></td>
+                        <td><c:out value="${notice.postNoticePinned}"/></td>
                     </tr>
                 </c:forEach>
             </c:otherwise>

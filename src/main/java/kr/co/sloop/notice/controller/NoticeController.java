@@ -2,6 +2,8 @@ package kr.co.sloop.notice.controller;
 
 
 import kr.co.sloop.common.AlertUtils;
+import kr.co.sloop.member.domain.MemberDTO;
+import kr.co.sloop.member.service.impl.MemberService;
 import kr.co.sloop.notice.domain.NoticeDTO;
 import kr.co.sloop.notice.domain.NoticeSearchDTO;
 import kr.co.sloop.notice.service.NoticeService;
@@ -68,13 +70,20 @@ public class NoticeController {
 	@GetMapping("/write")
 	public String noticeWriteForm(@PathVariable("studyGroupCode") String studyGroupCode ,
 																@PathVariable("boardIdx") int boardIdx ,
-																Model model){
+																Model model , HttpSession session , HttpServletResponse response) throws IOException{
 
 		NoticeDTO noticeDTO = new NoticeDTO();
+
 		noticeDTO.setBoardIdx(boardIdx);
-		/*noticeDTO.setStudyGroupCode(studyGroupCode);*/
-		model.addAttribute("noticeDTO", noticeDTO);
-		return "notice/write";
+		String loginMemberIdx = (String) session.getAttribute("loginMemberIdx");
+
+		if (loginMemberIdx != null) {
+			model.addAttribute("noticeDTO", noticeDTO);
+			return "notice/write";
+		}	else {
+			AlertUtils.alert(response, "로그인 후 작성할 수 있습니다.");
+			return "redirect:/member/login";
+		}
 	}
 
 	/** 공지사항 작성은
@@ -104,7 +113,7 @@ public class NoticeController {
 		if (result){
 			return "redirect:/study/{studyGroupCode}/notice/{boardIdx}/list";
 		} else {
-			return "member/loginForm";
+			return "redirect:/member/login";
 		}
 	}
 
@@ -129,16 +138,18 @@ public class NoticeController {
 	@GetMapping("update")
 	public String updateNoticeForm(@RequestParam("postIdx") int postIdx ,
 																 @PathVariable("boardIdx") int boardIdx,
-																 @PathVariable("studyGroupCode") String studyGroupCode, HttpSession session , Model model ){
+																 @PathVariable("studyGroupCode") String studyGroupCode, HttpSession session , Model model ,
+																 HttpServletResponse response) throws IOException {
 
 		String getNickname = (String) session.getAttribute("loginMemberNickname");
 
 		if (getNickname != null) {
 			NoticeDTO noticeDTO = noticeService.findByPostIdx(postIdx);
 			model.addAttribute("noticeDTO" , noticeDTO);
-			return "study/updateForm";
+			return "notice/updateForm";
 		} else {
-			return "member/loginForm";
+			AlertUtils.alert(response, "로그인 후 수정할 수 있습니다.");
+			return "redirect:/member/loginForm";
 		}
 	}
 
@@ -179,11 +190,11 @@ public class NoticeController {
 		log.info("세션이메일====="+loginEmail);
 		if (memberEmail.equals(loginEmail)){
 			log.info("조건문 들엉ㅁ? ============"+memberEmail+loginEmail);
-			AlertUtils.alertAndMovePage(response , "삭제하였습니다." , "/notice/list");
+			AlertUtils.alertAndMovePage(response , "삭제하였습니다." , "/study/"+studyGroupCode+"/notice/"+boardIdx+"/list");
 
 			return noticeService.deletePostByPostIdx(postIdx);
 		} else {
-			/*AlertUtils.alertAndBackPage(response ,"삭제할 수 없습니다.");*/
+			AlertUtils.alertAndBackPage(response ,"삭제할 수 없습니다.");
 			return "redirect:/study/{studyGroupCode}/notice/{boardIdx}/list";
 		}
 	}
