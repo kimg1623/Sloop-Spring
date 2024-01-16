@@ -237,7 +237,6 @@ public class PostForumController {
         keyword = keyword.trim();
 
         // 검색 + 페이징을 위한 객체
-        // boardType 3 [*****]
         SearchDTO searchDTO = searchServiceImpl.initialize(boardIdx, page, searchType, keyword, 3);
         model.addAttribute("searchDTO", searchDTO);
 
