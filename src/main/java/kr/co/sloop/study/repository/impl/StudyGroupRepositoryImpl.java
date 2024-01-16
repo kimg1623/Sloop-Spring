@@ -69,7 +69,11 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
 
     @Override
     public StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode) {
-        return studyGroupMapper.selectStudyGroupByGroupCode(studyGroupCode);
+        StudyGroupDTO studyGroup =  studyGroupMapper.selectStudyGroupByGroupCode(studyGroupCode);
+        studyGroup.setStudyGroupGrade(categoryGradeMap.get(studyGroup.getStudyGroupGradeCode()));
+        studyGroup.setStudyGroupSubject(categorySubjectMap.get(studyGroup.getStudyGroupSubjectCode()));
+        studyGroup.setStudyGroupRegion(categoryRegionMap.get(studyGroup.getStudyGroupRegionCode()));
+        return studyGroup;
     }
 
     @Override
