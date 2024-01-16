@@ -1,0 +1,13 @@
+
+t
+java:S2293;"YReplace the type specification in this constructor call with the diamond operator ("<>").(Î´Òşÿÿÿÿ
+t
+java:S1488-"^Immediately return this expression instead of assigning it to the temporary variable "result".(³Í†¢
+…
+java:S1488"jImmediately return this expression instead of assigning it to the temporary variable "categoryRegionList".(¡Áë‹ûÿÿÿÿ
+A
+java:S1168C"+Return an empty collection instead of null.(¥¹ï
+]
+java:S1128"BRemove this unused import 'org.mybatis.spring.SqlSessionTemplate'.(Æ¸–âüÿÿÿÿ
+n
+java:S1128"SRemove this unused import 'org.springframework.beans.factory.annotation.Autowired'.(¡¸Îùÿÿÿÿ

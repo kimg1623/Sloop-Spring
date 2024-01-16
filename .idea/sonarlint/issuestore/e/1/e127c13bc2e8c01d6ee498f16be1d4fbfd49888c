@@ -1,0 +1,22 @@
+
+g
+java:S1192Z"QDefine a constant instead of duplicating this literal "redirect:/study/" 3 times.(ŠØÒÑ
+|
+java:S1319²"`The type of "map" should be an interface such as "Map" rather than the implementation "HashMap".(õ„úÞýÿÿÿÿ
+f	java:S117~"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(¨Åóˆ
+X
+java:S6813"BRemove this field injection and use constructor injection instead.(›É ¬
+{
+java:S1149Å"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(åûÒ¸ûÿÿÿÿ
+A
+java:S1452F"&Remove usage of generic wildcard type.(Óú£†ùÿÿÿÿ
+Q	java:S125I"<This block of commented-out lines of code should be removed.(âß¢Ä
+V	java:S125M"<This block of commented-out lines of code should be removed.(áˆì“ýÿÿÿÿ
+=
+java:S1125Y"'Remove the unnecessary boolean literal.(ÿ™ûÕ
+W	java:S125Ÿ"<This block of commented-out lines of code should be removed.(Íõ‹·ûÿÿÿÿ
+5
+java:S2119Ä"Save and re-use this "Random".(–áÍÈ
+B
+java:S1905É"&Remove this unnecessary cast to "int".(ü‘±•úÿÿÿÿ
+A	java:S106Î"+Replace this use of System.out by a logger.(ÅŒòÂ
