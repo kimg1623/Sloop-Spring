@@ -44,9 +44,11 @@ public class MemberDTO {
 
     @NotNull(message = "학교명은 필수 입력값입니다")
     private String memberSchool;        // '회원 학교',
-
+    @NotNull(message = "학년은 필수 입력값입니다")
     private String memberGradeCode;        // '학년 카테고리 코드',
+    @NotNull(message = "관심과목은 필수 입력값입니다")
     private String memberSubjectCode;      // '과목 카테고리 코드',
+    @NotNull(message = "지역은 필수 입력값입니다")
     private String memberRegionCode;       // '지역 카테고리 코드',
     private String authority;            // 회원 권한
     private String memberProfile;            // 프로필사진
