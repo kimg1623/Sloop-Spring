@@ -13,9 +13,12 @@
 <form:form action="/member/signup" method="post" modelAttribute="memberDTO">
     <p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" onblur="emailCheck()" required="true"/>
                     <form:button type="button" value="중복확인" onclick="emailCheck()">중복확인</form:button></p>
+    <form:errors path="memberEmail" cssStyle="color: red"/>
     <p id="check-result"></p>
     <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
+    <form:errors path="memberPassword" cssStyle="color: red"/>
     <p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" onblur="nicknameCheck()" required="true"/></p>
+    <form:errors path="memberNickname" cssStyle="color: red"/>
     <p id="check-result2"></p>
     <p>성   별 :
         <form:radiobutton path="memberGender" id="male" value="남자" />
@@ -24,6 +27,7 @@
         <label for="female">여자</label>
     </p>
     <p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호" onblur="phoneNumbCheck()" required="true"/></p>
+    <form:errors path="memberPhonenumber" cssStyle="color: red"/>
     <p id="check-result3"></p>
 
     <p>회원대분류 :
@@ -39,6 +43,7 @@
             <option value="choose">선택하세요.</option>
         </form:select></p>--%>
     <p>학 교 명 : <form:input type="text" path="memberSchool" required="true"/></p>
+    <form:errors path="memberSchool" cssStyle="color: red"/>
     <p>관심 과목 :
         <form:checkbox path="memberSubjectCode" value="국어"/>국어
         <form:checkbox path="memberSubjectCode" value="영어"/>영어
@@ -81,35 +86,40 @@
     // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
     // 사용 가능 여부를 이메일 입력창 아래에 표시
     // document 관련된건 DOM 명령
+
     const emailCheck = () => {
         const email = document.getElementById("memberEmail").value;
         const checkResult = document.getElementById("check-result");
         console.log("입력한 이메일", email);
+        if (let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}'); { // 형식에 맞지 않을때
+            
 
-        $.ajax({
-            // 요청방식: post, url: "email-check", 데이터: 이메일
-            type: "post",
-            url: "/member/email-check",
-            data: {
-                "memberEmail": email
-            },
-            success: function (res) {
-                console.log("요청성공", res);
-                if (res == "ok") {
-                    console.log("사용가능한 이메일");
-                    checkResult.style.color = "green";
-                    checkResult.innerHTML = "사용가능한 이메일";
-                } else {
-                    console.log("이미 사용중인 이메일");
-                    checkResult.style.color = "red";
-                    checkResult.innerHTML = "이미 사용중인 이메일";
+        } else { // 형식에 맞을때
+            $.ajax({
+                // 요청방식: post, url: "email-check", 데이터: 이메일
+                type: "post",
+                url: "/member/email-check",
+                data: {
+                    "memberEmail": email
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+                    if (res == "ok") {
+                        console.log("사용가능한 이메일");
+                        checkResult.style.color = "green";
+                        checkResult.innerHTML = "사용가능한 이메일";
+                    } else {
+                        console.log("이미 사용중인 이메일");
+                        checkResult.style.color = "red";
+                        checkResult.innerHTML = "이미 사용중인 이메일";
+                    }
+                },
+                error: function (err) {
+                    console.log("에러발생", err);
                 }
-            },
-            error: function (err) {
-                console.log("에러발생", err);
-            }
 
-        });
+            });
+        }
     }
     const nicknameCheck = () => {
         const nickname = document.getElementById("memberNickname").value;
