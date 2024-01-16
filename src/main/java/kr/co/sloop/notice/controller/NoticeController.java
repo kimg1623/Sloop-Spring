@@ -41,6 +41,7 @@ public class NoticeController {
 											defaultValue = "1") 	// 파라미터가 없거나 비어있을 경우 기본값은 1로 설정한다.
 								 			int page , 				// 그러고나서 page 변수에 값을 대입. 아래는 비슷한 주석이라 생략한다.
 													 @PathVariable("boardIdx") int boardIdx,
+													 @PathVariable("studyGroupCode") String studyGroupCode,
 							 @RequestParam(value = "searchType" , defaultValue = "0" , required = false) int searchType,
 							 @RequestParam(value = "keyword" , defaultValue = "" , required = false) String keyword,
 							 Model model){
@@ -60,16 +61,18 @@ public class NoticeController {
 		/* JSP 에 noticeList 라는 변수명으로 넘겨준다. */
 		model.addAttribute("noticeList" , noticeList);
 
-
 		return "notice/list";
 	}
 
 	// 공지사항 작성 폼 출력
 	@GetMapping("/write")
-	public String noticeWriteForm(Model model , @PathVariable("boardIdx") int boardIdx){
+	public String noticeWriteForm(@PathVariable("studyGroupCode") String studyGroupCode ,
+																@PathVariable("boardIdx") int boardIdx ,
+																Model model){
 
 		NoticeDTO noticeDTO = new NoticeDTO();
 		noticeDTO.setBoardIdx(boardIdx);
+		/*noticeDTO.setStudyGroupCode(studyGroupCode);*/
 		model.addAttribute("noticeDTO", noticeDTO);
 		return "notice/write";
 	}
@@ -80,10 +83,10 @@ public class NoticeController {
 	 * 3) 게시판 은 공지게시판 ( 1 )에 작성 */
 	@PostMapping("/write")
 	public String noticeWrite(@Validated @ModelAttribute("noticeDTO") NoticeDTO noticeDTO , BindingResult errors ,
-							  @PathVariable("boardIdx") int boardIdx , HttpSession session){
+							  @PathVariable("boardIdx") int boardIdx , @PathVariable("studyGroupCode") String studyGroupCode , HttpSession session){
 
 		if (errors.hasErrors()){
-			return "notice/write";
+			return "study/{studyGroupCode}/notice/{boardIdx}/write";
 		}
 
 		/** 세션에서 이메일 , memberIdx 값 불러옴 */
@@ -94,13 +97,12 @@ public class NoticeController {
 
 		// noticeDTO 에 해당 변수값을 set 해준다.
 		noticeDTO.setMemberEmail(memberEmail);
-		noticeDTO.setBoardIdx(boardIdx);
 		noticeDTO.setMemberIdx(memberIdx);
 		// 서비스단의 로직을 수행하고 값을 넘겨받음.
 		boolean result = noticeService.noticeWrite(noticeDTO);
 
 		if (result){
-			return "redirect:/notice/list";
+			return "redirect:/study/{studyGroupCode}/notice/{boardIdx}/list";
 		} else {
 			return "member/loginForm";
 		}
@@ -109,7 +111,8 @@ public class NoticeController {
 	/** 공지 게시글 상세 조회 폼 */
 	@GetMapping("detail")
 	public String detail(@RequestParam("postIdx") int postIdx , Model model ,
-						 @PathVariable("boardIdx") int boardIdx){
+						 					 @PathVariable("boardIdx") int boardIdx,
+											 @PathVariable("studyGroupCode") String studyGroupCode){
 
 
 		NoticeDTO noticeDTO = noticeService.detailNotice(postIdx);
@@ -119,19 +122,21 @@ public class NoticeController {
 
 		/** 누구나 볼 수 있는 게시물 */
 
-		return "notice/detail";
+		return "study/detail";
 
 	}
 
 	@GetMapping("update")
-	public String updateNoticeForm(@RequestParam("postIdx") int postIdx , HttpSession session , Model model ){
+	public String updateNoticeForm(@RequestParam("postIdx") int postIdx ,
+																 @PathVariable("boardIdx") int boardIdx,
+																 @PathVariable("studyGroupCode") String studyGroupCode, HttpSession session , Model model ){
 
 		String getNickname = (String) session.getAttribute("loginMemberNickname");
 
 		if (getNickname != null) {
 			NoticeDTO noticeDTO = noticeService.findByPostIdx(postIdx);
 			model.addAttribute("noticeDTO" , noticeDTO);
-			return "notice/updateForm";
+			return "study/updateForm";
 		} else {
 			return "member/loginForm";
 		}
@@ -139,6 +144,8 @@ public class NoticeController {
 
 	@PostMapping("update")
 	public String updateNotice(@ModelAttribute("noticeDTO") NoticeDTO noticeDTO ,
+														 @PathVariable("boardIdx") int boardIdx,
+														 @PathVariable("studyGroupCode") String studyGroupCode,
 														 HttpSession session){
 		// 로그인된 회원과 글 작성자가 동일한지 검사
 
@@ -152,14 +159,16 @@ public class NoticeController {
 		log.info("==========DTOOOOOO" + noticeDTO);
 		if (result){ // 수정 성공
 
-			return "redirect:/notice/detail?postIdx=" + noticeDTO.getPostIdx();
+			return "redirect:/study/{studyGroupCode}/notice/{boardIdx}/detail?postIdx=" + noticeDTO.getPostIdx();
 		} else { // 수정 실패
-			return "redirect:/notice/list";
+			return "redirect:/study/{studyGroupCode}/notice/{boardIdx}/list";
 		}
 	}
 
 	@GetMapping("delete")
 	public String delete(@RequestParam("postIdx") int postIdx ,
+											 @PathVariable("boardIdx") int boardIdx,
+											 @PathVariable("studyGroupCode") String studyGroupCode,
 											 HttpSession session ,
 											 HttpServletResponse response) throws IOException {
 
@@ -175,7 +184,7 @@ public class NoticeController {
 			return noticeService.deletePostByPostIdx(postIdx);
 		} else {
 			/*AlertUtils.alertAndBackPage(response ,"삭제할 수 없습니다.");*/
-			return "redirect:/notice/list";
+			return "redirect:/study/{studyGroupCode}/notice/{boardIdx}/list";
 		}
 	}
 	public String getRandomStudyGroupCode(){

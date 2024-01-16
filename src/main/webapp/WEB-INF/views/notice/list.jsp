@@ -37,12 +37,11 @@
             <%-- 글이 1개 이상 존재할 때에는 글 목록 출력 O --%>
             <c:otherwise>
                 <c:forEach items="${noticeList}" var="notice" varStatus="status">
-                    <tr class="postforum_${notice.postIdx}">
-                            <%-- <td><c:out value="${status.index + 1}"/></td> --%>
+                    <tr class="${notice.postIdx}">
                         <td><c:out value="${notice.postIdx}"/></td>
                         <td><c:out value="${notice.categoryPostName}"/></td>
-                        <td><a href="/notice/detail?postIdx=${notice.postIdx}"><c:out value="${notice.postNoticeTitle}"/></a></td>
-                            <%-- <td><c:out value="${postForum.postForumTitle}"/></td> --%>
+                        <td><a href="/study/{studyGroupCode}/notice/{boardIdx}/detail?postIdx=${notice.postIdx}">
+                            <c:out value="${notice.postNoticeTitle}"/></a></td>
                         <td><c:out value="${notice.memberNickname}"/></td>
                         <td><c:out value="${notice.postNoticeRegDate}"/></td>
                         <td><c:out value="${notice.postNoticeHits}"/></td>
@@ -70,7 +69,7 @@
                             </c:when>
                             <%-- 1페이지가 아닌 경우에는 [이전]을 클릭하면 현재 페이지보다 1 작은 페이지 요청 --%>
                             <c:otherwise>
-                                <a href="/notice/list?page=${noticeSearchDTO.page-1}&searchType=${noticeSearchDTO.searchType}&keyword=${noticeSearchDTO.keyword}">[이전]</a>
+                                <a href="/study/${studyGroupCode}/notice/${boardIdx}/list?page=${noticeSearchDTO.page-1}&searchType=${noticeSearchDTO.searchType}&keyword=${noticeSearchDTO.keyword}">[이전]</a>
                             </c:otherwise>
                         </c:choose>
                             <%-- 페이징 번호 --%>
@@ -82,7 +81,7 @@
                                 </c:when>
 
                                 <c:otherwise>
-                                    <a href="/notice/list?page=${i}&searchType=${noticeSearchDTO.searchType}&keyword=${noticeSearchDTO.keyword}">${i}</a>
+                                    <a href="/study/${studyGroupCode}/notice/${boardIdx}/list?page=${i}&searchType=${noticeSearchDTO.searchType}&keyword=${noticeSearchDTO.keyword}">${i}</a>
                                 </c:otherwise>
                             </c:choose>
                         </c:forEach>
@@ -92,7 +91,7 @@
                                 <span>[다음]</span>
                             </c:when>
                             <c:otherwise>
-                                <a href="/notice/list?page=${noticeSearchDTO.page+1}&searchType=${noticeSearchDTO.searchType}&keyword=${noticeSearchDTO.keyword}">[다음]</a>
+                                <a href="/study/${studyGroupCode}/notice/${boardIdx}/list?page=${noticeSearchDTO.page+1}&searchType=${noticeSearchDTO.searchType}&keyword=${noticeSearchDTO.keyword}">[다음]</a>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -125,6 +124,7 @@
 
 
 <script>
+
     // 문서가 완전히 로드된 후에 스크립트를 실행하기 위해 jQuery의 document.ready() 함수를 사용
     $(document).ready(function() {
         $('table tbody tr').click(function() {
@@ -133,9 +133,26 @@
         });
     });
 
+
+    // 현재 페이지 URL 가져오기
+    const currentURL = window.location.href;
+
+    // URL에서 studyGroupCode와 boardIdx 파라미터 추출하기
+    const urlParams = new URLSearchParams(currentURL);
+    const studyGroupCode = urlParams.get('studyGroupCode');
+    const boardIdx = urlParams.get('boardIdx');
+
+    console.log("studyGroupCode:", studyGroupCode);
+    console.log("boardIdx:", boardIdx);
+
+    // 이전 URL 생성 예시
+    const previousURL = '/study/${studyGroupCode}/notice/${boardIdx}';
+
+    console.log("Previous URL:", previousURL);
+
     // 글 작성하기 버튼
-    writeBtn = () => {
-        location.href = "/notice/write";
+    const writeBtn = () => {
+        location.href = previousURL+'/write';
     };
 
     // 검색하기 버튼
@@ -154,7 +171,7 @@
             return false;
         }
 
-        location.href = '/notice/list?page=1&searchType=' + searchType + '&keyword=' + keyword;
+        location.href = '/study/${studyGroupCode}/notice/${boardIdx}/list?page=1&searchType=' + searchType + '&keyword=' + keyword;
     };
 </script>
 </main>

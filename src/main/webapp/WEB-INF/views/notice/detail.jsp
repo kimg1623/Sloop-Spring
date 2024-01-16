@@ -50,12 +50,12 @@
 <script>
     // 목록으로 돌아가기
     const findNotice = () => {
-        location.href = "/notice/list";
+        location.href = "/study/${studyGroupCode}/notice/${boardIdx}/list";
     };
 
     // 글 수정하기
     const updateNotice = (postIdx) => {
-        location.href = "/notice/update?postIdx=" + postIdx;
+        location.href = "/study/${studyGroupCode}/notice/${boardIdx}/update?postIdx=" + postIdx;
     };
 
     // 글 삭제하기
@@ -65,11 +65,24 @@
         if (confirm("삭제하시겠습니까?") == true){
             //true는 확인버튼을 눌렀을 때 코드 작성
             console.log("완료되었습니다.");
-            location.href = "/notice/delete?postIdx=" + postIdx;
+            location.href = "/study/${studyGroupCode}/notice/${boardIdx}/delete?postIdx=" + postIdx;
         }else{
             // false는 취소버튼을 눌렀을 때, 취소됨
             console.log("취소되었습니다");
         }
     };
+
+    const currentURL = window.location.href;
+
+    // URL에서 studyGroupCode와 boardIdx 파라미터 추출하기
+    const urlParams = new URLSearchParams(currentURL);
+    const studyGroupCode = urlParams.get('studyGroupCode');
+    const boardIdx = urlParams.get('boardIdx');
+
+    console.log("studyGroupCode:", studyGroupCode);
+    console.log("boardIdx:", boardIdx);
+
+    // 이전 URL 생성 예시
+    const previousURL = '/study/${studyGroupCode}/notice/${boardIdx}';
 </script>
 </html>

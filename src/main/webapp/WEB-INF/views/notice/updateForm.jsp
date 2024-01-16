@@ -8,7 +8,7 @@
 
 <%--글 작성 화면--%>
 <%--@elvariable id="noticeDTO" type="kr.co.sloop.notice.domain.NoticeDTO"--%>
-<form:form modelAttribute="noticeDTO" method="post" action="/notice/update">
+<form:form modelAttribute="noticeDTO" method="post" action="/study/${studyGroupCode}/notice/${boardIdx}/update">
     <!-- hidden -->
     <!-- 작성자 idx -->
     <p><form:hidden path="memberIdx"/></p>
@@ -51,5 +51,17 @@
     if(document.getElementById("input_check").checked) {
         document.getElementById("input_check_hidden").disabled = true;
     }
+    const currentURL = window.location.href;
+
+    // URL에서 studyGroupCode와 boardIdx 파라미터 추출하기
+    const urlParams = new URLSearchParams(currentURL);
+    const studyGroupCode = urlParams.get('studyGroupCode');
+    const boardIdx = urlParams.get('boardIdx');
+
+    console.log("studyGroupCode:", studyGroupCode);
+    console.log("boardIdx:", boardIdx);
+
+    // 이전 URL 생성 예시
+    const previousURL = '/study/${studyGroupCode}/notice/${boardIdx}';
 </script>
 </html>

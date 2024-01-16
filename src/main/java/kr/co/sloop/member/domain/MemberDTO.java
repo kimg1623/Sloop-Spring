@@ -51,4 +51,6 @@ public class MemberDTO {
     private String authority;            // 회원 권한
     private String memberProfile;            // 프로필사진
 
+
+
 }
