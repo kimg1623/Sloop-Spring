@@ -37,7 +37,7 @@
             <%-- 글이 1개 이상 존재할 때에는 글 목록 출력 O --%>
             <c:otherwise>
                 <c:forEach items="${noticeList}" var="notice" varStatus="status">
-                    <tr class="${notice.postIdx}">
+                    <tr class="postforum_${notice.postIdx}">
                         <td><c:out value="${notice.postIdx}"/></td>
                         <td><c:out value="${notice.categoryPostName}"/></td>
                         <td><a href="/study/{studyGroupCode}/notice/{boardIdx}/detail?postIdx=${notice.postIdx}">
