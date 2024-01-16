@@ -1,11 +1,11 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<html>
+
 <head>
     <link href="/resources/css/style_main.css" rel="stylesheet">
 </head>
-<body>
+
     <!-- main 페이지의 컨텐츠 부분 시작 -->
     <div class="container-main">
         <div class="card banner-img">
@@ -52,37 +52,3 @@
         </div>
     </div>
     <!-- main 페이지의 컨텐츠 부분 끝 -->
-
-    <table border="1px solid">
-        <tr>
-            <th>정렬번호</th>
-            <th>스터디그룹 이름</th>
-            <th>스터디그룹 방식</th>
-            <th>학년</th>
-            <th>과목</th>
-            <th>지역</th>
-            <th>모집인원</th>
-            <th>모집 마감일</th>
-            <th>스터디 시작일</th>
-            <th>조회수</th>
-        </tr>
-        <c:forEach items="${studyGroupList}" var="studyGroup">
-            <tr>
-                <td>${studyGroup.studyGroupIdx}</td>
-                <td>
-                    <a href="/study/${studyGroup.studyGroupCode}">${studyGroup.studyGroupName}</a>
-                </td>
-                <td>${studyGroup.studyGroupMethod}</td>
-                <td>${studyGroup.studyGroupGradeCode}${studyGroup.studyGroupGrade}</td>
-                <td>${studyGroup.studyGroupSubjectCode}${studyGroup.studyGroupSubject}</td>
-                <td>${studyGroup.studyGroupRegionCode}${studyGroup.studyGroupRegion}</td>
-                <td>${studyGroup.studyGroupNum}</td>
-                <td>${studyGroup.studyGroupDuedate}</td>
-                <td>${studyGroup.studyGroupStartdate}</td>
-                <td>${studyGroup.studyGroupHits}</td>
-            </tr>
-        </c:forEach>
-    </table>
-
-</body>
-</html>
