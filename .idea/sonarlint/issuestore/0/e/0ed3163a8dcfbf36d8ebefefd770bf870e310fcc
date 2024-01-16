@@ -1,6 +1,9 @@
 
-OWeb:TableWithoutCaptionCheck" Add a description to this table.(è¡8Æ³µáÏ1
-A	Web:S5256"%Add "<th>" headers to this "<table>".(è¡8È³µáÏ1
-E	Web:S1827")Remove this deprecated "width" attribute.(è¡8¤’¶áÏ1
-J	Web:S1827")Remove this deprecated "width" attribute.(Û•¦ºÿÿÿÿÿ8½¬ÈáÏ1
-J	Web:S1827")Remove this deprecated "width" attribute.(Û•¦ºÿÿÿÿÿ8½§ÉáÏ1
+HWeb:TableWithoutCaptionCheck" Add a description to this table.(è¡
+:	Web:S5256"%Add "<th>" headers to this "<table>".(è¡
+>	Web:S1827")Remove this deprecated "width" attribute.(è¡
+J	Web:S1827
+")Remove this deprecated "width" attribute.(â©—îıÿÿÿÿ8Üİş„Ñ1
+E	Web:S1827")Remove this deprecated "width" attribute.(ˆèá–8“æş†Ñ1
+E	Web:S1827")Remove this deprecated "width" attribute.(à¨õŠ8“æş†Ñ1
+E	Web:S1827#")Remove this deprecated "width" attribute.(ˆèá–8÷šµ‡Ñ1
