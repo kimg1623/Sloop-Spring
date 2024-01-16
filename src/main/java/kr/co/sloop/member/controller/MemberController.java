@@ -69,7 +69,7 @@ public class MemberController {
     // form method = post 로 데이터 받아옴
     // login 성공시 세션에 "loginEmail" & 게시판Idx 추가
     @PostMapping("/login")
-    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session) {
+    public String login(@ModelAttribute MemberDTO memberDTO, HttpSession session , HttpServletResponse response) throws IOException {
 
         Map<String, String> loginResult = memberService.login(memberDTO);
         if (loginResult != null) {
@@ -78,10 +78,9 @@ public class MemberController {
             session.setAttribute("loginMemberIdx", loginResult.get("loginMemberIdx")); // 지원 추가
             session.setAttribute("loginMemberNickname", loginResult.get("loginMemberNickname")); // 지원 추가
             return "redirect:/"; // 로그인 성공시 세션에 "loginEmail"이란 이름으로 저장 후 studyList or mypage 로  // 지원 수정
-        } else {
-            log.info("로그인 실패");
-            return "redirect:/member/login";    // 로그인 실패시 다시 GetMapping 의 LoginForm으로 redirect
-        }
+        } else{
+            AlertUtils.alertAndMovePage(response, "로그인에 실패하였습니다..","/member/login");
+        } return "redirect:/member/login";
     }
 
     // 이메일 중복확인 AJAX
@@ -114,21 +113,20 @@ public class MemberController {
 
     // update.jsp의 Form 출력
     @GetMapping("update")
-    public String updateForm(Model model , HttpSession session , HttpServletResponse response,
+    public String updateForm(@ModelAttribute("memberDTO") MemberDTO memberDTO, HttpSession session , HttpServletResponse response,
                              @RequestParam("memberIdx") int memberIdx) throws IOException {
         // 세션에 저장된 이메일 가져오기
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         if (loginEmail != null) {
 
-            MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
-            model.addAttribute("member", memberDTO);
+            memberService.findByMemberEmail(loginEmail);
 
             return "member/update";
 
-        } else {
-            return "redirect:/member/login";
-        }
+        } else{
+            AlertUtils.alertAndMovePage(response, "로그인에 실패하였습니다..","/member/login");
+        } return "redirect:/member/login";
 
 
     }
@@ -172,10 +170,8 @@ public class MemberController {
 
             return "redirect:/member?memberIdx="+memberDTO.getMemberIdx();  // 세션에 저장된 아이디에 맞는 마이페이지로 이동
         } else{
-            AlertUtils.alert(response, "로그인 후 마이페이지로 이동하실 수 있습니다.");
-            return "redirect:/member/login"; // 세션에 있는 아이디가 없거나 맞지 않으면 loginForm으로 이동
-        }
-
+            AlertUtils.alertAndMovePage(response, "로그인 후 마이페이지로 이동하실 수 있습니다.","/member/login");
+        } return "redirect:/member/login";
     }
     
     // 로그아웃 버튼 누를 시
@@ -193,11 +189,15 @@ public class MemberController {
         int getMemberIdx = Integer.parseInt((String) session.getAttribute("loginMemberIdx"));
         int deleteResult = memberService.deleteByUser(memberIdx);
 
-        if (deleteResult > 0 ){     // 성공시
-            return "home"; // 성공하면 home으로 이동
+        boolean result = getMemberIdx == memberIdx;
+
+
+        if (deleteResult > 0 && result){     // 성공시
+            AlertUtils.alertAndMovePage(response,"회원 탈퇴 되었습니다..","/");
         } else {
-            return "redirect:/member/mypage";
-        }
+
+          AlertUtils.alertAndMovePage(response,"탈퇴에 실패하였습니다.","/member/mypage");
+        } return "redirect:/member/mypage";
 
 
     }
