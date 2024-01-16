@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.sloop.postForum.mapper.PostForumMapper">
+    <insert id="insertPostForum" parameterType="postForum">
+        insert into postForum (postIdx, postForumTitle, postForumContents, memberIdx, categoryPostIdx)
+        values (#{postIdx}, #{postForumTitle}, #{postForumContents}, #{memberIdx}, #{categoryPostIdx})
+    </insert>
+
+    <insert id="insertPost" parameterType="postForum">
+        insert into post(boardIdx)
+        values(#{boardIdx})
+        <selectKey resultType="int" keyProperty="postIdx" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <select id="selectMemberIdxByMemberEmail" parameterType="String" resultType="int">
+        select memberIdx
+        from member
+        where memberEmail = #{memberEmail}
+    </select>
+
+    <select id="selectAllPostForumByBoardIdx" parameterType="search" resultType="postForum">
+        select f.postIdx, c.categoryPostName, f.postForumTitle, f.postForumRegDate, f.postForumHits, m.memberNickname
+        from postForum as f
+        join categoryPost as c on f.categoryPostIdx = c.categoryPostIdx
+        join member as m on f.memberIdx = m.memberIdx
+        join post as p on f.postIdx = p.postIdx
+        where p.boardIdx = #{boardIdx}
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test = "searchType == 1">
+                    and f.postForumTitle like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 2">
+                    and f.postForumContents like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 3">
+                    and (f.postForumTitle like concat('%', #{keyword}, '%') or f.postForumContents like concat('%', #{keyword}, '%'))
+                </when>
+                <when test = "searchType == 4">
+                    and m.memberNickname like concat('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+        order by f.postForumRegDate desc
+        limit #{postsPerPage} offset #{offset}
+    </select>
+
+    <select id="findByPostIdx" parameterType="int" resultType="postForum">
+        select f.postIdx, c.categoryPostName, f.postForumTitle, f.postForumContents, f.postForumRegDate, f.postForumEditDate, f.postForumHits, m.memberNickname, f.memberIdx, m.memberEmail
+        from postForum as f
+        join categoryPost as c on f.categoryPostIdx = c.categoryPostIdx
+        join member as m on f.memberIdx = m.memberIdx
+        join post as p on f.postIdx = p.postIdx
+        where f.postIdx = #{postIdx}
+    </select>
+
+    <update id="update" parameterType="postForum">
+        update postForum
+        set postForumTitle = #{postForumTitle},
+        postForumContents = #{postForumContents},
+        postForumEditDate = now()
+        where postIdx = #{postIdx}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from post
+        where postIdx = #{postIdx}
+    </delete>
+
+    <update id="updatePostForumHits" parameterType="int">
+        update postForum
+        set postForumHits = postForumHits + 1
+        where postIdx = #{postIdx}
+    </update>
+
+    <select id="searchAndCountPostsByBoardIdx" parameterType="search" resultType="int">
+        select count(f.postIdx)
+        from postForum as f
+        join member as m on f.memberIdx = m.memberIdx
+        join post as p on f.postIdx = p.postIdx
+        where p.boardIdx = #{boardIdx}
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test = "searchType == 1">
+                    and f.postForumTitle like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 2">
+                    and f.postForumContents like concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 3">
+                    and (f.postForumTitle like concat('%', #{keyword}, '%') or f.postForumContents like concat('%', #{keyword}, '%'))
+                </when>
+                <when test = "searchType == 4">
+                    and m.memberNickname like concat('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+    </select>
+
+    <select id="findWriterEmailByPostIdx" parameterType="int" resultType="String">
+        select m.memberEmail
+        from postForum as f
+        join member as m on f.memberIdx = m.memberIdx
+        where f.postIdx = #{postIdx}
+    </select>
+</mapper>
