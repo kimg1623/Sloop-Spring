@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: thegreatjy
-  Date: 12/27/23
-  Time: 1:28 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
@@ -36,23 +29,6 @@
             </div>
             <!--board_title 끝 -->
 
-    <table>
-        <!-- 글 속성 -->
-        <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>분류</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
-                </tr>
-        </thead>
-
-
-        <!-- 글 본문 -->
-        <tbody>
-            <div id="tbody" name="tbody">
             <c:choose>
                 <%-- 글이 존재하지 않을 때에는 글 목록 출력 X --%>
                 <c:when test="${empty postForumDTOList}">
@@ -63,22 +39,25 @@
                 <%-- 글이 1개 이상 존재할 때에는 글 목록 출력 O --%>
                 <c:otherwise>
                     <c:forEach items="${postForumDTOList}" var="postForum" varStatus="status">
-                        <tr class="postforum_${postForum.postIdx}">
-                            <%-- <td><c:out value="${status.index + 1}"/></td> --%>
-                            <td><c:out value="${postForum.postIdx}"/></td>
-                            <td><c:out value="${postForum.categoryPostName}"/></td>
-                            <td><a href="./detail?postIdx=${postForum.postIdx}"><c:out value="${postForum.postForumTitle}"/></a></td>
-                            <%-- <td><c:out value="${postForum.postForumTitle}"/></td> --%>
-                            <td><c:out value="${postForum.memberNickname}"/></td>
-                            <td><c:out value="${postForum.postForumRegDate}"/></td>
-                            <td><c:out value="${postForum.postForumHits}"/></td>
-                        </tr>
+                        <a href="./detail?postIdx=${postForum.postIdx}">
+                            <div class="card">
+                                <div class="card-body post-card">
+                                    <c:out value="${postForum.categoryPostName}"/>
+                                    <h5 class="post-card-title">
+                                        <c:out value="${postForum.postForumTitle}"/>
+                                    </h5>
+                                    <c:out value="${postForum.memberNickname}"/>
+                                    <c:out value="${postForum.postForumRegDate}"/>
+                                    <c:out value="${postForum.postForumHits}"/>
+                                </div>
+                            </div>
+                        </a>
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
-            </div>
-        </tbody>
 
+
+    <table>
         <!-- 페이징 + 검색 -->
         <tfoot>
         <div id="tfoot" name="tfoot">
