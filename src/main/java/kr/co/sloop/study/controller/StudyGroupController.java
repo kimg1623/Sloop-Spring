@@ -1,5 +1,6 @@
 package kr.co.sloop.study.controller;
 
+import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.service.StudyGroupService;
 import lombok.extern.log4j.Log4j;
@@ -7,6 +8,7 @@ import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,16 +44,23 @@ public class StudyGroupController {
 	 */
 	@GetMapping("/add")
 	public String requestAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO, Model model){
-
-		model.addAttribute("categoryGradeList1", null);
 		return "study/addStudyGroup";
+	}
+	@PutMapping("/add")
+	public ResponseEntity<?> requestAddStudyGroupForm(){
+		List<CategoryRegionDTO> categoryRegionList = studyGroupService.getCategoryRegion2();
+		log.info(categoryRegionList);
+//		model.addAttribute("categoryRegionList", JSONArray.fromObject(categoryRegionList));
+		JSONArray jsonArray = new JSONArray(categoryRegionList);
+		log.info(jsonArray);
+		return ResponseEntity.ok(categoryRegionList);
+//		return "study/addStudyGroup";
 	}
 
 	/*
 	 * 스터디 그룹 개설 : DB insert
 	 */
 	@PostMapping("/add")
-	@ResponseBody
 	public String submitAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO, HttpSession session){
 		studyGroupDTO.setStudyGroupCode(getRandomStudyGroupCode());
 		String memberIdx = (String)session.getAttribute("loginMemberIdx");
@@ -70,7 +79,7 @@ public class StudyGroupController {
 	@GetMapping("/{studyGroupCode}")
 	public String requestStudyGroup(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
 		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
-		List<HashMap<String,String>> groupBoardIdxs = studyGroupService.getBoardIdxsByGroupCode(studyGroupDTO.getStudyGroupIdx());
+		List<HashMap<String,String>> groupBoardIdxs = studyGroupService.getBoardIdxsByGroupCode(studyGroupCode);
 		model.addAttribute("studyGroup", studyGroupDTO);
 		model.addAttribute("groupBoardIdxs", groupBoardIdxs);
 		return "study/home";
@@ -177,5 +186,7 @@ public class StudyGroupController {
 		System.out.println("buf = " + buf);
 		return buf.toString();
 	}
+
+
 	
 }

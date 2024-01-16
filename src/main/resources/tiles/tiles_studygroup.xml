@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+   "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+   "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+   <definition name="studyGroupLayout" template="/WEB-INF/views/common/studygroup/layout.jsp" preparer="menuPreparer">
+      <put-attribute name="title" value="" />
+      <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
+      <put-attribute name="side" value="/WEB-INF/views/common/studygroup/side.jsp" />
+      <put-attribute name="body" value="" />
+      <put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp" />
+   </definition>
+
+   <definition name="study/home" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/study/home.jsp" />
+   </definition>
+
+   <definition name="study/infoForm" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/study/infoForm.jsp" />
+   </definition>
+
+   <!-- postForum -->
+   <definition name="postForum/list" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postForum/list.jsp" />
+   </definition>
+
+   <definition name="postForum/detail" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postForum/detail.jsp" />
+   </definition>
+
+   <definition name="postForum/write" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postForum/write.jsp" />
+   </definition>
+
+   <definition name="postForum/update" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postForum/update.jsp" />
+   </definition>
+
+   <!-- postAssignment -->
+   <definition name="postAssignment/list" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postAssignment/list.jsp" />
+   </definition>
+
+   <definition name="postAssignment/detail" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postAssignment/detail.jsp" />
+   </definition>
+
+   <definition name="postAssignment/write" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postAssignment/write.jsp" />
+   </definition>
+
+   <definition name="postAssignment/update" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postAssignment/update.jsp" />
+   </definition>
+
+</tiles-definitions>

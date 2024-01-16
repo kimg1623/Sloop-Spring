@@ -4,7 +4,7 @@
 <mapper namespace="kr.co.sloop.attachment.mapper.AttachmentMapper">
     <!-- attachment 테이블에 첨부파일 list 삽입 -->
     <insert id="insertAttachmentList" parameterType="java.util.List">
-        insert into attachment (postIdx, attachmentOrgName, attachmentDirPath, attachmentName)
+        insert into attachment(postIdx, attachmentOrgName, attachmentDirPath, attachmentName)
         values
         <foreach collection="list" item="atmt" separator=",">
         (#{atmt.postIdx}, #{atmt.attachmentOrgName}, #{atmt.attachmentDirPath}, #{atmt.attachmentName})

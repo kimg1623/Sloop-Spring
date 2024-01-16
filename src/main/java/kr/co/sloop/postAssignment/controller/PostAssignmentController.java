@@ -87,6 +87,9 @@ public class PostAssignmentController {
 
         // 글 DB에 삽입
         boolean result = postAssignmentService.write(postAssignmentDTO, multipartFileList);
+        if(multipartFileList != null && !multipartFileList.isEmpty()){
+            multipartFileList.clear();  // list 초기화
+        }
 
         if(result){ // 글 작성 성공
             // 해당 글 상세 조회 페이지로 이동
@@ -105,7 +108,7 @@ public class PostAssignmentController {
     @PostMapping("/uploadAttachmentsUsingAjax")
     public String fileUploadUsingAjax (
             @RequestParam("article_file") List<MultipartFile> multipartFile, HttpServletResponse response) {
-        String strResult = "{ \"result\":\"FAIL\" }";
+        String strResult = "{ \"result\":\"OK\" }";
         log.info("수정 확인 1" + multipartFile);
 
         try {
@@ -137,9 +140,13 @@ public class PostAssignmentController {
                 log.info("수정 확인 5" + strResult);
             }else { // 첨부파일이 없을 때
                 log.info("수정 확인 3" + multipartFile);
+                if(multipartFileList != null && !multipartFileList.isEmpty()){
+                    multipartFileList.clear();  // list 초기화
+                }
                 strResult = "{ \"result\":\"OK\" }";
             }
         }catch(Exception e){
+            strResult = "{ \"result\":\"FAIL\" }";
             log.info("수정 확인 4" + multipartFile);
             e.printStackTrace();
         }
@@ -247,7 +254,7 @@ public class PostAssignmentController {
     }
 
     // 서버로 전송된 이미지 가져오기 for ckeditor
-    @RequestMapping(value="/ckImgSubmit")
+    @GetMapping(value="/ckImgSubmit")
     public void ckSubmit(@RequestParam(value="uid") String uid
             , @RequestParam(value="fileName") String fileName
             , HttpServletRequest request, HttpServletResponse response)

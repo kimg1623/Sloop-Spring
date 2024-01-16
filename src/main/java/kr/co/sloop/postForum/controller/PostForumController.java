@@ -174,7 +174,7 @@ public class PostForumController {
     }
 
     // 서버로 전송된 이미지 가져오기
-    @RequestMapping(value="/ckImgSubmit")
+    @GetMapping(value="/ckImgSubmit")
     public void ckSubmit(@RequestParam(value="uid") String uid,
                         @RequestParam(value="fileName") String fileName,
                         HttpServletRequest request, HttpServletResponse response)
@@ -237,6 +237,7 @@ public class PostForumController {
         keyword = keyword.trim();
 
         // 검색 + 페이징을 위한 객체
+        // boardType 3 [*****]
         SearchDTO searchDTO = searchServiceImpl.initialize(boardIdx, page, searchType, keyword, 3);
         model.addAttribute("searchDTO", searchDTO);
 

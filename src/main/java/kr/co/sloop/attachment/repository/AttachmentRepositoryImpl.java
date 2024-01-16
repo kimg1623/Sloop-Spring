@@ -3,18 +3,21 @@ package kr.co.sloop.attachment.repository;
 import kr.co.sloop.attachment.domain.AttachmentDTO;
 import kr.co.sloop.attachment.mapper.AttachmentMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
+@Log4j2
 public class AttachmentRepositoryImpl implements AttachmentRepository{
     private final AttachmentMapper attachmentMapper;
 
     // 첨부파일 insert
     @Override
     public int uploadAttachmentListToDBTable(List<AttachmentDTO> attachmentDTOList) {
+        log.info("attachmentDTOList 확인 2 "+attachmentDTOList);
         return attachmentMapper.insertAttachmentList(attachmentDTOList);
     }
 

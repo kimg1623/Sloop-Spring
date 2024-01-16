@@ -5,41 +5,59 @@
 <html>
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>도서 등록</title>
+    <title>스터디 개설</title>
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script>
-        $('document').ready(function() {
-            var grade0 = ["학교 선택","초등학교","중학교","고등학교"];
-            var grade1 = ["1학년","2학년","3학년","4학년","5학년","6학년"];
-            var grade2 = ["1학년","2학년","3학년","4학년","5학년","6학년"];
-            var grade3 = ["1학년","2학년","3학년"];
+        (function (){
+            let categoryRegionList_option;
+            let sClassHtml = '<option value="">선택하세요.</option>';
+            let sItemHtml = '<option value="">선택하세요.</option>';
 
-            // 학년 선택 박스 초기화
-            $("select[name^=sido]").each(function() {
-                $selsido = $(this);
-                $.each(eval(area0), function() {
-                    $selsido.append("<option value='"+this+"'>"+this+"</option>");
-                });
-                $selsido.next().append("<option value=''>구/군 선택</option>");
-            });
+            // 서버로 댓글 데이터 전송
+            $.ajax({
+                type: "PUT",
+                url: "/study/add",
+                dataType: "json",
+                success: function(categoryRegionList) { // 지역 카테고리 JSONArray로 response
+                    console.log(categoryRegionList);
 
+                    $.each(categoryRegionList, function(index, item){ // categoryRegionList 반복문 돌리기
+                        if(item.categoryRegionTier == 1){ // 1단계 카테고리라면 sClassHtml = selectOption1_region의 option 으로 하기
+                            sClassHtml += "<option value="+item.categoryRegionCode+">"+item.categoryRegionName+"</option>";
+                        }
+                        else if(item.categoryRegionTier == 2){ // 2단계 카테고리라면 sItemHtml = selectOption2_region의 option 으로 하기
+                            sItemHtml += "<option value="+item.categoryRegionCode+" data-class="+item.categoryRegionParent+">"+item.categoryRegionName+"</option>";
+                        }
 
-            // 시/도 선택시 구/군 설정
-            $("select[name^=sido]").change(function() {
-                var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
-                var $gugun = $(this).next(); // 선택영역 군구 객체
-                $("option",$gugun).remove(); // 구군 초기화
+                        $('select[name=selectOption1_region]').html(sClassHtml);
+                        $('select[name=selectOption2_region]').html(sItemHtml);
 
-                if(area == "area0")
-                    $gugun.append("<option value=''>구/군 선택</option>");
-                else {
-                    $.each(eval(area), function() {
-                        $gugun.append("<option value='"+this+"'>"+this+"</option>");
-                    });
+                        $('select[name=selectOption2_region] option').each(function(idx, item) {
+                            if ($(this).val() == '') return true;
+                            $(this).hide();
+                        })
+                    })
+                },
+                error: function () {
+                    alert("카테고리 불러오기 실패");
+                    console.log("카테고리 불러오기 실패");
                 }
             });
 
+            $(document).on('change', 'select[name=selectOption1_region]', function() {
+                const classVal = $(this).val(); // 선택한 option의 value
 
-        })
+                $('select[name=selectOption2_region] option').each(function(idx, item) {
+                    if ($(this).data('class') == classVal || $(this).val() == '') { // 2단계 option의 data-class값과 1단계 value값이 같다면
+                        $(this).show(); // option 보이기
+                    } else {
+                        $(this).hide(); // option 숨기기
+                    }
+                });
+
+            })
+
+        })()
     </script>
 </head>
 <body>
@@ -88,6 +106,15 @@
                         <form:textarea path="studyGroupRegionCode" cols="50" rows="2" class="form-control"/>
                     </div>
                 </div>
+                <!-- ajax로 동적 select 박스 구현 test -->
+                <div class="form-group row">
+                    <label>option1</label>
+                    <select name="selectOption1_region"></select>
+                    <label>option2</label>
+                    <select name="selectOption2_region"></select>
+                </div>
+                <!-- ajax로 동적 select 박스 구현 test 끝-->
+
                 <div class="form-group row">
                     <label class="col-sm-2 control-label">모집인원</label>
                     <div class="col-sm-3">

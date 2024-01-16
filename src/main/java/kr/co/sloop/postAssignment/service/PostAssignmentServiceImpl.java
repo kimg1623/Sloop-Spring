@@ -76,14 +76,21 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
         if (result != 1) return false;  // 글 작성 실패
 
         // 첨부파일 list를 서버에 업로드 & postAssignmentDTO 멤버변수에 등록
-        if(multipartFileList != null) {     // 첨부파일이 존재한다면 업로드 실행
-            uploadResult = uploadAttachmentListToServer(postAssignmentDTO, multipartFileList);
-            if (!uploadResult) return false; // 첨부파일 업로드, 등록 실패
-
-            // 첨부파일 list를 attachment DB table에 삽입
-            uploadResult = uploadAttachmentListToDBTable(postAssignmentDTO.getAttachmentDTOList());
-            if(!uploadResult)   return false; // 첨부파일 insert 실패
+        if(multipartFileList == null) {    // 첨부파일이 없을 경우, 종료
+            return true;
         }
+        if(multipartFileList.isEmpty()){
+            return true;
+        }
+
+        // 첨부파일이 존재한다면 업로드 실행
+        uploadResult = uploadAttachmentListToServer(postAssignmentDTO, multipartFileList);
+        if (!uploadResult) return false; // 첨부파일 업로드, 등록 실패
+
+        // 첨부파일 list를 attachment DB table에 삽입
+        uploadResult = uploadAttachmentListToDBTable(postAssignmentDTO.getAttachmentDTOList());
+        if(!uploadResult)   return false; // 첨부파일 insert 실패
+
 
         // 글 작성 성공
         return true;
@@ -142,6 +149,7 @@ public class PostAssignmentServiceImpl implements PostAssignmentService{
 
     // 첨부파일 리스트를 첨부파일 DB 테이블에 삽입
     public boolean uploadAttachmentListToDBTable(List<AttachmentDTO> attachmentDTOList){
+        log.info("attachmentDTOList 확인 "+attachmentDTOList);
         int result = attachmentRepository.uploadAttachmentListToDBTable(attachmentDTOList);
         if(result == attachmentDTOList.size()){     // 모든 첨부파일 insert 성공
             return true;

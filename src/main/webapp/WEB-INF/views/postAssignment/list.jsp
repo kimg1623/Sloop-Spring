@@ -8,15 +8,11 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<html>
-<head>
-    <title>과제 게시판: 전체 게시글</title>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <!-- jquery cdn -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
             integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-</head>
-<body>
+
 <!-- 글 작성하기 버튼 -->
 <div id="writeBtn" name="writeBtn">
     <input type="button" value="글쓰기" onclick="writeBtn()"/>
@@ -185,5 +181,5 @@
         location.href = './list?page=1&searchType=' + searchType + '&keyword=' + keyword;
     };
 </script>
-</body>
-</html>
+
+</main>

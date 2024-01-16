@@ -115,6 +115,7 @@
                     let extension = fileName.slice(fileName.lastIndexOf(".")+1).toLowerCase(); // 확장자
                     let allowedExtensions = /(.*?)\.(xls|xlsx|txt|png|jpg|jpeg|html|htm|mpg|mp4|mp3|pdf|zip)$/;
                     if(!fileName.match(allowedExtensions)){
+                        alert("허용되는 확장자는 xls,xlsx,txt,png,jpg,jpeg,html,htm,mpg,mp4,mp3,pdf,zip 입니다.");
                         return;
                     }
 
@@ -161,6 +162,7 @@
             // 파일이 첨부되었을 때만 ajax 요청
             if(content_files.length > 0){
                 $.ajax({
+                    async : false,
                     type: "POST",
                     enctype: "multipart/form-data",
                     url: "./uploadAttachmentsUsingAjax",
