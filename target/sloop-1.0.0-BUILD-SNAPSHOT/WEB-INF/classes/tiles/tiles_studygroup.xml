@@ -3,7 +3,7 @@
    "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
    "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
-   <definition name="studyGroupLayout" template="/WEB-INF/views/common/studygroup/layout.jsp">
+   <definition name="studyGroupLayout" template="/WEB-INF/views/common/studygroup/layout.jsp" preparer="menuPreparer">
       <put-attribute name="title" value="" />
       <put-attribute name="header" value="/WEB-INF/views/common/header.jsp" />
       <put-attribute name="side" value="/WEB-INF/views/common/studygroup/side.jsp" />

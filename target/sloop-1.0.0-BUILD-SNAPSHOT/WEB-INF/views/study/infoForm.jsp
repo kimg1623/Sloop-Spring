@@ -2,69 +2,65 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<html>
-<head>
-<%--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">--%>
-    <title>스터디 관리</title>
-    <style>
-        .alert-message{
-            animation-name: fadeOut;
-            animation-delay: 5000ms;
+<style>
+    .alert-message{
+        animation-name: fadeOut;
+        animation-delay: 5000ms;
+    }
+    @keyframes fadeOut {
+        from {
+            opacity: 100%;
         }
-        @keyframes fadeOut {
-            from {
-                opacity: 100%;
-            }
-            to {
-                opacity: 0%;
-            }
+        to {
+            opacity: 0%;
         }
-    </style>
-    <script>
-        $('document').ready(function() {
-            var grade0 = ["학교 선택","초등학교","중학교","고등학교"];
-            var grade1 = ["1학년","2학년","3학년","4학년","5학년","6학년"];
-            var grade2 = ["1학년","2학년","3학년","4학년","5학년","6학년"];
-            var grade3 = ["1학년","2학년","3학년"];
+    }
+</style>
+<script>
+    $('document').ready(function() {
+        var grade0 = ["학교 선택","초등학교","중학교","고등학교"];
+        var grade1 = ["1학년","2학년","3학년","4학년","5학년","6학년"];
+        var grade2 = ["1학년","2학년","3학년","4학년","5학년","6학년"];
+        var grade3 = ["1학년","2학년","3학년"];
 
-            // 학년 선택 박스 초기화
-            $("select[name^=sido]").each(function() {
-                $selsido = $(this);
-                $.each(eval(area0), function() {
-                    $selsido.append("<option value='"+this+"'>"+this+"</option>");
+        // 학년 선택 박스 초기화
+        $("select[name^=sido]").each(function() {
+            $selsido = $(this);
+            $.each(eval(area0), function() {
+                $selsido.append("<option value='"+this+"'>"+this+"</option>");
+            });
+            $selsido.next().append("<option value=''>구/군 선택</option>");
+        });
+
+
+
+        // 시/도 선택시 구/군 설정
+
+        $("select[name^=sido]").change(function() {
+            var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
+            var $gugun = $(this).next(); // 선택영역 군구 객체
+            $("option",$gugun).remove(); // 구군 초기화
+
+            if(area == "area0")
+                $gugun.append("<option value=''>구/군 선택</option>");
+            else {
+                $.each(eval(area), function() {
+                    $gugun.append("<option value='"+this+"'>"+this+"</option>");
                 });
-                $selsido.next().append("<option value=''>구/군 선택</option>");
-            });
+            }
+        });
 
 
+    })
 
-            // 시/도 선택시 구/군 설정
+    function onDelete(){
+        if(confirm("정말로 폐쇄하시겠습니까?"))
+            location.href='/study/${studyGroupCode}/delete';
+        else;
+    }
+</script>
 
-            $("select[name^=sido]").change(function() {
-                var area = "area"+$("option",$(this)).index($("option:selected",$(this))); // 선택지역의 구군 Array
-                var $gugun = $(this).next(); // 선택영역 군구 객체
-                $("option",$gugun).remove(); // 구군 초기화
-
-                if(area == "area0")
-                    $gugun.append("<option value=''>구/군 선택</option>");
-                else {
-                    $.each(eval(area), function() {
-                        $gugun.append("<option value='"+this+"'>"+this+"</option>");
-                    });
-                }
-            });
-
-
-        })
-
-        function onDelete(){
-            if(confirm("정말로 폐쇄하시겠습니까?"))
-                location.href='/study/${studyGroupCode}/delete';
-            else;
-        }
-    </script>
-</head>
-<body>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
     <h1 class="display-3">스터디 관리</h1>
     <p>
@@ -167,5 +163,4 @@
             스터디 그룹 폐쇄하기 <input type="button" value="그룹 폐쇄" onclick="onDelete()">
         </div>
     </div>
-</body>
-</html>
+</main>

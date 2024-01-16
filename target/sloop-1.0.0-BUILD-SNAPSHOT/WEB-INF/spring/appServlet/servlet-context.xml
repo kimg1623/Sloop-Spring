@@ -29,6 +29,8 @@
 				class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	</beans:bean>
+	<!-- ViewPreparer를 위한 bean 등록 -->
+	<beans:bean id="menuPreparer" class="kr.co.sloop.common.MenuPreparer"></beans:bean>
 	<!-- Tiles Layout Configure File 등록 -->
 	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<beans:property name="definitions">
