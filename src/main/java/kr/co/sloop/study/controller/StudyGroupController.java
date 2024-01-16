@@ -61,7 +61,6 @@ public class StudyGroupController {
 	 * 스터디 그룹 개설 : DB insert
 	 */
 	@PostMapping("/add")
-	@ResponseBody
 	public String submitAddStudyGroupForm(@ModelAttribute("StudyGroupDTO") StudyGroupDTO studyGroupDTO, HttpSession session){
 		studyGroupDTO.setStudyGroupCode(getRandomStudyGroupCode());
 		String memberIdx = (String)session.getAttribute("loginMemberIdx");
@@ -80,7 +79,7 @@ public class StudyGroupController {
 	@GetMapping("/{studyGroupCode}")
 	public String requestStudyGroup(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
 		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
-		List<HashMap<String,String>> groupBoardIdxs = studyGroupService.getBoardIdxsByGroupCode(studyGroupDTO.getStudyGroupIdx());
+		List<HashMap<String,String>> groupBoardIdxs = studyGroupService.getBoardIdxsByGroupCode(studyGroupCode);
 		model.addAttribute("studyGroup", studyGroupDTO);
 		model.addAttribute("groupBoardIdxs", groupBoardIdxs);
 		return "study/home";

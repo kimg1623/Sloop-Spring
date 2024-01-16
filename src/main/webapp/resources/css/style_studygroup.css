@@ -16,3 +16,20 @@
     margin: 10px auto;
     width: 80%;
 }
+.nav-item:last-child{
+    position: fixed;
+    bottom: 10px;
+}
+
+@media (min-width: 768px) {
+    .nav-item:last-child {
+        flex: 0 0 auto;
+        width: 25%;
+    }
+}
+@media (min-width: 992px) {
+    .nav-item:last-child {
+        flex: 0 0 auto;
+        width: 16.66666667%;
+    }
+}
