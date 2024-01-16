@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="/study/${studyGroupCode}/assign/${groupBoardIdxs[1].boardIdx}/list">
+                <a class="nav-link" href="/study/${studyGroupCode}/postassignment/${groupBoardIdxs[1].boardIdx}/list">
                     <span data-feather="file"></span>
                     ${groupBoardIdxs[1].categoryName}
                 </a>

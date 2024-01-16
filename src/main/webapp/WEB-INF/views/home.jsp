@@ -31,6 +31,7 @@
 	<hr>
 	<h3>자유 게시판</h3><br>
 	<a href="/postforum/list">자유 게시판</a><br>
+	<a href="/postassignment/list">과제 게시판</a><br>
 
 	<!-- 이창규 - 주석 아래로 작성 -->
 	<hr>

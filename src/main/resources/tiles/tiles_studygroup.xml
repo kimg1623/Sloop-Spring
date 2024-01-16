@@ -21,14 +21,46 @@
       <put-attribute name="body" value="/WEB-INF/views/study/infoForm.jsp" />
    </definition>
 
+   <!-- postForum -->
    <definition name="postForum/list" extends="studyGroupLayout">
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/postForum/list.jsp" />
    </definition>
 
+   <definition name="postForum/detail" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postForum/detail.jsp" />
+   </definition>
 
+   <definition name="postForum/write" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postForum/write.jsp" />
+   </definition>
 
+   <definition name="postForum/update" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postForum/update.jsp" />
+   </definition>
 
+   <!-- postAssignment -->
+   <definition name="postAssignment/list" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postAssignment/list.jsp" />
+   </definition>
 
+   <definition name="postAssignment/detail" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postAssignment/detail.jsp" />
+   </definition>
+
+   <definition name="postAssignment/write" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postAssignment/write.jsp" />
+   </definition>
+
+   <definition name="postAssignment/update" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/postAssignment/update.jsp" />
+   </definition>
 
 </tiles-definitions>
