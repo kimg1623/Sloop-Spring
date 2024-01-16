@@ -110,9 +110,9 @@ public class NoticeController {
 
 	/** 공지 게시글 상세 조회 폼 */
 	@GetMapping("detail")
-	public String detail(@RequestParam("postIdx") int postIdx , Model model ,
+	public String detail(@RequestParam("postIdx") int postIdx ,
 						 					 @PathVariable("boardIdx") int boardIdx,
-											 @PathVariable("studyGroupCode") String studyGroupCode){
+											 @PathVariable("studyGroupCode") String studyGroupCode, Model model){
 
 
 		NoticeDTO noticeDTO = noticeService.detailNotice(postIdx);

@@ -1,11 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>공지사항 상세보기</title>
-</head>
-<body>
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 <h1>공지사항</h1>
 <table border="1">
     <tr>
@@ -46,7 +42,7 @@
     <button onclick="updateNotice('${noticeDTO.postIdx}')">수정</button>
     <button onclick="deleteNotice('${noticeDTO.postIdx}')">삭제</button>
 </c:if>
-</body>
+
 <script>
     // 목록으로 돌아가기
     const findNotice = () => {
@@ -85,4 +81,4 @@
     // 이전 URL 생성 예시
     const previousURL = '/study/${studyGroupCode}/notice/${boardIdx}';
 </script>
-</html>
+</main>
