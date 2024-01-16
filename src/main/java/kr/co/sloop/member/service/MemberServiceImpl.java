@@ -24,6 +24,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public int signup(MemberDTO memberDTO){
         // 유효성 검사 진행 ----------
+
         if (memberDTO.getMemberSubjectCode() == null){
             return -1;
         } else {
@@ -79,6 +80,15 @@ public class MemberServiceImpl implements MemberService {
             return "no";
         }
     }
+    /*@Override
+    public String emailCheck(String memberEmail) {
+        MemberDTO memberDTO = memberRepository.findByMemberEmail(memberEmail);
+        if (memberDTO == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }*/
 
     @Override
     public boolean update(MemberDTO memberDTO) {
@@ -104,6 +114,16 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void uploadProfile(MemberDTO memberDTO) {
         memberRepository.uploadProfile(memberDTO);
+    }
+
+    @Override
+    public String phoneNumbCheck(String memberPhonenumber) {
+        MemberDTO memberDTO = memberRepository.findByMemberPhoneNumb(memberPhonenumber);
+        if (memberDTO == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
     }
 
 

@@ -32,7 +32,9 @@ public interface MemberService {
 
         void uploadProfile(MemberDTO memberDTO);
 
-/*    void uploadProfileByIdx(int memberIdx);*/
+    String phoneNumbCheck(String memberPhonenumber);
+
+    /*    void uploadProfileByIdx(int memberIdx);*/
 
 
 

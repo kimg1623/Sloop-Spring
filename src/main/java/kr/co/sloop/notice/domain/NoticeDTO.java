@@ -25,4 +25,5 @@ public class NoticeDTO {
   private String memberNickname;
   private int boardIdx;
   private String categoryPostName;
+
 }

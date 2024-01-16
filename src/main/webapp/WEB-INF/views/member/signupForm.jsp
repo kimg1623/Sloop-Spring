@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
@@ -10,62 +11,69 @@
 <body>
 <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
 <form:form action="/member/signup" method="post" modelAttribute="memberDTO">
-    <p>이 메 일 : <form:input path="memberEmail" type="email" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()" />
-                    <form:button type="button" name="check-Email" value="중복확인" onclick="emailCheck()">중복확인</form:button></p>
+    <p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" onblur="emailCheck()" required="true"/>
+                    <form:button type="button" value="중복확인" onclick="emailCheck()">중복확인</form:button></p>
+    <form:errors path="memberEmail" cssStyle="color: red"/>
     <p id="check-result"></p>
-    <p>비밀번호 : <form:input path="memberPassword" type="password" name="memberPassword" placeholder="비밀번호" /></p>
-    <p>닉 네 임 : <form:input path="memberNickname" type="text" name="memberNickname" placeholder="닉네임" /></p>
+    <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
+    <form:errors path="memberPassword" cssStyle="color: red"/>
+    <p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" onblur="nicknameCheck()" required="true"/></p>
+    <form:errors path="memberNickname" cssStyle="color: red"/>
+    <p id="check-result2"></p>
     <p>성   별 :
         <form:radiobutton path="memberGender" id="male" value="남자" />
         <label for="male">남자</label>
         <form:radiobutton path="memberGender" id="female" value="여자" />
         <label for="female">여자</label>
     </p>
-    <p>전화번호 : <form:input path="memberPhonenumber" type="text" name="memberPhonenumber" placeholder="핸드폰번호" /></p>
+    <p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호" onblur="phoneNumbCheck()" required="true"/></p>
+    <form:errors path="memberPhonenumber" cssStyle="color: red"/>
+    <p id="check-result3"></p>
+
     <p>회원대분류 :
-        <form:select path="memberGradeCode" name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)">
-            <option>선택하세요.</option>
-            <option value="초등학생">초등학생</option>
-            <option value="중학생">중학생</option>
-            <option value="고등학생">고등학생</option>
-            <%--<option value="univ">대학생</option>--%>
-            <%--<option value="normal">일반인</option>--%>
+        <form:select path="memberGradeCode" onchange="memberDivisionChange(this)" required="true">
+            <form:option value="">선택하세요.</form:option>
+            <form:option value="초등학생">초등학생</form:option>
+            <form:option value="중학생">중학생</form:option>
+            <form:option value="고등학생">고등학생</form:option>
         </form:select>
     </p>
     <%--<p>회원소분류 :
         <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
             <option value="choose">선택하세요.</option>
         </form:select></p>--%>
-    <p>학 교 명 : <form:input type="text" name="memberSchool" path="memberSchool"/></p>
+    <p>학 교 명 : <form:input type="text" path="memberSchool" required="true"/></p>
+    <form:errors path="memberSchool" cssStyle="color: red"/>
     <p>관심 과목 :
-        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="국어"/>국어
-        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="영어"/>영어
-        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="수학"/>수학
-        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="사회"/>사회
-        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="과학"/>과학
-        <form:checkbox path="memberSubjectCode" name="memberSubjectCode" value="기타"/>기타
+        <form:checkbox path="memberSubjectCode" value="국어"/>국어
+        <form:checkbox path="memberSubjectCode" value="영어"/>영어
+        <form:checkbox path="memberSubjectCode" value="수학"/>수학
+        <form:checkbox path="memberSubjectCode" value="사회"/>사회
+        <form:checkbox path="memberSubjectCode" value="과학"/>과학
+        <form:checkbox path="memberSubjectCode" value="기타"/>기타
     </p>
     <p>지역대분류 :
-        <form:select path="memberRegionCode" name="memberRegionCode" id="memberRegionCode" onchange="memberSigugunChange(this)">
-            <option>선택하세요.</option>
-            <option value="900">서울특별시</option>
-            <option value="200">경기도</option>
-            <option value="1200">인천광역시</option>
-            <option value="100">강원특별자치도</option>
-            <option value="1700">충청북도</option>
-            <option value="1600">충청남도</option>
-            <option value="700">대전광역시</option>
-            <option value="1000">세종특별자치시</option>
-            <option value="1400">전라북도</option>
-            <option value="1300">전라남도</option>
-            <option value="500">광주광역시</option>
-            <option value="400">경상북도</option>
-            <option value="300">경상남도</option>
-            <option value="800">부산광역시</option>
-            <option value="600">대구광역시</option>
-            <option value="1100">울산광역시</option>
-            <option value="1500">제주특별자치도</option>
-        </form:select></p>
+        <form:select path="memberRegionCode" onchange="memberSigugunChange(this)" required="true">
+            <form:option value="">선택하세요.</form:option>
+            <form:option value="900">서울특별시</form:option>
+            <form:option value="200">경기도</form:option>
+            <form:option value="1200">인천광역시</form:option>
+            <form:option value="100">강원특별자치도</form:option>
+            <form:option value="1700">충청북도</form:option>
+            <form:option value="1600">충청남도</form:option>
+            <form:option value="700">대전광역시</form:option>
+            <form:option value="1000">세종특별자치시</form:option>
+            <form:option value="1400">전라북도</form:option>
+            <form:option value="1300">전라남도</form:option>
+            <form:option value="500">광주광역시</form:option>
+            <form:option value="400">경상북도</form:option>
+            <form:option value="300">경상남도</form:option>
+            <form:option value="800">부산광역시</form:option>
+            <form:option value="600">대구광역시</form:option>
+            <form:option value="1100">울산광역시</form:option>
+            <form:option value="1500">제주특별자치도</form:option>
+        </form:select>
+    </p>
     <%--<p>지역소분류 :
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
@@ -78,27 +86,90 @@
     // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
     // 사용 가능 여부를 이메일 입력창 아래에 표시
     // document 관련된건 DOM 명령
+
     const emailCheck = () => {
         const email = document.getElementById("memberEmail").value;
         const checkResult = document.getElementById("check-result");
         console.log("입력한 이메일", email);
+        if (let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}'); { // 형식에 맞지 않을때
+            
+
+        } else { // 형식에 맞을때
+            $.ajax({
+                // 요청방식: post, url: "email-check", 데이터: 이메일
+                type: "post",
+                url: "/member/email-check",
+                data: {
+                    "memberEmail": email
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+                    if (res == "ok") {
+                        console.log("사용가능한 이메일");
+                        checkResult.style.color = "green";
+                        checkResult.innerHTML = "사용가능한 이메일";
+                    } else {
+                        console.log("이미 사용중인 이메일");
+                        checkResult.style.color = "red";
+                        checkResult.innerHTML = "이미 사용중인 이메일";
+                    }
+                },
+                error: function (err) {
+                    console.log("에러발생", err);
+                }
+
+            });
+        }
+    }
+    const nicknameCheck = () => {
+        const nickname = document.getElementById("memberNickname").value;
+        const checkResult2 = document.getElementById("check-result2");
+        console.log("입력한 닉네임", nickname);
         $.ajax({
-            // 요청방식: post, url: "email-check", 데이터: 이메일
+
             type: "post",
-            url: "/member/email-check",
+            url: "/member/nickname-check",
             data: {
-                "memberEmail": email
+                "memberNickname": nickname
             },
             success: function(res) {
                 console.log("요청성공", res);
                 if (res == "ok") {
-                    console.log("사용가능한 이메일");
-                    checkResult.style.color = "green";
-                    checkResult.innerHTML = "사용가능한 이메일";
+                    console.log("사용가능한 닉네임");
+                    checkResult2.style.color = "green";
+                    checkResult2.innerHTML = "사용가능한 닉네임";
                 } else {
                     console.log("이미 사용중인 이메일");
-                    checkResult.style.color = "red";
-                    checkResult.innerHTML = "이미 사용중인 이메일";
+                    checkResult2.style.color = "red";
+                    checkResult2.innerHTML = "이미 사용중인 닉네임";
+                }
+            },
+            error: function(err) {
+                console.log("에러발생", err);
+            }
+        });
+    }
+    const phoneNumbCheck = () => {
+        const phoneNumb = document.getElementById("memberPhonenumber").value;
+        const checkResult3 = document.getElementById("check-result3");
+        console.log("입력한 전화번호", phoneNumb);
+        $.ajax({
+
+            type: "post",
+            url: "/member/phoneNumb-check",
+            data: {
+                "memberPhonenumber": phoneNumb
+            },
+            success: function(res) {
+                console.log("요청성공", res);
+                if (res == "ok") {
+                    console.log("사용가능한 전화번호");
+                    checkResult3.style.color = "green";
+                    checkResult3.innerHTML = "사용가능한 전화번호";
+                } else {
+                    console.log("이미 사용중인 전화번호");
+                    checkResult3.style.color = "red";
+                    checkResult3.innerHTML = "이미 사용중인 전화번호";
                 }
             },
             error: function(err) {
@@ -125,7 +196,7 @@
         target.options.length = 0;
 
         for (x in d) {
-            var opt = document.createElement("option");
+            var opt = document.createElement("form:option");
             opt.value = d[x];
             opt.innerHTML = d[x];
             target.appendChild(opt);
@@ -190,7 +261,7 @@
         target.options.length = 0;
 
         for (x in b) {
-            var opt = document.createElement("option");
+            var opt = document.createElement("form:option");
             opt.value = b[x];
             opt.innerHTML = b[x];
             target.appendChild(opt);

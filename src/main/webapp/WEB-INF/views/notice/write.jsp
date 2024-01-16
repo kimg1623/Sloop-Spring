@@ -8,9 +8,9 @@
 <body>
 <%--글 작성 화면--%>
 <%--@elvariable id="noticeDTO" type="kr.co.sloop.notice.domain.NoticeDTO"--%>
-<form:form modelAttribute="noticeDTO" method="post" action="/notice/write">
+<form:form modelAttribute="noticeDTO" method="post" action="/study/${studyGroupCode}/notice/${boardIdx}/write">
     <div class="category_">카테고리 선택 :
-        <form:radiobutton path="categoryPostIdx" id="categoryPostNormal" name="categoryPostIdx" value="5" />
+        <form:radiobutton path="categoryPostIdx" id="categoryPostNormal" name="categoryPostIdx" value="5"/>
         <label for="categoryPostNormal">일반</label>
 
         <form:radiobutton path="categoryPostIdx" id="categoryPostImportant" name="categoryPostIdx" value="6" />
@@ -25,11 +25,11 @@
         <label for="postNoticePinned">상단 고정</label>
     </div>
     <div>글 제목<br>
-        <form:input path="postNoticeTitle" id="postNoticeTitle" name="postNoticeTitle"/>
+        <form:input path="postNoticeTitle" id="postNoticeTitle" name="postNoticeTitle" required="true"/>
     </div>
 
     <div>글 작성칸<br>
-        <form:textarea path="postNoticeContents" id="postNoticeContents" name="postNoticeContents"/>
+        <form:textarea path="postNoticeContents" id="postNoticeContents" name="postNoticeContents" required="true"/>
     </div>
 
     <div>
@@ -41,5 +41,18 @@
     if(document.getElementById("input_check").checked) {
         document.getElementById("input_check_hidden").disabled = true;
     }
+
+    const currentURL = window.location.href;
+
+    // URL에서 studyGroupCode와 boardIdx 파라미터 추출하기
+    const urlParams = new URLSearchParams(currentURL);
+    const studyGroupCode = urlParams.get('studyGroupCode');
+    const boardIdx = urlParams.get('boardIdx');
+
+    console.log("studyGroupCode:", studyGroupCode);
+    console.log("boardIdx:", boardIdx);
+
+    // 이전 URL 생성 예시
+    const previousURL = '/study/${studyGroupCode}/notice/${boardIdx}';
 </script>
 </html>
