@@ -68,22 +68,24 @@ public class NoticeController {
 
 	// 공지사항 작성 폼 출력
 	@GetMapping("/write")
-	public String noticeWriteForm(@PathVariable("studyGroupCode") String studyGroupCode ,
-																@PathVariable("boardIdx") int boardIdx ,
-																Model model , HttpSession session , HttpServletResponse response) throws IOException{
+	public String noticeWriteForm(@ModelAttribute("noticeDTO") NoticeDTO noticeDTO,
+								  BindingResult errors,
+								  @PathVariable("studyGroupCode") String studyGroupCode ,
+								  @PathVariable("boardIdx") int boardIdx ,
+								  HttpSession session , HttpServletResponse response) throws IOException{
 
-		NoticeDTO noticeDTO = new NoticeDTO();
-
-		noticeDTO.setBoardIdx(boardIdx);
-		String loginMemberIdx = (String) session.getAttribute("loginMemberIdx");
-
-		if (loginMemberIdx != null) {
-			model.addAttribute("noticeDTO", noticeDTO);
-			return "notice/write";
-		}	else {
-			AlertUtils.alert(response, "로그인 후 작성할 수 있습니다.");
-			return "redirect:/member/login";
+		if (errors.hasGlobalErrors()){
+			AlertUtils.alertAndMovePage(response,"작성화면 넘어가는 중 오류 발생!!","/study/"+studyGroupCode+"/notice/"+boardIdx+"/list");
 		}
+		
+		
+		String loginMemberIdx = (String) session.getAttribute("loginMemberIdx");
+		if (loginMemberIdx != null) {
+			return "notice/write";
+		}
+		AlertUtils.alertAndMovePage(response, "로그인 후 작성할 수 있습니다." ,"/member/login");
+
+		return "redirect:/member/login";
 	}
 
 	/** 공지사항 작성은
@@ -92,10 +94,12 @@ public class NoticeController {
 	 * 3) 게시판 은 공지게시판 ( 1 )에 작성 */
 	@PostMapping("/write")
 	public String noticeWrite(@Validated @ModelAttribute("noticeDTO") NoticeDTO noticeDTO , BindingResult errors ,
-							  @PathVariable("boardIdx") int boardIdx , @PathVariable("studyGroupCode") String studyGroupCode , HttpSession session){
+							  @PathVariable("boardIdx") int boardIdx ,
+							  @PathVariable("studyGroupCode") String studyGroupCode ,
+							  HttpSession session , HttpServletResponse response) throws IOException{
 
-		if (errors.hasErrors()){
-			return "study/{studyGroupCode}/notice/{boardIdx}/write";
+		if (errors.hasGlobalErrors()){
+			AlertUtils.alertAndMovePage(response,"작성중 오류 발생!!","/study/"+studyGroupCode+"/notice/"+boardIdx+"/list");
 		}
 
 		/** 세션에서 이메일 , memberIdx 값 불러옴 */
@@ -111,10 +115,10 @@ public class NoticeController {
 		boolean result = noticeService.noticeWrite(noticeDTO);
 
 		if (result){
-			return "redirect:/study/{studyGroupCode}/notice/{boardIdx}/list";
+			AlertUtils.alertAndMovePage(response,"성공적으로 작성되었습니다.","/study/"+studyGroupCode+"/notice/"+boardIdx+"/list");
 		} else {
-			return "redirect:/member/login";
-		}
+			AlertUtils.alertAndMovePage(response,"작성에 실패하였습니다.","/study/"+studyGroupCode+"/notice/"+boardIdx+"/write");
+		} return "redirect:/study/{studyGroupCode}/notice/{boardIdx}/list";
 	}
 
 	/** 공지 게시글 상세 조회 폼 */
@@ -148,9 +152,9 @@ public class NoticeController {
 			model.addAttribute("noticeDTO" , noticeDTO);
 			return "notice/updateForm";
 		} else {
-			AlertUtils.alert(response, "로그인 후 수정할 수 있습니다.");
-			return "redirect:/member/loginForm";
+			AlertUtils.alertAndMovePage(response, "로그인 후 수정할 수 있습니다." ,"/member/login");
 		}
+		return "redirect:/member/login";
 	}
 
 	@PostMapping("update")
