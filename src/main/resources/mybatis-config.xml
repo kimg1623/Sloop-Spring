@@ -27,6 +27,9 @@
         <typeAlias type="kr.co.sloop.post.domain.PostDTO" alias="post"/>
         <typeAlias type="kr.co.sloop.post.domain.PageDTO" alias="page"/>
         <typeAlias type="kr.co.sloop.post.domain.SearchDTO" alias="search"/>
+        <typeAlias type="kr.co.sloop.postAssignment.domain.PostAssignmentDTO" alias="postAssignment"/>
+        <typeAlias type="kr.co.sloop.postAssignment.domain.AssignmentDTO" alias="assignment"/>
+        <typeAlias type="kr.co.sloop.attachment.domain.AttachmentDTO" alias="attachment"/>
 
 
         <!-- 이창규 - 주석 아래로 작성 -->
