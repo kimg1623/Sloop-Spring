@@ -17,6 +17,7 @@ public class PostRepositoryImpl implements PostRepository{
         return postMapper.countAllPostsByBoardIdx(boardIdx);
     }
 
+  
     // post 테이블에 글 작성하기
     @Override
     public int insertPost(PostDTO postDTO) {
@@ -27,5 +28,11 @@ public class PostRepositoryImpl implements PostRepository{
     @Override
     public int delete(int postIdx) {
         return postMapper.delete(postIdx);
+    }
+
+    // memberEmail로 memberIdx 찾기
+    @Override
+    public int selectMemberIdxByMemberEmail(String memberEmail) {
+        return postMapper.selectMemberIdxByMemberEmail(memberEmail);
     }
 }

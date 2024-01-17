@@ -61,7 +61,6 @@
     <update id="update" parameterType="member">
         update member
         set memberEmail = #{memberEmail},
-            memberPassword = #{memberPassword},
             memberNickname = #{memberNickname},
             memberGender = #{memberGender},
             memberPhonenumber = #{memberPhonenumber},
@@ -91,7 +90,13 @@
         where memberIdx = #{memberIdx}
     </update>
 
-
+    <select id="findStudyByIdx" parameterType="String" resultType="member">
+        select m.memberIdx , s.memberIdx , s.studyGroupIdx , s.studyMemRole , g.studyGroupIdx , g.studyGroupCode , g.studyGroupName
+        from member as m
+        join studyMem as s on m.memberIdx = s.memberIdx
+        join studyGroup as g on s.studyGroupIdx = g.studyGroupIdx
+        where m.memberIdx = #{sessionIdx}
+    </select>
     <!--Security-->
     <!--<select id="adminLogin" parameterType="member" resultType="kr.co.sloop.security.LoginUserDTO$MemberVO">
         select memberIdx, memberEmail, memberPassword,

@@ -8,7 +8,7 @@
 
 
 <head>
-    <link href="/resources/css/style_header.css" rel="stylesheet">
+    <link href="/resources/css/style_studygroup_header.css" rel="stylesheet">
 </head>
 <body>
     <header class="navbar navbar-dark sticky-top flex-md-nowrap p-0 shadow header-bg-color">

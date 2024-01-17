@@ -1,44 +1,35 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: thegreatjy
-  Date: 12/27/23
-  Time: 1:28 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<link href="/resources/css/style_post.css" rel="stylesheet">
 <!-- jquery cdn -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="container-studyGroup">
+        <div class="box-size contents_wrapper">
+            <!--board_title 시작 -->
+            <div class="box-size board_title">
+                <div class="box-size title_contents">
+                    <div class="box-size">
+                        <div class="box-size title_div_text">
+                            <h3 class="title_text">
+                                자유게시판
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="box-size">
+                        <div id="writeBtn" name="writeBtn">
+                            <input type="button" class="btn_write" value="글쓰기" onclick="writeBtn()"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--board_title 끝 -->
 
-    <h2> 자유게시판 </h2>
-
-    <!-- 글 작성하기 버튼 -->
-    <div id="writeBtn" name="writeBtn">
-        <input type="button" value="글쓰기" onclick="writeBtn()"/>
-    </div>
-
-    <table>
-        <!-- 글 속성 -->
-        <thead>
-                <tr>
-                    <th>번호</th>
-                    <th>분류</th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>조회수</th>
-                </tr>
-        </thead>
-
-
-        <!-- 글 본문 -->
-        <tbody>
-            <div id="tbody" name="tbody">
             <c:choose>
                 <%-- 글이 존재하지 않을 때에는 글 목록 출력 X --%>
                 <c:when test="${empty postForumDTOList}">
@@ -49,22 +40,41 @@
                 <%-- 글이 1개 이상 존재할 때에는 글 목록 출력 O --%>
                 <c:otherwise>
                     <c:forEach items="${postForumDTOList}" var="postForum" varStatus="status">
-                        <tr class="postforum_${postForum.postIdx}">
-                            <%-- <td><c:out value="${status.index + 1}"/></td> --%>
-                            <td><c:out value="${postForum.postIdx}"/></td>
-                            <td><c:out value="${postForum.categoryPostName}"/></td>
-                            <td><a href="./detail?postIdx=${postForum.postIdx}"><c:out value="${postForum.postForumTitle}"/></a></td>
-                            <%-- <td><c:out value="${postForum.postForumTitle}"/></td> --%>
-                            <td><c:out value="${postForum.memberNickname}"/></td>
-                            <td><c:out value="${postForum.postForumRegDate}"/></td>
-                            <td><c:out value="${postForum.postForumHits}"/></td>
-                        </tr>
+                        <a href="./detail?postIdx=${postForum.postIdx}">
+                            <div class="card">
+                                <div class="card-body post-card">
+                                    <div class="card-category">
+                                        <c:out value="${postForum.categoryPostName}"/>
+                                    </div>
+                                    <h5 class="post-card-title">
+                                        <c:out value="${postForum.postForumTitle}"/>
+                                    </h5>
+                                    <div class="card-bottom">
+                                        <div class="bottom_userAndDate">
+                                            <div class="bottom_user">
+                                                <div class="bottom_userName">
+                                                    <c:out value="${postForum.memberNickname}"/>
+                                                </div>
+                                            </div>
+                                            <div class="bottom_seperator"></div>
+                                            <div class="bottom_registeredDate">
+                                                <fmt:formatDate value="${postForum.postForumRegDate}" pattern="yyyy-MM-dd"></fmt:formatDate>
+                                            </div>
+                                        </div>
+                                        <div class="bottom_view">
+                                            <img src="/resources/images/eye.png" alt="views" class="view_img">
+                                            <c:out value="${postForum.postForumHits}"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
-            </div>
-        </tbody>
 
+
+    <table>
         <!-- 페이징 + 검색 -->
         <tfoot>
         <div id="tfoot" name="tfoot">
@@ -111,26 +121,32 @@
             </tr>
             </c:if>
 
-            <%-- 검색 --%>
-            <tr>
-                <td colspan="6">
-                    <%-- 검색 --%>
-                    <div id="search" name="search">
-                        <select name="searchType">
-                            <option value="1" <c:if test="${searchDTO.searchType == 0 || searchDTO.searchType == 1}">selected</c:if>>제목</option>
-                            <option value="2" <c:if test="${searchDTO.searchType == 2}">selected</c:if>>내용</option>
-                            <option value="3" <c:if test="${searchDTO.searchType == 3}">selected</c:if>>제목+내용</option>
-                            <option value="4" <c:if test="${searchDTO.searchType == 4}">selected</c:if>>작성자</option>
-                        </select>
+                        <%-- 검색 --%>
+                        <tr>
+                            <td colspan="6">
+                                <%-- 검색 --%>
+                                <div id="search" name="search">
+                                    <select name="searchType">
+                                        <option value="1"
+                                                <c:if test="${searchDTO.searchType == 0 || searchDTO.searchType == 1}">selected</c:if>>
+                                            제목
+                                        </option>
+                                        <option value="2" <c:if test="${searchDTO.searchType == 2}">selected</c:if>>내용</option>
+                                        <option value="3" <c:if test="${searchDTO.searchType == 3}">selected</c:if>>제목+내용
+                                        </option>
+                                        <option value="4" <c:if test="${searchDTO.searchType == 4}">selected</c:if>>작성자</option>
+                                    </select>
 
-                        <input type="text" name="keyword" value="${searchDTO.keyword}" />
-                        <input type="button" onclick="searchBtn()" value="검색"/>
+                                    <input type="text" name="keyword" value="${searchDTO.keyword}"/>
+                                    <input type="button" onclick="searchBtn()" value="검색"/>
+                                </div>
+                            </td>
+                        </tr>
                     </div>
-                </td>
-            </tr>
+                    </tfoot>
+                </table>
         </div>
-        </tfoot>
-    </table>
+    </div>
 </main>
 
 
