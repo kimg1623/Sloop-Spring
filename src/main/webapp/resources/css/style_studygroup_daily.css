@@ -332,6 +332,7 @@ p{
 
 /*삭제*/
 .btn_delete{
+    margin-left: 4px;
     height: 35px;
     background: #727272;
     border-radius: 0.375rem;
@@ -346,9 +347,15 @@ p{
 }
 
 
-
-
-
-
 /*-------dailyUpdate-------*/
 
+/*notice category, pinned */
+.CategoryList{
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.Pinned{
+    text-align: left;
+    margin-bottom: 5px;
+}
