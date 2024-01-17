@@ -36,7 +36,7 @@
 
 | **김지원** | **이지연** | **이창규** | **차소영** | **최지혜** |
 | :------: |  :------: | :------: | :------: | :------: |
-| [<img src="https://avatars.githubusercontent.com/u/40616792?v=4" height=150 width=150> <br/> @kimg1623](https://github.com/kimg1623) | [<img src="https://avatars.githubusercontent.com/u/74610908?v=4" height=150 width=150> <br/> @thegreatjy](https://github.com/thegreatjy) | [<img src="https://avatars.githubusercontent.com/u/145524731?v=4" height=150 width=150> <br/> @kidchang93](https://github.com/kidchang93)  | [<img src="https://avatars.githubusercontent.com/u/145963611?v=4" height=150 width=150> <br/> @Eumnya415](https://github.com/Eumnya415) | [<img src="https://avatars.githubusercontent.com/u/145963612?v=4" height=150 width=150> <br/> @jyeeeh](https://github.com/jyeeeh) |
+| [<img src="https://avatars.githubusercontent.com/u/40616792?v=4" height=140 width=140> <br/> @kimg1623](https://github.com/kimg1623) | [<img src="https://avatars.githubusercontent.com/u/74610908?v=4" height=140 width=140> <br/> @thegreatjy](https://github.com/thegreatjy) | [<img src="https://avatars.githubusercontent.com/u/145524731?v=4" height=140 width=140> <br/> @kidchang93](https://github.com/kidchang93)  | [<img src="https://avatars.githubusercontent.com/u/145963611?v=4" height=140 width=140> <br/> @Eumnya415](https://github.com/Eumnya415) | [<img src="https://avatars.githubusercontent.com/u/145963612?v=4" height=140 width=140> <br/> @jyeeeh](https://github.com/jyeeeh) |
 | 스터디 그룹 관리 구현 | 자유, 과제게시판 구현 |  회원 관리, 공지사항 구현 | 댓글 게시판 구현 | 인증 게시판 구현 | 
 
 </div>
