@@ -30,11 +30,11 @@ public class DailyController {
 
 	private final DailyService dailyService;
 
-	//	파일업로드
+	// 파일업로드
 	@Resource(name="uploadPathforDaily")
 	String uploadPath;
 
-	//공부 인증게시판 첫화면-전체 리스트
+	// 공부 인증게시판 첫화면-전체 리스트
 	// 페이징 리스트(O)
 	@GetMapping("/list")
 	public String paging(@PathVariable("studyGroupCode") String studyGroupCode,
@@ -49,30 +49,23 @@ public class DailyController {
 		// 검색어 앞뒤 공백 제거
 		keyword = keyword.trim();
 
-		//[***] 확인하기
-//		int boardIdx = 4;
-
 		// 검색+페이징
 		PageDTO pageDTO = dailyService.initialize(boardIdx, page, searchType, keyword, 4);
 		model.addAttribute("pageDTO",pageDTO);
 
-		// pageDTO 확인용
-		log.info("*********pageDTO:"+pageDTO);
 
 		ArrayList<DailyDTO> pagingDailyList = dailyService.pageList(pageDTO);
 
-		// [***] 확인필요
-//		pageDTO.setBoardIdx(4);
 		model.addAttribute("dailyList", pagingDailyList);
-		log.info("******pagingDailyList:"+pagingDailyList);
+
 
 		return "daily/dailyList";
 
 	}
 
 
-	//공부인증 게시글 작성
-	//게시글 작성 폼 가져오기
+	// 공부인증 게시글 작성
+	// 게시글 작성 폼 가져오기
 	@GetMapping("/write")
 	public String dailyWriteForm(@PathVariable("studyGroupCode") String studyGroupCode,
 								 @PathVariable("boardIdx") int boardIdx,
@@ -80,7 +73,7 @@ public class DailyController {
 		return "daily/dailyWrite";
 	}
 
-	//공부인증 게시글 작성
+	// 공부인증 게시글 작성
 	@PostMapping("/write")
 	public String dailyWrite(@PathVariable("studyGroupCode") String studyGroupCode,
 							 @PathVariable("boardIdx") int boardIdx,
@@ -91,11 +84,13 @@ public class DailyController {
 		// 로그인되어있는 email Session 가져오기
 		String memberEmail = (String)session.getAttribute("loginEmail");
 
-		// int boardIdx = (int) session.getAttribute("boardIdx");
-//		int boardIdx = 4;
-
 		dailyDTO.setMemberEmail(memberEmail);
 		dailyDTO.setBoardIdx(boardIdx);
+
+		// 로그인 안되어있으면 로그인창
+		if(memberEmail==null){
+			return "redirect:/member/login";
+		}
 
 		boolean dailyWriteResult = dailyService.dailyWrite(dailyDTO);
 
@@ -171,14 +166,15 @@ public class DailyController {
 						 @PathVariable("boardIdx") int boardIdx,
 						 @ModelAttribute DailyDTO dailyDTO){
 		int dailyUpdateResult = dailyService.update(dailyDTO);
-//		DailyDTO dto = dailyService.findByPostIdx(dailyDTO.getPostIdx());
-//		model.addAttribute("daily",dailyDTO);
+
 		if(dailyUpdateResult>0){
-			//수정 성공
-			return "redirect:/study/{studyGroupCode}/daily/{boardIdx}/list";  //해당되는 게시물로 수정해야함 [***]
+			// 수정 성공
+			// 해당되는 게시물로 이동
+			return "redirect:/study/{studyGroupCode}/daily/{boardIdx}/detail?postIdx="+dailyDTO.getPostIdx();
 		}else{
-			//수정 실패
-			return "redirect:/study/{studyGroupCode}/daily/{boardIdx}/list"; // 초기화면으로 이동
+			// 수정 실패
+			// 초기화면으로 이동
+			return "redirect:/study/{studyGroupCode}/daily/{boardIdx}/list";
 		}
 
 	}
