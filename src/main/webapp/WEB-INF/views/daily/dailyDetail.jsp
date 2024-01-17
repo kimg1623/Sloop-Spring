@@ -26,29 +26,43 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-    <h4>공부인증 게시판(상세)</h4>
-    <div class="row" align="left">
-        <div class="col-md-12">
-            <h3>${daily.postDailyTitle}</h3>
+<%--    <h4 class="dailyWrite-title">공부인증 게시판(상세)</h4>--%>
+    <div class="detailBox" align="center">
 
-            <p><b>닉네임</b> : ${daily.memberNickname}
-            <p><b>일자</b> : ${empty daily.postDailyEditDate?daily.postDailyRegDate:daily.postDailyEditDate}</p>
+            <h1 class="detailTitle">${daily.postDailyTitle}</h1>
+            <div class="detailInfo">
+                <div class="detailNick">
+                    <span class="detailNickInfo">${daily.memberNickname}</span>
+                </div><!--detailNick-->
+                <div class="detailCal">
+                    ${empty daily.postDailyEditDate?daily.postDailyRegDate:daily.postDailyEditDate}
+                </div><!--detailCal-->
+                <div class="detailCal">
+                    <p><b>조회수</b> : ${daily.postDailyHits}
+                </div><!--detailHit-->
+            </div><!--detailInfo 닉네임, 일자, 조회수-->
 
-            <p><b>글내용</b> : ${daily.postDailyContents}
+            <div class="detail-border"></div>
 
-            <p><b>조회수</b> : ${daily.postDailyHits}
+            <div class="detailContentWrap">
+            <p>${daily.postDailyContents}
+            </div><!--detailContentWrap-->
 
-                <br>
-            <p>
+            <br>
 
-                <!--본인일때만 수정삭제 보이게 -->
-                <c:if test="${daily.memberEmail == sessionScope.loginEmail}">
-                <button class="btn btn-primary" onclick="updateFn()">수정</button>
-                <button class="btn btn-primary" onclick="deleteFn()">삭제</button>
-                </c:if>
-                <button class="btn btn-primary" onclick="listFn()">목록</button>
-        </div>
-    </div>
+    </div><!--detailBox-->
+
+        <button class="writeList" onclick="listFn()">목록</button>
+        <!--본인일때만 수정삭제 보이게 -->
+        <c:if test="${daily.memberEmail == sessionScope.loginEmail}">
+        <button class="writeUpdate" onclick="updateFn()">수정</button>
+        <button class="writeDelete" onclick="deleteFn()">삭제</button>
+        </c:if>
+
+
+
+
+
 
 
     <script>
