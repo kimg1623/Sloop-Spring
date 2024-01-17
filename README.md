@@ -187,8 +187,7 @@
 
 | 댓글이 없을 때 | 댓글이 있을 때 |
 | --- | --- |
-| ![image](https://github.com/S-loop/Sloop-Spring/assets/145963611/9c03c08a-d98e-47c7-a3c7-f088733bc3fe) |
-| ![image](https://github.com/S-loop/Sloop-Spring/assets/145963611/5f201eb4-0660-4156-a780-6d633a4ef2be) |
+| ![image](https://github.com/S-loop/Sloop-Spring/assets/145963611/9c03c08a-d98e-47c7-a3c7-f088733bc3fe) | ![image](https://github.com/S-loop/Sloop-Spring/assets/145963611/5f201eb4-0660-4156-a780-6d633a4ef2be) |
 
 <br>
 
