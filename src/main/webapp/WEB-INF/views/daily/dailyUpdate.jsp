@@ -33,30 +33,35 @@
 </script>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 
-    <h4>공부인증 게시글 수정</h4>
+    <h4 class="dailyWrite-title">공부인증 게시글 수정</h4>
 
     <form action="/study/${studyGroupCode}/daily/${boardIdx}/update" method="post" name="updateForm">
         <input type="hidden" name="postIdx" value="${daily.postIdx}" >
-        <p>${daily.postIdx}</p>
         <input type="hidden" name="memberIdx" value="${daily.memberIdx}" >
 
-        <div class="form-group row">
-            <label class="col-sm-2 control-label">제목</label>
-            <div class="col-sm-3">
-                <input type="text" name="postDailyTitle" value="${daily.postDailyTitle}">
+
+        <div class="daily_title">
+            <div class="input-group flex-nowrap">
+            <span class="input-group-text" id="addon-wrapping">제목</span>
+            <input type="text" name="postDailyTitle" class="form-control" aria-describedby="addon-wrapping"
+                   value="${daily.postDailyTitle}">
             </div>
         </div>
 
-        <div class="form-group row">
-            <label class="col-sm-2 control-label">내용</label>
-            <div class="col-sm-5">
-            <textarea name="postDailyContents" cols="30" rows="10" placeholder="내용을 입력하세요"
-                      class="form-control">${daily.postDailyContents}</textarea>
+        <div class="detail-border"></div>
+
+        <div>
+            <div class="input-group">
+                <span class="input-group-text">내용</span>
+            <textarea name="postDailyContents" cols="30" rows="10" class="form-control">
+                ${daily.postDailyContents}</textarea>
             </div>
         </div>
 
-        <input class="btn btn-primary" type="submit" value="글수정" onclick="updateReqFn()">
-        <button class="btn btn-primary" onclick="listFn()">목록</button>
+        <br>
+
+        <input class="writeUpdate" type="submit" value="글수정" onclick="updateReqFn()">
+        <button class="writeList" onclick="listFn()">목록</button>
 
     </form>
 
