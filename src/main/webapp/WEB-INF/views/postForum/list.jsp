@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
@@ -16,7 +17,7 @@
                     <div class="box-size">
                         <div class="box-size title_div_text">
                             <h3 class="title_text">
-                            안내사항
+                                자유게시판
                             </h3>
                         </div>
                     </div>
@@ -42,13 +43,29 @@
                         <a href="./detail?postIdx=${postForum.postIdx}">
                             <div class="card">
                                 <div class="card-body post-card">
-                                    <c:out value="${postForum.categoryPostName}"/>
+                                    <div class="card-category">
+                                        <c:out value="${postForum.categoryPostName}"/>
+                                    </div>
                                     <h5 class="post-card-title">
                                         <c:out value="${postForum.postForumTitle}"/>
                                     </h5>
-                                    <c:out value="${postForum.memberNickname}"/>
-                                    <c:out value="${postForum.postForumRegDate}"/>
-                                    <c:out value="${postForum.postForumHits}"/>
+                                    <div class="card-bottom">
+                                        <div class="bottom_userAndDate">
+                                            <div class="bottom_user">
+                                                <div class="bottom_userName">
+                                                    <c:out value="${postForum.memberNickname}"/>
+                                                </div>
+                                            </div>
+                                            <div class="bottom_seperator"></div>
+                                            <div class="bottom_registeredDate">
+                                                <fmt:formatDate value="${postForum.postForumRegDate}" pattern="yyyy-MM-dd"></fmt:formatDate>
+                                            </div>
+                                        </div>
+                                        <div class="bottom_view">
+                                            <img src="/resources/images/eye.png" alt="views" class="view_img">
+                                            <c:out value="${postForum.postForumHits}"/>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </a>
