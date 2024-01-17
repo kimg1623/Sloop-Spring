@@ -68,7 +68,7 @@ a:link{
 .card-category{
     color: #508dfd;;
     font-weight: bold;
-    margin-bottom: 3px;
+    margin-bottom: 10px;
 }
 .post-card-title{
     font-size: 1rem;
@@ -112,4 +112,78 @@ a:link{
 .view_img{
     width: 16px;
     height: auto;
+}
+
+/*
+    post detail 상세보기 페이지
+*/
+.post-top{
+    margin-top: 30px;
+}
+.post_content_category{
+    color: #508dfd;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: left;
+}
+.post_content_title{
+    font-weight: 800;
+    font-size: 30px;
+    line-height: 126.5%;
+    letter-spacing: -.005em;
+    color: #000;
+    text-align: left;
+}
+.post_content_title_bottom {
+    border-bottom: 3px solid #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.post_content_userAndDate {
+    margin-top: 32px;
+    padding-bottom: 25px;
+    display: flex;
+    grid-gap: 15px;
+    gap: 15px;
+    align-items: center;
+}
+.post_content_user {
+    display: flex;
+    align-items: center;
+    position: relative;
+    transition: -webkit-transform .2s ease-in-out;
+    transition: transform .2s ease-in-out;
+    transition: transform .2s ease-in-out,-webkit-transform .2s ease-in-out;
+}
+.post_content_userImg {
+    cursor: pointer;
+    display: block;
+    height: 1.5rem;
+    width: 1.5rem;
+    margin-right: 8px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.post_content_userName {
+    color: #333;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.post_content_seperator {
+    width: 2px;
+    height: 1rem;
+    background-color: #e2e2e2;
+}
+.post_content_registeredDate {
+    font-size: 1rem;
+    color: #717171;
+}
+.post_content_contents{
+    width: 100%;
+    margin: 40px auto 0;
+    font-size: 0.9rem;
+    text-align: left;
 }
