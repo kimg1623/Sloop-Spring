@@ -117,15 +117,14 @@ public class MemberController {
 
     // update.jsp의 Form 출력
     @GetMapping("update")
-    public String updateForm(@ModelAttribute("memberDTO") MemberDTO memberDTO, HttpSession session , HttpServletResponse response,
-                             @RequestParam("memberIdx") int memberIdx) throws IOException {
+    public String updateForm( HttpSession session , HttpServletResponse response,
+                             @RequestParam("memberIdx") int memberIdx , Model model) throws IOException {
         // 세션에 저장된 이메일 가져오기
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         if (loginEmail != null) {
-
-            memberService.findByMemberEmail(loginEmail);
-
+            MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
+            model.addAttribute("memberDTO",memberDTO);
             return "member/update";
 
         } else{

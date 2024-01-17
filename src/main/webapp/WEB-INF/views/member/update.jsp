@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -10,7 +11,7 @@
 <body>
 <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
 <form:form action="/member/signup" method="post" modelAttribute="memberDTO">
-<p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" readonly="true"/>
+<p>이 메 일 : <form:input path="memberEmail" readonly="true"/>
 <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
 <p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" readonly="true"/></p>
 <p>성   별 :
@@ -34,12 +35,12 @@
         </form:select></p>--%>
 <p>학 교 명 : <form:input type="text" path="memberSchool" readonly="true"/></p>
 <p>관심 과목 :
-    <form:checkbox path="memberSubjectCode"/>국어
-    <form:checkbox path="memberSubjectCode"/>영어
-    <form:checkbox path="memberSubjectCode"/>수학
-    <form:checkbox path="memberSubjectCode"/>사회
-    <form:checkbox path="memberSubjectCode"/>과학
-    <form:checkbox path="memberSubjectCode"/>기타
+    <form:checkbox path="memberSubjectCode" value="국어"/>국어
+    <form:checkbox path="memberSubjectCode" value="영어"/>영어
+    <form:checkbox path="memberSubjectCode" value="수학"/>수학
+    <form:checkbox path="memberSubjectCode" value="사회"/>사회
+    <form:checkbox path="memberSubjectCode" value="과학"/>과학
+    <form:checkbox path="memberSubjectCode" value="기타"/>기타
 </p>
 <p>지역대분류 :
     <form:select path="memberRegionCode">
