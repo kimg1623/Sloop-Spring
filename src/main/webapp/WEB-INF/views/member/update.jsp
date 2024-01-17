@@ -9,8 +9,13 @@
     <title>S-loop 회원 정보 수정</title>
 </head>
 <body>
+
 <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
-<form:form action="/member/signup" method="post" modelAttribute="memberDTO">
+<form:form action="/member/update" method="post" modelAttribute="memberDTO" name="updateForm">
+<!-- hidden -->
+<!-- 작성자 idx -->
+<p><form:hidden path="memberIdx"/></p>
+
 <p>이 메 일 : <form:input path="memberEmail" readonly="true"/>
 <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
 <p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" readonly="true"/></p>
@@ -68,7 +73,7 @@
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
         </select></p>--%>
-    <input type="button" value="수정" onclick="update()">
+    <button type="button" value="수정" onclick="update()">
 </form:form>
 </body>
 <script>
@@ -78,6 +83,7 @@
         const password = document.getElementById("memberPassword").value;
         if (passwordDB == password) {
             document.updateForm.submit();
+            /*location.href = "/member/update";*/
         } else {
             alert("비밀번호가 일치하지 않습니다!");
         }

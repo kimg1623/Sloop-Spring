@@ -118,7 +118,7 @@ public class MemberController {
     // update.jsp의 Form 출력
     @GetMapping("update")
     public String updateForm( HttpSession session , HttpServletResponse response,
-                             @RequestParam("memberIdx") int memberIdx , Model model) throws IOException {
+                              Model model) throws IOException {
         // 세션에 저장된 이메일 가져오기
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
@@ -137,13 +137,17 @@ public class MemberController {
 
     // update.jsp 의 Form method = Post로 데이터 받아옴
     @PostMapping("update")
-    public String update (@ModelAttribute MemberDTO memberDTO,
+    public String update (@ModelAttribute("memberDTO") MemberDTO memberDTO,
+                          @RequestParam("memberIdx") int memberIdx,
+                          HttpSession session,
                           HttpServletResponse response) throws IOException{
         boolean result = memberService.update(memberDTO);
 
-        if (result) {
+        boolean idxMatch = (memberIdx == memberDTO.getMemberIdx());
 
-            AlertUtils.alertAndMovePage(response,"수정되었습니다." ,"redirect:/member?memberIdx=" + memberDTO.getMemberIdx() );// update 성공시 redirect로 상세보기 화면 출력
+        if (result == idxMatch) {
+
+            AlertUtils.alertAndMovePage(response,"수정되었습니다." ,"/member?memberIdx="+memberDTO.getMemberIdx());// update 성공시 redirect로 상세보기 화면 출력
         }
         return "redirect:/member/update";  // update 실패시 다시 수정할 수 있게 update.jsp로 정보 가져가면서 redirect 어케함?
 
@@ -152,19 +156,29 @@ public class MemberController {
 
     // 회원 리스트에서 회원 정보 페이지로 이동 -> 관리자의 기능 ( 회원페이지 페이징도 추후 진행 )
     @GetMapping
-    public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model){
-        MemberDTO memberDTO = memberService.findByIdx(memberIdx);   // memberIdx 파라미터 값을 가져온 뒤 해당 domain 정보를 불러온다.
-        model.addAttribute("member",memberDTO);
-        return "member/mypage";
+    public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model , HttpSession session , HttpServletResponse response) throws IOException {
+        int sessionIdx = Integer.parseInt((String)session.getAttribute("loginMemberIdx"));
+        boolean matchIdx = sessionIdx == memberIdx;
+
+        if (!matchIdx) {
+
+            AlertUtils.alertAndMovePage(response, "로그인 먼저 하세요.", "member/login");
+
+        } else {
+            MemberDTO memberDTO = memberService.findByIdx(memberIdx);   // memberIdx 파라미터 값을 가져온 뒤 해당 domain 정보를 불러온다.
+            model.addAttribute("member", memberDTO);
+        } return "member/mypage";
+
+
     }
 
     // 꼭 로그인 후 마이페이지로 이동 ( 회원의 기능 )
     @GetMapping("mypage")
-    public String mypage(@ModelAttribute MemberDTO memberDTO , Model model , HttpSession session ,
+    public String mypage(Model model , HttpSession session ,
                          HttpServletResponse response) throws IOException {
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
-        memberDTO = memberService.findByMemberEmail(loginEmail);
+        MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
         model.addAttribute("member",memberDTO);
 
         if (loginEmail != null ){
