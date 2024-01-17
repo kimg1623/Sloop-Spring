@@ -123,4 +123,14 @@ public class NoticeServiceImpl implements NoticeService {
     return noticeSearchDTO;
 
   }
+
+  @Override
+  public String deletePostByPostIdx(int postIdx) {
+    return noticeRepository.deletePostByPostIdx(postIdx);
+  }
+
+  @Override
+  public String findMemberEmailByPostIdx(int postIdx) {
+    return noticeRepository.findMemberEmailByPostIdx(postIdx);
+  }
 }

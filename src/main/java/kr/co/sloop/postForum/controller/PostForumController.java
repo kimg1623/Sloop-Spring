@@ -127,8 +127,10 @@ public class PostForumController {
             // uuid 생성 (36자)
             UUID uuid = UUID.randomUUID();
 
+
             // ckeditor로 첨부한 이미지가 저장될 풀 경로 (sloop/postforum/uploads/uuid_fileName)
             String ckUploadPath = uploadPath + File.separator + "uploads" + File.separator + uuid + "_" + fileName;
+
             log.info("uploadPath : " + uploadPath);
             log.info("ckUploadPath : " + ckUploadPath);
 
@@ -185,7 +187,7 @@ public class PostForumController {
         System.out.println("path:" + path);
         String sDirPath = path + uid + "_" + fileName;
 
-        sDirPath = uploadPath + File.separator + "uploads" + File.separator + uid + "_" + fileName;
+        sDirPath = uploadPath + File.separator + "resources/uploads" + File.separator + uid + "_" + fileName;
 
 
         File imgFile = new File(sDirPath);

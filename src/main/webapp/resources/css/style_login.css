@@ -9,9 +9,6 @@
 
 /* BASIC */
 
-html {
-    background-color: #56baed;
-}
 
 body {
     font-family: "Poppins", sans-serif;
@@ -51,6 +48,15 @@ h2 {
     margin-bottom: 100px;
 }
 
+.form-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 100%;
+    padding: 20px;
+}
+
 #formContent {
     -webkit-border-radius: 10px 10px 10px 10px;
     border-radius: 10px 10px 10px 10px;
@@ -79,7 +85,7 @@ h2 {
 /* TABS */
 
 h2.inactive {
-    color: #cccccc;
+    color: #000ffd;
 }
 
 h2.active {
@@ -125,7 +131,7 @@ input[type=button]:active, input[type=submit]:active, input[type=reset]:active  
     transform: scale(0.95);
 }
 
-input[type=text] {
+input[type=text], input[type=email], input[type=password] {
     background-color: #f6f6f6;
     border: none;
     color: #0d0d0d;

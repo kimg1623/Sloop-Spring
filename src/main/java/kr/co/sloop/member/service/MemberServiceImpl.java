@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public int signup(MemberDTO memberDTO){
         // 유효성 검사 진행 ----------
+
         if (memberDTO.getMemberSubjectCode() == null){
             return -1;
         } else {
@@ -78,6 +80,15 @@ public class MemberServiceImpl implements MemberService {
             return "no";
         }
     }
+    /*@Override
+    public String emailCheck(String memberEmail) {
+        MemberDTO memberDTO = memberRepository.findByMemberEmail(memberEmail);
+        if (memberDTO == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }*/
 
     @Override
     public boolean update(MemberDTO memberDTO) {
@@ -96,8 +107,40 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int deleteByUser(int memberIdx) {
+
         return memberRepository.deleteByUser(memberIdx);
     }
+
+    @Override
+    public void uploadProfile(MemberDTO memberDTO) {
+        memberRepository.uploadProfile(memberDTO);
+    }
+
+    @Override
+    public String phoneNumbCheck(String memberPhonenumber) {
+        MemberDTO memberDTO = memberRepository.findByMemberPhoneNumb(memberPhonenumber);
+        if (memberDTO == null) {
+            return "ok";
+        } else {
+            return "no";
+        }
+    }
+
+    @Override
+    public List<MemberDTO> findStudyByIdx(String sessionIdx) {
+        return memberRepository.findStudyByIdx(sessionIdx);
+    }
+
+
+/*    @Override
+    public void uploadProfileByIdx(int memberIdx) {
+        memberRepository.uploadProfileByIdx(memberIdx);
+    }*/
+
+
+
+
+
 
     /*@Override
     public int signup(RegisterFormDTO registerFormDTO) {

@@ -250,7 +250,11 @@
 		</dependency>
 
 		<!-- 이창규 - 주석 아래로 작성 -->
-
+		<dependency>
+			<groupId>net.coobird</groupId>
+			<artifactId>thumbnailator</artifactId>
+			<version>0.4.17</version>
+		</dependency>
 		<!-- 차소영 - 주석 아래로 작성 -->
 
 		<!-- 최지혜 - 주석 아래로 작성 -->

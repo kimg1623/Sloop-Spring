@@ -76,5 +76,10 @@
                 <span class="kydRHc">${studyGroup.studyGroupHits}</span>
             </div>
         </section>
+
+        <div class="sc_button">
+            <button class="sc_join">가입신청</button>
+            <button class="sc_share">공유하기</button>
+        </div>
     </div>
 </div>
