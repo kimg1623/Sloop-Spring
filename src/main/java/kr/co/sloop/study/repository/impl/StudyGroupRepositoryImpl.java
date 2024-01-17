@@ -69,7 +69,11 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
 
     @Override
     public StudyGroupDTO getStudyGroupByGroupCode(String studyGroupCode) {
-        return studyGroupMapper.selectStudyGroupByGroupCode(studyGroupCode);
+        StudyGroupDTO studyGroup =  studyGroupMapper.selectStudyGroupByGroupCode(studyGroupCode);
+        studyGroup.setStudyGroupGrade(categoryGradeMap.get(studyGroup.getStudyGroupGradeCode()));
+        studyGroup.setStudyGroupSubject(categorySubjectMap.get(studyGroup.getStudyGroupSubjectCode()));
+        studyGroup.setStudyGroupRegion(categoryRegionMap.get(studyGroup.getStudyGroupRegionCode()));
+        return studyGroup;
     }
 
     @Override
@@ -78,8 +82,8 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
     }
 
     @Override
-    public List<HashMap<String,String>> getBoardIdxsByGroupCode(int studyGroupIdx) {
-        return studyGroupMapper.getBoardIdxsByGroupCode(studyGroupIdx);
+    public List<HashMap<String,String>> getBoardIdxsByGroupCode(String studyGroupCode) {
+        return studyGroupMapper.getBoardIdxsByGroupCode(studyGroupCode);
     }
 
     @Override
@@ -122,5 +126,10 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
     public List<CategoryRegionDTO> getCategoryRegion2() {
         List<CategoryRegionDTO> categoryRegionList = studyGroupMapper.getAllRegionName();
         return categoryRegionList;
+    }
+
+    @Override
+    public String getGroupNameByGroupCode(String studyGroupCode) {
+        return studyGroupMapper.getGroupNameByGroupCode(studyGroupCode);
     }
 }

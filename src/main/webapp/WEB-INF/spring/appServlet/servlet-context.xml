@@ -29,6 +29,8 @@
 				class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
 	</beans:bean>
+	<!-- ViewPreparer를 위한 bean 등록 -->
+	<beans:bean id="menuPreparer" class="kr.co.sloop.common.MenuPreparer"></beans:bean>
 	<!-- Tiles Layout Configure File 등록 -->
 	<beans:bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<beans:property name="definitions">
@@ -40,7 +42,6 @@
 	</beans:bean>
 
 	<!-- 이지연 - 주석 아래로 작성 -->
-	<!-- ckeditor -->
 	<!-- 사진 업로드 -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<!-- 첨부 파일 한 개의 용량 제한 2,500,000 bytes = 25MB 25000000 -->
@@ -50,13 +51,20 @@
 		<!-- 기본 인코딩 -->
 		<beans:property name="defaultEncoding" value="utf-8"/>
 	</beans:bean>
+
+	<!-- ckeditor -->
 	<!-- ckeditor 통해 업로드된 사진의 저장 경로 -->
-	<!-- 윈도우 경로 수정 필수 -->
 	<beans:bean class="java.lang.String" id="uploadPath">
-		<!--<beans:constructor-arg value="/Users/thegreatjy/Documents"/>-->
-		<beans:constructor-arg value="D:\\upload\\temp"/>
+
+		<beans:constructor-arg value="/Users/thegreatjy/Documents/sloop/postforum"></beans:constructor-arg>
+
 	</beans:bean>
 	<resources mapping="/uploads/**" location="/resources/uploads/" />
+
+	<!-- 과제 게시판 첨부파일 저장 경로 -->
+	<beans:bean class="java.lang.String" id="uploadPathForAssignment">
+		<beans:constructor-arg value="/Users/thegreatjy/Documents/sloop/postassignment"></beans:constructor-arg>
+	</beans:bean>
 
 	<!-- 이창규 - 주석 아래로 작성 -->
 
