@@ -162,7 +162,7 @@ public class MemberController {
 
         if (!matchIdx) {
 
-            AlertUtils.alertAndMovePage(response, "로그인 먼저 하세요.", "member/login");
+            AlertUtils.alertAndMovePage(response, "해당 아이디로 로그인 먼저 하세요.", "member/login");
 
         } else {
             MemberDTO memberDTO = memberService.findByIdx(memberIdx);   // memberIdx 파라미터 값을 가져온 뒤 해당 domain 정보를 불러온다.
@@ -309,4 +309,25 @@ public class MemberController {
         return strResult;
     }
 /** 프로필 사진 업로드 끝 */
+
+/** 스터디 가입 목록 */
+    @GetMapping("/home")
+    public String joinStudy(HttpServletResponse response,
+                            HttpSession session , Model model
+                            ) throws IOException{
+
+        MemberDTO memberDTO = new MemberDTO();
+        int memberIdx = memberDTO.getMemberIdx();
+
+        String sessionIdx =((String) session.getAttribute("loginMemberIdx"));
+        if (sessionIdx != null) {
+            memberDTO = memberService.findStudyByIdx(sessionIdx);
+            log.info("스터디그룹아이디엑스"+memberDTO.getStudyGroupIdx());
+            model.addAttribute("memberDTO", memberDTO);
+            return "member/home";
+        } else {
+            return "redirect:/member/login";
+        }
+
+    }
 }

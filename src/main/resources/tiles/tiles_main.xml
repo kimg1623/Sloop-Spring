@@ -59,7 +59,10 @@
       <put-attribute name="title" value="회원정보수정창" />
       <put-attribute name="body" value="/WEB-INF/views/member/update.jsp" />
    </definition>
-
+   <definition name="member/home" extends="mainLayout">
+      <put-attribute name="title" value="스터디가입목록창" />
+      <put-attribute name="body" value="/WEB-INF/views/member/home.jsp" />
+   </definition>
 
 
 

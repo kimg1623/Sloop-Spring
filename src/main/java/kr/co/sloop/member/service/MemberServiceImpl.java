@@ -126,6 +126,11 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    @Override
+    public MemberDTO findStudyByIdx(String sessionIdx) {
+        return memberRepository.findStudyByIdx(sessionIdx);
+    }
+
 
 /*    @Override
     public void uploadProfileByIdx(int memberIdx) {

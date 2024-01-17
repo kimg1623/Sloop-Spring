@@ -17,7 +17,9 @@
 <p><form:hidden path="memberIdx"/></p>
 
 <p>이 메 일 : <form:input path="memberEmail" readonly="true"/>
+<%--
 <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
+--%>
 <p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" readonly="true"/></p>
 <p>성   별 :
     <form:radiobutton path="memberGender" id="male" value="남자" />
@@ -73,21 +75,21 @@
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
         </select></p>--%>
-    <button type="button" value="수정" onclick="update()">
+    <input type="submit" value="수정">
 </form:form>
 </body>
 <script>
 
-    const update = () => {
+    /*const update = () => {
         const passwordDB = '${memberDTO.memberPassword}';
         const password = document.getElementById("memberPassword").value;
         if (passwordDB == password) {
             document.updateForm.submit();
-            /*location.href = "/member/update";*/
+            /!*location.href = "/member/update";*!/
         } else {
             alert("비밀번호가 일치하지 않습니다!");
         }
-    }
+    }*/
     // 이메일 입력값을 가져오고,
     // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
     // 사용 가능 여부를 이메일 입력창 아래에 표시
