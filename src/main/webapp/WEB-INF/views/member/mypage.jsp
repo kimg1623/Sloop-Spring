@@ -5,7 +5,8 @@
 </head>
 <body>
 <h1>${sessionScope.loginEmail}의 마이페이지 입니다.</h1>
-<a href="/member/update">회원 정보 수정</a><br>
+<a href="/member/update?memberIdx=${member.memberIdx}">회원 정보 수정</a><br>
+<a href="/member/profile?memberIdx=${member.memberIdx}">회원 프로필 수정</a><br>
 <table>
     <tr>
         <th>정렬번호</th>
@@ -47,8 +48,24 @@
         <th>지역</th>
         <td>${member.memberRegionCode}</td>
     </tr>
+    <tr>
+        <th>프로필 사진</th>
+        <td><img src="${pageContext.request.contextPath}/resources/upload/${member.memberProfile}"/></td>
+    </tr>
 </table>
 <a href="/member/logout">로그아웃</a><br>
-<a href="/member/delete">회원 탈퇴</a>
+<button onclick="deleteMember('${member.memberIdx}')">회원 탈퇴</button>
 </body>
+<script>
+    const deleteMember = (memberIdx) => {
+
+        if (confirm("정말 삭제하시겠습니까?") == true){
+            console.log(memberIdx);
+            location.href = "/member/delete?memberIdx="+memberIdx;
+        } else {
+            return;
+        }
+
+    }
+</script>
 </html>
