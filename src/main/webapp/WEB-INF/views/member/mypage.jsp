@@ -16,10 +16,10 @@
         <th>이메일</th>
         <td>${member.memberEmail}</td>
     </tr>
-    <tr>
+<%--    <tr>
         <th>password</th>
         <td>${member.memberPassword}</td>
-    </tr>
+    </tr>--%>
     <tr>
         <th>닉네임</th>
         <td>${member.memberNickname}</td>
