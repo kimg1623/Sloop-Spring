@@ -30,6 +30,7 @@
         <form:button type="button" value="중복확인" onclick="nicknameCheck()">중복확인</form:button></p>
     <%--안내 문구--%>
     <span>영문 대소문자,숫자,밑줄(_) 중 하나 이상 포함(2~19자)</span>
+    <%--에러 문구--%>
     <form:errors path="memberNickname" cssStyle="color: red"/>
     <p id="check-result2"></p>
 

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Daily">
+
+    <!--(초기화면)페이징 목록 출력-->
+    <!-- 내용은 글자 제한 -->
+    <select id="getAllDailyList" parameterType="dailyPage" resultType="daily">
+        SELECT d.postIdx, d.postDailyTitle, substring(d.postDailyContents, 1, 10) as postDaily, d.memberIdx, d.postDailyRegDate, d.postDailyEditDate, d.postDailyHits, m.memberNickname,p.boardIdx,m.memberEmail
+        FROM postDaily AS d
+        JOIN member AS m ON d.memberIdx = m.memberIdx
+        JOIN post AS p ON d.postIdx = p.postIdx
+        WHERE p.boardIdx = #{boardIdx}
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test = "searchType == 1">
+                    AND d.postDailyTitle LIKE concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 2">
+                    AND d.postDailyContents LIKE concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 3">
+                    AND (d.postDailyTitle LIKE concat('%', #{keyword}, '%') OR d.postDailyContents like concat('%', #{keyword}, '%'))
+                </when>
+                <when test = "searchType == 4">
+                    AND m.memberNickname LIKE concat('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+        ORDER BY d.postDailyRegDate DESC
+        limit #{postsPerPage} offset #{offset}
+    </select>
+
+
+    <!-- 게시물Count -->
+    <select id="boardCountByBoardIdx" resultType="int" parameterType="dailyPage">
+        SELECT count(d.postIdx)
+        FROM postDaily as d
+        JOIN member as m on d.memberIdx = m.memberIdx
+        JOIN post as p on d.postIdx = p.postIdx
+        WHERE p.boardIdx = #{boardIdx}
+        <if test='searchType != null and searchType != 0'>
+            <choose>
+                <when test = "searchType == 1">
+                    AND d.postDailyTitle LIKE concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 2">
+                    AND d.postDailyContents LIKE concat('%', #{keyword}, '%')
+                </when>
+                <when test = "searchType == 3">
+                    AND (d.postDailyTitle LIKE concat('%', #{keyword}, '%') OR d.postDailyContents LIKE concat('%', #{keyword}, '%'))
+                </when>
+                <when test = "searchType == 4">
+                    AND m.memberNickname LIKE concat('%', #{keyword}, '%')
+                </when>
+            </choose>
+        </if>
+    </select>
+
+    <!-- 글작성 -->
+    <insert id="dailyWrite" parameterType="daily">
+        insert into postDaily(postIdx, postDailyTitle, postDailyContents, memberIdx)
+        values(#{postIdx},#{postDailyTitle}, #{postDailyContents},#{memberIdx})
+    </insert>
+
+    <!--    post 용 -->
+    <insert id="insertPost" parameterType="daily">
+        insert into post(boardIdx)
+        values(#{boardIdx})
+        <selectKey resultType="int" keyProperty="postIdx" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <!--    상세보기-->
+    <select id="findByPostIdx" parameterType="int" resultType="daily">
+        SELECT p.postIdx, p.postDailyTitle, p.memberIdx, p.postDailyRegDate, p.postDailyEditDate, p.postDailyContents, p.postDailyHits,  m.memberNickname, m.memberEmail
+        FROM postDaily as p
+        JOIN member as m ON p.memberIdx=m.memberIdx
+        WHERE postIdx=#{postIdx}
+    </select>
+
+    <!--수정하기-->
+    <update id="update" parameterType="daily">
+        UPDATE postDaily
+        SET postDailyTitle=#{postDailyTitle}, postDailyContents=#{postDailyContents}, postDailyEditDate= now()
+        WHERE postIdx=#{postIdx}
+    </update>
+
+    <!--삭제하기-->
+    <delete id="delete" parameterType="int">
+        DELETE FROM postDaily
+        WHERE postIdx=#{postIdx}
+    </delete>
+
+    <!--조회수 카운트-->
+    <update id="updateViewCnt" parameterType="int">
+        UPDATE postDaily
+        set postDailyHits = postDailyHits+1
+        WHERE postIdx=#{postIdx}
+    </update>
+
+
+</mapper>
+

@@ -181,3 +181,46 @@ ul {
     font-size: 0.9rem;
     font-weight: 500;
 }
+/* 하단 버튼 */
+.sc_button{
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    gap: 3rem;
+    margin-top: 3rem;
+    padding-top: 10px;
+    padding-right: 30px;
+    padding-left: 30px;
+    width: 100%;
+    z-index: 3;
+    background-color: white;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 10px);
+}
+.sc_join{
+    flex: 1 1 0%;
+    height: 45px;
+    background: #458dfc;
+    border-radius: 50px;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 17px;
+    border: none;
+}
+.sc_join:hover{
+    background-color: #ffcc00;
+    transition: 0.2s ease;
+}
+.sc_share{
+    flex: 1 1 0%;
+    height: 45px;
+    background: rgb(241, 241, 241);
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 17px;
+    color: rgb(133, 133, 133);
+    border: none;
+}
+.sc_share:hover{
+    background-color: #ffcc00;
+    transition: 0.2s ease;
+}

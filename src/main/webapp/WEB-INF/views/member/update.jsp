@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -8,10 +9,17 @@
     <title>S-loop 회원 정보 수정</title>
 </head>
 <body>
+
 <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
-<form:form action="/member/signup" method="post" modelAttribute="memberDTO">
-<p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" readonly="true"/>
+<form:form action="/member/update" method="post" modelAttribute="memberDTO" name="updateForm">
+<!-- hidden -->
+<!-- 작성자 idx -->
+<p><form:hidden path="memberIdx"/></p>
+
+<p>이 메 일 : <form:input path="memberEmail" readonly="true"/>
+<%--
 <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
+--%>
 <p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" readonly="true"/></p>
 <p>성   별 :
     <form:radiobutton path="memberGender" id="male" value="남자" />
@@ -34,12 +42,12 @@
         </form:select></p>--%>
 <p>학 교 명 : <form:input type="text" path="memberSchool" readonly="true"/></p>
 <p>관심 과목 :
-    <form:checkbox path="memberSubjectCode"/>국어
-    <form:checkbox path="memberSubjectCode"/>영어
-    <form:checkbox path="memberSubjectCode"/>수학
-    <form:checkbox path="memberSubjectCode"/>사회
-    <form:checkbox path="memberSubjectCode"/>과학
-    <form:checkbox path="memberSubjectCode"/>기타
+    <form:checkbox path="memberSubjectCode" value="국어"/>국어
+    <form:checkbox path="memberSubjectCode" value="영어"/>영어
+    <form:checkbox path="memberSubjectCode" value="수학"/>수학
+    <form:checkbox path="memberSubjectCode" value="사회"/>사회
+    <form:checkbox path="memberSubjectCode" value="과학"/>과학
+    <form:checkbox path="memberSubjectCode" value="기타"/>기타
 </p>
 <p>지역대분류 :
     <form:select path="memberRegionCode">
@@ -67,20 +75,21 @@
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
         </select></p>--%>
-    <input type="button" value="수정" onclick="update()">
+    <input type="submit" value="수정">
 </form:form>
 </body>
 <script>
 
-    const update = () => {
+    /*const update = () => {
         const passwordDB = '${memberDTO.memberPassword}';
         const password = document.getElementById("memberPassword").value;
         if (passwordDB == password) {
             document.updateForm.submit();
+            /!*location.href = "/member/update";*!/
         } else {
             alert("비밀번호가 일치하지 않습니다!");
         }
-    }
+    }*/
     // 이메일 입력값을 가져오고,
     // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
     // 사용 가능 여부를 이메일 입력창 아래에 표시
