@@ -22,6 +22,9 @@
         <typeAlias type="kr.co.sloop.post.domain.PostDTO" alias="post"/>
         <typeAlias type="kr.co.sloop.post.domain.PageDTO" alias="page"/>
         <typeAlias type="kr.co.sloop.post.domain.SearchDTO" alias="search"/>
+        <typeAlias type="kr.co.sloop.postAssignment.domain.PostAssignmentDTO" alias="postAssignment"/>
+        <typeAlias type="kr.co.sloop.postAssignment.domain.AssignmentDTO" alias="assignment"/>
+        <typeAlias type="kr.co.sloop.attachment.domain.AttachmentDTO" alias="attachment"/>
 
 
 
@@ -34,7 +37,8 @@
         <!-- 차소영 - 주석 아래로 작성 -->
 
         <!-- 최지혜 - 주석 아래로 작성 -->
-
+        <typeAlias type="kr.co.sloop.daily.domain.DailyDTO" alias="daily"/>
+        <typeAlias type="kr.co.sloop.daily.domain.PageDTO" alias="dailyPage"/>
 
 
     </typeAliases>

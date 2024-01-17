@@ -5,9 +5,10 @@
 
 <mapper namespace="kr.co.sloop.study.mapper.StudyGroupMapper">
 
-
+    <!-- 메인페이지에서 전체 스터디 그룹 카드 정보 가져오기 -->
     <select id="getAllStudyGroupList" resultType="studyGroup">
-        SELECT * from studyGroup
+        SELECT studyGroupName, studyGroupCode, studyGroupGradeCode, studyGroupSubjectCode, studyGroupRegionCode, studyGroupDuedate, studyGroupMethod from studyGroup
+        order by studyGroupIdx desc
     </select>
 
     <!-- 학교학년 카테고리 가져오기 -->
@@ -49,10 +50,10 @@
         select * from studyGroup where studyGroupCode=#{studyGroupCode}
     </select>
 
-    <select id="getBoardIdxsByGroupCode" parameterType="int" resultType="java.util.HashMap">
+    <select id="getBoardIdxsByGroupCode" parameterType="String" resultType="java.util.HashMap">
         select boardIdx, c.categoryBoardIdx cidx, c.categoryBoard categoryName
-        from board b left join categoryboard c on b.categoryBoardIdx = c.categoryBoardIdx
-        where studyGroupIdx=#{studyGroupIdx}
+        from board b left join categoryBoard c on b.categoryBoardIdx = c.categoryBoardIdx
+        where studyGroupIdx=(select studyGroupIdx from studyGroup s where studyGroupCode=#{studyGroupCode})
     </select>
 
     <update id="updateStudyGroup" parameterType="studyGroup">
@@ -72,5 +73,9 @@
     <delete id="deleteGroupByGroupCode" parameterType="String">
         delete from studyGroup where studyGroupCode=#{studyGroupCode}
     </delete>
+
+    <select id="getGroupNameByGroupCode" parameterType="String" resultType="String">
+        select studyGroupName from studyGroup where studyGroupCode=#{studyGroupCode}
+    </select>
 
 </mapper>

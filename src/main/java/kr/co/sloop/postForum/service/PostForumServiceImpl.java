@@ -60,7 +60,7 @@ public class PostForumServiceImpl implements PostForumService {
     public boolean update(PostForumDTO postForumDTO) {
         int result = postForumRepositoryImpl.update(postForumDTO);
 
-        if(result == 1){    // 성공
+        if(result != 0){    // 성공
             return true;
         }else{  // 실패
             return false;

@@ -40,6 +40,26 @@ public class StudyGroupController {
 	}
 
 	/*
+	 * LMS페이지 접근을 위한 임시 페이지
+	 */
+	@GetMapping("/tmp")
+	public String requestStudyGroupListTmp(Model model){ // 웹 요청 처리할 메서드
+		List<StudyGroupDTO> list = studyGroupService.getAllStudyGroupList();
+		model.addAttribute("studyGroupList", list); // model 객체에 view에 전달할 정보 담는다.
+		return "study/listtmp"; // view
+	}
+
+	/*
+	 * 스터디 그룹에 대한 소개 확인하기
+	 */
+	@GetMapping("/introduce")
+	public String requestStudyGroupIntroduce(@RequestParam("group") String groupCode, Model model){ // 웹 요청 처리할 메서드
+		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(groupCode);
+		model.addAttribute("studyGroup", studyGroupDTO); // model 객체에 view에 전달할 정보 담는다.
+		return "study/introduce"; // view
+	}
+
+	/*
 	 * 스터디 그룹 개설 : 화면 처리
 	 */
 	@GetMapping("/add")
@@ -79,7 +99,7 @@ public class StudyGroupController {
 	@GetMapping("/{studyGroupCode}")
 	public String requestStudyGroup(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
 		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(studyGroupCode);
-		List<HashMap<String,String>> groupBoardIdxs = studyGroupService.getBoardIdxsByGroupCode(studyGroupDTO.getStudyGroupIdx());
+		List<HashMap<String,String>> groupBoardIdxs = studyGroupService.getBoardIdxsByGroupCode(studyGroupCode);
 		model.addAttribute("studyGroup", studyGroupDTO);
 		model.addAttribute("groupBoardIdxs", groupBoardIdxs);
 		return "study/home";
