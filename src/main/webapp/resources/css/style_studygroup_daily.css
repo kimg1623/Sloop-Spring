@@ -349,3 +349,13 @@ p{
 
 /*-------dailyUpdate-------*/
 
+/*notice category, pinned */
+.CategoryList{
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.Pinned{
+    text-align: left;
+    margin-bottom: 5px;
+}
