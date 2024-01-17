@@ -284,8 +284,6 @@ public class MemberController {
                     // memberDTO에 savedFileName으로 저장된 파일명을 넣어줌
                     memberDTO.setMemberProfile(savedFileName);
 
-
-
                     log.info("파일 저장 =====" + savedFileName);
                     log.info("타겟 파일 객체 ====" + targetFile);
                     log.info("dddddddddd" +extension.matches(allowedExtensions));
