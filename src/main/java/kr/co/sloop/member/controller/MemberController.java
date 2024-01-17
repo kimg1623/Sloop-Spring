@@ -272,11 +272,11 @@ public class MemberController {
                     System.out.println(fileRoot);
                     
                     String originalFileName = file.getOriginalFilename();    //오리지날 파일명
-                    String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);    //파일 확장자
+                    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
                     extension = extension.toLowerCase(); // 소문자로 변경
                     String savedFileName = UUID.randomUUID() + extension;    //저장될 파일 명
 
-                    String allowedExtensions = "(jpg|jpeg|gif|png)"; // 허용되는 확장자
+                    String allowedExtensions = "(.jpg|.jpeg|.gif|.png)"; // 허용되는 확장자
 
                     // targetFile은 굳이 필요 없지만 나중에 쓰기 위해 객체 만들어줌
                     File targetFile = new File(fileRoot + savedFileName);
@@ -284,8 +284,7 @@ public class MemberController {
                     // memberDTO에 savedFileName으로 저장된 파일명을 넣어줌
                     memberDTO.setMemberProfile(savedFileName);
 
-                    // uploadProfile 메서드를 이용해서 service -> repository -> mapper 순으로 DB에 update문을 통해 저장.
-                    memberService.uploadProfile(memberDTO);
+
 
                     log.info("파일 저장 =====" + savedFileName);
                     log.info("타겟 파일 객체 ====" + targetFile);
@@ -293,6 +292,8 @@ public class MemberController {
                     // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우, 오류 메세지 반환
                     if (!extension.matches(allowedExtensions)){
                         strResult = "{ \"result\":\"FAIL\" }";
+                        //파일삭제
+                        FileUtils.deleteQuietly(targetFile);    //저장된 현재 파일 삭제
                     } else {
                         try {
                             // 서버에 파일 저장하기 위해 쓰는 함수.
@@ -300,14 +301,13 @@ public class MemberController {
                             InputStream fileStream = file.getInputStream();
                             // fileStream , targetFile는 commmons 라이브러리인 FileUtils 클래스를 통해 서버에 특정 디렉토리에 저장.
                             FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+                            // uploadProfile 메서드를 이용해서 service -> repository -> mapper 순으로 DB에 update문을 통해 저장.
+                            memberService.uploadProfile(memberDTO);
 
                         } catch (Exception e) {
-                            //파일삭제
-                            FileUtils.deleteQuietly(targetFile);    //저장된 현재 파일 삭제
                             e.printStackTrace();
                             break;
                         }
-
                     }
                 }
                 /*strResult = "{ \"result\":\"ok\" }";*/
