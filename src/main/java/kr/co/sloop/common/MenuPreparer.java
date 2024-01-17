@@ -27,22 +27,22 @@ public class MenuPreparer implements ViewPreparer {
 
         /* request 객체 가져오는 테스트 코드 */
         List<String> list = tilesContext.getAvailableScopes();
-        System.out.println(list.size());
+//        System.out.println(list.size());
         for(String s : list){
-            System.out.println(s);
+//            System.out.println(s);
 
         }
-        System.out.println("model.size="+model.size());
+//        System.out.println("model.size="+model.size());
 
         Map<String, Object> requestMap = tilesContext.getContext("request");
 
-        log.info(requestMap);
+//        log.info(requestMap);
         for( String strKey : requestMap.keySet() ){
             Object strValue = requestMap.get(strKey);
-            System.out.println( strKey +":"+ strValue.getClass() );
+//            System.out.println( strKey +":"+ strValue.getClass() );
         }
-        System.out.println(requestMap.get("org.springframework.web.util.UrlPathHelper.PATH"));
-        System.out.println(requestMap.get("studyGroupCode"));
+//        System.out.println(requestMap.get("org.springframework.web.util.UrlPathHelper.PATH"));
+//        System.out.println(requestMap.get("studyGroupCode"));
         /* 테스트 코드 끝 */
 
 
@@ -51,7 +51,7 @@ public class MenuPreparer implements ViewPreparer {
         String uriPath = (String)model.get("org.springframework.web.util.UrlPathHelper.PATH");
         String [] vars = uriPath.split("/");
         String studyGroupCode = vars[2];
-        System.out.println("studyGroupCode"+studyGroupCode);
+//        System.out.println("studyGroupCode"+studyGroupCode);
 
         if(studyGroupCode.equals(null)) // request에서 가져오는 title이 없을 시 title 설정해주기
             System.out.println("code nulllllllllllllllllllll");

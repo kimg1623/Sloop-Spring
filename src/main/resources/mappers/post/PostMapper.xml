@@ -2,11 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.co.sloop.post.mapper.PostMapper">
+    <!-- boardIdx에 해당하는 게시판의 전체 게시글 개수 조회 -->
     <select id="countAllPostsByBoardIdx" parameterType="int" resultType="int">
         select count(postIdx)
         from post
         where boardIdx = #{boardIdx}
     </select>
+
+    <!-- post 테이블에 글 삽입하기 & auto_increment된 postIdx를 parameter에 대입 -->
+    <insert id="insertPost" parameterType="post">
+        insert into post(boardIdx)
+        values (#{boardIdx})
+        <selectKey resultType="int" keyProperty="postIdx" order="AFTER">
+            select last_insert_id();
+        </selectKey>
+    </insert>
+
+    <!-- post 글 삭제하기 -->
+    <delete id="delete" parameterType="int">
+        delete from post
+        where postIdx = #{postIdx}
+    </delete>
 
     <!-- email로 idx 찾기 -->
     <select id="selectMemberIdxByMemberEmail" parameterType="String" resultType="int">

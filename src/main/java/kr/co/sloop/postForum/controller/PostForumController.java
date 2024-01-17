@@ -38,21 +38,18 @@ public class PostForumController {
     private final PageServiceImpl pageServiceImpl; // 페이징
     private final SearchServiceImpl searchServiceImpl; // 페이징 + 검색
 
-    // 글 작성하기 : 화면 출력
+    // 글 작성하기: 화면 출력
     @GetMapping("/write")
     public String writeForm(Model model){
         PostForumDTO postForumDTO = new PostForumDTO();
-        postForumDTO.setCategoryPostIdx(1);
+        postForumDTO.setCategoryPostIdx(1); // 카테고리 기본값 지정
         model.addAttribute("postForumDTO", postForumDTO);
         return "postForum/write";
     }
 
     // 글 작성하기
     @PostMapping("/write")
-    public String write(@PathVariable("boardIdx") int boardIdx, @Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors, HttpSession session){
-        log.info(errors);
-        log.info(postForumDTO);
-
+    public String write(@PathVariable("studyGroupCode") String studyGroupCode, @PathVariable("boardIdx") int boardIdx, @Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors, HttpSession session){
         // 객체 바인딩에 유효성 오류가 존재한다면, 작성 페이지로 돌아가서 오류 메세지를 출력한다.
         if(errors.hasErrors()){
             return "postForum/write";
@@ -69,7 +66,7 @@ public class PostForumController {
 
         if(result){ // 글 작성 성공
             // 해당 글 상세 조회 페이지로 이동
-            return "redirect:/postforum/detail?postIdx=" + postForumDTO.getPostIdx();
+            return "redirect:/study/" + studyGroupCode + "/postforum/" + boardIdx + "/detail?postIdx=" + postForumDTO.getPostIdx();
         }else {     // 글 작성 실패
             return "postForum/write";
         }
@@ -77,9 +74,13 @@ public class PostForumController {
 
     // 글 작성하기 : 이미지 업로드
     @PostMapping("/upload-image")
-    public void imageUpload(HttpServletRequest request,
-                            HttpServletResponse response, MultipartHttpServletRequest multiFile
-            , @RequestParam MultipartFile upload, @RequestParam(value="CKEditorFuncNum", required=false) String CKEditorFuncNum) throws Exception {
+    public void imageUpload(@PathVariable("studyGroupCode") String studyGroupCode,
+                            @PathVariable("boardIdx") int boardIdx,
+                            HttpServletRequest request,
+                            HttpServletResponse response,
+                            MultipartHttpServletRequest multiFile,
+                            @RequestParam MultipartFile upload,
+                            @RequestParam(value="CKEditorFuncNum", required=false) String CKEditorFuncNum) throws Exception {
         OutputStream out = null;
         PrintWriter printWriter = null;
 
@@ -90,7 +91,7 @@ public class PostForumController {
             // 파일 이름 가져오기 (확장자 포함)
             String fileName = upload.getOriginalFilename();
 
-            // 파일 확장자 검사 [*****] window, mac 다른지 log를 통해 확인 필요
+            // 파일 확장자 검사
             String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
             extension = extension.toLowerCase(); // 소문자로 변경
 
@@ -126,8 +127,10 @@ public class PostForumController {
             // uuid 생성 (36자)
             UUID uuid = UUID.randomUUID();
 
-            // ckeditor로 첨부한 이미지가 저장될 풀 경로 (서버경로/uploads/uuid_파일이름) [*****] -> 서버경로/스터디그룹idx/postForum/uuid_파일이름)
-            String ckUploadPath = uploadPath + File.separator + "resources/uploads" + File.separator + uuid + "_" + fileName;
+
+            // ckeditor로 첨부한 이미지가 저장될 풀 경로 (sloop/postforum/uploads/uuid_fileName)
+            String ckUploadPath = uploadPath + File.separator + "uploads" + File.separator + uuid + "_" + fileName;
+
             log.info("uploadPath : " + uploadPath);
             log.info("ckUploadPath : " + ckUploadPath);
 
@@ -147,7 +150,7 @@ public class PostForumController {
 
             String callback = request.getParameter("CKEditorFuncNum");
             printWriter = response.getWriter();
-            String fileUrl = "/postforum/ckImgSubmit?uid=" + uuid + "&fileName=" + fileName; // 작성화면
+            String fileUrl = "/study/" + studyGroupCode + "/postforum/" + boardIdx + "/ckImgSubmit?uid=" + uuid + "&fileName=" + fileName; // 작성화면
 
             // 업로드시 메시지 json 출력
             String[] message = {fileName, fileUrl};
@@ -173,10 +176,10 @@ public class PostForumController {
     }
 
     // 서버로 전송된 이미지 가져오기
-    @RequestMapping(value="/ckImgSubmit")
-    public void ckSubmit(@RequestParam(value="uid") String uid
-            , @RequestParam(value="fileName") String fileName
-            , HttpServletRequest request, HttpServletResponse response)
+    @GetMapping(value="/ckImgSubmit")
+    public void ckSubmit(@RequestParam(value="uid") String uid,
+                        @RequestParam(value="fileName") String fileName,
+                        HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         //서버에 저장된 이미지 경로
@@ -236,7 +239,6 @@ public class PostForumController {
         keyword = keyword.trim();
 
         // 검색 + 페이징을 위한 객체
-        // boardType 3 [*****]
         SearchDTO searchDTO = searchServiceImpl.initialize(boardIdx, page, searchType, keyword, 3);
         model.addAttribute("searchDTO", searchDTO);
 
@@ -266,16 +268,18 @@ public class PostForumController {
 
     // 글 수정하기
     @PostMapping("/update")
-    public String update(@Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors, HttpSession session, HttpServletResponse response){
+    public String update(@PathVariable("studyGroupCode") String studyGroupCode, @PathVariable("boardIdx") int boardIdx,
+                         @Valid @ModelAttribute("postForumDTO") PostForumDTO postForumDTO, BindingResult errors,
+                         HttpSession session, HttpServletResponse response){
         // 로그인 된 회원과 글 작성자가 동일한지 검사
         if(!postForumDTO.getMemberEmail().equals(session.getAttribute("loginEmail"))){
             // 동일하지 않다면 수정하지 않고 글 목록 페이지로 리다이렉트
-            return "redirect:/postforum/list";
+            return "redirect:/study/" + studyGroupCode + "/postforum/" + boardIdx + "/list";
         }
 
         // 객체 바인딩에 유효성 오류가 존재한다면, 작성 페이지로 돌아가서 오류 메세지를 출력한다.
         if(errors.hasErrors()){
-            return "redirect:/postForum/update?postIdx=" + postForumDTO.getPostIdx();
+            return "redirect:/study/" + studyGroupCode + "/postforum/" + boardIdx + "/update?postIdx=" + postForumDTO.getPostIdx();
         }
 
         try {
@@ -283,35 +287,36 @@ public class PostForumController {
             boolean result = postForumServiceImpl.update(postForumDTO);
 
             if (result) { // 수정 성공
-                return "redirect:/postforum/detail?postIdx=" + postForumDTO.getPostIdx();
+                return "redirect:/study/" + studyGroupCode + "/postforum/" + boardIdx + "/detail?postIdx=" + postForumDTO.getPostIdx();
             } else { // 수정 실패
                 AlertUtils.alertAndBackPage(response, "수정에 실패하였습니다.");
-                return "redirect:/postforum/list";
+                return "redirect:/study/" + studyGroupCode + "/postforum/" + boardIdx + "/list";
             }
         }catch (Exception e){
-            return "redirect:/postforum/list";
+            return "redirect:/study/" + studyGroupCode + "/postforum/" + boardIdx + "/list";
         }
     }
 
     // 글 삭제하기
     @GetMapping("/delete")
-    public String delete(@RequestParam("postIdx") int postIdx, HttpSession session, HttpServletResponse response){
+    public String delete(@PathVariable("studyGroupCode") String studyGroupCode, @PathVariable("boardIdx") int boardIdx, @RequestParam("postIdx") int postIdx,
+                         HttpSession session, HttpServletResponse response){
         try {
             // 로그인 된 회원과 글 작성자가 동일한지 검사
             String writerEmail = postForumServiceImpl.findWriterEmailByPostIdx(postIdx);
             if (!writerEmail.equals(session.getAttribute("loginEmail"))) {
                 // 동일하지 않다면 삭제하지 않고 글 목록 페이지로 리다이렉트
-                AlertUtils.alertAndMovePage(response, "본인의 글만 삭제할 수 있습니다.", "/postforum/list");
+                AlertUtils.alertAndMovePage(response, "본인의 글만 삭제할 수 있습니다.", "/study/" + studyGroupCode + "/postforum/" + boardIdx + "/list");
                 return "";
             }
 
             postForumServiceImpl.delete(postIdx);
         }catch (Exception e){
             // 목록 조회 페이지로 돌아간다.
-            return "redirect:/postforum/list";
+            return "redirect:/study/" + studyGroupCode + "/postforum/" + boardIdx + "/list";
         }
         // 삭제 후, 목록 조회 페이지로 돌아간다.
-        return "redirect:/postforum/list";
+        return "redirect:/study/" + studyGroupCode + "/postforum/" + boardIdx + "/list";
     }
 
     // json 객체 생성
