@@ -22,4 +22,7 @@ public class ReplyDTO {
         private int replyGroup; // 원 댓글의 id (그룹 번호)
         private int replyGroupOrder; // 댓글의 댓글 내 순서 (그룹 내 순서)
         private int replyGroupDepth; // 댓글 들여쓰기 (깊이)
+
+        private String memberNickname;  // 작성자 회원 닉네임
+        private String memberEmail;     // 작성자 회원 이메일
 }
