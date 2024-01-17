@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+	<!-- Root Context: defines shared resources visible to all other web components -->
+
+	<!--
+		HikariCP 설정 : JDBC 드라이버 지정
+	-->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="net.sf.log4jdbc.sql.jdbcapi.DriverSpy"/>
+		<property name="jdbcUrl" value="jdbc:log4jdbc:mariadb://localhost:3306/sloop"/>
+		<!--        log 쓰지 않는 경우, jdbc 드라이버 일반 연결 -->
+		<!--		<property name="driverClassName" value="org.mariadb.jdbc.Driver"/>-->
+		<!--		<property name="jdbcUrl" value="jdbc:mariadb://localhost:3306/sloop"/>-->
+		<property name="username" value="sloopuser"/>
+		<property name="password" value="sloopuser"/>
+		<property name="dataSourceProperties">
+
+			<props>
+				<prop key="cachePrepStmts">true</prop>
+				<prop key="prepStmtCacheSize">250</prop>
+				<prop key="prepStmtCacheSqlLimit">2048</prop>
+			</props>
+
+		</property>
+	</bean>
+
+	<!-- dataSource : 데이터베이스와 관련된 정보를 설정한다. -->
+	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig" />
+	</bean>
+
+	<!--
+        데이터베이스와 연결을 맺고 끊어질 때까지의 라이프 사이클을 관리해주는 SqlSessionTemplate 객체를 생성한다.
+        1) dataSource
+        2) MyBatis config 파일 연결
+        3) Mapper xml의 위치 선정
+    -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:/mybatis-config.xml"/>
+		<property name="mapperLocations" value="classpath:/mappers/**/*.xml"/>
+	</bean>
+
+	<!--
+        데이터베이스에 개발적으로 쿼리를 실행시키는 객체
+        이 객체를 통해서 query를 실행한다.
+     -->
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg name="sqlSessionFactory" index="0" ref="sqlSessionFactory"/>
+	</bean>
+
+	<!--
+	 	Mapper 인터페이스 설정
+	 	개발자가 직접 DAO를 설정하지 않아도 자동으로 Mapper 인터페이스를 활용하는 객체를 생성하게된다.
+	  -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="kr.co.sloop"/>
+		<property name="annotationClass" value="org.apache.ibatis.annotations.Mapper"/>
+	</bean>
+	<!--	<context:component-scan base-package="org.zerock.springex.sample" /> ex00 프로젝트 기준 스캐닝 패키지 -->
+	<!--	<mybatis-spring:scan base-package="org.zerock.springex.mapper" /> ex00 프로젝트 기준 스캐닝 패키지 -->
+
+
+	<!-- 트랜잭션 설정 : 트랜잭션 관리자의 빈을정의 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<!-- 애너테이션 기반의 트랜잭션 제어를 활성화 합니다. -->
+	<tx:annotation-driven/>
+
+	<!-- 김지원 - 주석 아래로 작성 -->
+
+	<!-- 박석은 - 주석 아래로 작성 -->
+
+	<!-- 이지연 - 주석 아래로 작성 -->
+
+	<!-- 이창규 - 주석 아래로 작성 -->
+
+	<!-- 차소영 - 주석 아래로 작성 -->
+
+	<!-- 최지혜 - 주석 아래로 작성 -->
+
+</beans>
