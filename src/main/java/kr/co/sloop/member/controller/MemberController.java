@@ -245,11 +245,12 @@ public class MemberController {
         log.info("포스트업로드!!!!!!!!");
 
         // 기본적으로 JSON 객체로 "{"result":"FAIL"}" 이렇게 설정한다.
-        String strResult = "{ \"result\":\"FAIL\" }";
+        String strResult = "{ \"result\":\"ok\" }";
         // 절대경로 초기화 - HttpServletRequest는 보안이슈가 있기에 ServletContext 를 통해 가져오는게 더 안전하지만 일단 씀
         String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
         // 파일 경로 초기화
         String fileRoot;
+
 
         // 세션에서 memberIdx 값을 가져온다.
         int memberIdx = Integer.parseInt((String) session.getAttribute("loginMemberIdx"));
@@ -262,6 +263,7 @@ public class MemberController {
             // 파일이 있을때 탄다.
             if (multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
                 log.info("파일이 있음");
+
                 // for문을 통해 file 객체 안에 정보를 대입
                 for (MultipartFile file : multipartFile) {
 
@@ -270,38 +272,49 @@ public class MemberController {
                     System.out.println(fileRoot);
                     
                     String originalFileName = file.getOriginalFilename();    //오리지날 파일명
-                    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
+                    String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);    //파일 확장자
+                    extension = extension.toLowerCase(); // 소문자로 변경
                     String savedFileName = UUID.randomUUID() + extension;    //저장될 파일 명
+
+                    String allowedExtensions = "(jpg|jpeg|gif|png)"; // 허용되는 확장자
+
                     // targetFile은 굳이 필요 없지만 나중에 쓰기 위해 객체 만들어줌
                     File targetFile = new File(fileRoot + savedFileName);
 
                     // memberDTO에 savedFileName으로 저장된 파일명을 넣어줌
                     memberDTO.setMemberProfile(savedFileName);
+
                     // uploadProfile 메서드를 이용해서 service -> repository -> mapper 순으로 DB에 update문을 통해 저장.
                     memberService.uploadProfile(memberDTO);
+
                     log.info("파일 저장 =====" + savedFileName);
                     log.info("타겟 파일 객체 ====" + targetFile);
+                    log.info("dddddddddd" +extension.matches(allowedExtensions));
+                    // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우, 오류 메세지 반환
+                    if (!extension.matches(allowedExtensions)){
+                        strResult = "{ \"result\":\"FAIL\" }";
+                    } else {
+                        try {
+                            // 서버에 파일 저장하기 위해 쓰는 함수.
+                            // getInputStream 메서드는 multipartFile 객체에서 데이터를 읽어오기 위한 InputStream을 반환.
+                            InputStream fileStream = file.getInputStream();
+                            // fileStream , targetFile는 commmons 라이브러리인 FileUtils 클래스를 통해 서버에 특정 디렉토리에 저장.
+                            FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
 
+                        } catch (Exception e) {
+                            //파일삭제
+                            FileUtils.deleteQuietly(targetFile);    //저장된 현재 파일 삭제
+                            e.printStackTrace();
+                            break;
+                        }
 
-                    try {
-                        // 서버에 파일 저장하기 위해 쓰는 함수.
-                        // getInputStream 메서드는 multipartFile 객체에서 데이터를 읽어오기 위한 InputStream을 반환.
-                        InputStream fileStream = file.getInputStream();
-                        // fileStream , targetFile는 commmons 라이브러리인 FileUtils 클래스를 통해 서버에 특정 디렉토리에 저장.
-                        FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
-
-                    } catch (Exception e) {
-                        //파일삭제
-                        FileUtils.deleteQuietly(targetFile);    //저장된 현재 파일 삭제
-                        e.printStackTrace();
-                        break;
                     }
                 }
-                strResult = "{ \"result\":\"OK\" }";
+                /*strResult = "{ \"result\":\"ok\" }";*/
             }
             // 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
             else
-                strResult = "{ \"result\":\"OK\" }";
+                strResult = "{ \"result\":\"ok\" }";
         } catch (Exception e) {
             e.printStackTrace();
         }
