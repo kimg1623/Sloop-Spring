@@ -20,7 +20,7 @@ public interface MemberRepository {
 
     MemberDTO findByMemberPhoneNumb(String memberPhonenumber);
 
-  MemberDTO findStudyByIdx(String sessionIdx);
+    List<MemberDTO> findStudyByIdx(String sessionIdx);
 
   /*void uploadProfileByIdx(int memberIdx);*/
     /*int signup(RegisterFormDTO registerFormDTO);

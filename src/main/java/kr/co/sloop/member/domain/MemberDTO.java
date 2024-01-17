@@ -53,11 +53,14 @@ public class MemberDTO {
     private String authority;            // 회원 권한
     private String memberProfile;            // 프로필사진
 
+    private String sessionIdx;
+
     /** Join column data*/
 
     private int studyGroupIdx;
     private String studyGroupCode;
     private String studyGroupName;
     private String studyMemRole;
+
 
 }

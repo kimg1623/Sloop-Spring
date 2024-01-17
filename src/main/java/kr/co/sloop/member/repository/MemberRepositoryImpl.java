@@ -72,7 +72,7 @@ public class MemberRepositoryImpl implements MemberRepository {
     }
 
     @Override
-    public MemberDTO findStudyByIdx(String sessionIdx) {
+    public List<MemberDTO> findStudyByIdx(String sessionIdx) {
         return memberMapper.findStudyByIdx(sessionIdx);
     }
 

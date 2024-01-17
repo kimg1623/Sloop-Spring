@@ -127,7 +127,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public MemberDTO findStudyByIdx(String sessionIdx) {
+    public List<MemberDTO> findStudyByIdx(String sessionIdx) {
         return memberRepository.findStudyByIdx(sessionIdx);
     }
 

@@ -90,7 +90,7 @@
         where memberIdx = #{memberIdx}
     </update>
 
-    <select id="findStudyByIdx" parameterType="member" resultType="member">
+    <select id="findStudyByIdx" parameterType="String" resultType="member">
         select m.memberIdx , s.memberIdx , s.studyGroupIdx , s.studyMemRole , g.studyGroupIdx , g.studyGroupCode , g.studyGroupName
         from member as m
         join studyMem as s on m.memberIdx = s.memberIdx

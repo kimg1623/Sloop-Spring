@@ -34,7 +34,7 @@ public interface MemberService {
 
     String phoneNumbCheck(String memberPhonenumber);
 
-  MemberDTO findStudyByIdx(String sessionIdx);
+  List<MemberDTO> findStudyByIdx(String sessionIdx);
 
   /*    void uploadProfileByIdx(int memberIdx);*/
 

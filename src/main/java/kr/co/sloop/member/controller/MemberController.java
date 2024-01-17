@@ -313,19 +313,20 @@ public class MemberController {
 /** 스터디 가입 목록 */
     @GetMapping("/home")
     public String joinStudy(HttpServletResponse response,
-                            HttpSession session , Model model
+                            HttpSession session , Model model , MemberDTO memberDTO
                             ) throws IOException{
 
-        MemberDTO memberDTO = new MemberDTO();
-        int memberIdx = memberDTO.getMemberIdx();
+
 
         String sessionIdx =((String) session.getAttribute("loginMemberIdx"));
         if (sessionIdx != null) {
-            memberDTO = memberService.findStudyByIdx(sessionIdx);
+            List<MemberDTO> memberDTOList = memberService.findStudyByIdx(sessionIdx);
             log.info("스터디그룹아이디엑스"+memberDTO.getStudyGroupIdx());
-            model.addAttribute("memberDTO", memberDTO);
+
+            model.addAttribute("myStudy", memberDTOList);
             return "member/home";
         } else {
+            AlertUtils.alertAndMovePage(response,"로그인을 해야 목록을 확인할 수 있습니다." , "login");
             return "redirect:/member/login";
         }
 
