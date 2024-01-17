@@ -71,6 +71,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         return memberMapper.findByMemberPhoneNumb(memberPhonenumber);
     }
 
+    @Override
+    public List<MemberDTO> findStudyByIdx(String sessionIdx) {
+        return memberMapper.findStudyByIdx(sessionIdx);
+    }
+
     /*@Override
     public void uploadProfileByIdx(int memberIdx) {
         memberMapper.uploadProfileByIdx(memberIdx);
