@@ -1,5 +1,6 @@
 package kr.co.sloop.study.controller;
 
+import kr.co.sloop.common.AlertUtils;
 import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.service.StudyGroupService;
@@ -107,7 +108,7 @@ public class StudyGroupController {
 
 	/**
 	 * 스터디 그룹 관리 페이지: 스터디 설정 호출
-	 * URI : /study/{studyGroupCode}/info
+	 * URI : /study/{studyGroupCode}/manage/info
 	 */
 	@GetMapping("/{studyGroupCode}/manage/info")
 	public String requestStudyGroupInfo(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
@@ -118,7 +119,7 @@ public class StudyGroupController {
 
 	/**
 	 * 스터디 설정 수정
-	 * URI : /study/{studyGroupCode}/info
+	 * URI : /study/{studyGroupCode}/manage/info
 	 */
 	@PostMapping("/{studyGroupCode}/manage/info")
 	public String submitUpdateStudyGroupForm(@PathVariable("studyGroupCode") String studyGroupCode,
@@ -133,6 +134,17 @@ public class StudyGroupController {
 			log.info("스터디 그룹 정보 수정 오류");
 			return "redirect:/study/" + studyGroupDTO.getStudyGroupCode() + "/manage/info"; // alert 띄울 수 있도록 경고 전송
 		}
+	}
+
+	/**
+	 * 스터디 구성원 관리 페이지
+	 * URI : /study/{studyGroupCode}/manage/members
+	 */
+	@GetMapping("/{studyGroupCode}/manage/members")
+	public String requestStudyGroupMemebers(@PathVariable("studyGroupCode") String studyGroupCode,
+											 @ModelAttribute("StudyGroup") StudyGroupDTO studyGroupDTO,
+											 RedirectAttributes RA){
+		return "study/members";
 	}
 
 	/**
