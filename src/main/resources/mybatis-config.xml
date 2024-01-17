@@ -33,6 +33,7 @@
         <typeAlias type="kr.co.sloop.notice.domain.NoticeDTO" alias="notice"/>
         <typeAlias type="kr.co.sloop.notice.domain.NoticeSearchDTO" alias="noticeSearch"/>
 
+
         <!-- 차소영 - 주석 아래로 작성 -->
 
         <!-- 최지혜 - 주석 아래로 작성 -->
