@@ -26,7 +26,9 @@
                 <div class="sidebar-division-line"></div>
             </li>
             <li class="nav-item">
+
                 <a class="nav-link active" aria-current="page" href="/study/${studyGroupCode}/notice/${groupBoardIdxs[0].boardIdx}/list">
+
                     <span data-feather="home"></span>
                     ${groupBoardIdxs[0].categoryName}
                 </a>
