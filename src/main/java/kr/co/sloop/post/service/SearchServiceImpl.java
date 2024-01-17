@@ -1,6 +1,7 @@
 package kr.co.sloop.post.service;
 
 import kr.co.sloop.post.domain.SearchDTO;
+import kr.co.sloop.postAssignment.repository.PostAssignmentRepository;
 import kr.co.sloop.postForum.repository.PostForumRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class SearchServiceImpl implements SearchService{
     private final PostForumRepositoryImpl postForumRepositoryImpl; // 자유 게시판
+    private final PostAssignmentRepository postAssignmentRepository; // 과제 게시판
 
     // 게시판에 맞는 전체 페이지 수, 시작 페이지 번호, 마지막 페이지 번호를 계산하여 SearchDTO 인스턴스에 담아 반환한다.
      /* Params :
@@ -29,11 +31,12 @@ public class SearchServiceImpl implements SearchService{
         switch (boardType){
             // 공지
             case 1:
-                // 공지게 시판의 전체 게시글 수를 조회
+                // 공지 게시판의 전체 게시글 수를 조회
                 break;
             // 과제
             case 2:
                 // 과제 게시판의 전체 게시글 수를 조회
+                numOfPosts = postAssignmentRepository.searchAndCountPostsByBoardIdx(searchDTO);
                 break;
             // 자유
             case 3:
