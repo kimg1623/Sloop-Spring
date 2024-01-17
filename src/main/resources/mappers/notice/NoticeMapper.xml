@@ -28,7 +28,7 @@
 				</when>
 			</choose>
 		</if>
-		where p.boardIdx = 1
+		where p.boardIdx = #{boardIdx}
 		order by n.postNoticePinned desc , n.postNoticeRegDate desc
 		limit #{postsPerPage} offset #{offset}
 	</select>
@@ -95,4 +95,18 @@
 		where postIdx = #{postIdx}
 
 	</update>
+
+	<delete id="deletePostByPostIdx" parameterType="int">
+		delete p from postNotice as n
+			join post as p
+		       on n.postIdx = p.postIdx
+		where n.postIdx = #{postIdx}
+	</delete>
+
+	<select id="findMemberEmailByPostIdx" parameterType="int" resultType="String">
+		select m.memberEmail
+		from postNotice as n
+		join member as m on n.memberIdx = m.memberIdx
+		where n.postIdx = #{postIdx}
+	</select>
 </mapper>

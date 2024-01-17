@@ -15,4 +15,8 @@ public interface NoticeRepository {
   int updateNotice(NoticeDTO noticeDTO);
   void updateNoticeHits(int postIdx);
   int searchAndCountPostsByBoardIdx(NoticeSearchDTO boardIdx);
+
+  String deletePostByPostIdx(int postIdx);
+
+  String findMemberEmailByPostIdx(int postIdx);
 }
