@@ -9,6 +9,14 @@
         where boardIdx = #{boardIdx}
     </select>
 
+
+    <!-- email로 idx 찾기 -->
+    <select id="selectMemberIdxByMemberEmail" parameterType="String" resultType="int">
+        select memberIdx
+        from member
+        where memberEmail = #{memberEmail}
+    </select>
+
     <!-- post 테이블에 글 삽입하기 & auto_increment된 postIdx를 parameter에 대입 -->
     <insert id="insertPost" parameterType="post">
         insert into post(boardIdx)
@@ -23,4 +31,11 @@
         delete from post
         where postIdx = #{postIdx}
     </delete>
+
+    <!-- email로 idx 찾기 -->
+    <select id="selectMemberIdxByMemberEmail" parameterType="String" resultType="int">
+        select memberIdx
+        from member
+        where memberEmail = #{memberEmail}
+    </select>
 </mapper>
