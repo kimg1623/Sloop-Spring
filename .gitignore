@@ -38,7 +38,7 @@ target/
 # .idea/modules.xml
 # .idea/*.iml
 # .idea/modules
-# *.iml
+*.iml
 # *.ipr
 # CMake
 cmake-build-*/
@@ -138,4 +138,3 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 # End of https://www.toptal.com/developers/gitignore/api/intellij,macos,windows
-.settings
