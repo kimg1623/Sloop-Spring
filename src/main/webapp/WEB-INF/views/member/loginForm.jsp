@@ -3,19 +3,34 @@
 <html>
 <head>
     <title>로그인</title>
+    <link href="/resources/css/style_login.css" rel="stylesheet">
 </head>
 <body>
-<%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
-<form:form action="/member/login" method="post" modelAttribute="memberDTO" >
-    <p>아이디 : <form:input path="memberEmail" type="email" placeholder="이메일" required="true" /></p>
-    <form:errors path="memberEmail" cssStyle="color: red"/>
 
-    <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
-    <form:errors path="memberPassword" cssStyle="color: red"/>
+<div class="wrapper fadeInDown">
+    <div class="form-wrapper">
+        <div id="formContent">
+        <!-- Tabs Titles -->
+        <h2 class="active"> LOG IN </h2>
 
-    <input type="submit" value="로그인"/>
-</form:form>
-<a href="/member/signup">회원가입하러가기</a>
+        <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
+        <form:form action="/member/login" method="post" modelAttribute="memberDTO" >
+            <p><form:input path="memberEmail" type="email" placeholder="이메일" class="fadeIn second" required="true" /></p>
+            <form:errors path="memberEmail" cssStyle="color: red"/>
+
+            <p><form:input path="memberPassword" type="password" placeholder="비밀번호" class="fadeIn third" required="true" /></p>
+            <form:errors path="memberPassword" cssStyle="color: red"/>
+
+            <input type="submit" class="fadeIn fourth" value="로그인"/>
+        </form:form>
+        <div id="formFooter">
+            <a class="underlineHover" href="/member/signup">회원가입</a>
+        </div>
+
+    </div>
+</div>
+</div>
+
 </body>
 </html>
 
