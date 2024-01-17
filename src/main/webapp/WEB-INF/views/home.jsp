@@ -37,9 +37,7 @@
 	<a href="/member/signup">회원가입</a><br>
 	<a href="/member/memberList">회원리스트</a><br>
 	<a href="/member/mypage">마이페이지</a><br>
-	<hr>
-	<h3>공지사항 게시판</h3><br>
-	<a href="/notice/list">공지사항리스트</a>
+	<a href="/member/home">스터디 가입목록</a><br>
 	<!-- 차소영 - 주석 아래로 작성 -->
 
 	<!-- 최지혜 - 주석 아래로 작성 -->

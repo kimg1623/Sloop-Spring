@@ -21,7 +21,9 @@ public interface MemberMapper {
 
     MemberDTO findByMemberPhoneNumb(String memberPhonenumber);
 
-    /*    void uploadProfileByIdx(int memberIdx);*/
+    List<MemberDTO> findStudyByIdx(String sessionIdx);
+
+  /*    void uploadProfileByIdx(int memberIdx);*/
 
 
 
