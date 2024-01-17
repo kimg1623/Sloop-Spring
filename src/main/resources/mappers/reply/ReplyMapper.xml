@@ -8,9 +8,11 @@
     </insert>
 
     <select id="findAll" parameterType="int" resultType="reply">
-        SELECT *
-        FROM reply
+        SELECT r.replyIdx, r.postIdx, r.replyContents, r.memberIdx, r.replyRegDate, m.memberNickname
+        FROM reply as r
+        join member as m on m.memberIdx = r.memberIdx
         WHERE postIdx = #{postIdx}
+        order by r.replyRegDate desc
     </select>
 
     <update id="update" parameterType="reply">
