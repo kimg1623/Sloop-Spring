@@ -33,4 +33,10 @@ public class PostRepositoryImpl implements PostRepository{
     public int delete(int postIdx) {
         return postMapper.delete(postIdx);
     }
+
+    // memberEmail로 memberIdx 찾기
+    @Override
+    public int selectMemberIdxByMemberEmail(String memberEmail) {
+        return postMapper.selectMemberIdxByMemberEmail(memberEmail);
+    }
 }

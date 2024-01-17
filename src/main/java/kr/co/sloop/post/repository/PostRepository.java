@@ -11,4 +11,6 @@ public interface PostRepository {
     int insertPost(PostDTO postDTO);
     // post 테이블에서 postIdx에 해당하는 글 삭제하기
     int delete(int postIdx);
+
+    int selectMemberIdxByMemberEmail(String memberEmail);
 }

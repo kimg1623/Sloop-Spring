@@ -13,4 +13,5 @@ public interface PostMapper {
     // 글 삭제하기
     int delete(int postIdx);
 
+    int selectMemberIdxByMemberEmail(String memberEmail);
 }
