@@ -6,21 +6,107 @@
             crossorigin="anonymous"></script>
     <title>S-loop 회원가입</title>
 </head>
+<style>
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 160vh;
+    }
+
+    .signup-form {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        /*height: 100vh;*/
+    }
+
+    .signup-form form {
+        width: 700px;
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px 1px #c3c6c9;
+    }
+
+    .signup-form p {
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        /*justify-content: space-between;*/
+    }
+
+    .signup-form label {
+        margin-right: 10px;
+    }
+
+    .signup-form input[type="text"], .signup-form input[type="password"], .signup-form input[type="email"], .signup-form select {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #456DFC;
+        border-radius: 5px;
+        margin-left: 4ch;
+    }
+
+    .signup-form button[type="button"] {
+        padding: 10px;
+        width: 100%;
+        background-color: #456DFC;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-left: 1ch;
+        border-radius: 5px;
+    }
+
+    .signup-form input[type="submit"] {
+        padding: 10px;
+        width: 100%;
+        background-color: #456DFC;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .signup-form button[type="button"]:hover, .signup-form input[type="submit"]:hover {
+        background-color: #345CCB;
+    }
+
+    .signup-form button[type="button"] {
+        width: 90px;
+        padding: 9px;
+    }
+
+    .signup-form input[type="email"] {
+        width: 350px;
+        height: 42px;
+    }
+
+    .signup-form input[type="password"], .signup-form input[type="text"] {
+        width: 60%;
+        height: 42px;
+    }
+</style>
 <body>
+<br /><br /><br /><br />
+<div class="signup-form">
 <form action="/member/signup" method="post">
-    <p>이 메 일 : <input type="email" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()">
+    <div style="text-align: center; margin-bottom: 2em;">
+        <h3>회원가입</h3>
+    </div>
+    <p>이 메 일 &nbsp;&nbsp;&nbsp;&nbsp;<input type="email" name="memberEmail" placeholder="이메일 (example@example.com)" id="memberEmail" onblur="emailCheck()">
                     <button type="button" name="check-Email" value="중복확인" onclick="emailCheck()">중복확인</button></p>
     <p id="check-result"></p>
-    <p>비밀번호 : <input type="password" name="memberPassword" placeholder="비밀번호" required></p>
-    <p>닉 네 임 : <input type="text" name="memberNickname" placeholder="닉네임" required></p>
-    <p>성   별 :
-        <input type="radio" name="memberGender" id="male" value="남자">
-        <label for="male">남자</label>
-        <input type="radio" name="memberGender" id="female" value="여자">
+    <p>비밀번호 &nbsp;&nbsp;&nbsp;<input type="password" name="memberPassword" placeholder="비밀번호" required></p>
+    <p>닉 네 임 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="memberNickname" placeholder="닉네임" required></p>
+    <p>성   별 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" name="memberGender" id="male" value="남자">&nbsp;
+        <label for="male">남자</label>&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="radio" name="memberGender" id="female" value="여자">&nbsp;
         <label for="female">여자</label>
     </p>
-    <p>전화번호 : <input type="text" name="memberPhonenumber" placeholder="핸드폰번호" required></p>
-    <p>회원대분류 :
+    <p>전화 번호 &nbsp;&nbsp;&nbsp;<input type="text" name="memberPhonenumber" placeholder="휴대폰 번호" required></p>
+    <p>회원대분류 &nbsp;
         <select name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required>
             <option>선택하세요.</option>
             <option value="초등학생">초등학생</option>
@@ -30,20 +116,20 @@
             <%--<option value="normal">일반인</option>--%>
         </select>
     </p>
-    <p>회원소분류 :
+    <p>회원소분류 &nbsp;
         <select name="memberGradeCode" id="memberGradeCode_sub">
             <option value="choose">선택하세요.</option>
         </select></p>
-    <p>학 교 명 : <input type="text" name="memberSchool" required></p>
-    <p>관심 과목 :
-        <input type="checkbox" name="memberSubjectCode" value="국어">국어
-        <input type="checkbox" name="memberSubjectCode" value="영어">영어
-        <input type="checkbox" name="memberSubjectCode" value="수학">수학
-        <input type="checkbox" name="memberSubjectCode" value="사회">사회
-        <input type="checkbox" name="memberSubjectCode" value="과학">과학
-        <input type="checkbox" name="memberSubjectCode" value="기타">기타
+    <p>학 교 명 &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="memberSchool" required></p>
+    <p>관심 과목 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="memberSubjectCode" value="국어">&nbsp;국어&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="memberSubjectCode" value="영어">&nbsp;영어&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="memberSubjectCode" value="수학">&nbsp;수학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="memberSubjectCode" value="사회">&nbsp;사회&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="memberSubjectCode" value="과학">&nbsp;과학&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="checkbox" name="memberSubjectCode" value="기타">&nbsp;기타
     </p>
-    <p>지역대분류 :
+    <p>지역대분류 &nbsp;
         <select name="memberRegionCode" id="memberRegionCode" onchange="memberSigugunChange(this)" required>
             <option>선택하세요.</option>
             <option value="900">서울특별시</option>
@@ -64,12 +150,14 @@
             <option value="1100">울산광역시</option>
             <option value="1500">제주특별자치도</option>
         </select></p>
-    <p>지역소분류 :
+    <p>지역소분류 &nbsp;
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
         </select></p>
     <input type="submit" value="회원가입">
 </form>
+</div>
+<br /><br /><br /><br />
 </body>
 <script type="text/javascript">
     // 이메일 입력값을 가져오고,
