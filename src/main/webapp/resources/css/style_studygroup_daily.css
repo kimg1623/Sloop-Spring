@@ -332,6 +332,7 @@ p{
 
 /*삭제*/
 .btn_delete{
+    margin-left: 4px;
     height: 35px;
     background: #727272;
     border-radius: 0.375rem;
@@ -344,10 +345,6 @@ p{
     background: #ff3a3a;
     transition: 0.2s ease;
 }
-
-
-
-
 
 
 /*-------dailyUpdate-------*/
