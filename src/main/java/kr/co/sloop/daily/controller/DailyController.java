@@ -70,6 +70,7 @@ public class DailyController {
 	public String dailyWriteForm(@PathVariable("studyGroupCode") String studyGroupCode,
 								 @PathVariable("boardIdx") int boardIdx,
 								 Model model){
+
 		return "daily/dailyWrite";
 	}
 
@@ -96,13 +97,14 @@ public class DailyController {
 
 		if(dailyWriteResult){
 			//정상적으로 처리
-			///글 작성했을 때 페이지 목록으로 가도록 수정
-			return "redirect:/study/{studyGroupCode}/daily/{boardIdx}/list";
+			///해당 글로 이동
+			return "redirect:/study/{studyGroupCode}/daily/{boardIdx}/detail?postIdx="+dailyDTO.getPostIdx();
 		}else{
 			//실패
 			return "daily/dailyWrite";
 		}
 	}
+
 
 	@ResponseBody
 	@RequestMapping(value = "/file-upload", method = RequestMethod.POST)
@@ -205,6 +207,7 @@ public class DailyController {
 						 @RequestParam("postIdx") int postIdx){
 		dailyService.delete(postIdx);
 
+		//삭제 시 list로 이동
 		return "redirect:/study/{studyGroupCode}/daily/{boardIdx}/list";
 	}
 
