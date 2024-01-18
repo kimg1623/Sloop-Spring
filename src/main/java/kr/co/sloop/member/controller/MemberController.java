@@ -7,6 +7,7 @@ import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -32,6 +33,8 @@ public class MemberController {
 
     private final MemberService memberService;
 
+
+
     // signupForm.jsp 로 이동
     @GetMapping("/signup")
     public String signupForm(Model model){
@@ -39,9 +42,9 @@ public class MemberController {
         model.addAttribute("memberDTO",memberDTO);
         return "member/signupForm";
     }
-
+/** bcrypt 없이 하는 회원가입 */
     // signupForm.jsp -> form method = Post 로 데이터 받아옴
-    @PostMapping("/signup")
+    /*@PostMapping("/signup")
     public String signup(@Validated @ModelAttribute MemberDTO memberDTO , BindingResult errors , HttpServletResponse response) throws IOException{
 
         if (errors.hasErrors()){
@@ -53,11 +56,34 @@ public class MemberController {
 
         if (signupResult > 0) {
             AlertUtils.alertAndMovePage(response, "회원가입 되었습니다.", "login");// update 성공시 redirect로 상세보기 화면 출력
+            *//*return "member/signupSuccess"; // 회원가입 성공 시 이동*//*
+        }
+        return "member/signupForm";    // 회원가입 실패 시 이동
+
+    }*/
+    /** bcrypt 없이 하는 회원가입 */
+
+    /** bcrypt 회원가입 */
+    @PostMapping("/signup")
+    public String signup(@Validated @ModelAttribute MemberDTO memberDTO , BindingResult errors , HttpServletResponse response) throws IOException{
+
+        if (errors.hasErrors()){
+            AlertUtils.alert(response , "회원가입에 실패하였습니다.");
+            return "member/signupForm";
+        }
+
+        int signupResult = memberService.signup(memberDTO);
+
+        if (signupResult > 0) {
+
+            AlertUtils.alertAndMovePage(response, "회원가입 되었습니다.", "login");// update 성공시 redirect로 상세보기 화면 출력
             /*return "member/signupSuccess"; // 회원가입 성공 시 이동*/
         }
         return "member/signupForm";    // 회원가입 실패 시 이동
 
     }
+    /** bcrypt 회원가입 */
+
 
     // 회원가입 성공 후 로그인 하러 가기 버튼 클릭시 LoginForm.jsp 로 이동
     @GetMapping("/login")
@@ -92,6 +118,7 @@ public class MemberController {
     public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail){
         System.out.println("memberEmail = " + memberEmail);
         String checkResult = memberService.emailCheck(memberEmail);
+        log.info("checkResult CONTROLLER" + checkResult );
         return checkResult;
     }
     // 닉네임 중복확인 AJAX
