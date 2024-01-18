@@ -5,7 +5,10 @@
     <title>Title</title>
 </head>
 <body>
+<h1>${sessionScope.loginEmail}의 마이페이지 입니다.</h1>
+<a href="/member/mypage">마이페이지</a>
 
+<hr>
 <table>
     <tr>
         <th>스터디 그룹 번호</th>
@@ -31,6 +34,6 @@
     </c:otherwise>
 </c:choose>
 </table>
-
 </body>
+
 </html>
