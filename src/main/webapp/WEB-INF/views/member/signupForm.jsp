@@ -13,7 +13,7 @@
 <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
 <form:form action="/member/signup" method="post" modelAttribute="memberDTO">
     <p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" required="true"/>
-                    <form:button type="button" value="중복확인" onclick="emailCheck()">중복확인</form:button></p>
+                    <form:button type="button" onclick="emailCheck()">중복확인</form:button></p>
     <%--안내 문구--%>
     <span>ex) "email@email.com"</span>
     <%--에러 문구--%>

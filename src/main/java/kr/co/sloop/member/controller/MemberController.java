@@ -116,6 +116,7 @@ public class MemberController {
     // 이메일 중복확인 AJAX
     @PostMapping("/email-check")
     public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail){
+        log.info("emailCheck=====" + memberEmail);
         String checkResult = memberService.emailCheck(memberEmail);
         log.info("checkResult CONTROLLER" + checkResult );
         return checkResult;
