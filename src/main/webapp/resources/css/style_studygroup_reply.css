@@ -45,11 +45,12 @@ body {
 .replyButton{
     margin-left: 4px;
     height: 35px;
+    width: 90px;
     background: #000000;
     border-radius: 0.5rem;
     color: rgb(255, 255, 255);
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: 600;
+    font-size: 16px;
     border: none;
 }
 .replyButton:hover{

@@ -73,19 +73,19 @@
                     <div class="input-group flex-nowrap">
                         <span class="input-group-text" id="addon-wrapping">제목</span>
                         <input type="text" name="postDailyTitle" class="form-control" aria-describedby="addon-wrapping"
-                               value="${daily.postDailyTitle}">
+                               required value="${daily.postDailyTitle}">
                     </div>
                 </div>
 
                 <div>
                     <div class="input-group">
                         <span class="input-group-text">내용</span>
-                        <textarea name="postDailyContents" cols="30" rows="10" class="form-control">${daily.postDailyContents}</textarea>
+                        <textarea required name="postDailyContents" cols="30" rows="10" class="form-control">${daily.postDailyContents}</textarea>
                     </div>
                 </div>
 
                 <section class="writeSection">
-                    <input type="submit"  value="글수정" class="btn_update" onclick="updateReqFn()"/>
+                    <input type="submit"  value="수정" class="btn_update" onclick="updateReqFn()"/>
                 </section>
 
             </form>
