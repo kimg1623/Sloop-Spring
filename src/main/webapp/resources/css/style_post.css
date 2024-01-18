@@ -121,8 +121,13 @@ a:link{
     background-color: #e2e2e2;
 }
 .bottom_registeredDate, .bottom_view {
+    margin-bottom: 0.5px;
     font-size: 0.7rem;
     color: #717171;
+}
+.bottom_endDate {
+    font-size: 0.7rem;
+    color: #ff976b;
 }
 .view_img{
     width: 16px;
