@@ -14,6 +14,7 @@
 <script src="/resources/js/reply.js"></script>
 
 <script>
+
     // 현재 페이지 URL 가져오기
     const currentURL = window.location.href;
 
@@ -29,6 +30,7 @@
     const previousURL = `/study/${studyGroupCode}/daily/${boardIdx}`;
 
     console.log("Previous URL:", previousURL);
+
 </script>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -153,8 +155,6 @@
         $(document).ready(function(){
             let postIdx = '${daily.postIdx}';
             let loginMemberIdx = '${sessionScope.loginMemberIdx}';
-            console.log("ㅇㅇㅁㅁㄴㅇ" + postIdx+" "+loginMemberIdx);
-
             // 댓글 목록 출력
             loadReplyList(postIdx, loginMemberIdx);
         });

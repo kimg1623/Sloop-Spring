@@ -91,7 +91,7 @@
     </div>
 
     <section class="writeSection">
-        <input type="submit"  value="글수정" class="btn_update" onclick="updateReqFn()"/>
+        <input type="submit"  value="수정" class="btn_update" onclick="updateReqFn()"/>
     </section>
     </form:form>
 
