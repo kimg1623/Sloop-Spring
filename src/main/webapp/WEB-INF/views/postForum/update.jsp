@@ -20,18 +20,18 @@
     <%--@elvariable id="postForumDTO" type="kr.co.sloop.postForum.domain.PostForumDTO"--%>
     <form:form modelAttribute="postForumDTO" method="post" action="./update">
 
-        <%--<!-- 카테고리 -->
-        <form:radiobutton path="categoryPostIdx" id="categoryPostDaily" name="categoryPostIdx" value="1" checked="true" />
+        <!-- 카테고리 -->
+        <form:radiobutton path="categoryPostIdx" id="categoryPostDaily" name="categoryPostIdx" value="1" />
         <label for="categoryPostDaily">일상</label>
 
-        <form:radiobutton path="categoryPostIdx" id="categoryPostHobby" name="categoryPostIdx" value="2" checked="true" />
+        <form:radiobutton path="categoryPostIdx" id="categoryPostHobby" name="categoryPostIdx" value="2" />
         <label for="categoryPostDaily">취미</label>
 
-        <form:radiobutton path="categoryPostIdx" id="categoryPostWorry" name="categoryPostIdx" value="3" checked="true" />
+        <form:radiobutton path="categoryPostIdx" id="categoryPostWorry" name="categoryPostIdx" value="3" />
         <label for="categoryPostDaily">고민</label>
 
-        <form:radiobutton path="categoryPostIdx" id="categoryPostCareer" name="categoryPostIdx" value="4" checked="true" />
-        <label for="categoryPostDaily">진로</label>--%>
+        <form:radiobutton path="categoryPostIdx" id="categoryPostCareer" name="categoryPostIdx" value="4"/>
+        <label for="categoryPostDaily">진로</label>
 
         <!-- hidden -->
         <!-- 작성자 idx -->

@@ -54,7 +54,7 @@
 
     <!-- postIdx에 해당하는 게시글 하나의 상세 조회 페이지를 위한 쿼리 -->
     <select id="findByPostIdx" parameterType="int" resultType="postForum">
-        select f.postIdx, c.categoryPostName, f.postForumTitle, f.postForumContents, f.postForumRegDate, f.postForumEditDate, f.postForumHits, m.memberNickname, f.memberIdx, m.memberEmail
+        select f.postIdx, c.categoryPostIdx, c.categoryPostName, f.postForumTitle, f.postForumContents, f.postForumRegDate, f.postForumEditDate, f.postForumHits, m.memberNickname, f.memberIdx, m.memberEmail
         from postForum as f
         join categoryPost as c on f.categoryPostIdx = c.categoryPostIdx
         join member as m on f.memberIdx = m.memberIdx
@@ -67,7 +67,8 @@
         update postForum
         set postForumTitle = #{postForumTitle},
         postForumContents = #{postForumContents},
-        postForumEditDate = now()
+        postForumEditDate = now(),
+        categoryPostIdx = #{categoryPostIdx}
         where postIdx = #{postIdx}
     </update>
 

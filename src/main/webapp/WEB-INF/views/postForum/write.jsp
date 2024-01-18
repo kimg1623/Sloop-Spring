@@ -11,7 +11,6 @@
 <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
         integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
 <script src="/resources/ckeditor/ckeditor.js"></script>
-<!-- <script src="ckeditor.js"></script> -->
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container-studyGroup">
