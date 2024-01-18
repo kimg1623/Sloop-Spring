@@ -6,20 +6,20 @@ body {
  */
 .header-a{
     text-decoration: none;
-    color: #ffffff;
+    rgba(255,255,255,.55);
 }
 .header-a:hover{
     text-decoration: none;
-    color: #ffffff;
+    color: rgba(255, 255, 255, 0.76);
 }
 .header-span{
-    color: #ffffff;
+    color: rgba(255,255,255,.55);
 }
 .header-span:hover{
-    color: #ffffff !important;
+    color: rgba(255,255,255,.55) !important;
 }
 .header-bg-color{
-    background-color: #ffffff;
+    background-color: #458DFC;
 }
 
 
