@@ -187,7 +187,7 @@ public class PostForumController {
         System.out.println("path:" + path);
         String sDirPath = path + uid + "_" + fileName;
 
-        sDirPath = uploadPath + File.separator + "resources/uploads" + File.separator + uid + "_" + fileName;
+        sDirPath = uploadPath + File.separator + "uploads" + File.separator + uid + "_" + fileName;
 
 
         File imgFile = new File(sDirPath);
