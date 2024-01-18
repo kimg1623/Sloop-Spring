@@ -23,4 +23,11 @@
         delete from post
         where postIdx = #{postIdx}
     </delete>
+
+    <!-- email로 idx 찾기 -->
+    <select id="selectMemberIdxByMemberEmail" parameterType="String" resultType="int">
+        select memberIdx
+        from member
+        where memberEmail = #{memberEmail}
+    </select>
 </mapper>

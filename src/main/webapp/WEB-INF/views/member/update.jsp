@@ -1,95 +1,95 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
-    <title>회원정보수정</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <title>S-loop 회원 정보 수정</title>
 </head>
 <body>
-<form action="/member/update" method="post" name="updateForm">
-    정렬번호 : <input type="text" name="memberIdx" value="${member.memberIdx}" readonly><br>
-    이메일 : <input type="text" name="memberEmail" value="${member.memberEmail}" readonly><br>
-    비밀번호 : <input type="text" name="memberPassword" id="memberPassword" autofocus><br>
-    닉네임 : <input type="text" name="memberNickname" value="${member.memberNickname}" readonly><br>
-    <p>성   별 :
-        <input type="radio" name="memberGender" id="male" value="남자"
-        <c:if test="${member.memberGender eq '남자'}"> checked ></c:if>
-        <label for="male">남자</label>
-        <input type="radio" name="memberGender" id="female" value="여자"
-        <c:if test="${member.memberGender eq '여자'}"> checked ></c:if>
-        <label for="female">여자</label>
-    </p>
 
-    핸드폰 번호: <input type="text" name="memberPhonenumber" value="${member.memberPhonenumber}" required><br>
-    <p>회원대분류 :
-        <select name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required>
-            <option>선택하세요.</option>
-            <option value="초등학생">초등학생</option>
-            <option value="중학생">중학생</option>
-            <option value="고등학생">고등학생</option>
-            <%--<option value="univ">대학생</option>--%>
-            <%--<option value="normal">일반인</option>--%>
-        </select>
-    </p>
-    <p>회원소분류 :
-        <select name="memberGradeCode" id="memberGradeCode_sub">
+<%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
+<form:form action="/member/update" method="post" modelAttribute="memberDTO" name="updateForm">
+<!-- hidden -->
+<!-- 작성자 idx -->
+<p><form:hidden path="memberIdx"/></p>
+
+<p>이 메 일 : <form:input path="memberEmail" readonly="true"/>
+<%--
+<p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
+--%>
+<p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" readonly="true"/></p>
+<p>성   별 :
+    <form:radiobutton path="memberGender" id="male" value="남자" />
+    <label for="male">남자</label>
+    <form:radiobutton path="memberGender" id="female" value="여자" />
+    <label for="female">여자</label>
+</p>
+<p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호"/></p>
+<p>회원대분류 :
+    <form:select path="memberGradeCode">
+        <form:option value="">선택하세요.</form:option>
+        <form:option value="초등학생">초등학생</form:option>
+        <form:option value="중학생">중학생</form:option>
+        <form:option value="고등학생">고등학생</form:option>
+    </form:select>
+</p>
+    <%--<p>회원소분류 :
+        <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
             <option value="choose">선택하세요.</option>
-        </select></p>
-    학교명 : <input type="text" name="memberSchool" value="${member.memberSchool}"><br>
-    <p>관심 과목 :
-        <input type="checkbox" name="memberSubjectCode" value="국어" id="국어" <c:if test="${member.memberSubjectCode eq '국어'}"> checked ></c:if>
-        <label for="국어">국어</label>
-        <input type="checkbox" name="memberSubjectCode" value="영어" id="영어" <c:if test="${member.memberSubjectCode eq '영어'}"> checked ></c:if>
-        <label for="영어">영어</label>
-        <input type="checkbox" name="memberSubjectCode" value="수학" id="수학" <c:if test="${member.memberSubjectCode eq '수학'}"> checked ></c:if>
-        <label for="수학">수학</label>
-        <input type="checkbox" name="memberSubjectCode" value="사회" id="사회" <c:if test="${member.memberSubjectCode eq '사회'}"> checked ></c:if>
-        <label for="사회">사회</label>
-        <input type="checkbox" name="memberSubjectCode" value="과학" id="과학" <c:if test="${member.memberSubjectCode eq '과학'}"> checked ></c:if>
-        <label for="과학">과학</label>
-        <input type="checkbox" name="memberSubjectCode" value="기타" id="기타" <c:if test="${member.memberSubjectCode eq '기타'}"> checked ></c:if>
-        <label for="기타">기타</label>
-
-    </p>
-    <p>지역 : <input type="text" name="memberRegionCode" value="${member.memberRegionCode}"></p>
-    <p>지역대분류 :
-        <select name="memberRegionCode" id="memberRegionCode" onchange="memberSigugunChange(this)" required>
-            <option>선택하세요.</option>
-            <option value="900">서울특별시</option>
-            <option value="200">경기도</option>
-            <option value="1200">인천광역시</option>
-            <option value="100">강원특별자치도</option>
-            <option value="1700">충청북도</option>
-            <option value="1600">충청남도</option>
-            <option value="700">대전광역시</option>
-            <option value="1000">세종특별자치시</option>
-            <option value="1400">전라북도</option>
-            <option value="1300">전라남도</option>
-            <option value="500">광주광역시</option>
-            <option value="400">경상북도</option>
-            <option value="300">경상남도</option>
-            <option value="800">부산광역시</option>
-            <option value="600">대구광역시</option>
-            <option value="1100">울산광역시</option>
-            <option value="1500">제주특별자치도</option>
-        </select></p>
-    <p>지역소분류 :
+        </form:select></p>--%>
+<p>학 교 명 : <form:input type="text" path="memberSchool" readonly="true"/></p>
+<p>관심 과목 :
+    <form:checkbox path="memberSubjectCode" value="국어"/>국어
+    <form:checkbox path="memberSubjectCode" value="영어"/>영어
+    <form:checkbox path="memberSubjectCode" value="수학"/>수학
+    <form:checkbox path="memberSubjectCode" value="사회"/>사회
+    <form:checkbox path="memberSubjectCode" value="과학"/>과학
+    <form:checkbox path="memberSubjectCode" value="기타"/>기타
+</p>
+<p>지역대분류 :
+    <form:select path="memberRegionCode">
+        <form:option value="">선택하세요.</form:option>
+        <form:option value="900">서울특별시</form:option>
+        <form:option value="200">경기도</form:option>
+        <form:option value="1200">인천광역시</form:option>
+        <form:option value="100">강원특별자치도</form:option>
+        <form:option value="1700">충청북도</form:option>
+        <form:option value="1600">충청남도</form:option>
+        <form:option value="700">대전광역시</form:option>
+        <form:option value="1000">세종특별자치시</form:option>
+        <form:option value="1400">전라북도</form:option>
+        <form:option value="1300">전라남도</form:option>
+        <form:option value="500">광주광역시</form:option>
+        <form:option value="400">경상북도</form:option>
+        <form:option value="300">경상남도</form:option>
+        <form:option value="800">부산광역시</form:option>
+        <form:option value="600">대구광역시</form:option>
+        <form:option value="1100">울산광역시</form:option>
+        <form:option value="1500">제주특별자치도</form:option>
+    </form:select>
+</p>
+    <%--<p>지역소분류 :
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
-        </select></p>
-    <input type="button" value="수정" onclick="update()">
-
-</form>
+        </select></p>--%>
+    <input type="submit" value="수정">
+</form:form>
 </body>
 <script>
-    const update = () => {
-        const passwordDB = '${member.memberPassword}';
+
+    /*const update = () => {
+        const passwordDB = '${memberDTO.memberPassword}';
         const password = document.getElementById("memberPassword").value;
         if (passwordDB == password) {
             document.updateForm.submit();
+            /!*location.href = "/member/update";*!/
         } else {
             alert("비밀번호가 일치하지 않습니다!");
         }
-    }
+    }*/
     // 이메일 입력값을 가져오고,
     // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
     // 사용 가능 여부를 이메일 입력창 아래에 표시

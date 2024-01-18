@@ -20,6 +20,23 @@
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/study/infoForm.jsp" />
    </definition>
+   <!--notice-->
+   <definition name="notice/list" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/notice/list.jsp" />
+   </definition>
+   <definition name="notice/write" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/notice/write.jsp" />
+   </definition>
+   <definition name="notice/detail" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/notice/detail.jsp" />
+   </definition>
+   <definition name="notice/updateForm" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/notice/updateForm.jsp" />
+   </definition>
 
    <!-- postForum -->
    <definition name="postForum/list" extends="studyGroupLayout">
@@ -37,6 +54,27 @@
       <put-attribute name="body" value="/WEB-INF/views/postForum/write.jsp" />
    </definition>
 
+   <!-- 지혜 -->
+   <definition name="daily/dailyList" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyList.jsp" />
+   </definition>
+
+   <definition name="daily/dailyWrite" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyWrite.jsp" />
+   </definition>
+
+   <definition name="daily/dailyUpdate" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyUpdate.jsp" />
+   </definition>
+
+   <definition name="daily/dailyDetail" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyDetail.jsp" />
+   </definition>
+  
    <definition name="postForum/update" extends="studyGroupLayout">
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/postForum/update.jsp" />
@@ -62,5 +100,28 @@
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/postAssignment/update.jsp" />
    </definition>
+
+   <!-- 지혜 daily -->
+   <definition name="daily/dailyList" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyList.jsp" />
+   </definition>
+
+   <definition name="daily/dailyWrite" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyWrite.jsp" />
+   </definition>
+
+   <definition name="daily/dailyUpdate" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyUpdate.jsp" />
+   </definition>
+
+   <definition name="daily/dailyDetail" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/daily/dailyDetail.jsp" />
+   </definition>
+
+
 
 </tiles-definitions>

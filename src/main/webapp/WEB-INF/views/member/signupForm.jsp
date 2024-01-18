@@ -1,3 +1,5 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
@@ -7,102 +9,212 @@
     <title>S-loop 회원가입</title>
 </head>
 <body>
-<form action="/member/signup" method="post">
-    <p>이 메 일 : <input type="email" name="memberEmail" placeholder="이메일" id="memberEmail" onblur="emailCheck()">
-                    <button type="button" name="check-Email" value="중복확인" onclick="emailCheck()">중복확인</button></p>
+<%-- form:errors 가 span 으로 나오는 출력문과 / <p> 태그로 유효성검사 나오는건 조장님 컨트롤하기 편하신거로 선택해서 쓰시면 될거 같아요--%>
+<%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
+<form:form action="/member/signup" method="post" modelAttribute="memberDTO">
+    <p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" required="true"/>
+                    <form:button type="button" value="중복확인" onclick="emailCheck()">중복확인</form:button></p>
+    <%--안내 문구--%>
+    <span>ex) "email@email.com"</span>
+    <%--에러 문구--%>
+    <form:errors path="memberEmail" cssStyle="color: red"/>
     <p id="check-result"></p>
-    <p>비밀번호 : <input type="password" name="memberPassword" placeholder="비밀번호" required></p>
-    <p>닉 네 임 : <input type="text" name="memberNickname" placeholder="닉네임" required></p>
+
+    <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
+    <%--안내 문구--%>
+    <span>영어 대소문자,숫자 한 개 이상,특수문자(!,@,#,$)중 한 개 이상을 반드시 포함해야 합니다.(8~16자)</span>
+    <%--에러 문구--%>
+    <form:errors path="memberPassword" cssStyle="color: red"/>
+
+    <p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" required="true"/>
+        <form:button type="button" value="중복확인" onclick="nicknameCheck()">중복확인</form:button></p>
+    <%--안내 문구--%>
+    <span>영문 대소문자,숫자,밑줄(_) 중 하나 이상 포함(2~19자)</span>
+    <%--에러 문구--%>
+    <form:errors path="memberNickname" cssStyle="color: red"/>
+    <p id="check-result2"></p>
+
     <p>성   별 :
-        <input type="radio" name="memberGender" id="male" value="남자">
+        <form:radiobutton path="memberGender" id="male" value="남자" />
         <label for="male">남자</label>
-        <input type="radio" name="memberGender" id="female" value="여자">
+        <form:radiobutton path="memberGender" id="female" value="여자" />
         <label for="female">여자</label>
     </p>
-    <p>전화번호 : <input type="text" name="memberPhonenumber" placeholder="핸드폰번호" required></p>
+    <form:errors path="memberGender" cssStyle="color: red"/>
+
+    <p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호" required="true"/>
+        <form:button type="button" value="중복확인" onclick="phoneNumbCheck()">중복확인</form:button></p>
+    <form:errors path="memberPhonenumber" cssStyle="color: red"/>
+    <p id="check-result3"></p>
+
     <p>회원대분류 :
-        <select name="memberGradeCode" id="memberGradeCode" onchange="memberDivisionChange(this)" required>
-            <option>선택하세요.</option>
-            <option value="초등학생">초등학생</option>
-            <option value="중학생">중학생</option>
-            <option value="고등학생">고등학생</option>
-            <%--<option value="univ">대학생</option>--%>
-            <%--<option value="normal">일반인</option>--%>
-        </select>
+        <form:select path="memberGradeCode" onchange="memberDivisionChange(this)" required="true">
+            <form:option value="">선택하세요.</form:option>
+            <form:option value="초등학생">초등학생</form:option>
+            <form:option value="중학생">중학생</form:option>
+            <form:option value="고등학생">고등학생</form:option>
+        </form:select>
     </p>
-    <p>회원소분류 :
-        <select name="memberGradeCode" id="memberGradeCode_sub">
+    <form:errors path="memberGradeCode" cssStyle="color: red"/>
+    <%--<p>회원소분류 :
+        <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
             <option value="choose">선택하세요.</option>
-        </select></p>
-    <p>학 교 명 : <input type="text" name="memberSchool" required></p>
+        </form:select></p>--%>
+    <p>학 교 명 : <form:input type="text" path="memberSchool" required="true"/></p>
+    <form:errors path="memberSchool" cssStyle="color: red"/>
     <p>관심 과목 :
-        <input type="checkbox" name="memberSubjectCode" value="국어">국어
-        <input type="checkbox" name="memberSubjectCode" value="영어">영어
-        <input type="checkbox" name="memberSubjectCode" value="수학">수학
-        <input type="checkbox" name="memberSubjectCode" value="사회">사회
-        <input type="checkbox" name="memberSubjectCode" value="과학">과학
-        <input type="checkbox" name="memberSubjectCode" value="기타">기타
+        <form:checkbox path="memberSubjectCode" value="국어"/>국어
+        <form:checkbox path="memberSubjectCode" value="영어"/>영어
+        <form:checkbox path="memberSubjectCode" value="수학"/>수학
+        <form:checkbox path="memberSubjectCode" value="사회"/>사회
+        <form:checkbox path="memberSubjectCode" value="과학"/>과학
+        <form:checkbox path="memberSubjectCode" value="기타"/>기타
     </p>
+    <form:errors path="memberSubjectCode" cssStyle="color: red"/>
     <p>지역대분류 :
-        <select name="memberRegionCode" id="memberRegionCode" onchange="memberSigugunChange(this)" required>
-            <option>선택하세요.</option>
-            <option value="900">서울특별시</option>
-            <option value="200">경기도</option>
-            <option value="1200">인천광역시</option>
-            <option value="100">강원특별자치도</option>
-            <option value="1700">충청북도</option>
-            <option value="1600">충청남도</option>
-            <option value="700">대전광역시</option>
-            <option value="1000">세종특별자치시</option>
-            <option value="1400">전라북도</option>
-            <option value="1300">전라남도</option>
-            <option value="500">광주광역시</option>
-            <option value="400">경상북도</option>
-            <option value="300">경상남도</option>
-            <option value="800">부산광역시</option>
-            <option value="600">대구광역시</option>
-            <option value="1100">울산광역시</option>
-            <option value="1500">제주특별자치도</option>
-        </select></p>
-    <p>지역소분류 :
+        <form:select path="memberRegionCode" onchange="memberSigugunChange(this)" required="true">
+            <form:option value="">선택하세요.</form:option>
+            <form:option value="900">서울특별시</form:option>
+            <form:option value="200">경기도</form:option>
+            <form:option value="1200">인천광역시</form:option>
+            <form:option value="100">강원특별자치도</form:option>
+            <form:option value="1700">충청북도</form:option>
+            <form:option value="1600">충청남도</form:option>
+            <form:option value="700">대전광역시</form:option>
+            <form:option value="1000">세종특별자치시</form:option>
+            <form:option value="1400">전라북도</form:option>
+            <form:option value="1300">전라남도</form:option>
+            <form:option value="500">광주광역시</form:option>
+            <form:option value="400">경상북도</form:option>
+            <form:option value="300">경상남도</form:option>
+            <form:option value="800">부산광역시</form:option>
+            <form:option value="600">대구광역시</form:option>
+            <form:option value="1100">울산광역시</form:option>
+            <form:option value="1500">제주특별자치도</form:option>
+        </form:select>
+    </p>
+    <form:errors path="memberRegionCode" cssStyle="color: red"/>
+    <%--<p>지역소분류 :
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
-        </select></p>
+        </select></p>--%>
     <input type="submit" value="회원가입">
-</form>
+</form:form>
 </body>
 <script type="text/javascript">
-    // 이메일 입력값을 가져오고,
-    // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
-    // 사용 가능 여부를 이메일 입력창 아래에 표시
-    // document 관련된건 DOM 명령
+
+        /** 이메일 유효성 검사 JavaScript & AJAX & JSON */
+        // 이메일 입력값을 가져오고,
+        // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
+        // 사용 가능 여부를 이메일 입력창 아래에 표시
+        // document 관련된건 DOM 명령
     const emailCheck = () => {
         const email = document.getElementById("memberEmail").value;
         const checkResult = document.getElementById("check-result");
         console.log("입력한 이메일", email);
-        $.ajax({
-            // 요청방식: post, url: "email-check", 데이터: 이메일
-            type: "post",
-            url: "/member/email-check",
-            data: {
-                "memberEmail": email
-            },
-            success: function(res) {
-                console.log("요청성공", res);
-                if (res == "ok") {
-                    console.log("사용가능한 이메일");
-                    checkResult.style.color = "green";
-                    checkResult.innerHTML = "사용가능한 이메일";
-                } else {
-                    console.log("이미 사용중인 이메일");
-                    checkResult.style.color = "red";
-                    checkResult.innerHTML = "이미 사용중인 이메일";
+        // 이메일 정규 표현식 초기화
+        let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+
+        if (email === "" || !regex.test(email)) { // 형식에 맞지 않거나 빈 문자열이라면
+            checkResult.style.color = "red"
+            checkResult.innerHTML = "이메일을 형식에 맞게 입력하세요.(공백X)"
+        } else { // 형식에 맞을때
+            $.ajax({
+                // 요청방식: post, url: "email-check", 데이터: 이메일
+                type: "post",
+                url: "/member/email-check",
+                data: {
+                    "memberEmail": email
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+                    if (res == "ok") {          // service 단에서 "ok" or "no" 를 반환
+                        console.log("사용가능한 이메일");
+                        checkResult.style.color = "green";
+                        checkResult.innerHTML = "사용가능한 이메일";
+                    } else {
+                        console.log("이미 사용중인 이메일");
+                        checkResult.style.color = "red";
+                        checkResult.innerHTML = "이미 사용중인 이메일";
+                    }
+                },
+                error: function (err) {
+                    console.log("에러발생", err);
                 }
-            },
-            error: function(err) {
-                console.log("에러발생", err);
-            }
-        });
+
+            });
+        }
+    }
+    /** 닉네임 중복검사도 이메일 유효성과 마찬가지로 동일한 형태로 진행 */
+    const nicknameCheck = () => {
+        const nickname = document.getElementById("memberNickname").value;
+        const checkResult2 = document.getElementById("check-result2");
+        console.log("입력한 닉네임", nickname);
+
+        let regex2 = new RegExp('[a-zA-Z][a-zA-Z0-9_]{2,19}');
+        if (nickname === "" || !regex2.test(nickname)) { // 형식에 맞지 않거나 빈 문자열이라면
+            checkResult2.style.color = "red"
+            checkResult2.innerHTML = "닉네임을 형식에 맞게 기입하세요.(공백X)"
+        } else { // 형식에 맞을때
+            $.ajax({
+
+                type: "post",
+                url: "/member/nickname-check",
+                data: {
+                    "memberNickname": nickname
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+                    if (res == "ok") {
+                        console.log("사용가능한 닉네임");
+                        checkResult2.style.color = "green";
+                        checkResult2.innerHTML = "사용가능한 닉네임";
+                    } else {
+                        console.log("이미 사용중인 이메일");
+                        checkResult2.style.color = "red";
+                        checkResult2.innerHTML = "이미 사용중인 닉네임";
+                    }
+                },
+                error: function (err) {
+                    console.log("에러발생", err);
+                }
+            });
+        }
+    }
+    const phoneNumbCheck = () => {
+        const phoneNumb = document.getElementById("memberPhonenumber").value;
+        const checkResult3 = document.getElementById("check-result3");
+        console.log("입력한 전화번호", phoneNumb);
+
+        let regex3 = new RegExp('0([0-9]{2,3})([0-9]{3,4})([0-9]{4})');
+        if (phoneNumb === "" || !regex3.test(phoneNumb)) { // 형식에 맞지 않거나 빈 문자열이라면
+            checkResult3.style.color = "red"
+            checkResult3.innerHTML = "전화번호를 형식에 맞게 기입하세요.(공백X)"
+        } else { // 형식에 맞을때
+            $.ajax({
+
+                type: "post",
+                url: "/member/phoneNumb-check",
+                data: {
+                    "memberPhonenumber": phoneNumb
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+                    if (res == "ok") {
+                        console.log("사용가능한 전화번호");
+                        checkResult3.style.color = "green";
+                        checkResult3.innerHTML = "사용가능한 전화번호";
+                    } else {
+                        console.log("이미 사용중인 전화번호");
+                        checkResult3.style.color = "red";
+                        checkResult3.innerHTML = "이미 사용중인 전화번호";
+                    }
+                },
+                error: function (err) {
+                    console.log("에러발생", err);
+                }
+            });
+        }
     }
     /*대분류 선택시 소분류 다르게 표시하기*/
 
@@ -123,7 +235,7 @@
         target.options.length = 0;
 
         for (x in d) {
-            var opt = document.createElement("option");
+            var opt = document.createElement("form:option");
             opt.value = d[x];
             opt.innerHTML = d[x];
             target.appendChild(opt);
@@ -188,7 +300,7 @@
         target.options.length = 0;
 
         for (x in b) {
-            var opt = document.createElement("option");
+            var opt = document.createElement("form:option");
             opt.value = b[x];
             opt.innerHTML = b[x];
             target.appendChild(opt);

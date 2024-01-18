@@ -1,6 +1,4 @@
 package kr.co.sloop.member.repository;
-
-
 import kr.co.sloop.member.domain.MemberDTO;
 import kr.co.sloop.member.mapper.MemberMapper;
 import kr.co.sloop.member.repository.impl.MemberRepository;
@@ -10,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -61,6 +60,26 @@ public class MemberRepositoryImpl implements MemberRepository {
     public int deleteByUser(int memberIdx) {
         return memberMapper.deleteByUser(memberIdx);
     }
+
+    @Override
+    public void uploadProfile(MemberDTO memberDTO) {
+        memberMapper.uploadProfile(memberDTO);
+    }
+
+    @Override
+    public MemberDTO findByMemberPhoneNumb(String memberPhonenumber) {
+        return memberMapper.findByMemberPhoneNumb(memberPhonenumber);
+    }
+
+    @Override
+    public List<MemberDTO> findStudyByIdx(String sessionIdx) {
+        return memberMapper.findStudyByIdx(sessionIdx);
+    }
+
+    /*@Override
+    public void uploadProfileByIdx(int memberIdx) {
+        memberMapper.uploadProfileByIdx(memberIdx);
+    }*/
 
     /*@Override
     public int signup(RegisterFormDTO registerFormDTO) {

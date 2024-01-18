@@ -38,9 +38,16 @@
 </table>
 </body>
 <script>
+
     const deleteMember = (memberIdx) => {
-        console.log(memberIdx);
-        location.href = "/member/delete?memberIdx="+memberIdx;
+
+        if (confirm("정말 삭제하시겠습니까?") == true){
+            console.log(memberIdx);
+            location.href = "/member/delete?memberIdx="+memberIdx;
+        } else {
+            return;
+        }
+
     }
 </script>
 </html>
