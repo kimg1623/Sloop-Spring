@@ -161,7 +161,25 @@ public class StudyGroupController {
 			return "study/"+studyGroupCode+"/infoForm";
 	}
 
+	/*
+	 * 스터디 그룹 가입 신청
+	 * URI: /study/join
+	 */
+	@PostMapping(value = "/join")
+	@ResponseBody
+	public Map joinStudyGroup(@RequestParam String studyGroupIdx, @RequestParam int memberIdx) {
+		Map result = new HashMap<String, Object>();
+		log.info("가입 신청 : " + studyGroupIdx + ", " + memberIdx);
+		// studyGroupIdx 스터디 그룹에 memberIdx 회원이 가입 신청
+		boolean joinResult = studyGroupService.joinStudyGroup(studyGroupIdx, memberIdx);
 
+		if(true){	// 성공
+			result.put("result", "ok");
+		}else{	// 실패
+			result.put("result", "false");
+		}
+		return result;
+	}
 
 
 
@@ -218,7 +236,4 @@ public class StudyGroupController {
 		System.out.println("buf = " + buf);
 		return buf.toString();
 	}
-
-
-	
 }

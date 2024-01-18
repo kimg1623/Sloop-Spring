@@ -78,4 +78,8 @@
         select studyGroupName from studyGroup where studyGroupCode=#{studyGroupCode}
     </select>
 
+    <insert id="joinStudyGroup">
+        insert into studyMem (studyGroupIdx, memberIdx, studyMemRole)
+        values (#{studyGroupIdx}, #{memberIdx}, 'ROLE_STUDY_STANDBY')
+    </insert>
 </mapper>
