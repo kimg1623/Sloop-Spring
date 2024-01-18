@@ -302,3 +302,21 @@ a:link{
     grid-gap: 15px;
     gap: 15px;
 }
+
+/*스터디관리 개설버튼*/
+
+.addStudyButton{
+    height: 35px;
+    width: 65px;
+    background: #458dfc;
+    border-radius: 0.375rem;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+}
+
+.addStudyButton:hover{
+    background: #c9c9c9;
+    transition: 0.2s ease;
+}
