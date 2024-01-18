@@ -4,6 +4,11 @@
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
 
+<!-- jquery for ajax cdn -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<!-- 댓글 js -->
+<script src="/resources/js/reply.js"></script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container-studyGroup">
         <div class="box-size contents_wrapper">
@@ -69,9 +74,28 @@
             <!-- post 내용 끝 -->
             <p hidden="true">${postForumDTO.memberIdx}</p>
         </div>
+
+    <button onclick="listFn()">목록</button>
+    <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
+    <c:if test="${postForumDTO.memberEmail == sessionScope.loginEmail}">
+        <button onclick="updateFn('${postForumDTO.postIdx}')">수정</button>
+        <button onclick="deleteFn('${postForumDTO.postIdx}')">삭제</button>
+    </c:if>
+
+    <!-- 댓글 입력 폼 -->
+    <div>
+        <input type="text" id="replyContents" placeholder="댓글을 입력해주세요.">
+        <button id="reply-write-btn" onclick="replyWrite('${postForumDTO.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 작성</button>
+    </div>
+    <br>
+
+    <!-- 댓글 목록 -->
+    <div id = "reply-list">
     </div>
 
+    </div>
     <script>
+        /* 게시글 */
         // 목록으로 돌아가기
         const listFn = () => {
             location.href = "./list";
@@ -95,5 +119,14 @@
                 console.log("취소되었습니다");
             }
         };
+
+        /* 댓글 */
+        // 자동 실행 함수
+        $(document).ready(function(){
+            let postIdx = '${postForumDTO.postIdx}';
+            let loginMemberIdx = '${sessionScope.loginMemberIdx}';
+            // 댓글 목록 출력
+            loadReplyList(postIdx, loginMemberIdx);
+        });
     </script>
 </main>
