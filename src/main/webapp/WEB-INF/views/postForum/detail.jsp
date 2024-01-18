@@ -3,6 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
+<link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
+<link href="/resources/css/style_studygroup_reply.css" rel="stylesheet">
 
 <!-- jquery for ajax cdn -->
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
@@ -26,8 +28,8 @@
                         <div id="writeBtn" name="writeBtn">
                             <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
                             <c:if test="${postForumDTO.memberEmail == sessionScope.loginEmail}">
-                                <input type="button" class="btn_write" onclick="updateFn('${postForumDTO.postIdx}')" value="수정"/>
-                                <input type="button" class="btn_write" onclick="deleteFn('${postForumDTO.postIdx}')" value="삭제"/>
+                                <input type="button" class="btn_update" onclick="updateFn('${postForumDTO.postIdx}')" value="수정"/>
+                                <input type="button" class="btn_delete" onclick="deleteFn('${postForumDTO.postIdx}')" value="삭제"/>
                             </c:if>
                         </div>
                     </div>
@@ -67,25 +69,27 @@
             </div>
             <!-- post 제목 영역 끝 -->
 
-            <!-- post 내용 시작 -->
-            <div class="post_content_contents">
-                <c:out value="${postForumDTO.postForumContents}" escapeXml="false"/>
-            </div>
-            <!-- post 내용 끝 -->
-            <p hidden="true">${postForumDTO.memberIdx}</p>
-        </div>
+                <!-- post 내용 시작 -->
+                <div class="post_content_contents">
+                    <c:out value="${postForumDTO.postForumContents}" escapeXml="false"/>
+                </div>
+                <!-- post 내용 끝 -->
+                <p hidden="true">${postForumDTO.memberIdx}</p>
 
-    <button onclick="listFn()">목록</button>
-    <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
-    <c:if test="${postForumDTO.memberEmail == sessionScope.loginEmail}">
-        <button onclick="updateFn('${postForumDTO.postIdx}')">수정</button>
-        <button onclick="deleteFn('${postForumDTO.postIdx}')">삭제</button>
-    </c:if>
+        </div><!--box-size contents_wrapper-->
+    </div>
 
     <!-- 댓글 입력 폼 -->
-    <div>
-        <input type="text" id="replyContents" placeholder="댓글을 입력해주세요.">
-        <button id="reply-write-btn" onclick="replyWrite('${postForumDTO.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 작성</button>
+    <div class="replyInput_replytitle">
+    댓글
+    </div>
+    <div class="replyInput_content_box">
+        <input class="replyInput_content" type="text" id="replyContents"
+               placeholder="댓글을 입력해주세요.">
+    </div>
+    <div class="replyButton_wrap">
+        <button class="replyButton" id="reply-write-btn"
+                onclick="replyWrite('${postForumDTO.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 등록</button>
     </div>
     <br>
 
@@ -93,7 +97,8 @@
     <div id = "reply-list">
     </div>
 
-    </div>
+
+
     <script>
         /* 게시글 */
         // 목록으로 돌아가기
