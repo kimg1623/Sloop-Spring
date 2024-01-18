@@ -16,14 +16,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
+import java.io.*;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 @Controller
@@ -31,7 +31,9 @@ import java.util.*;
 @RequiredArgsConstructor
 @Log4j2
 public class MemberController {
-
+    // 파일업로드
+    @Resource(name="uploadPathforMember")
+    String uploadPath;
     private final MemberService memberService;
 
 
@@ -283,10 +285,7 @@ public class MemberController {
 
         // 기본적으로 JSON 객체로 "{"result":"FAIL"}" 이렇게 설정한다.
         String strResult = "{ \"result\":\"ok\" }";
-        // 절대경로 초기화 - HttpServletRequest는 보안이슈가 있기에 ServletContext 를 통해 가져오는게 더 안전하지만 일단 씀
-        String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-        // 파일 경로 초기화
-        String fileRoot;
+
 
 
         // 세션에서 memberIdx 값을 가져온다.
@@ -294,6 +293,9 @@ public class MemberController {
         // memberDTO 내부 정보를 idx를 통해 불러온다.
         MemberDTO memberDTO = memberService.findByIdx(memberIdx);
         log.info("업로드 객체 안에 memberDTO 정보 불러오기" + memberDTO);
+
+        // 서버 저장 경로
+        String sDirPath = uploadPath + File.separator + "uploads";
 
 
         try {
@@ -303,20 +305,17 @@ public class MemberController {
 
                 // for문을 통해 file 객체 안에 정보를 대입
                 for (MultipartFile file : multipartFile) {
-
-                    // 파일 경로 재 초기화
-                    fileRoot = contextRoot + "resources/upload/";
-                    System.out.println(fileRoot);
-                    
                     String originalFileName = file.getOriginalFilename();    //오리지날 파일명
-                    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
+                    String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);    //파일 확장자
                     extension = extension.toLowerCase(); // 소문자로 변경
-                    String savedFileName = UUID.randomUUID() + extension;    //저장될 파일 명
+                    String savedFileName = UUID.randomUUID() + "." + extension;    //저장될 파일 명
 
-                    String allowedExtensions = "(.jpg|.jpeg|.gif|.png)"; // 허용되는 확장자
+                    String allowedExtensions = "(jpg|jpeg|gif|png)"; // 허용되는 확장자
+
+                    sDirPath += File.separator + savedFileName;
 
                     // targetFile은 굳이 필요 없지만 나중에 쓰기 위해 객체 만들어줌
-                    File targetFile = new File(fileRoot + savedFileName);
+                    File targetFile = new File(sDirPath);
 
                     // memberDTO에 savedFileName으로 저장된 파일명을 넣어줌
                     memberDTO.setMemberProfile(savedFileName);
@@ -368,6 +367,8 @@ public class MemberController {
 
         String sessionIdx =((String) session.getAttribute("loginMemberIdx"));
         String loginEmail = (String) session.getAttribute("loginEmail");
+
+
         if (sessionIdx != null) {
             List<MemberDTO> memberDTOList = memberService.findStudyByIdx(sessionIdx);
             memberDTO = memberService.findByMemberEmail(loginEmail);
@@ -380,6 +381,50 @@ public class MemberController {
             AlertUtils.alertAndMovePage(response,"로그인을 해야 목록을 확인할 수 있습니다." , "login");
             return "redirect:/member/login";
         }
+    }
 
+    // 사진 출력
+    @GetMapping("/image")
+    public void printImage(@RequestParam(value="fileName") String fileName,
+                           HttpServletResponse response)
+            throws IOException{
+        //서버에 저장된 이미지 경로
+        String sDirPath = uploadPath + File.separator + "uploads" + File.separator + fileName;
+
+        File imgFile = new File(sDirPath);
+
+        //사진 이미지 찾지 못하는 경우 예외처리로 빈 이미지 파일을 설정한다.
+        if (imgFile.isFile()) {
+            byte[] buf = new byte[1024];
+            int readByte = 0;
+            int length = 0;
+            byte[] imgBuf = null;
+
+            FileInputStream fileInputStream = null;
+            ByteArrayOutputStream outputStream = null;
+            ServletOutputStream out = null;
+
+            try {
+                fileInputStream = new FileInputStream(imgFile);
+                outputStream = new ByteArrayOutputStream();
+                out = response.getOutputStream();
+
+                while ((readByte = fileInputStream.read(buf)) != -1) {
+                    outputStream.write(buf, 0, readByte);
+                }
+
+                imgBuf = outputStream.toByteArray();
+                length = imgBuf.length;
+                out.write(imgBuf, 0, length);
+                out.flush();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                outputStream.close();
+                fileInputStream.close();
+                out.close();
+            }
+        }
     }
 }
