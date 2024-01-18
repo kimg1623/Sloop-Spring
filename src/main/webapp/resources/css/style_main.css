@@ -253,3 +253,17 @@ ul {
     color: #000;
     transition: 0.2s ease;
 }
+.submitButton {
+    height: 35px;
+    width: 80px;
+    background: #458dfc;
+    border-radius: 0.375rem;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+}
+.submitButton:hover{
+    background: #c9c9c9;
+    transition: 0.2s ease;
+}

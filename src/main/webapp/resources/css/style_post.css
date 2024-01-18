@@ -50,6 +50,11 @@ a:link{
     display: flex;
     align-items: center;
 }
+.title_div_contents{
+    text-align: left;
+    margin-top: 5px;
+    color: #333;
+}
 .title_text{
     margin-bottom: 4px;
     font-weight: bold;
