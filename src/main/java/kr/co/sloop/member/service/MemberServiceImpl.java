@@ -5,6 +5,7 @@ import kr.co.sloop.member.repository.impl.MemberRepository;
 import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -19,18 +20,44 @@ public class MemberServiceImpl implements MemberService {
 
     private final MemberRepository memberRepository;
 
+    // 암호화를 위한 의존성 주입
+    private final BCryptPasswordEncoder bcrypt;
+
     @Override
     public int signup(MemberDTO memberDTO){
         // 유효성 검사 진행 ----------
-
         if (memberDTO.getMemberSubjectCode() == null){
             return -1;
         } else {
+            /* bcrypt 암호화 */
+            String inputPass = memberDTO.getMemberPassword();
+            String pwd = bcrypt.encode(inputPass);
+            memberDTO.setMemberPassword(pwd);
             return memberRepository.signup(memberDTO);
         }
     }
-
+    /** 로그인 bcrypt로 하는 메서드 */
     @Override
+    public Map<String, String> login(MemberDTO memberDTO) {
+        MemberDTO loginMember = memberRepository.login(memberDTO);
+        /* bcrypt 암호화된 pwd 와 입력받은 pwd 값 참,거짓 확인 */
+        boolean pwdMatch = bcrypt.matches(memberDTO.getMemberPassword(), loginMember.getMemberPassword());
+        log.info("pwdMatch" + pwdMatch);
+
+        if (loginMember != null && pwdMatch == true){
+            Map<String, String> loginSessionMap = new HashMap<String, String>();
+            loginSessionMap.put("loginEmail", loginMember.getMemberEmail());
+            loginSessionMap.put("loginMemberIdx", String.valueOf(loginMember.getMemberIdx())); // 지원 추가
+            loginSessionMap.put("loginMemberNickname", loginMember.getMemberNickname());
+            return loginSessionMap;
+        } else {
+            return null;
+        }
+    }
+    /** 로그인 bcrypt로 하는 메서드 */
+
+    /** 로그인 bcrypt 없이 하는 메서드 */
+    /*@Override
     public Map<String, String> login(MemberDTO memberDTO) {
         MemberDTO loginMember = memberRepository.login(memberDTO);
         if (loginMember != null){
@@ -42,7 +69,8 @@ public class MemberServiceImpl implements MemberService {
         } else {
             return null;
         }
-    }
+    }*/
+    /** 로그인 bcrypt 없이 하는 메서드 */
 
 
 
@@ -71,7 +99,8 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public String emailCheck(String memberEmail) {
-        MemberDTO memberDTO = memberRepository.findByMemberEmail(memberEmail);
+        MemberDTO memberDTO = memberRepository.emailCheck(memberEmail);
+        log.info("findByMemberEmail aaaaa"+memberDTO);
         if (memberDTO == null) {
             return "ok";
         } else {
