@@ -5,6 +5,7 @@ import kr.co.sloop.member.repository.impl.MemberRepository;
 import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -119,11 +120,18 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean update(MemberDTO memberDTO) {
-        int result = memberRepository.update(memberDTO);
-        if (result > 0) {
-            return true;
-        } else {
+        try {
+            int result = memberRepository.update(memberDTO);
+            boolean subResult = (memberDTO.getMemberSubjectCode() != null);
+
+            if (subResult && result > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (DataIntegrityViolationException e){
             return false;
+
         }
     }
 
