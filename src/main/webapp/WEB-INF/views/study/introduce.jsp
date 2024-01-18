@@ -2,6 +2,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
+<!-- jquery for ajax -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
 
 <link href="/resources/css/style_main.css" rel="stylesheet">
 <!-- main 페이지의 컨텐츠 부분 시작 -->
@@ -78,8 +80,39 @@
         </section>
 
         <div class="sc_button">
-            <button class="sc_join">가입신청</button>
+            <button class="sc_join" onclick="joinBtn()">가입신청</button>
             <button class="sc_share">공유하기</button>
         </div>
     </div>
 </div>
+
+
+<script>
+    // 가입 신청
+    const joinBtn = () => {
+        let studyGroupIdx = '${studyGroup.studyGroupIdx}';
+        let memberIdx = '${sessionScope.loginMemberIdx}';
+
+        console.log(studyGroupIdx + ", " + memberIdx);
+
+        if(!studyGroupIdx || !memberIdx)   return;
+
+        $.ajax({
+            type: "POST",
+            url: "/study/join",
+            data: {
+                studyGroupIdx: studyGroupIdx,
+                memberIdx: memberIdx
+            },
+            dataType: "json",
+            async: false,
+            success: function(data) {
+                if(data.result == "ok") alert("스터디 가입 신청이 되었습니다.");
+                else    alert("다시 시도해 주세요.");
+            },
+            error: function () {
+                alert("다시 시도해 주세요.");
+            }
+        });
+    };
+</script>
