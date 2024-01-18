@@ -20,6 +20,7 @@ ul {
 .container-main{
     margin: 0 auto;
     width: 70%;
+    min-height: calc(100vh - 182px);
 }
 .banner-img{
     margin-top: 3rem;
