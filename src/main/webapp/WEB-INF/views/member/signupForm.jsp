@@ -103,48 +103,48 @@
 </body>
 <script type="text/javascript">
 
-    /** 이메일 유효성 검사 JavaScript & AJAX & JSON */
+        /** 이메일 유효성 검사 JavaScript & AJAX & JSON */
         // 이메일 입력값을 가져오고,
         // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
         // 사용 가능 여부를 이메일 입력창 아래에 표시
         // document 관련된건 DOM 명령
     const emailCheck = () => {
-            const email = document.getElementById("memberEmail").value;
-            const checkResult = document.getElementById("check-result");
-            console.log("입력한 이메일", email);
-            // 이메일 정규 표현식 초기화
-            let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
+        const email = document.getElementById("memberEmail").value;
+        const checkResult = document.getElementById("check-result");
+        console.log("입력한 이메일", email);
+        // 이메일 정규 표현식 초기화
+        let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
 
-            if (email === "" || !regex.test(email)) { // 형식에 맞지 않거나 빈 문자열이라면
-                checkResult.style.color = "red"
-                checkResult.innerHTML = "이메일을 형식에 맞게 입력하세요.(공백X)"
-            } else { // 형식에 맞을때
-                $.ajax({
-                    // 요청방식: post, url: "email-check", 데이터: 이메일
-                    type: "post",
-                    url: "/member/email-check",
-                    data: {
-                        "memberEmail": email
-                    },
-                    success: function (res) {
-                        console.log("요청성공", res);
-                        if (res == "ok") {          // service 단에서 "ok" or "no" 를 반환
-                            console.log("사용가능한 이메일");
-                            checkResult.style.color = "green";
-                            checkResult.innerHTML = "사용가능한 이메일";
-                        } else {
-                            console.log("이미 사용중인 이메일");
-                            checkResult.style.color = "red";
-                            checkResult.innerHTML = "이미 사용중인 이메일";
-                        }
-                    },
-                    error: function (err) {
-                        console.log("에러발생", err);
+        if (email === "" || !regex.test(email)) { // 형식에 맞지 않거나 빈 문자열이라면
+            checkResult.style.color = "red"
+            checkResult.innerHTML = "이메일을 형식에 맞게 입력하세요.(공백X)"
+        } else { // 형식에 맞을때
+            $.ajax({
+                // 요청방식: post, url: "email-check", 데이터: 이메일
+                type: "post",
+                url: "/member/email-check",
+                data: {
+                    "memberEmail": email
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+                    if (res == "ok") {          // service 단에서 "ok" or "no" 를 반환
+                        console.log("사용가능한 이메일");
+                        checkResult.style.color = "green";
+                        checkResult.innerHTML = "사용가능한 이메일";
+                    } else {
+                        console.log("이미 사용중인 이메일");
+                        checkResult.style.color = "red";
+                        checkResult.innerHTML = "이미 사용중인 이메일";
                     }
+                },
+                error: function (err) {
+                    console.log("에러발생", err);
+                }
 
-                });
-            }
+            });
         }
+    }
     /** 닉네임 중복검사도 이메일 유효성과 마찬가지로 동일한 형태로 진행 */
     const nicknameCheck = () => {
         const nickname = document.getElementById("memberNickname").value;
