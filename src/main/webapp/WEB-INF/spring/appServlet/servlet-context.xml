@@ -67,7 +67,9 @@
 	</beans:bean>
 
 	<!-- 이창규 - 주석 아래로 작성 -->
-
+	<beans:bean class="java.lang.String" id="uploadPathforMember">
+		<beans:constructor-arg value="D:\upload\sloop\profile\uploads"/>
+	</beans:bean>
 	<!-- 차소영 - 주석 아래로 작성 -->
 
 	<!-- 최지혜 - 주석 아래로 작성 -->
