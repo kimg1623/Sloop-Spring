@@ -74,19 +74,6 @@
 				</div>
 			</div>
 			<!--board_title 끝 -->
-			<!--검색-->
-			<div id="search" name="search" class="searchList">
-				<select name="searchType">
-					<option value="1" <c:if test="${pageDTO.searchType == 0 || pageDTO.searchType == 1}">selected</c:if>>제목</option>
-					<option value="2" <c:if test="${pageDTO.searchType == 2}">selected</c:if>>내용</option>
-					<option value="3" <c:if test="${pageDTO.searchType == 3}">selected</c:if>>제목+내용</option>
-					<option value="4" <c:if test="${pageDTO.searchType == 4}">selected</c:if>>작성자</option>
-				</select>
-				<input class="searchInfo" type="text" name="keyword" value="${pageDTO.keyword}" />
-				<input class="searchButton" type="button" onclick="searchBtn()" value="검색"/>
-				<%--		<button class="dailyWriteButton" onclick="writeFn()">글작성</button>--%>
-			</div><!--searchList-->
-
 
 
 		</div><!--box-size contents_wrapper-->
@@ -193,5 +180,20 @@
 				</div><!--page_nation-->
 			</div><!--page_wrap-->
 		</c:if>
+
+		<!--검색-->
+		<div id="search" name="search" >
+			<select name="searchType">
+				<option value="1" <c:if test="${pageDTO.searchType == 0 || pageDTO.searchType == 1}">selected</c:if>>제목</option>
+				<option value="2" <c:if test="${pageDTO.searchType == 2}">selected</c:if>>내용</option>
+				<option value="3" <c:if test="${pageDTO.searchType == 3}">selected</c:if>>제목+내용</option>
+				<option value="4" <c:if test="${pageDTO.searchType == 4}">selected</c:if>>작성자</option>
+			</select>
+			<input class="searchInfo" type="text" name="keyword" value="${pageDTO.keyword}" />
+			<input class="searchButton" type="button" onclick="searchBtn()" value="검색"/>
+			<%--		<button class="dailyWriteButton" onclick="writeFn()">글작성</button>--%>
+		</div><!--searchList-->
+
+
 	</div><!--container main-->
 </main>
