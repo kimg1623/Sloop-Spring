@@ -4,7 +4,6 @@
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
 <link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script>
@@ -60,7 +59,8 @@
         })()
     </script>
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<!-- main 페이지의 컨텐츠 부분 시작 -->
+<div class="container-main">
     <div class="container-studyGroup">
         <div class="box-size contents_wrapper">
         <!--board_title 시작 -->
@@ -71,6 +71,10 @@
                         <h3 class="title_text">
                             스터디 개설
                         </h3>
+                    </div>
+                    <div class="box-size title_div_contents">
+                        개설할 스터디 그룹의 정보를 입력해주세요.<br>
+                        <b>스터디 그룹 이름을 제외</b>한 모든 정보는 변경이 가능합니다.
                     </div>
                 </div>
             </div>
@@ -186,4 +190,4 @@
         </form:form>
     </div>
     </div>
-</main>
+</div>
