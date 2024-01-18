@@ -155,6 +155,17 @@ a:link{
     color: #000;
     text-align: left;
 }
+.post_content_title_assign{
+    display: flex;
+    justify-content: space-between;
+}
+.post_assign_score{
+    background-color: rgb(44, 187, 58);
+    color: #fff;
+    border-radius: 5%;
+    padding: 1px 10px;
+    font-size: 1rem;
+}
 .post_content_title_bottom {
     border-bottom: 3px solid #f2f2f2;
     display: flex;
@@ -162,7 +173,7 @@ a:link{
     justify-content: space-between;
 }
 .post_content_userAndDate {
-    margin-top: 32px;
+    margin-top: 25px;
     padding-bottom: 25px;
     display: flex;
     grid-gap: 15px;
@@ -201,11 +212,24 @@ a:link{
     font-size: 1rem;
     color: #717171;
 }
+.post_content_endDate {
+    color: #ff976b;
+}
 .post_content_contents{
     width: 100%;
     margin: 40px auto 0;
     font-size: 0.9rem;
     text-align: left;
+}
+.post_content_attach{
+    width: 100%;
+    margin: 40px auto 0;
+    font-size: 0.9rem;
+    text-align: left;
+}
+.list-group-item-gray {
+    color: #141619;
+    background-color: #e3e3e3;
 }
 
 /*
