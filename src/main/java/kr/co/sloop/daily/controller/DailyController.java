@@ -1,5 +1,6 @@
 package kr.co.sloop.daily.controller;
 
+import kr.co.sloop.attachment.domain.AttachmentDTO;
 import kr.co.sloop.daily.domain.DailyDTO;
 import kr.co.sloop.daily.domain.PageDTO;
 import kr.co.sloop.daily.service.impl.DailyService;
@@ -29,8 +30,8 @@ import java.util.UUID;
 @RequestMapping("/study/{studyGroupCode}/daily/{boardIdx}")
 @RequiredArgsConstructor
 public class DailyController {
-
 	private final DailyService dailyService;
+	private AttachmentDTO attachmentDTO;
 
 	// 파일업로드
 	@Resource(name="uploadPathforDaily")
@@ -95,7 +96,8 @@ public class DailyController {
 			return "redirect:/member/login";
 		}
 
-		boolean dailyWriteResult = dailyService.dailyWrite(dailyDTO);
+		boolean dailyWriteResult = dailyService.dailyWrite(dailyDTO, attachmentDTO);
+		attachmentDTO = null;
 
 		if(dailyWriteResult){
 			//정상적으로 처리
@@ -107,7 +109,7 @@ public class DailyController {
 		}
 	}
 
-
+	// ajax로 첨부파일 이미지 업로드
 	@ResponseBody
 	@RequestMapping(value = "/file-upload", method = RequestMethod.POST)
 	public String fileUpload(
@@ -149,6 +151,8 @@ public class DailyController {
 						InputStream fileStream = file.getInputStream();
 						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
 
+						// 객체 저장
+						attachmentDTO = new AttachmentDTO(originalFileName, uploadPath + File.separator + "uploads", savedFileName);
 					} catch (Exception e) {
 						//파일삭제
 						FileUtils.deleteQuietly(targetFile);    //저장된 현재 파일 삭제

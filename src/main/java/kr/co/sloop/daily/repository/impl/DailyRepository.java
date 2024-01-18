@@ -1,5 +1,6 @@
 package kr.co.sloop.daily.repository.impl;
 
+import kr.co.sloop.attachment.domain.AttachmentDTO;
 import kr.co.sloop.daily.domain.DailyDTO;
 import kr.co.sloop.daily.domain.PageDTO;
 
@@ -29,7 +30,7 @@ public interface DailyRepository {
     // 조회수
     void updateViewCnt(int postIdx);
 
-
-
+    // 첨부파일
+    int insertAttachment(AttachmentDTO attachmentDTO);
 }
 
