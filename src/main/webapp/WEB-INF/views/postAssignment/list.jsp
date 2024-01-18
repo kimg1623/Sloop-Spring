@@ -49,6 +49,19 @@
                                     <h5 class="post-card-title">
                                         <c:out value="${postAssignment.postAssignmentTitle}"/>
                                     </h5>
+                                        <%-- 과제 마감일시 --%>
+                                    <div class="bottom_endDate">
+                                        마감일
+                                        <fmt:formatDate value="${postAssignment.assignmentEndDate}"
+                                                        pattern="yyyy-MM-dd"></fmt:formatDate>
+                                    </div>
+                                        <%-- 글 작성일시 --%>
+                                    <div class="bottom_registeredDate">
+                                        등록일
+                                        <fmt:formatDate value="${postAssignment.postAssignmentRegDate}"
+                                                        pattern="yyyy-MM-dd"></fmt:formatDate>
+                                    </div>
+
                                     <div class="card-bottom">
                                         <div class="bottom_userAndDate">
                                             <div class="bottom_user">
@@ -63,18 +76,6 @@
                                             <img src="/resources/images/eye.png" alt="views" class="view_img">
                                             <c:out value="${postAssignment.postAssignmentHits}"/>
                                         </div>
-                                    </div>
-                                        <%-- 과제 마감일시 --%>
-                                    <div class="bottom_endDate">
-                                        마감일
-                                        <fmt:formatDate value="${postAssignment.assignmentEndDate}"
-                                                        pattern="yyyy-MM-dd"></fmt:formatDate>
-                                    </div>
-                                        <%-- 글 작성일시 --%>
-                                    <div class="bottom_registeredDate">
-                                        등록일
-                                        <fmt:formatDate value="${postAssignment.postAssignmentRegDate}"
-                                                        pattern="yyyy-MM-dd"></fmt:formatDate>
                                     </div>
                                 </div>
                             </div>
