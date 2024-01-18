@@ -48,11 +48,7 @@
                     </div>
                     <div class="box-size">
                         <div id="writeBtn" name="writeBtn">
-                            <!--본인일때만 수정삭제 보이게 -->
-                            <c:if test="${daily.memberEmail == sessionScope.loginEmail}">
-                                <button class="btn_update" onclick="updateFn()">수정</button>
-                                <button class="btn_delete" onclick="deleteFn()">삭제</button>
-                            </c:if>
+                            <button class="btn_list" onclick="listFn()">목록</button>
                         </div>
                     </div>
                 </div>
@@ -102,24 +98,36 @@
             </div>
             <!-- post 내용 끝 -->
             <p hidden="true">${daily.memberIdx}</p>
+            <div class="box-size buttonList">
+            <div class="box-size">
+                <div name="writeBtn">
+                    <!--본인일때만 수정삭제 보이게 -->
+                    <c:if test="${daily.memberEmail == sessionScope.loginEmail}">
+                        <button class="btn_update" onclick="updateFn()">수정</button>
+                        <button class="btn_delete" onclick="deleteFn()">삭제</button>
+                    </c:if>
+                </div>
+            </div>
+            </div>
 
-    <!-- 댓글 입력 폼 -->
-    <div class="replyInput_replytitle">
-        댓글
-    </div>
-    <div class="replyInput_content_box">
-        <input class="replyInput_content" type="text" id="replyContents"
-               placeholder="댓글을 입력해주세요.">
-    </div>
-    <div class="replyButton_wrap">
-        <button class="replyButton" id="reply-write-btn"
-                onclick="replyWrite('${daily.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 등록</button>
-    </div>
-    <br>
 
-    <!-- 댓글 목록 -->
-    <div id = "reply-list">
-    </div>
+            <!-- 댓글 입력 폼 -->
+            <div class="replyInput_replytitle">
+                댓글
+            </div>
+            <div class="replyInput_content_box">
+                <input class="replyInput_content" type="text" id="replyContents"
+                       placeholder="댓글을 입력해주세요.">
+            </div>
+            <div class="replyButton_wrap">
+                <button class="replyButton" id="reply-write-btn"
+                        onclick="replyWrite('${daily.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 등록</button>
+            </div>
+            <br>
+
+            <!-- 댓글 목록 -->
+            <div id = "reply-list">
+            </div>
 
 
         </div><!--box size wrap-->
@@ -128,32 +136,32 @@
 
 
 
-    <script>
-        //목록
-        const listFn = () => {
-            location.href = previousURL+"/list";
-        }
-        //글수정
-        const updateFn = () => {
-            const postIdx = '${daily.postIdx}';
-            location.href = previousURL+"/update?postIdx=" + postIdx;
-        }
-        //글삭제
-        const deleteFn = () => {
-            const postIdx = '${daily.postIdx}';
-            location.href = previousURL+"/delete?postIdx=" + postIdx;
-        }
+<script>
+    //목록
+    const listFn = () => {
+        location.href = previousURL+"/list";
+    }
+    //글수정
+    const updateFn = () => {
+        const postIdx = '${daily.postIdx}';
+        location.href = previousURL+"/update?postIdx=" + postIdx;
+    }
+    //글삭제
+    const deleteFn = () => {
+        const postIdx = '${daily.postIdx}';
+        location.href = previousURL+"/delete?postIdx=" + postIdx;
+    }
 
-        /* 댓글 */
-        // 자동 실행 함수
-        $(document).ready(function(){
-            let postIdx = '${daily.postIdx}';
-            let loginMemberIdx = '${sessionScope.loginMemberIdx}';
-            // 댓글 목록 출력
-            loadReplyList(postIdx, loginMemberIdx);
-        });
-
-
+    /* 댓글 */
+    // 자동 실행 함수
+    $(document).ready(function(){
+        let postIdx = '${daily.postIdx}';
+        let loginMemberIdx = '${sessionScope.loginMemberIdx}';
+        // 댓글 목록 출력
+        loadReplyList(postIdx, loginMemberIdx);
+    });
 
 
-    </script>
+
+
+</script>

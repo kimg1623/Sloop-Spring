@@ -35,13 +35,7 @@
                     </div>
                     <div class="box-size">
                         <div id="writeBtn" name="writeBtn">
-                            <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
-                            <c:if test="${sessionScope.loginEmail != null && postAssignmentDTO.memberEmail == sessionScope.loginEmail}">
-                                <input type="button" class="btn_write"
-                                       onclick="updateFn('${postAssignmentDTO.postIdx}')" value="수정"/>
-                                <input type="button" class="btn_write"
-                                       onclick="deleteFn('${postAssignmentDTO.postIdx}')" value="삭제"/>
-                            </c:if>
+                            <button class="btn_list" onclick="listFn()">목록</button>
                         </div>
                     </div>
                 </div>
@@ -115,7 +109,7 @@
                 <c:out value="${postAssignmentDTO.postAssignmentContents}" escapeXml="false"/>
             </div>
             <div class="post_content_attach">
-                <ul class="list-group">
+                <ul class="list-group" style="margin-bottom: 15px;">
                     <li class="list-group-item list-group-item-dark">
                         첨부파일
                     </li>
@@ -130,6 +124,21 @@
             </div>
             <!-- post 내용 끝 -->
             <p hidden="true">${postAssignmentDTO.memberIdx}</p>
+
+            <div class="box-size buttonList">
+            <div class="box-size">
+                <div name="writeBtn">
+                    <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
+                    <c:if test="${sessionScope.loginEmail != null && postAssignmentDTO.memberEmail == sessionScope.loginEmail}">
+                        <input type="button" class="btn_update"
+                               onclick="updateFn('${postAssignmentDTO.postIdx}')" value="수정"/>
+                        <input type="button" class="btn_delete"
+                               onclick="deleteFn('${postAssignmentDTO.postIdx}')" value="삭제"/>
+                    </c:if>
+                </div>
+            </div>
+            </div>
+
 
 
             <!-- 댓글 입력 폼 -->
