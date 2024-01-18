@@ -1,9 +1,6 @@
 -- DDL--
 use sloop;
 
-
--- 여기 수정 해야합니다! --
--- member테이블 추가했습니다. 외래키는 카테고리 부분 완료되면 같이 업데이트할게요--
 create table member(
                        memberIdx              int AUTO_INCREMENT  not null comment '회원 index',
                        memberEmail            varchar(50) unique  not null comment '회원 이메일',
@@ -13,11 +10,12 @@ create table member(
                        memberRegdate          date DEFAULT now()           comment '회원가입 날짜',
                        memberPhonenumber      varchar(30) unique  not null comment '회원 핸드폰번호',
                        memberSchool           varchar(30)         not null comment '회원 학교',
-                       memberGradeCode        varchar(30)          not null comment '학년 카테고리 코드',
-                       memberSubjectCode      varchar(30)          not null comment '과목 카테고리 코드',
-                       memberRegionCode       varchar(30)          not null comment '지역 카테고리 코드',
+                       memberGradeCode        varchar(30)         not null comment '학년 카테고리 코드',
+                       memberSubjectCode      varchar(30)         not null comment '과목 카테고리 코드',
+                       memberRegionCode       varchar(30)         not null comment '지역 카테고리 코드',
+                       authority			         varchar(30)		default 'ROLE_MEMBER' comment '회원 권한',
+                       memberProfile		       varchar(100) 			     null comment '멤버 프로필',
                        PRIMARY KEY (memberIdx)
--- FOREIGN KEY (memberGradeCode) REFERENCES category_grade(gradecate_code) on update CASCADE on delete CASCADE
 );
 
 create table categoryGrade (

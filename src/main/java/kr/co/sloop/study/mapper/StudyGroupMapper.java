@@ -5,6 +5,7 @@ import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.CategorySubjectDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.HashMap;
@@ -33,4 +34,6 @@ public interface StudyGroupMapper {
 
 
     String getGroupNameByGroupCode(String studyGroupCode); // 스터디 그룹 코드로 그룹 이름 가져오기
+
+    int joinStudyGroup(@Param("studyGroupIdx") String studyGroupIdx, @Param("memberIdx") int memberIdx);    // 스터디 그룹 가입 신청
 }
