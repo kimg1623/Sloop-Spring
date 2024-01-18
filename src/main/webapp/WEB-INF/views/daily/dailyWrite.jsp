@@ -49,15 +49,15 @@
             <!--board_title 시작 -->
             <div class="box-size board_title">
                 <div class="post_content_title_bottom">
-                <div class="box-size title_contents">
-                    <div class="box-size">
-                        <div class="box-size title_div_text">
-                            <h3 class="title_text">
-                                공부인증 글쓰기
-                            </h3>
+                    <div class="box-size title_contents">
+                        <div class="box-size">
+                            <div class="box-size title_div_text">
+                                <h3 class="title_text">
+                                    공부인증 글쓰기
+                                </h3>
+                            </div>
                         </div>
                     </div>
-                </div>
                 </div>
             </div>
             <!--board_title 끝 -->
