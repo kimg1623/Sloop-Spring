@@ -23,4 +23,9 @@ public class DailyDTO extends PostDTO {
     private String memberNickname; //작성자 닉네임
     private int boardIdx;          //게시판idx
     private String memberEmail;    //작성자 이메일
+
+
+    // 첨부파일
+    private String attachmentDirPath; // 저장 디렉터리 경로
+    private String attachmentName;  // 파일명
 }

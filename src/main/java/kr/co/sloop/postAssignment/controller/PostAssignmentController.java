@@ -122,7 +122,7 @@ public class PostAssignmentController {
                     extension = extension.toLowerCase(); // 소문자로 변경
 
                     // 허용되는 첨부파일 확장자
-                    String allowedExtensions = "(xls|xlsx|txt|png|jpg|jpeg|html|htm|mpg|mp4|mp3|pdf|zip)";
+                    String allowedExtensions = "(xls|xlsx|txt|png|jpg|jpeg|hwp|mpg|mp4|mp3|pdf|zip)";
 
                     // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우, 오류 메세지 반환
                     if(!extension.matches(allowedExtensions)){
