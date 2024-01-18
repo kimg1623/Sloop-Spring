@@ -102,8 +102,6 @@
             </div>
             <!-- post 내용 끝 -->
             <p hidden="true">${daily.memberIdx}</p>
-        </div><!--box size wrap-->
-    </div><!--container studyGroup-->
 
     <!-- 댓글 입력 폼 -->
     <div class="replyInput_replytitle">
@@ -124,7 +122,8 @@
     </div>
 
 
-
+        </div><!--box size wrap-->
+    </div><!--container studyGroup-->
 </main>
 
 
@@ -158,5 +157,3 @@
 
 
     </script>
-
-</main>
