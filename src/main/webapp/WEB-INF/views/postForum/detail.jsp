@@ -4,6 +4,11 @@
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
 
+<!-- jquery for ajax cdn -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<!-- 댓글 js -->
+<script src="/resources/js/reply.js"></script>
+
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container-studyGroup">
         <div class="box-size contents_wrapper">
