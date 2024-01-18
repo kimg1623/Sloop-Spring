@@ -10,7 +10,9 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 
 @Data
@@ -36,7 +38,7 @@ public class MemberDTO {
     private String memberGender;        //	'회원 성별',
 
 
-    private Date memberRegdate;         // '회원가입 날짜',
+    private Timestamp memberRegdate;         // '회원가입 날짜',
 
     @Pattern(regexp = "^0([0-9]{2,3})([0-9]{3,4})([0-9]{4})$",
             message = "- 기호를 제외한 숫자만 입력해주세요")
