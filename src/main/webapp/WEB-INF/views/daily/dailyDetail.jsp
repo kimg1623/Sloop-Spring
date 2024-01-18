@@ -95,9 +95,10 @@
             <!-- post 제목 영역 끝 -->
 
             <!-- 사진 출력 -->
-            <!-- 사진이 있을 때만 출력 [*****] -->
-            <%-- <img src="./image?fileName=${daily.image}" alt="views" class="view_img"> --%>
-            <img src="./image?fileName=353a0313-723c-4c5c-92fe-3f83a503f74a.png" alt="views" width="70%">
+            <!-- 사진이 있을 때만 출력 -->
+            <c:if test="${not empty daily.attachmentName}">
+                <img src="./image?fileName=${daily.attachmentName}" alt="views" width="70%">
+            </c:if>
 
             <!-- post 내용 시작 -->
             <div class="post_content_contents">
@@ -152,6 +153,8 @@
         $(document).ready(function(){
             let postIdx = '${daily.postIdx}';
             let loginMemberIdx = '${sessionScope.loginMemberIdx}';
+            console.log("ㅇㅇㅁㅁㄴㅇ" + postIdx+" "+loginMemberIdx);
+
             // 댓글 목록 출력
             loadReplyList(postIdx, loginMemberIdx);
         });
