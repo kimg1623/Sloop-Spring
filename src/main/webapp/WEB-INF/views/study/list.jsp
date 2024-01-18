@@ -13,15 +13,13 @@
             <div class="card-img-overlay">
             </div>
         </div>
-
-        <div class="main-tab">
-            <p>
-<%--                <a href="#">초등</a> |--%>
-<%--                <a href="#">중등</a> |--%>
-<%--                <a href="#">고등</a>--%>
-            </p>
-        </div>
-
+        <c:choose>
+            <c:when test="${sessionScope.loginMemberIdx ne null}">
+                <div class="main-tab main-tab-right">
+                    <input type="button" class="submitButton addButton" onclick="location.href='/study/add'" value="스터디 그룹 만들기"/>
+                </div>
+            </c:when>
+        </c:choose>
         <div class="row">
             <c:forEach items="${studyGroupList}" var="studyGroup">
                 <div class="col-sm-3">

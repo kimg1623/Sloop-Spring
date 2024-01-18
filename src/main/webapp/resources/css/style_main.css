@@ -47,6 +47,9 @@ ul {
 .bg-lightgreen {
     background-color: #E2F0D9;
 }
+.main-tab-right{
+    text-align: right;
+}
 
 /*
     스터디 소개글 스타일
@@ -295,4 +298,13 @@ ul {
 .deleteButton:hover{
     background-color: whitesmoke;
     color: indianred;
+}
+
+.addButton{
+    width: auto;
+    margin-bottom: 10px;
+}
+.addButton:hover{
+    background-color: #eeeeee;
+    color: #5095fd;
 }
