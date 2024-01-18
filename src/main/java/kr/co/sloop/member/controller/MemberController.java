@@ -7,6 +7,7 @@ import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -116,6 +117,7 @@ public class MemberController {
     // 이메일 중복확인 AJAX
     @PostMapping("/email-check")
     public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail){
+        System.out.println("memberEmailddd"+memberEmail);
         log.info("emailCheck=====" + memberEmail);
         String checkResult = memberService.emailCheck(memberEmail);
         log.info("checkResult CONTROLLER" + checkResult );
