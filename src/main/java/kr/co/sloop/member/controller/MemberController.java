@@ -7,6 +7,7 @@ import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -76,15 +77,20 @@ public class MemberController {
         }
 
         int signupResult = memberService.signup(memberDTO);
+        try {
+            if (signupResult > 0) {
 
-        if (signupResult > 0) {
-
-            AlertUtils.alertAndMovePage(response, "회원가입 되었습니다.", "login");// update 성공시 redirect로 상세보기 화면 출력
-            /*return "member/signupSuccess"; // 회원가입 성공 시 이동*/
+                AlertUtils.alertAndMovePage(response, "회원가입 되었습니다.", "login");// update 성공시 redirect로 상세보기 화면 출력
+                /*return "member/signupSuccess"; // 회원가입 성공 시 이동*/
+            } else {
+                AlertUtils.alertAndMovePage(response , "이메일,핸드폰번호,닉네임은 중복검사를 꼭 해주세요.","signup");
+            }
+        } catch (DuplicateKeyException e) {
         }
-        return "member/signupForm";    // 회원가입 실패 시 이동
+        return "member/signupForm";
 
-    }
+        }
+
     /** bcrypt 회원가입 */
 
 
