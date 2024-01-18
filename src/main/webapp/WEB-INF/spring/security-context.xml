@@ -11,6 +11,7 @@
     <!--BCryptPasswordEncoder-->
     <!--비밀번호 암호화-->
     <bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <bean id="customLoginSuccess" class="kr.co.sloop.security.CustomLoginSuccessHandler"/>
     <!--CustomAccessDeniedHandler-->
     <!--<bean id="customAccessDenied" class="kr.co.chunjae.security.CustomAccessDeniedHandler"/>
     &lt;!&ndash;CustomLoginSuccessHandler&ndash;&gt;
@@ -25,16 +26,16 @@
     <security:http>
         <!--<security:form-login/>-->
         <!--접근 제한 설정-->
-        <!--<security:intercept-url pattern="/member/login" access="permitAll()"/>
+        <security:intercept-url pattern="/member/login" access="permitAll()"/>
         <security:intercept-url pattern="/member/mypage" access="hasRole('ROLE_MEMBER')"/>
-        <security:intercept-url pattern="/memberList" access="hasRole('ROLE_ADMIN')"/>-->
+        <security:intercept-url pattern="/memberList" access="hasRole('ROLE_ADMIN')"/>
 
         <!--Implement로 error메세지 출력할때 ( Bean에 등록해서 사용 )-->
         <!--<security:access-denied-handler ref="customAccessDenied"/>-->
 
         <!--logout-success-url 아님 주의!! 이게 없으면 POST 방식으로 전송을 하지 못함.-->
         <!-- 커스텀 로그인 폼-->
-        <!--<security:form-login login-page="/member/login" authentication-success-handler-ref="customLoginSuccess"/>-->
+        <security:form-login login-page="/member/login" authentication-success-handler-ref="customLoginSuccess"/>
         <!--로그아웃 페이지로 이동-->
         <!--지정하지 않으면 customLogout의 form 속성에서 action 값을 다른 값으로 써야한다. (기본값 : logout)-->
         <!--<security:logout logout-url="/customLogout" invalidate-session="true"/>-->
@@ -47,17 +48,11 @@
         <!--DB연결 할 때 필요-->
         <!--<security:authentication-provider user-service-ref="customUserDetailsService">-->
         <security:authentication-provider>
-            <!--DB datasource 매핑-->
-            <!--<security:jdbc-user-service data-source-ref="dataSource">-->
-            <!--사용 후 아래 없어도됨.-->
-            <security:user-service>
-                <!--<security:user name="qwe123@naver.com" password="{noop}1234" authorities="ROLE_MEMBER"/>-->
+                <security:user-service>
 
-
-            </security:user-service>
-
+                </security:user-service>
             <!--DB에 저장할 때 encoder-->
-            <!--<security:password-encoder ref="bcryptPasswordEncoder"/>-->
+            <security:password-encoder ref="bcryptPasswordEncoder"/>
         </security:authentication-provider>
     </security:authentication-manager>
 </beans>
