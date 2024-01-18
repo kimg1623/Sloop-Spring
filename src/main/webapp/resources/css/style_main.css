@@ -262,8 +262,36 @@ ul {
     font-weight: 600;
     font-size: 16px;
     border: none;
+    margin-bottom: 5px;
 }
 .submitButton:hover{
     background: #c9c9c9;
     transition: 0.2s ease;
+}
+
+/*
+    마이페이지
+ */
+.study_group_list{
+    border: #fff 2px solid;
+    /*background-color: forestgreen;*/
+}
+.myinfo_list{
+    border: #fff 2px solid;
+    /*background-color: blue;*/
+}
+.mypage_subtitle{
+    text-align: left;
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.group_list_card:hover{
+    background-color: #eeeeee;
+}
+.deleteButton{
+    background-color: indianred;
+}
+.deleteButton:hover{
+    background-color: whitesmoke;
+    color: indianred;
 }
