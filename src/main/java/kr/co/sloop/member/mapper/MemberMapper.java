@@ -23,7 +23,9 @@ public interface MemberMapper {
 
     List<MemberDTO> findStudyByIdx(String sessionIdx);
 
-  /*    void uploadProfileByIdx(int memberIdx);*/
+    MemberDTO emailCheck(String memberEmail);
+
+    /*    void uploadProfileByIdx(int memberIdx);*/
 
 
 

@@ -17,6 +17,7 @@ body {
     display: flex;
 }
 .searchButton{
+    margin-left:4px;
     position: relative;
     border: none;
     display: inline-block;
