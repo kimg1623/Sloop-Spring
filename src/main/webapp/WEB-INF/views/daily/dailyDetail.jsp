@@ -14,7 +14,6 @@
 <script src="/resources/js/reply.js"></script>
 
 <script>
-
     // 현재 페이지 URL 가져오기
     const currentURL = window.location.href;
 
@@ -30,7 +29,6 @@
     const previousURL = `/study/${studyGroupCode}/daily/${boardIdx}`;
 
     console.log("Previous URL:", previousURL);
-
 </script>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
@@ -95,6 +93,11 @@
                 </div>
             </div>
             <!-- post 제목 영역 끝 -->
+
+            <!-- 사진 출력 -->
+            <!-- 사진이 있을 때만 출력 [*****] -->
+            <%-- <img src="./image?fileName=${daily.image}" alt="views" class="view_img"> --%>
+            <img src="./image?fileName=353a0313-723c-4c5c-92fe-3f83a503f74a.png" alt="views" width="70%">
 
             <!-- post 내용 시작 -->
             <div class="post_content_contents">

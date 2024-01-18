@@ -39,7 +39,7 @@
 
 
         <!-- 차소영 - 주석 아래로 작성 -->
-        <typeAlias type="kr.co.sloop.reply.domain.ReplyDTO" alias="reply"></typeAlias>
+        <typeAlias type="kr.co.sloop.reply.domain.ReplyDTO" alias="reply"/>
 
         <!-- 최지혜 - 주석 아래로 작성 -->
         <typeAlias type="kr.co.sloop.daily.domain.DailyDTO" alias="daily"/>

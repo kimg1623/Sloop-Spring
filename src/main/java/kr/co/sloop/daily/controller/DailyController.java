@@ -12,11 +12,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -126,10 +128,23 @@ public class DailyController {
 					System.out.println(fileRoot);
 
 					String originalFileName = file.getOriginalFilename();    //오리지날 파일명
-					String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
-					String savedFileName = UUID.randomUUID() + extension;    //저장될 파일 명
+					String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);    //파일 확장자
+					String savedFileName = UUID.randomUUID() + "." + extension;    //저장될 파일 명
+					extension = extension.toLowerCase(); // 소문자로 변경
 
-					File targetFile = new File(fileRoot + savedFileName);
+					// 허용되는 첨부파일 확장자
+					String allowedExtensions = "(png|jpg|jpeg|gif)";
+
+					// 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우, 오류 메세지 반환
+					if(!extension.matches(allowedExtensions)){
+						strResult = "{ \"result\":\"TYPEERROR\" }";
+						//AlertUtils.alertAndBackPage(response, "허용되는 확장자는 xls,xlsx,txt,png,jpg,jpeg,html,htm,mpg,mp4,mp3,pdf,zip 입니다.");
+						return strResult;
+					}
+
+					String sDirPath = uploadPath + File.separator + "uploads" + File.separator + savedFileName;
+
+					File targetFile = new File(sDirPath);
 					try {
 						InputStream fileStream = file.getInputStream();
 						FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
@@ -211,5 +226,49 @@ public class DailyController {
 		return "redirect:/study/{studyGroupCode}/daily/{boardIdx}/list";
 	}
 
+	// 사진 출력
+	@GetMapping("/image")
+	public void printImage(@RequestParam(value="fileName") String fileName,
+						   HttpServletResponse response)
+							throws IOException{
+		//서버에 저장된 이미지 경로
+		String sDirPath = uploadPath + File.separator + "uploads" + File.separator + fileName;
+
+		File imgFile = new File(sDirPath);
+
+		//사진 이미지 찾지 못하는 경우 예외처리로 빈 이미지 파일을 설정한다.
+		if (imgFile.isFile()) {
+			byte[] buf = new byte[1024];
+			int readByte = 0;
+			int length = 0;
+			byte[] imgBuf = null;
+
+			FileInputStream fileInputStream = null;
+			ByteArrayOutputStream outputStream = null;
+			ServletOutputStream out = null;
+
+			try {
+				fileInputStream = new FileInputStream(imgFile);
+				outputStream = new ByteArrayOutputStream();
+				out = response.getOutputStream();
+
+				while ((readByte = fileInputStream.read(buf)) != -1) {
+					outputStream.write(buf, 0, readByte);
+				}
+
+				imgBuf = outputStream.toByteArray();
+				length = imgBuf.length;
+				out.write(imgBuf, 0, length);
+				out.flush();
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				outputStream.close();
+				fileInputStream.close();
+				out.close();
+			}
+		}
+	}
 
 }
