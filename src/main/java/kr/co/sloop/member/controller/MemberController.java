@@ -166,10 +166,17 @@ public class MemberController {
 
     // update.jsp 의 Form method = Post로 데이터 받아옴
     @PostMapping("update")
-    public String update (@ModelAttribute("memberDTO") MemberDTO memberDTO,
+    public String update (@Validated @ModelAttribute("memberDTO") MemberDTO memberDTO,
+                          BindingResult errors,
                           @RequestParam("memberIdx") int memberIdx,
                           HttpSession session,
                           HttpServletResponse response) throws IOException{
+        log.info("수정실패---------");
+        if (errors.hasGlobalErrors()){
+           AlertUtils.alert(response,"수정에 실패했습니다.");
+           return "member/update";
+        }
+
         boolean result = memberService.update(memberDTO);
 
         boolean idxMatch = (memberIdx == memberDTO.getMemberIdx());
@@ -178,7 +185,8 @@ public class MemberController {
 
             AlertUtils.alertAndMovePage(response,"수정되었습니다." ,"/member?memberIdx="+memberDTO.getMemberIdx());// update 성공시 redirect로 상세보기 화면 출력
         }
-        return "redirect:/member/update";  // update 실패시 다시 수정할 수 있게 update.jsp로 정보 가져가면서 redirect 어케함?
+        AlertUtils.alertAndMovePage(response , "수정에 실패하였습니다.","update");
+        return "member/update";
 
     }
 
@@ -359,11 +367,14 @@ public class MemberController {
 
 
         String sessionIdx =((String) session.getAttribute("loginMemberIdx"));
+        String loginEmail = (String) session.getAttribute("loginEmail");
         if (sessionIdx != null) {
             List<MemberDTO> memberDTOList = memberService.findStudyByIdx(sessionIdx);
+            memberDTO = memberService.findByMemberEmail(loginEmail);
             log.info("스터디그룹아이디엑스"+memberDTO.getStudyGroupIdx());
 
             model.addAttribute("myStudy", memberDTOList);
+            model.addAttribute("member" , memberDTO);
             return "member/home";
         } else {
             AlertUtils.alertAndMovePage(response,"로그인을 해야 목록을 확인할 수 있습니다." , "login");
