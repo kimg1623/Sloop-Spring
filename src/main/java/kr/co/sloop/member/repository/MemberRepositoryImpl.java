@@ -4,11 +4,8 @@ import kr.co.sloop.member.mapper.MemberMapper;
 import kr.co.sloop.member.repository.impl.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -74,6 +71,11 @@ public class MemberRepositoryImpl implements MemberRepository {
     @Override
     public List<MemberDTO> findStudyByIdx(String sessionIdx) {
         return memberMapper.findStudyByIdx(sessionIdx);
+    }
+
+    @Override
+    public MemberDTO emailCheck(String memberEmail) {
+        return memberMapper.emailCheck(memberEmail);
     }
 
     /*@Override
