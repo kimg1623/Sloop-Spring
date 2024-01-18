@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 
+<link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
 <link href="/resources/css/style_post.css" rel="stylesheet">
 
 <!-- jquery cdn -->
@@ -45,9 +46,24 @@
             <a href="/study/${studyGroupCode}/notice/${boardIdx}/detail?postIdx=${notice.postIdx}">
                 <div class="card">
                     <div class="card-body post-card">
-                        <div class="card-category">
-                            <c:out value="${notice.categoryPostName}"/>
+
+<%--                            &lt;%&ndash;  상단 고정&ndash;%&gt;--%>
+<%--                            <c:if test="${notice.postNoticePinned==1}">--%>
+<%--                                <div class="bottom_view">--%>
+<%--                                    <img src="/resources/images/pinned.png" alt="pinned" class="pinned_img">--%>
+<%--                                </div>--%>
+<%--                            </c:if>--%>
+                        <div class="notice_categoryPinned">
+                            <div class="card-category">
+                                <c:out value="${notice.categoryPostName}"/>
+                            </div>
+                            <div>
+                                <c:if test="${notice.postNoticePinned==1}">
+                                    <img src="/resources/images/pinned.png" alt="pinned" class="pinned_img">
+                                </c:if>
+                            </div>
                         </div>
+
                         <h5 class="post-card-title">
                             <c:out value="${notice.postNoticeTitle}"/>
                         </h5>
@@ -66,12 +82,6 @@
                             <div class="bottom_view">
                                 <img src="/resources/images/eye.png" alt="views" class="view_img">
                                 <c:out value="${notice.postNoticeHits}"/>
-                            </div>
-                        </div>
-                            <%--  상단 고정--%>
-                        <div class="bottom_user">
-                            <div class="bottom_userName">
-                                상단고정:<c:out value="${notice.postNoticePinned}"/>
                             </div>
                         </div>
                     </div>
