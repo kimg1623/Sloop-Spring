@@ -25,12 +25,8 @@
                         </a>
                     </div>
                     <div class="box-size">
-                        <div id="writeBtn" name="writeBtn">
-                            <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
-                            <c:if test="${postForumDTO.memberEmail == sessionScope.loginEmail}">
-                                <input type="button" class="btn_update" onclick="updateFn('${postForumDTO.postIdx}')" value="수정"/>
-                                <input type="button" class="btn_delete" onclick="deleteFn('${postForumDTO.postIdx}')" value="삭제"/>
-                            </c:if>
+                        <div name="writeBtn">
+                            <button class="btn_list" onclick="listFn()">목록</button>
                         </div>
                     </div>
                 </div>
@@ -75,6 +71,18 @@
                 </div>
                 <!-- post 내용 끝 -->
                 <p hidden="true">${postForumDTO.memberIdx}</p>
+            <div class="box-size buttonList">
+            <div class="box-size">
+                <div id="writeBtn" name="writeBtn">
+                    <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
+                    <c:if test="${postForumDTO.memberEmail == sessionScope.loginEmail}">
+                        <input type="button" class="btn_update" onclick="updateFn('${postForumDTO.postIdx}')" value="수정"/>
+                        <input type="button" class="btn_delete" onclick="deleteFn('${postForumDTO.postIdx}')" value="삭제"/>
+                    </c:if>
+                </div>
+            </div>
+            </div>
+
 
     <!-- 댓글 입력 폼 -->
     <div class="replyInput_replytitle">
