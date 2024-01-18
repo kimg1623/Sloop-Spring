@@ -98,9 +98,9 @@
 <%--    </thead>--%>
 
 
-    <table>
+
         <!-- 페이징 + 검색 -->
-        <tfoot>
+
         <div id="tfoot" name="tfoot">
             <%-- 글이 1개 이상 존재할 때만 페이징 출력 --%>
             <c:if test="${not empty noticeList}">
@@ -158,13 +158,12 @@
                         </select>
 
                         <input type="text" name="keyword" value="${noticeSearchDTO.keyword}" />
-                        <input type="button" onclick="searchBtn()" value="검색"/>
+                        <input class="searchButton" type="button" onclick="searchBtn()" value="검색"/>
                     </div>
                 </td>
             </tr>
         </div>
-        </tfoot>
-    </table>
+
         </div>
     </div>
 </main>

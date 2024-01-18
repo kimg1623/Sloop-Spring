@@ -3,6 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
+<link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
 <!-- jquery cdn -->
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
@@ -145,7 +146,7 @@
                         </select>
 
                         <input type="text" name="keyword" value="${searchDTO.keyword}"/>
-                        <input type="button" onclick="searchBtn()" value="검색"/>
+                        <input class="searchButton" type="button" onclick="searchBtn()" value="검색"/>
                     </div>
                 </td>
             </tr>
