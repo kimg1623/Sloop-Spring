@@ -92,23 +92,23 @@
         <p>지역대분류 :
             <form:select path="memberRegionCode" onchange="memberSigugunChange(this)" required="true">
                 <form:option value="">선택하세요.</form:option>
-                <form:option value="900">서울특별시</form:option>
-                <form:option value="200">경기도</form:option>
-                <form:option value="1200">인천광역시</form:option>
-                <form:option value="100">강원특별자치도</form:option>
-                <form:option value="1700">충청북도</form:option>
-                <form:option value="1600">충청남도</form:option>
-                <form:option value="700">대전광역시</form:option>
-                <form:option value="1000">세종특별자치시</form:option>
-                <form:option value="1400">전라북도</form:option>
-                <form:option value="1300">전라남도</form:option>
-                <form:option value="500">광주광역시</form:option>
-                <form:option value="400">경상북도</form:option>
-                <form:option value="300">경상남도</form:option>
-                <form:option value="800">부산광역시</form:option>
-                <form:option value="600">대구광역시</form:option>
-                <form:option value="1100">울산광역시</form:option>
-                <form:option value="1500">제주특별자치도</form:option>
+                <form:option value="서울특별시">서울특별시</form:option>
+                <form:option value="경기도">경기도</form:option>
+                <form:option value="인천광역시">인천광역시</form:option>
+                <form:option value="강원특별자치도">강원특별자치도</form:option>
+                <form:option value="충청북도">충청북도</form:option>
+                <form:option value="충청남도">충청남도</form:option>
+                <form:option value="대전광역시">대전광역시</form:option>
+                <form:option value="세종특별자치시">세종특별자치시</form:option>
+                <form:option value="전라북도">전라북도</form:option>
+                <form:option value="전라남도">전라남도</form:option>
+                <form:option value="광주광역시">광주광역시</form:option>
+                <form:option value="경상북도">경상북도</form:option>
+                <form:option value="경상남도">경상남도</form:option>
+                <form:option value="부산광역시">부산광역시</form:option>
+                <form:option value="대구광역시">대구광역시</form:option>
+                <form:option value="울산광역시">울산광역시</form:option>
+                <form:option value="제주특별자치도">제주특별자치도</form:option>
             </form:select>
         </p>
         <form:errors path="memberRegionCode" cssStyle="color: red"/>
