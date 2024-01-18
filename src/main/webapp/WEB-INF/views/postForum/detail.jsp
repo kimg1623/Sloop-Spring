@@ -76,9 +76,6 @@
                 <!-- post 내용 끝 -->
                 <p hidden="true">${postForumDTO.memberIdx}</p>
 
-        </div><!--box-size contents_wrapper-->
-    </div>
-
     <!-- 댓글 입력 폼 -->
     <div class="replyInput_replytitle">
     댓글
@@ -134,4 +131,6 @@
             loadReplyList(postIdx, loginMemberIdx);
         });
     </script>
+    </div><!--box size wrap-->
+    </div><!--container studyGroup-->
 </main>
