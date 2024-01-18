@@ -116,7 +116,6 @@ public class MemberController {
     // 이메일 중복확인 AJAX
     @PostMapping("/email-check")
     public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail){
-        System.out.println("memberEmail = " + memberEmail);
         String checkResult = memberService.emailCheck(memberEmail);
         log.info("checkResult CONTROLLER" + checkResult );
         return checkResult;
@@ -124,14 +123,14 @@ public class MemberController {
     // 닉네임 중복확인 AJAX
     @PostMapping("/nickname-check")
     public @ResponseBody String nicknameCheck(@RequestParam("memberNickname") String memberNickname){
-        log.info("memberNickname == "+memberNickname);
         String checkResult2 = memberService.nicknameCheck(memberNickname);
+        log.info("memberNickname == "+memberNickname);
         return checkResult2;
     }
     @PostMapping("/phoneNumb-check")
     public @ResponseBody String phoneNumbCheck(@RequestParam("memberPhonenumber") String memberPhonenumber){
-        log.info("memberPhonenumber == "+memberPhonenumber);
         String checkResult3 = memberService.phoneNumbCheck(memberPhonenumber);
+        log.info("memberPhonenumber == "+memberPhonenumber);
         return checkResult3;
     }
     // 회원 목록 보기 추후에 관리자 권한으로만 갈 수 있게하기
