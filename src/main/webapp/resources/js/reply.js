@@ -34,9 +34,11 @@ const replyWrite = (postIdx, loginMemberIdx) => {
 const update = (replyIdx, memberIdx, replyContents, memberNickname, postIdx) => {
     // 댓글 수정 폼을 동적으로 생성하여 출력
     let form = "";
-    form += "<td id='updateWriter' value='" + memberNickname + "'></td>"; // 댓글 작성자 닉네임
-    form += "<td><input type='text' id='updateContents' value='" + replyContents + "'></td>";   // 수정 폼
-    form += "<td><button type='button' onclick='updateAction(" + replyIdx + ", " + memberIdx + "," + postIdx +")'>수정하기</button></td>";
+    form += "<div id='updateWriter' value='" + memberNickname + "'></div>"; // 댓글 작성자 닉네임
+    form += "<div class='replyInput_content_box'><input class='replyInput_content' type='text' id='updateContents' value='" + replyContents + "'></div>";   // 수정 폼
+    form += "<div class='replyButton_wrap'>";
+    form += "<button class='btn_update_reply_form' type='button' onclick='updateAction(" + replyIdx + ", " + memberIdx + "," + postIdx +")'>수정완료</button>";
+    form += "</div>";
 
     document.getElementById('reply_' + replyIdx).innerHTML = form;
 }
@@ -96,20 +98,26 @@ const deleteReply = (replyIdx, postIdx, loginMemberIdx) => {
 
 // 댓글 목록 출력
 const displayReplyList = (replyList, loginMemberIdx) => {
-    let output = "<table>";
+    let output = "<div class='reply_section_wrap'>";
     for (let i in replyList){
-        output += "<tr id='reply_" + replyList[i].replyIdx +"'>";
-        output += "<td>" + replyList[i].memberNickname + "</td>";
-        output += "<td>" + replyList[i].replyContents + "</td>";
-        output += "<td>" + replyList[i].replyRegDate + "</td>";
+        output += "<div class='reply_section_top'>";
+        output += "<div id='reply_" + replyList[i].replyIdx +"' />";
+        output += "<div class='reply_nickname'>" + replyList[i].memberNickname + "</div>";
+        output += "<div class='reply_date'>" + replyList[i].replyRegDate + "</div>";
+        output += "</div>";
+        output += "<section class='reply_section_bottom'>";
+        output += "<p class='reply_section_bottom'>" + replyList[i].replyContents + "</p>";
 
         if(replyList[i].memberIdx == loginMemberIdx) {    // 작성자와 로그인된 사용자가 동일한 경우에만 수정, 삭제 버튼 출력
-            output += "<td><button onclick=\"update(" + replyList[i].replyIdx + ", '" + replyList[i].memberIdx + "', '" + replyList[i].replyContents + "', '" + replyList[i].memberNickname + "', " + replyList[i].postIdx + ")\">수정</button></td>";
-            output += "<td><button onclick=\"deleteReply(" + replyList[i].replyIdx + ", " + replyList[i].postIdx + ", " + loginMemberIdx + ")\">삭제</button></td>";
+
+            output += "<div class='replyButton_wrap'>";
+            output += "<button class='btn_update_reply' onclick=\"update(" + replyList[i].replyIdx + ", '" + replyList[i].memberIdx + "', '" + replyList[i].replyContents + "', '" + replyList[i].memberNickname + "', " + replyList[i].postIdx + ")\">수정</button>";
+            output += "<button class='btn_delete_reply' onclick=\"deleteReply(" + replyList[i].replyIdx + ", " + replyList[i].postIdx + ", " + loginMemberIdx + ")\">삭제</button>";
+            output += "</div>";
         }
-        output += "</tr>";
+        output += "</section>";
+    output += "</div>";
     }
-    output += "</table>";
     document.getElementById('reply-list').innerHTML = output;
 };
 

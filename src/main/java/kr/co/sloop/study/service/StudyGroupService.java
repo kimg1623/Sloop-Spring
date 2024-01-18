@@ -29,4 +29,6 @@ public interface StudyGroupService {
     List<CategoryRegionDTO> getCategoryRegion2();
 
     String getGroupNameByGroupCode(String studyGroupCode);
+
+    boolean joinStudyGroup(String studyGroupIdx, int memberIdx);
 }

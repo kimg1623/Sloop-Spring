@@ -74,19 +74,6 @@
 				</div>
 			</div>
 			<!--board_title 끝 -->
-			<!--검색-->
-			<div id="search" name="search" class="searchList">
-				<select name="searchType">
-					<option value="1" <c:if test="${pageDTO.searchType == 0 || pageDTO.searchType == 1}">selected</c:if>>제목</option>
-					<option value="2" <c:if test="${pageDTO.searchType == 2}">selected</c:if>>내용</option>
-					<option value="3" <c:if test="${pageDTO.searchType == 3}">selected</c:if>>제목+내용</option>
-					<option value="4" <c:if test="${pageDTO.searchType == 4}">selected</c:if>>작성자</option>
-				</select>
-				<input class="searchInfo" type="text" name="keyword" value="${pageDTO.keyword}" />
-				<input class="searchButton" type="button" onclick="searchBtn()" value="검색"/>
-				<%--		<button class="dailyWriteButton" onclick="writeFn()">글작성</button>--%>
-			</div><!--searchList-->
-
 
 
 		</div><!--box-size contents_wrapper-->
@@ -154,17 +141,17 @@
 		<%-- 글이 1개 이상 존재할 때만 페이징 출력 --%>
 		<c:if test="${not empty dailyList}">
 			<%-- 페이징 --%>
-			<div id="paging" name="paging" class="page_wrap">
-				<div class="page_nation">
+			<div id="paging" name="paging">
+				<div >
 						<%-- [이전] --%>
 					<c:choose>
 						<%-- 현재 페이지가 1페이지면 이전 글자만 보여줌 --%>
 						<c:when test="${pageDTO.page<=1}">
-							<span class="prev">이전</span>
+							<span>[이전]</span>
 						</c:when>
 						<%-- 1페이지가 아닌 경우에는 [이전]을 클릭하면 현재 페이지보다 1 작은 페이지 요청 --%>
 						<c:otherwise>
-							<a href="/study/${studyGroupCode}/daily/${boardIdx}/list?page=${pageDTO.page-1}&searchType=${pageDTO.searchType}&keyword=${pageDTO.keyword}">이전</a>
+							<a href="/study/${studyGroupCode}/daily/${boardIdx}/list?page=${pageDTO.page-1}&searchType=${pageDTO.searchType}&keyword=${pageDTO.keyword}">[이전]</a>
 						</c:otherwise>
 					</c:choose>
 						<%-- 페이징 번호 --%>
@@ -184,14 +171,29 @@
 						<%-- [다음] --%>
 					<c:choose>
 						<c:when test="${pageDTO.page>=pageDTO.maxPage}">
-							<span class="next">다음</span>
+							<span >[다음]</span>
 						</c:when>
 						<c:otherwise>
-							<a href="/study/${studyGroupCode}/daily/${boardIdx}/list?page=${pageDTO.page+1}&searchType=${pageDTO.searchType}&keyword=${pageDTO.keyword}">다음</a>
+							<a href="/study/${studyGroupCode}/daily/${boardIdx}/list?page=${pageDTO.page+1}&searchType=${pageDTO.searchType}&keyword=${pageDTO.keyword}">[다음]</a>
 						</c:otherwise>
 					</c:choose>
 				</div><!--page_nation-->
 			</div><!--page_wrap-->
 		</c:if>
+
+		<!--검색-->
+		<div id="search" name="search" >
+			<select name="searchType">
+				<option value="1" <c:if test="${pageDTO.searchType == 0 || pageDTO.searchType == 1}">selected</c:if>>제목</option>
+				<option value="2" <c:if test="${pageDTO.searchType == 2}">selected</c:if>>내용</option>
+				<option value="3" <c:if test="${pageDTO.searchType == 3}">selected</c:if>>제목+내용</option>
+				<option value="4" <c:if test="${pageDTO.searchType == 4}">selected</c:if>>작성자</option>
+			</select>
+			<input class="searchInfo" type="text" name="keyword" value="${pageDTO.keyword}" />
+			<input class="searchButton" type="button" onclick="searchBtn()" value="검색"/>
+			<%--		<button class="dailyWriteButton" onclick="writeFn()">글작성</button>--%>
+		</div><!--searchList-->
+
+
 	</div><!--container main-->
 </main>

@@ -5,7 +5,14 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <link href="/resources/css/style_post.css" rel="stylesheet">
+<link href="/resources/css/style_studygroup_reply.css" rel="stylesheet">
 <link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
+
+<!-- jquery for ajax cdn -->
+<script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+<!-- 댓글 js -->
+<script src="/resources/js/reply.js"></script>
+
 <script>
 
     // 현재 페이지 URL 가져오기
@@ -95,6 +102,26 @@
             </div>
             <!-- post 내용 끝 -->
             <p hidden="true">${daily.memberIdx}</p>
+
+    <!-- 댓글 입력 폼 -->
+    <div class="replyInput_replytitle">
+        댓글
+    </div>
+    <div class="replyInput_content_box">
+        <input class="replyInput_content" type="text" id="replyContents"
+               placeholder="댓글을 입력해주세요.">
+    </div>
+    <div class="replyButton_wrap">
+        <button class="replyButton" id="reply-write-btn"
+                onclick="replyWrite('${daily.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 등록</button>
+    </div>
+    <br>
+
+    <!-- 댓글 목록 -->
+    <div id = "reply-list">
+    </div>
+
+
         </div><!--box size wrap-->
     </div><!--container studyGroup-->
 </main>
@@ -117,7 +144,16 @@
             location.href = previousURL+"/delete?postIdx=" + postIdx;
         }
 
+        /* 댓글 */
+        // 자동 실행 함수
+        $(document).ready(function(){
+            let postIdx = '${daily.postIdx}';
+            let loginMemberIdx = '${sessionScope.loginMemberIdx}';
+            // 댓글 목록 출력
+            loadReplyList(postIdx, loginMemberIdx);
+        });
+
+
+
 
     </script>
-
-</main>

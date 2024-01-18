@@ -7,9 +7,16 @@
   Time: 0:07
   To change this template use File | Settings | File Templates.
 --%>
+<!-- jquery cdn -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
+<link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
+<link href="/resources/css/style_studygroup_reply.css" rel="stylesheet">
+
+<script src="/resources/js/reply.js"></script>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container-studyGroup">
@@ -126,10 +133,16 @@
 
 
             <!-- 댓글 입력 폼 -->
-            <div>
-                <input type="text" id="replyContents" placeholder="댓글을 입력해주세요.">
-                <button id="reply-write-btn"
-                        onclick="replyWrite('${postAssignmentDTO.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 작성
+            <div class="replyInput_replytitle">
+                댓글
+            </div>
+            <div class="replyInput_content_box">
+                <input class="replyInput_content" type="text" id="replyContents"
+                       placeholder="댓글을 입력해주세요.">
+            </div>
+            <div class="replyButton_wrap">
+                <button class="replyButton" id="reply-write-btn"
+                        onclick="replyWrite('${postAssignmentDTO.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 등록
                 </button>
             </div>
             <br>

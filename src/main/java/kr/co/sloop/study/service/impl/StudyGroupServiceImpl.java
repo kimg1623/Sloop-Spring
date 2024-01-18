@@ -84,4 +84,15 @@ public class StudyGroupServiceImpl implements StudyGroupService {
     public String getGroupNameByGroupCode(String studyGroupCode) {
         return studyGroupRepository.getGroupNameByGroupCode(studyGroupCode);
     }
+
+    @Override
+    public boolean joinStudyGroup(String studyGroupIdx, int memberIdx) {
+        int result = studyGroupRepository.joinStudyGroup(studyGroupIdx, memberIdx);
+
+        if(result != 0){    // 성공
+            return true;
+        }else{  // 실패
+            return false;
+        }
+    }
 }
