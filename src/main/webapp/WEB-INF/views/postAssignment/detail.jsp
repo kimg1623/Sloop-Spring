@@ -10,6 +10,10 @@
 <html>
 <head>
     <title>과제 게시판: 게시글 상세 조회</title>
+    <!-- jquery for ajax cdn -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
+    <!-- 댓글 js -->
+    <script src="/resources/js/reply.js"></script>
 </head>
 <body>
     <table>
@@ -63,7 +67,21 @@
         <button onclick="deleteFn('${postAssignmentDTO.postIdx}')">삭제</button>
     </c:if>
 
+
+    <!-- 댓글 입력 폼 -->
+    <div>
+        <input type="text" id="replyContents" placeholder="댓글을 입력해주세요.">
+        <button id="reply-write-btn" onclick="replyWrite('${postAssignmentDTO.postIdx}', '${sessionScope.loginMemberIdx}')">댓글 작성</button>
+    </div>
+    <br>
+
+    <!-- 댓글 목록 -->
+    <div id = "reply-list">
+    </div>
+
+
     <script>
+        /* 게시글 */
         // 목록으로 돌아가기
         const listFn = () => {
             location.href = "./list";
@@ -86,6 +104,16 @@
                 console.log("취소되었습니다");
             }
         };
+
+        /* 댓글 */
+        // 자동 실행 함수
+        $(document).ready(function(){
+            let postIdx = '${postAssignmentDTO.postIdx}';
+            let loginMemberIdx = '${sessionScope.loginMemberIdx}';
+            // 댓글 목록 출력
+            loadReplyList(postIdx, loginMemberIdx);
+        });
+
     </script>
 </body>
 </html>
