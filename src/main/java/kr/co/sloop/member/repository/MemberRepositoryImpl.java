@@ -73,6 +73,11 @@ public class MemberRepositoryImpl implements MemberRepository {
         return memberMapper.findStudyByIdx(sessionIdx);
     }
 
+    @Override
+    public MemberDTO emailCheck(String memberEmail) {
+        return memberMapper.emailCheck(memberEmail);
+    }
+
     /*@Override
     public void uploadProfileByIdx(int memberIdx) {
         memberMapper.uploadProfileByIdx(memberIdx);
