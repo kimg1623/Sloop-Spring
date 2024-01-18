@@ -16,9 +16,9 @@
 
         <div class="main-tab">
             <p>
-                <a href="#">초등</a> |
-                <a href="#">중등</a> |
-                <a href="#">고등</a>
+<%--                <a href="#">초등</a> |--%>
+<%--                <a href="#">중등</a> |--%>
+<%--                <a href="#">고등</a>--%>
             </p>
         </div>
 
