@@ -72,7 +72,7 @@
 
 	<select id="findByPostIdx" resultType="notice">
 		select n.postIdx , n.postNoticeTitle, n.postNoticeContents, n.postNoticeRegDate, n.memberIdx, n.postNoticeEditDate, n.postNoticeHits , n.categoryPostIdx , n.postNoticePinned , m.memberNickname , m.memberEmail , c.categoryPostName
-		from postnotice as n
+		from postNotice as n
 				 join categoryPost as c on n.categoryPostIdx = c.categoryPostIdx
 				 join member as m on n.memberIdx = m.memberIdx
 				 join post as p on n.postIdx = p.postIdx

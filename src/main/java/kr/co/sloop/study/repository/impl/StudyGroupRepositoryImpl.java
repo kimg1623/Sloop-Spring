@@ -143,4 +143,19 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
         studyGroupMapper.updateStudyGroupHits(groupCode);
     }
 
+
+    @Override
+    public String getStudyMemRoleByMemberIdx(String loginMemberIdx, String studyGroupCode) {
+        return studyGroupMapper.getStudyMemRoleByMemberIdx(loginMemberIdx, studyGroupCode);
+    }
+
+    @Override
+    public List<Map<String, String>> getStudyGroupMembers(String studyGroupCode) {
+        return studyGroupMapper.getStudyGroupMembers(studyGroupCode);
+    }
+
+    @Override
+    public int updateStudyMemberRoleApprove(String memberIdx, String studyGroupIdx) {
+        return studyGroupMapper.updateStudyMemberRoleApprove(memberIdx, studyGroupIdx);
+    }
 }

@@ -1,13 +1,17 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
 <style>
-    .alert-message{
+    .alert-message {
         animation-name: fadeOut;
         animation-delay: 5000ms;
     }
+
     @keyframes fadeOut {
         from {
             opacity: 100%;
@@ -17,8 +21,6 @@
         }
     }
 </style>
-<script>
-</script>
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="container-studyGroup">
@@ -40,108 +42,84 @@
                 <div class="studygroup_tabmenu">
                     <ul class="nav nav-tabs">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/study/${StudyGroup.studyGroupCode}/manage/info">스터디 정보</a>
+                            <a class="nav-link" aria-current="page"
+                               href="/study/${studyGroupCode}/manage/info">스터디 정보</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="/study/${StudyGroup.studyGroupCode}/manage/members">스터디 구성원</a>
+                            <a class="nav-link active" href="/study/${studyGroupCode}/manage/members">스터디
+                                구성원</a>
                         </li>
                     </ul>
                 </div>
             </div>
             <!--board_title 끝 -->
 
-
-                <form:form modelAttribute="StudyGroup" class="form-horizontal" method="post" action="/study/${StudyGroup.studyGroupCode}/manage/info">
-                    <fieldset>
-                        <legend>${addTitle}</legend> <!-- 모델 속성의 이름 addTitle 출력 -->
-                        <!-- 스터디 그룹 index -->
-                        <p><form:hidden path="studyGroupIdx"/></p>
-                        <!-- 스터디그룹 코드 -->
-                        <p><form:hidden path="studyGroupCode"/></p>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">스터디 이름</label>
-                            <div class="col-sm-3">
-                                <form:input path="studyGroupName" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">스터디 방식</label>
-                            <div class="col-sm-3">
-                                <form:radiobutton path="studyGroupMethod" value="1" /> 온라인
-                                <form:radiobutton path="studyGroupMethod" value="2" /> 오프라인
-                                <form:radiobutton path="studyGroupMethod" value="3" /> 온/오프라인
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">학년</label>
-                            <div class="col-sm-3">
-                                <form:select path="studyGroupGradeCode">
-                                    <form:option value="100">초등학교</form:option>
-                                    <form:option value="200">중학교</form:option>
-                                    <form:option value="300">고등학교</form:option>
-                                </form:select>
-
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">과목</label>
-                            <div class="col-sm-3">
-                                <form:input path="studyGroupSubjectCode" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">지역</label>
-                            <div class="col-sm-5">
-                                <form:input path="studyGroupRegionCode" cols="50" rows="2" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">모집인원</label>
-                            <div class="col-sm-3">
-                                <form:input path="studyGroupNum" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">모집마감일</label>
-                            <div class="col-sm-3">
-                                <form:input path="studyGroupDuedate" type="date" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">스터디 시작일</label>
-                            <div class="col-sm-3">
-                                <form:input path="studyGroupStartdate" type="date" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">소개글</label>
-                            <div class="col-sm-3">
-                                <form:input path="studyGroupIntrotxt" class="form-control"/>
-                            </div>
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-sm-2 control-label">스터디 이미지</label>
-                            <div class="col-sm-3">
-                                <form:input path="studyGroupOImg" class="form-control"/>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-sm-offset-2 col-sm-10" >
-                                <input type="submit" class="btn btn-primary" value ="변경사항 저장"/>
-                            </div>
-                        </div>
-                    </fieldset>
-                </form:form>
-                <div class="alert-message">
-                    <c:if test="${resultMessage ne null}">
-                        ${resultMessage} - 5초 뒤 사라지게 css 적용 예정
-                    </c:if>
-                </div>
-                <div>
-                    스터디 그룹 폐쇄하기 <input type="button" value="그룹 폐쇄" onclick="onDelete()">
-                </div>
-
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <c:forEach items="${studyMembers}" var="studyMember" varStatus="status">
+                    <tr>
+                        <th scope="row">${status.count}</th>
+                        <td>${studyMember.memberNickname}</td>
+                        <c:choose>
+                            <c:when test="${studyMember.studyMemRole eq 'ROLE_STUDY_LEADER'}">
+                                <td>그룹 리더</td>
+                            </c:when>
+                            <c:when test="${studyMember.studyMemRole eq 'ROLE_STUDY_MEMBER'}">
+                                <td>그룹 멤버</td>
+                                <td>
+                                    <input type="button" class="btn_reject" value="강제 탈퇴" onclick="onDeleteMember(${studyMember.memberIdx},${studyMember.studyGroupIdx})">
+                                </td>
+                            </c:when>
+                            <c:when test="${studyMember.studyMemRole eq 'ROLE_STUDY_STANDBY'}">
+                                <td style="color: #007fff">가입 대기</td>
+                                <td>
+                                    <input type="submit" class="btn_approve" value ="승인" onclick="onApproveMember(${studyMember.memberIdx},${studyMember.studyGroupIdx})">
+                                    <input type="button" class="btn_reject" value="거절" onclick="onDeleteMember(${studyMember.memberIdx},${studyMember.studyGroupIdx})">
+                                </td>
+                            </c:when>
+                        </c:choose>
+                    </tr>
+                </c:forEach>
+                </tbody>
+            </table>
         </div>
     </div>
 </main>
+<script>
+    onApproveMember = (memberIdx, studyGroupIdx) => {
+        var obj = new Object();
+        obj.memberIdx = memberIdx;
+        obj.studyGroupIdx = studyGroupIdx;
+        var jsonData = JSON.stringify(obj);
+
+        $.ajax({
+            type: "POST",
+            url: "./members/role",
+            data: JSON.stringify ({
+                memberIdx : memberIdx,
+                studyGroupIdx : studyGroupIdx
+            }),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data) {
+                alert("권한 변경 성공");
+                console.log("권한 변경 성공");
+                console.log(data);
+                location.reload(true);
+            },
+            error: function () {
+                alert("권한 변경 실패");
+                console.log("권한 변경 실패");
+                location.reload(true);
+            }
+        });
+    }
+</script>

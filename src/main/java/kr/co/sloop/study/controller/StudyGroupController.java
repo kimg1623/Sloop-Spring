@@ -4,17 +4,20 @@ import kr.co.sloop.common.AlertUtils;
 import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.service.StudyGroupService;
+import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.html.Option;
@@ -156,10 +159,49 @@ public class StudyGroupController {
 	 * URI : /study/{studyGroupCode}/manage/members
 	 */
 	@GetMapping("/{studyGroupCode}/manage/members")
-	public String requestStudyGroupMemebers(@PathVariable("studyGroupCode") String studyGroupCode,
-											 @ModelAttribute("StudyGroup") StudyGroupDTO studyGroupDTO,
-											 RedirectAttributes RA){
-		return "study/members";
+	public String requestStudyGroupMembers(@PathVariable("studyGroupCode") String studyGroupCode,
+											 HttpSession session, HttpServletResponse response,
+											 Model model) throws IOException {
+		String studyMemRole = studyGroupService.getStudyMemRoleByMemberIdx((String)session.getAttribute("loginMemberIdx"), studyGroupCode);
+		if(studyMemRole.equals("ROLE_STUDY_LEADER")){
+			List<Map<String, String>> studyMembers = studyGroupService.getStudyGroupMembers(studyGroupCode);
+			log.info(studyMembers);
+			model.addAttribute("studyMembers",studyMembers);
+			return "study/members";
+		} else {
+			AlertUtils.alertAndBackPage(response, "스터디 리더만 접근할 수 있습니다.");
+			return "redirect:/study/"+studyGroupCode;
+		}
+	}
+
+	/**
+	 * 스터디 구성원 관리 페이지
+	 * URI : /study/{studyGroupCode}/manage/members/role
+	 */
+	@PostMapping("/{studyGroupCode}/manage/members/role")
+	public ResponseEntity<?> requestChangeStudyGroupMemberRole(@PathVariable("studyGroupCode") String studyGroupCode,
+										   HttpSession session, HttpServletResponse response,
+											@RequestBody HashMap<String, Object> map,
+										   	Model model) throws IOException {
+		String memberIdx = (String)map.get("memberIdx");
+		String studyGroupIdx = (String)map.get("studyGroupIdx");
+
+		String studyMemRole = studyGroupService.getStudyMemRoleByMemberIdx((String)session.getAttribute("loginMemberIdx"), studyGroupCode);
+		log.info("변경 상태222"+studyMemRole);
+		if(studyMemRole.equals("ROLE_STUDY_LEADER")){
+			int result = studyGroupService.updateStudyMemberRoleApprove(memberIdx, studyGroupIdx);
+			log.info("변경 상태"+result);
+			if (result == 1){
+				return ResponseEntity.ok(result);
+			}
+			else {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("권한 변경 실패 status");
+
+			}
+		} else {
+			AlertUtils.alertAndBackPage(response, "스터디 리더만 접근할 수 있습니다.");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("스터디 리더만 접근할 수 있습니다.");
+		}
 	}
 
 	/**

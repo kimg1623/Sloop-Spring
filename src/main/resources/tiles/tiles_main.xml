@@ -67,17 +67,18 @@
 
 
    <definition name="member/profile" extends="mainLayout">
-      <put-attribute name="title" value="회원프로필수정창" />
+      <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/member/profile.jsp" />
    </definition>
 
 
    <definition name="member/update" extends="mainLayout">
-      <put-attribute name="title" value="회원정보수정창" />
+      <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/member/update.jsp" />
    </definition>
+
    <definition name="member/home" extends="mainLayout">
-      <put-attribute name="title" value="스터디가입목록창" />
+      <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/member/home.jsp" />
    </definition>
 

@@ -36,10 +36,10 @@
                 <div class="studygroup_tabmenu">
                     <ul class="nav nav-tabs" id="manageTab">
                         <li class="nav-item">
-                            <a class="nav-link active" href="/study/${StudyGroup.studyGroupCode}/manage/info">스터디 정보</a>
+                            <a class="nav-link active" href="/study/${studyGroupCode}/manage/info">스터디 정보</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/study/${StudyGroup.studyGroupCode}/manage/members">스터디 구성원</a>
+                            <a class="nav-link" href="/study/${studyGroupCode}/manage/members">스터디 구성원</a>
                         </li>
                     </ul>
                 </div>
@@ -162,7 +162,7 @@
                         그룹을 폐쇄하면 모든 데이터가 사라집니다.
                     </div>
                     <div class="col-sm-3">
-                        <input type="button" class="btn_delete" value="그룹 폐쇄하기" onclick="onDelete()">
+
                     </div>
                 </div>
             </div>
