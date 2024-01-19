@@ -96,7 +96,21 @@
 							<div class="card-study">
 								<li>
 									<a href="/study/${studyGroupCode}/daily/${boardIdx}/detail?postIdx=${daily.postIdx}">
-										<img src="${contextPath}/resources/images/thumbnail_01.png" class="card-img-top" alt="...">
+
+<%--										<img src="${contextPath}/resources/images/thumbnail_01.png" class="card-img-top" alt="...">--%>
+
+										<c:choose>
+											<c:when test="${not empty daily.attachmentName}">
+												<img src="./image?fileName=${daily.attachmentName}" alt="views" width="70%">
+											</c:when>
+											<c:otherwise>
+<%--												<img src="./image?fileName=${daily.attachmentName}" alt="views" width="70%">--%>
+												<img src="${contextPath}/resources/images/thumbnail_01.png" class="card-img-top" alt="...">
+											</c:otherwise>
+										</c:choose>
+
+
+
 										<div class="card-border"></div>
 										<div class="card-body">
 

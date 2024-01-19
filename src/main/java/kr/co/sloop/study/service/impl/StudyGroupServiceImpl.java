@@ -95,4 +95,10 @@ public class StudyGroupServiceImpl implements StudyGroupService {
             return false;
         }
     }
+
+    @Override
+    public void updateStudyGroupHits(String groupCode) {
+        studyGroupRepository.updateStudyGroupHits(groupCode);
+    }
+
 }
