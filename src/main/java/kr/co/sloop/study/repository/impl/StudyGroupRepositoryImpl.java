@@ -137,4 +137,10 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
     public int joinStudyGroup(String studyGroupIdx, int memberIdx) {
         return studyGroupMapper.joinStudyGroup(studyGroupIdx, memberIdx);
     }
+
+    @Override
+    public void updateStudyGroupHits(String groupCode) {
+        studyGroupMapper.updateStudyGroupHits(groupCode);
+    }
+
 }
