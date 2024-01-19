@@ -54,7 +54,7 @@
                     <label for="memberPassword" class="col-sm-2 col-form-label">비밀번호</label>
                     <div class="col-sm-7">
                         <form:input path="memberPassword" class="form-control" type="password" id="memberPassword"
-                                    placeholder="1234" required="true"/>
+                                    required="true"/>
                             <%--에러 문구--%>
                         <form:errors path="memberPassword" cssStyle="color: red" cssClass="check-result"/>
                         <div id="check-result" class="check-result">영어 대소문자,숫자,특수문자(!,@,#,$)를 각각 한 개 이상을 반드시 포함(8~16자)

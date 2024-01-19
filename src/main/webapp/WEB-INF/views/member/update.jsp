@@ -1,87 +1,177 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<html>
-<head>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-            crossorigin="anonymous"></script>
-    <title>S-loop 회원 정보 수정</title>
-</head>
-<body>
 
-<%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
-<form:form action="/member/update" method="post" modelAttribute="memberDTO">
-<!-- hidden -->
-<!-- 작성자 idx -->
-<p><form:hidden path="memberIdx"/></p>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+        crossorigin="anonymous"></script>
 
-<p>이 메 일 : <form:input path="memberEmail" readonly="true"/>
-<%--
-<p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
---%>
-<p>닉 네 임 : <form:input path="memberNickname" readonly="true"/></p>
-<p>성   별 :
-    <form:radiobutton path="memberGender" id="male" value="남자" />
-    <label for="male">남자</label>
-    <form:radiobutton path="memberGender" id="female" value="여자" />
-    <label for="female">여자</label>
-</p>
-    <p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호" required="true"/>
-        <form:button type="button" value="중복확인" onclick="phoneNumbCheck()">중복확인</form:button></p>
-    <form:errors path="memberPhonenumber" cssStyle="color: red"/>
-    <p id="check-result3"></p>
-<p>회원대분류 :
-    <form:select path="memberGradeCode">
-        <form:option value="">선택하세요.</form:option>
-        <form:option value="초등학생">초등학생</form:option>
-        <form:option value="중학생">중학생</form:option>
-        <form:option value="고등학생">고등학생</form:option>
-    </form:select>
-</p>
-    <%--<p>회원소분류 :
-        <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
-            <option value="choose">선택하세요.</option>
-        </form:select></p>--%>
-<p>학 교 명 : <form:input path="memberSchool"/></p>
-<p>관심 과목 :
-    <form:checkbox path="memberSubjectCode" value="국어"/>국어
-    <form:checkbox path="memberSubjectCode" value="영어"/>영어
-    <form:checkbox path="memberSubjectCode" value="수학"/>수학
-    <form:checkbox path="memberSubjectCode" value="사회"/>사회
-    <form:checkbox path="memberSubjectCode" value="과학"/>과학
-    <form:checkbox path="memberSubjectCode" value="기타"/>기타
-</p>
-    <form:errors path="memberSubjectCode" cssStyle="color: red"/>
-<p>지역대분류 :
-    <form:select path="memberRegionCode">
-        <form:option value="">선택하세요.</form:option>
-        <form:option value="서울특별시">서울특별시</form:option>
-        <form:option value="경기도">경기도</form:option>
-        <form:option value="인천광역시">인천광역시</form:option>
-        <form:option value="강원특별자치도">강원특별자치도</form:option>
-        <form:option value="충청북도">충청북도</form:option>
-        <form:option value="충청남도">충청남도</form:option>
-        <form:option value="대전광역시">대전광역시</form:option>
-        <form:option value="세종특별자치시">세종특별자치시</form:option>
-        <form:option value="전라북도">전라북도</form:option>
-        <form:option value="전라남도">전라남도</form:option>
-        <form:option value="광주광역시">광주광역시</form:option>
-        <form:option value="경상북도">경상북도</form:option>
-        <form:option value="경상남도">경상남도</form:option>
-        <form:option value="부산광역시">부산광역시</form:option>
-        <form:option value="대구광역시">대구광역시</form:option>
-        <form:option value="울산광역시">울산광역시</form:option>
-        <form:option value="제주특별자치도">제주특별자치도</form:option>
-    </form:select>
-</p>
-    <%--<p>지역소분류 :
-        <select name="memberRegionCode" id="memberRegionCode_sub" required>
-            <option value="choose">선택하세요.</option>
-        </select></p>--%>
-    <input type="submit" value="수정">
-</form:form>
-</body>
+<link href="/resources/css/style_main.css" rel="stylesheet">
+<link href="/resources/css/style_post.css" rel="stylesheet">
+<link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
+
+
+<!-- main 페이지의 컨텐츠 부분 시작 -->
+<div class="container-main">
+    <div class="container-studyGroup">
+        <div class="box-size contents_wrapper">
+            <!--board_title 시작 -->
+            <div class="box-size board_title">
+                <div class="box-size title_contents">
+                    <div class="box-size">
+                        <div class="box-size title_div_text">
+                            <h3 class="title_text">
+                                회원정보수정
+                            </h3>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+
+            <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
+            <form:form action="/member/update" method="post" modelAttribute="memberDTO">
+                <!-- hidden -->
+                <!-- 작성자 idx -->
+                <form:hidden path="memberIdx"/>
+
+                <div class="row mb-3 signup_row">
+                    <label for="memberEmail" class="col-sm-2 col-form-label">이메일</label>
+                    <div class="col-sm-8">
+                        <form:input path="memberEmail" class="form-control" readonly="true"/>
+                    </div>
+                </div>
+
+                <div class="row mb-3 signup_row">
+                    <label for="memberNickname" class="col-sm-2 col-form-label">닉네임</label>
+                    <div class="col-sm-8">
+                        <form:input path="memberNickname" class="form-control" readonly="true"/>
+                    </div>
+                </div>
+                <%--
+                <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
+                --%>
+
+
+                <fieldset class="row mb-3">
+                    <label class="col-form-label col-sm-2">성별</label>
+                    <div class="col-sm-8 option_flex">
+                        <div class="form-check form-option-custom">
+                            <form:radiobutton path="memberGender" id="male" value="남자" />
+                            <label class="form-check-label" for="male">
+                                남자
+                            </label>
+                        </div>
+                        <div class="form-check form-option-custom">
+                            <form:radiobutton path="memberGender" id="female" value="여자" />
+                            <label class="form-check-label" for="female">
+                                여자
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <%--전화번호--%>
+                <div class="row mb-3">
+                    <label for="memberPhonenumber" class="col-sm-2 col-form-label">전화번호</label>
+                    <div class="col-sm-8">
+                        <form:input path="memberPhonenumber" class="form-control" type="text" placeholder="핸드폰번호" required="true"/>
+                    </div>
+                    <form:errors path="memberPhonenumber" cssStyle="color: red"/>
+                </div>
+
+                <p id="check-result3"></p>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">회원대분류</label>
+                    <div class="col-sm-8">
+                        <form:select path="memberGradeCode" class="form-select">
+                            <form:option value="">선택하세요.</form:option>
+                            <form:option value="초등학생">초등학생</form:option>
+                            <form:option value="중학생">중학생</form:option>
+                            <form:option value="고등학생">고등학생</form:option>
+                        </form:select>
+                    </div>
+                </div>
+                <%--<p>회원소분류 :
+                    <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
+                        <option value="choose">선택하세요.</option>
+                    </form:select></p>--%>
+                <div class="row mb-3">
+                    <label for="memberSchool" class="col-sm-2 col-form-label">학교명</label>
+                    <div class="col-sm-8">
+                        <form:input path="memberSchool" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">관심 과목</label>
+                    <div class="col-sm-8">
+                        <div class="form-check form-check-inline">
+                            <form:checkbox path="memberSubjectCode" value="국어"/>
+                            <label class="form-check-label">국어</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox path="memberSubjectCode" value="영어"/>
+                            <label class="form-check-label">영어</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox path="memberSubjectCode" value="수학"/>
+                            <label class="form-check-label">수학</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox path="memberSubjectCode" value="사회"/>
+                            <label class="form-check-label">사회</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox path="memberSubjectCode" value="과학"/>
+                            <label class="form-check-label">과학</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox path="memberSubjectCode" value="기타"/>
+                            <label class="form-check-label">기타</label>
+                        </div>
+                    </div>
+                    <form:errors path="memberSubjectCode" cssStyle="color: red"/>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">지역대분류</label>
+                    <div class="col-sm-8">
+                        <form:select path="memberRegionCode" class="form-select">
+                            <form:option value="">선택하세요.</form:option>
+                            <form:option value="서울특별시">서울특별시</form:option>
+                            <form:option value="경기도">경기도</form:option>
+                            <form:option value="인천광역시">인천광역시</form:option>
+                            <form:option value="강원특별자치도">강원특별자치도</form:option>
+                            <form:option value="충청북도">충청북도</form:option>
+                            <form:option value="충청남도">충청남도</form:option>
+                            <form:option value="대전광역시">대전광역시</form:option>
+                            <form:option value="세종특별자치시">세종특별자치시</form:option>
+                            <form:option value="전라북도">전라북도</form:option>
+                            <form:option value="전라남도">전라남도</form:option>
+                            <form:option value="광주광역시">광주광역시</form:option>
+                            <form:option value="경상북도">경상북도</form:option>
+                            <form:option value="경상남도">경상남도</form:option>
+                            <form:option value="부산광역시">부산광역시</form:option>
+                            <form:option value="대구광역시">대구광역시</form:option>
+                            <form:option value="울산광역시">울산광역시</form:option>
+                            <form:option value="제주특별자치도">제주특별자치도</form:option>
+                        </form:select>
+                    </div>
+                </div>
+                <%--<p>지역소분류 :
+                    <select name="memberRegionCode" id="memberRegionCode_sub" required>
+                        <option value="choose">선택하세요.</option>
+                    </select></p>--%>
+                <input type="submit" class="submitButton" value="수정">
+            </form:form>
+
+        </div>
+    </div>
+</div>
+
+
 <script>
     /*const update = () => {
         const passwordDB = '${memberDTO.memberPassword}';
@@ -222,4 +312,3 @@
         }
     }
 </script>
-</html>
