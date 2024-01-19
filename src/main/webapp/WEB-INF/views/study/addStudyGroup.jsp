@@ -29,9 +29,9 @@
                         }
 
                         $('select[name=selectOption1_region]').html(sClassHtml);
-                        $('select[name=selectOption2_region]').html(sItemHtml);
+                        $('select[name=studyGroupRegionCode]').html(sItemHtml);
 
-                        $('select[name=selectOption2_region] option').each(function(idx, item) {
+                        $('select[name=studyGroupRegionCode] option').each(function(idx, item) {
                             if ($(this).val() == '') return true;
                             $(this).hide();
                         })
@@ -46,7 +46,7 @@
             $(document).on('change', 'select[name=selectOption1_region]', function() {
                 const classVal = $(this).val(); // 선택한 option의 value
 
-                $('select[name=selectOption2_region] option').each(function(idx, item) {
+                $('select[name=studyGroupRegionCode] option').each(function(idx, item) {
                     if ($(this).data('class') == classVal || $(this).val() == '') { // 2단계 option의 data-class값과 1단계 value값이 같다면
                         $(this).show(); // option 보이기
                     } else {
@@ -147,8 +147,9 @@
                         <select class="form-select" name="selectOption1_region"></select>
                     </div>
                     <div class="col-md-4">
-                        <select class="form-select" name="selectOption2_region"></select>
+                        <select class="form-select" name="studyGroupRegionCode"></select>
                     </div>
+<%--                    <form:hidden path="studyGroupRegionCode" />--%>
                 </div>
                 <!-- ajax로 동적 select 박스 구현 test 끝-->
 
