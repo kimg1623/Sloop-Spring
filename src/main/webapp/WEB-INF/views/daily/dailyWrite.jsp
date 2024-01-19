@@ -89,7 +89,7 @@
             <form name="dataForm" id="dataForm" onsubmit="return registerAction()">
                 <button id="btn-upload" type="button" style="border: 1px solid #ddd; outline: none;">파일 선택</button>
                 <input id="input_file" multiple="multiple" type="file" style="display:none;">
-                <span style="font-size:10px;">※첨부파일은 최대 10개까지 등록이 가능합니다.</span>
+                <span style="font-size:10px;">※첨부파일은 최대 1개까지 등록이 가능합니다.</span>
                 <button type="submit" style="border: 1px solid #ddd; outline: none;">Upload</button>
                 <div class="data_file_txt" id="data_file_txt" style="margin:40px;">
                     <span class="Addfile">첨부 파일</span>
@@ -161,7 +161,7 @@
                     $('#articlefileChange').append(
                         '<div id="file' + fileNum + '" onclick="fileDelete(\'file' + fileNum + '\')">'
                         + '<font style="font-size:12px">' + f.name + '</font>'
-                        + '<img src="/resources/images/thumbnail_01.png" style="width:20px; height:auto; vertical-align: middle; cursor: pointer;"/>'
+                        + '<img src="/resources/images/fileM.png" style="width:20px; height:auto; vertical-align: middle; cursor: pointer;"/>'
                         + '<div/>'
                     );
                     fileNum ++;

@@ -48,13 +48,10 @@
                     </div>
                     <div class="box-size">
                         <div id="writeBtn" name="writeBtn">
-                            <!--본인일때만 수정삭제 보이게 -->
-                            <c:if test="${daily.memberEmail == sessionScope.loginEmail}">
-                                <button class="btn_update" onclick="updateFn()">수정</button>
-                                <button class="btn_delete" onclick="deleteFn()">삭제</button>
-                            </c:if>
+                            <button class="btn_list" onclick="listFn()">목록</button>
                         </div>
                     </div>
+
                 </div>
             </div>
             <!--post button 영역 끝 -->
@@ -98,9 +95,11 @@
 
             <!-- 사진 출력 -->
             <!-- 사진이 있을 때만 출력 -->
+            <div style="margin-top:25px;">
             <c:if test="${not empty daily.attachmentName}">
                 <img src="./image?fileName=${daily.attachmentName}" alt="views" width="70%">
             </c:if>
+            </div>
 
             <!-- post 내용 시작 -->
             <div class="post_content_contents">
@@ -108,6 +107,17 @@
             </div>
             <!-- post 내용 끝 -->
             <p hidden="true">${daily.memberIdx}</p>
+            <div class="box-size buttonList">
+            <div class="box-size">
+                <div name="writeBtn">
+                    <!--본인일때만 수정삭제 보이게 -->
+                    <c:if test="${daily.memberEmail == sessionScope.loginEmail}">
+                        <button class="btn_update" onclick="updateFn()">수정</button>
+                        <button class="btn_delete" onclick="deleteFn()">삭제</button>
+                    </c:if>
+                </div>
+            </div>
+            </div>
 
     <!-- 댓글 입력 폼 -->
     <div class="replyInput_replytitle">
