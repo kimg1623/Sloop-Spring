@@ -15,7 +15,7 @@
 
         <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
         <form:form action="/member/login" method="post" modelAttribute="memberDTO" >
-            <p><form:input path="memberEmail" type="email" placeholder="이메일" class="fadeIn second" required="true" /></p>
+            <p><form:input path="memberEmail" type="email" placeholder="이메일" class="fadeIn second" required="true" autofocus="autofocus"/></p>
             <form:errors path="memberEmail" cssStyle="color: red"/>
 
             <p><form:input path="memberPassword" type="password" placeholder="비밀번호" class="fadeIn third" required="true" /></p>
