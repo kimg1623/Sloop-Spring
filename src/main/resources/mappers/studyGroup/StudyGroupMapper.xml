@@ -82,4 +82,12 @@
         insert into studyMem (studyGroupIdx, memberIdx, studyMemRole)
         values (#{studyGroupIdx}, #{memberIdx}, 'ROLE_STUDY_STANDBY')
     </insert>
+
+    <!--창규 추가-->
+    <update id="updateStudyGroupHits" parameterType="String">
+        update studygroup
+        set	studyGroupHits = studyGroupHits + 1
+        where studyGroupCode = #{groupIdx}
+    </update>
+
 </mapper>
