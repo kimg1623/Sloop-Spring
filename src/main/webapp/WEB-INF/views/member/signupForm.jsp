@@ -7,117 +7,213 @@
         crossorigin="anonymous"></script>
 
 <link href="/resources/css/style_main.css" rel="stylesheet">
+<link href="/resources/css/style_post.css" rel="stylesheet">
+<link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
 
 
 <!-- main 페이지의 컨텐츠 부분 시작 -->
 <div class="container-main">
-
-
-    <%-- form:errors 가 span 으로 나오는 출력문과 / <p> 태그로 유효성검사 나오는건 조장님 컨트롤하기 편하신거로 선택해서 쓰시면 될거 같아요--%>
-    <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
-    <form:form action="/member/signup" method="post" modelAttribute="memberDTO">
-        <%--이메일--%>
-        <div class="row mb-3 signup_row">
-            <label for="memberEmail" class="col-sm-2 col-form-label">이메일</label>
-            <div class="col-sm-7">
-                <form:input path="memberEmail" class="form-control" id="memberEmail" placeholder="name@example.com" required="true"/>
-                <%--에러 문구--%>
-                <form:errors path="memberEmail" cssStyle="color: red" cssClass="check-result"/>
-                <div id="check-result" class="check-result"></div>
+    <div class="container-studyGroup">
+        <div class="box-size contents_wrapper">
+            <!--board_title 시작 -->
+            <div class="box-size board_title">
+                <div class="box-size title_contents">
+                    <div class="box-size">
+                        <div class="box-size title_div_text">
+                            <h3 class="title_text">
+                                회원가입
+                            </h3>
+                        </div>
+                        <div class="box-size title_div_contents">
+                            슬룹의 회원으로 가입하고, 원하는 스터디 그룹에 참여해보세요.
+                        </div>
+                    </div>
+                </div>
             </div>
-            <form:button type="button" class="checkButton" value="중복확인" onclick="emailCheck()">중복확인</form:button>
+
+
+            <%-- form:errors 가 span 으로 나오는 출력문과 / <p> 태그로 유효성검사 나오는건 조장님 컨트롤하기 편하신거로 선택해서 쓰시면 될거 같아요--%>
+            <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
+            <form:form action="/member/signup" method="post" modelAttribute="memberDTO">
+                <%--이메일--%>
+                <div class="row mb-3 signup_row">
+                    <label for="memberEmail" class="col-sm-2 col-form-label">이메일</label>
+                    <div class="col-sm-7">
+                        <form:input path="memberEmail" class="form-control" id="memberEmail"
+                                    placeholder="name@example.com" required="true"/>
+                            <%--에러 문구--%>
+                        <form:errors path="memberEmail" cssStyle="color: red" cssClass="check-result"/>
+                        <div id="check-result" class="check-result"></div>
+                    </div>
+                    <form:button type="button" id="checkButton1" class="checkButton" value="중복확인"
+                                 onclick="emailCheck()">중복확인</form:button>
+                </div>
+
+                <%--비밀번호--%>
+                <div class="row mb-3 signup_row">
+                    <label for="memberPassword" class="col-sm-2 col-form-label">비밀번호</label>
+                    <div class="col-sm-7">
+                        <form:input path="memberPassword" class="form-control" type="password" id="memberPassword"
+                                    placeholder="1234" required="true"/>
+                            <%--에러 문구--%>
+                        <form:errors path="memberPassword" cssStyle="color: red" cssClass="check-result"/>
+                        <div id="check-result" class="check-result">영어 대소문자,숫자,특수문자(!,@,#,$)를 각각 한 개 이상을 반드시 포함(8~16자)
+                        </div>
+                    </div>
+                </div>
+
+                <%--닉네임--%>
+                <div class="row mb-3 signup_row">
+                    <label for="memberNickname" class="col-sm-2 col-form-label">닉네임</label>
+                    <div class="col-sm-7">
+                        <form:input path="memberNickname" class="form-control" id="memberNickname" placeholder=""
+                                    required="true"/>
+                            <%--에러 문구--%>
+                        <form:errors path="memberNickname" cssStyle="color: red" cssClass="check-result"/>
+                        <div id="check-result2" class="check-result">영문 대소문자,숫자,밑줄(_) 중 하나 이상 포함(2~19자, 공백불가)</div>
+                    </div>
+                    <form:button type="button" id="checkButton2" class="checkButton" value="중복확인"
+                                 onclick="nicknameCheck()">중복확인</form:button>
+                </div>
+
+                <%--성별--%>
+                <fieldset class="row mb-3">
+                    <label class="col-form-label col-sm-2">성별</label>
+                    <div class="col-sm-7 option_flex">
+                        <div class="form-check form-option-custom">
+                            <form:radiobutton path="memberGender" value="male"/>
+                            <label class="form-check-label">
+                                남자
+                            </label>
+                        </div>
+                        <div class="form-check form-option-custom">
+                            <form:radiobutton path="memberGender" value="female"/>
+                            <label class="form-check-label">
+                                여자
+                            </label>
+
+                        </div>
+                    </div>
+                        <%--에러 문구--%>
+                    <form:errors path="memberGender" cssStyle="color: red" cssClass="check-result"/>
+                </fieldset>
+
+
+                <%--전화번호--%>
+                <div class="row mb-3 signup_row">
+                    <label for="memberPhonenumber" class="col-sm-2 col-form-label">전화번호</label>
+                    <div class="col-sm-7">
+                        <form:input path="memberPhonenumber" class="form-control" id="memberPhonenumber"
+                                    placeholder="공백이나 '-'없이 숫자 11자리만 입력하세요." required="true"/>
+                            <%--에러 문구--%>
+                        <form:errors path="memberPhonenumber" cssStyle="color: red" cssClass="check-result"/>
+                        <div id="check-result3" class="check-result">공백이나 '-'없이 숫자 11자리만 입력하세요.</div>
+                    </div>
+                    <form:button type="button" id="checkButton3" class="checkButton" value="중복확인"
+                                 onclick="phoneNumbCheck()">중복확인</form:button>
+                </div>
+
+                <%--회원분류--%>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">학년</label>
+                    <div class="col-sm-7">
+                        <form:select path="memberGradeCode" class="form-select" onchange="memberDivisionChange(this)"
+                                     required="true">
+                            <form:option value="초등학생">초등학교</form:option>
+                            <form:option value="중학생">중학교</form:option>
+                            <form:option value="고등학생">고등학교</form:option>
+                        </form:select>
+                    </div>
+                    <form:errors path="memberGradeCode" cssStyle="color: red"/>
+                </div>
+                <%--<p>회원소분류 :
+                    <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
+                        <option value="choose">선택하세요.</option>
+                    </form:select></p>--%>
+
+                <%--학 교 명--%>
+                <div class="row mb-3">
+                    <label for="memberSchool" class="col-sm-2 col-form-label">학교명</label>
+                    <div class="col-sm-7">
+                        <form:input path="memberSchool" class="form-control" id="memberSchool" placeholder=""
+                                    required="true"/>
+                            <%--에러 문구--%>
+                        <form:errors path="memberSchool" cssStyle="color: red" cssClass="check-result"/>
+                    </div>
+                </div>
+
+                <%--관심 과목--%>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">관심 과목</label>
+                    <div class="col-sm-8">
+                        <div class="form-check form-check-inline">
+                            <form:checkbox cssClass="form-check-input" path="memberSubjectCode" value="국어"
+                                           id="inlineCheckbox1"/>
+                            <label class="form-check-label" for="inlineCheckbox1">국어</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox cssClass="form-check-input" path="memberSubjectCode" value="영어"
+                                           id="inlineCheckbox2"/>
+                            <label class="form-check-label" for="inlineCheckbox2">영어</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox cssClass="form-check-input" path="memberSubjectCode" value="수학"
+                                           id="inlineCheckbox3"/>
+                            <label class="form-check-label" for="inlineCheckbox3">수학</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox cssClass="form-check-input" path="memberSubjectCode" value="사회"
+                                           id="inlineCheckbox4"/>
+                            <label class="form-check-label" for="inlineCheckbox4">사회</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox cssClass="form-check-input" path="memberSubjectCode" value="과학"
+                                           id="inlineCheckbox5"/>
+                            <label class="form-check-label" for="inlineCheckbox5">과학</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <form:checkbox cssClass="form-check-input" path="memberSubjectCode" value="기타"
+                                           id="inlineCheckbox6"/>
+                            <label class="form-check-label" for="inlineCheckbox6">기타</label>
+
+                        </div>
+                    </div>
+                    <form:errors path="memberSubjectCode" cssStyle="color: red"/>
+                </div>
+
+                <%--지역--%>
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label">지역</label>
+                    <div class="col-sm-7">
+                        <form:select path="memberRegionCode" class="form-select" onchange="memberSigugunChange(this)"
+                                     required="true">
+                            <form:option value="">선택하세요.</form:option>
+                            <form:option value="서울특별시">서울특별시</form:option>
+                            <form:option value="경기도">경기도</form:option>
+                            <form:option value="인천광역시">인천광역시</form:option>
+                            <form:option value="강원특별자치도">강원특별자치도</form:option>
+                            <form:option value="충청북도">충청북도</form:option>
+                            <form:option value="충청남도">충청남도</form:option>
+                            <form:option value="대전광역시">대전광역시</form:option>
+                            <form:option value="세종특별자치시">세종특별자치시</form:option>
+                            <form:option value="전라북도">전라북도</form:option>
+                            <form:option value="전라남도">전라남도</form:option>
+                            <form:option value="광주광역시">광주광역시</form:option>
+                            <form:option value="경상북도">경상북도</form:option>
+                            <form:option value="경상남도">경상남도</form:option>
+                            <form:option value="부산광역시">부산광역시</form:option>
+                            <form:option value="대구광역시">대구광역시</form:option>
+                            <form:option value="울산광역시">울산광역시</form:option>
+                            <form:option value="제주특별자치도">제주특별자치도</form:option>
+                        </form:select>
+                    </div>
+                    <form:errors path="memberRegionCode" cssStyle="color: red"/>
+                </div>
+
+                <input type="submit" class="submitButton" value="회원가입"/>
+            </form:form>
         </div>
-        <%--비밀번호--%>
-        <div class="row mb-3 signup_row">
-            <label for="memberPassword" class="col-sm-2 col-form-label">비밀번호</label>
-            <div class="col-sm-7">
-                <form:input path="memberPassword" class="form-control" type="password" id="memberPassword" placeholder="1234" required="true"/>
-                    <%--에러 문구--%>
-                <form:errors path="memberPassword" cssStyle="color: red" cssClass="check-result"/>
-                <div id="check-result" class="check-result">영어 대소문자,숫자,특수문자(!,@,#,$)를 각각 한 개 이상을 반드시 포함(8~16자)</div>
-            </div>
-        </div>
-
-        <%--닉네임--%>
-        <div class="row mb-3 signup_row">
-            <label for="memberNickname" class="col-sm-2 col-form-label">닉네임</label>
-            <div class="col-sm-7">
-                <form:input path="memberNickname" class="form-control" id="memberNickname" placeholder="" required="true"/>
-                    <%--에러 문구--%>
-                <form:errors path="memberNickname" cssStyle="color: red" cssClass="check-result"/>
-                <div id="check-result2" class="check-result">영문 대소문자,숫자,밑줄(_) 중 하나 이상 포함(2~19자, 공백불가)</div>
-            </div>
-            <form:button type="button" class="checkButton" value="중복확인" onclick="nicknameCheck()">중복확인</form:button>
-        </div>
-
-
-
-        <p>성 별 :
-            <form:radiobutton path="memberGender" id="male" value="남자"/>
-            <label for="male">남자</label>
-            <form:radiobutton path="memberGender" id="female" value="여자"/>
-            <label for="female">여자</label>
-        </p>
-        <form:errors path="memberGender" cssStyle="color: red"/>
-
-        <p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호" required="true"/>
-            <form:button type="button" value="중복확인" onclick="phoneNumbCheck()">중복확인</form:button></p>
-        <form:errors path="memberPhonenumber" cssStyle="color: red"/>
-        <p id="check-result3"></p>
-
-        <p>회원대분류 :
-            <form:select path="memberGradeCode" onchange="memberDivisionChange(this)" required="true">
-                <form:option value="">선택하세요.</form:option>
-                <form:option value="초등학생">초등학생</form:option>
-                <form:option value="중학생">중학생</form:option>
-                <form:option value="고등학생">고등학생</form:option>
-            </form:select>
-        </p>
-        <form:errors path="memberGradeCode" cssStyle="color: red"/>
-        <%--<p>회원소분류 :
-            <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
-                <option value="choose">선택하세요.</option>
-            </form:select></p>--%>
-        <p>학 교 명 : <form:input type="text" path="memberSchool" required="true"/></p>
-        <form:errors path="memberSchool" cssStyle="color: red"/>
-        <p>관심 과목 :
-            <form:checkbox path="memberSubjectCode" value="국어"/>국어
-            <form:checkbox path="memberSubjectCode" value="영어"/>영어
-            <form:checkbox path="memberSubjectCode" value="수학"/>수학
-            <form:checkbox path="memberSubjectCode" value="사회"/>사회
-            <form:checkbox path="memberSubjectCode" value="과학"/>과학
-            <form:checkbox path="memberSubjectCode" value="기타"/>기타
-        </p>
-        <form:errors path="memberSubjectCode" cssStyle="color: red"/>
-        <p>지역대분류 :
-            <form:select path="memberRegionCode" onchange="memberSigugunChange(this)" required="true">
-                <form:option value="">선택하세요.</form:option>
-                <form:option value="서울특별시">서울특별시</form:option>
-                <form:option value="경기도">경기도</form:option>
-                <form:option value="인천광역시">인천광역시</form:option>
-                <form:option value="강원특별자치도">강원특별자치도</form:option>
-                <form:option value="충청북도">충청북도</form:option>
-                <form:option value="충청남도">충청남도</form:option>
-                <form:option value="대전광역시">대전광역시</form:option>
-                <form:option value="세종특별자치시">세종특별자치시</form:option>
-                <form:option value="전라북도">전라북도</form:option>
-                <form:option value="전라남도">전라남도</form:option>
-                <form:option value="광주광역시">광주광역시</form:option>
-                <form:option value="경상북도">경상북도</form:option>
-                <form:option value="경상남도">경상남도</form:option>
-                <form:option value="부산광역시">부산광역시</form:option>
-                <form:option value="대구광역시">대구광역시</form:option>
-                <form:option value="울산광역시">울산광역시</form:option>
-                <form:option value="제주특별자치도">제주특별자치도</form:option>
-            </form:select>
-        </p>
-        <form:errors path="memberRegionCode" cssStyle="color: red"/>
-        <%--<p>지역소분류 :
-            <select name="memberRegionCode" id="memberRegionCode_sub" required>
-                <option value="choose">선택하세요.</option>
-            </select></p>--%>
-        <input type="submit" value="회원가입">
-    </form:form>
+    </div>
 </div>
 
 
@@ -131,6 +227,7 @@
     const emailCheck = () => {
             const email = document.getElementById("memberEmail").value;
             const checkResult = document.getElementById("check-result");
+            const checkButton1 = document.getElementById("checkButton1");
             console.log("입력한 이메일", email);
             // 이메일 정규 표현식 초기화
             let regex = new RegExp('[a-z0-9]+@[a-z]+\.[a-z]{2,3}');
@@ -152,6 +249,9 @@
                             console.log("사용가능한 이메일");
                             checkResult.style.color = "green";
                             checkResult.innerHTML = "사용가능한 이메일";
+                            checkButton1.style.backgroundColor = "#b9b9b9";
+                            checkButton1.style.color = "#000";
+
                         } else {
                             console.log("이미 사용중인 이메일");
                             checkResult.style.color = "red";
@@ -165,10 +265,12 @@
                 });
             }
         }
+
     /** 닉네임 중복검사도 이메일 유효성과 마찬가지로 동일한 형태로 진행 */
     const nicknameCheck = () => {
         const nickname = document.getElementById("memberNickname").value;
         const checkResult2 = document.getElementById("check-result2");
+        const checkButton2 = document.getElementById("checkButton2");
         console.log("입력한 닉네임", nickname);
 
         let regex2 = new RegExp('[a-zA-Z][a-zA-Z0-9_]{2,19}');
@@ -189,6 +291,8 @@
                         console.log("사용가능한 닉네임");
                         checkResult2.style.color = "green";
                         checkResult2.innerHTML = "사용가능한 닉네임";
+                        checkButton2.style.backgroundColor = "#b9b9b9";
+                        checkButton2.style.color = "#000";
                     } else {
                         console.log("이미 사용중인 이메일");
                         checkResult2.style.color = "red";
@@ -204,6 +308,7 @@
     const phoneNumbCheck = () => {
         const phoneNumb = document.getElementById("memberPhonenumber").value;
         const checkResult3 = document.getElementById("check-result3");
+        const checkButton3 = document.getElementById("checkButton3");
         console.log("입력한 전화번호", phoneNumb);
 
         let regex3 = new RegExp('0([0-9]{2,3})([0-9]{3,4})([0-9]{4})');
@@ -224,6 +329,8 @@
                         console.log("사용가능한 전화번호");
                         checkResult3.style.color = "green";
                         checkResult3.innerHTML = "사용가능한 전화번호";
+                        checkButton3.style.backgroundColor = "#b9b9b9";
+                        checkButton3.style.color = "#000";
                     } else {
                         console.log("이미 사용중인 전화번호");
                         checkResult3.style.color = "red";

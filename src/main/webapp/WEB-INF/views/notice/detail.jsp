@@ -21,11 +21,7 @@
                     </div>
                     <div class="box-size">
                         <div id="writeBtn" name="writeBtn">
-                            <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
-                            <c:if test="${noticeDTO.memberEmail == sessionScope.loginEmail}">
-                                <button class="btn_update" onclick="updateNotice('${noticeDTO.postIdx}')">수정</button>
-                                <button class="btn_delete" onclick="deleteNotice('${noticeDTO.postIdx}')">삭제</button>
-                            </c:if>
+                            <button class="btn_list" onclick="findNotice()">목록</button>
                         </div>
                     </div>
                 </div>
@@ -70,6 +66,18 @@
             </div>
             <!-- post 내용 끝 -->
             <p hidden="true">${noticeDTO.postIdx}</p>
+            <div class="box-size buttonList">
+            <div class="box-size">
+                <div name="writeBtn">
+                    <%-- 게시물 작성자 이메일과 session에 저장된 로그인 된 이메일이 동일할 경우에만 수정, 삭제 버튼 출력 --%>
+                    <c:if test="${noticeDTO.memberEmail == sessionScope.loginEmail}">
+                        <button class="btn_update" onclick="updateNotice('${noticeDTO.postIdx}')">수정</button>
+                        <button class="btn_delete" onclick="deleteNotice('${noticeDTO.postIdx}')">삭제</button>
+                    </c:if>
+                </div>
+            </div>
+            </div>
+
         </div>
     </div>
 </main>

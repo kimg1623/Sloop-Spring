@@ -20,21 +20,21 @@
     <select id="findByMemberEmail" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode , authority , memberProfile
+               memberSubjectCode, memberRegionCode , authority
         from  member
         where memberEmail = #{loginEmail}
     </select>
     <select id="findByMemberNickname" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode , authority , memberProfile
+               memberSubjectCode, memberRegionCode , authority
         from  member
         where memberNickname = #{memberNickname}
     </select>
     <select id="findByMemberPhoneNumb" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode , authority , memberProfile
+               memberSubjectCode, memberRegionCode , authority
         from  member
         where memberPhonenumber = #{memberPhonenumber}
     </select>

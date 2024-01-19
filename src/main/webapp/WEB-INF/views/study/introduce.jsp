@@ -18,11 +18,11 @@
             <div class="studyContent_title">${studyGroup.studyGroupName}</div>
             <div class="studyContent_userAndDate">
                 <div class="studyContent_user">
-                    <img class="studyContent_userImg" src="." alt="userImg">
+<%--                    <img class="studyContent_userImg" src="." alt="userImg">--%>
                     <div class="studyContent_userName">글쓴이</div>
                 </div>
                 <div class="studyContent_seperator"></div>
-                <div class="studyContent_registeredDate">2024.01.00</div>
+                <div class="studyContent_registeredDate">2024.01.16</div>
             </div>
         </div>
 

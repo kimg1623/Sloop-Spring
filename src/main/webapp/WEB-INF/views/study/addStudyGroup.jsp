@@ -4,7 +4,6 @@
 
 <link href="/resources/css/style_post.css" rel="stylesheet">
 <link href="/resources/css/style_studygroup_daily.css" rel="stylesheet">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
 <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
     <script>
@@ -60,7 +59,8 @@
         })()
     </script>
 
-<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+<!-- main 페이지의 컨텐츠 부분 시작 -->
+<div class="container-main">
     <div class="container-studyGroup">
         <div class="box-size contents_wrapper">
         <!--board_title 시작 -->
@@ -71,6 +71,10 @@
                         <h3 class="title_text">
                             스터디 개설
                         </h3>
+                    </div>
+                    <div class="box-size title_div_contents">
+                        개설할 스터디 그룹의 정보를 입력해주세요.<br>
+                        <b>스터디 그룹 이름을 제외</b>한 모든 정보는 변경이 가능합니다.
                     </div>
                 </div>
             </div>
@@ -115,35 +119,35 @@
                     <label class="col-sm-3 col-form-label">학년</label>
                     <div class="col-sm-8">
                         <form:select path="studyGroupGradeCode" class="form-select">
-                            <form:option value="100">초등학교</form:option>
-                            <form:option value="200">중학교</form:option>
-                            <form:option value="300">고등학교</form:option>
+                            <form:option value="101">초등1학년</form:option>
+                            <form:option value="102">초등2학년</form:option>
+                            <form:option value="103">초등3학년</form:option>
+                            <form:option value="104">초등4학년</form:option>
+                            <form:option value="105">초등5학년</form:option>
+                            <form:option value="106">초등6학년</form:option>
                         </form:select>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">과목</label>
                     <div class="col-sm-8">
-                        <form:input path="studyGroupSubjectCode" class="form-control"/>
+                        <form:select path="studyGroupSubjectCode" class="form-select">
+                            <form:option value="101">국어</form:option>
+                            <form:option value="102">수학</form:option>
+                            <form:option value="103">영어</form:option>
+                            <form:option value="104">사회</form:option>
+                            <form:option value="105">과학</form:option>
+                            <form:option value="106">기타</form:option>
+                        </form:select>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">지역</label>
-                    <div class="col-sm-8">
-                        <form:textarea path="studyGroupRegionCode" cols="50" rows="2" class="form-control"/>
-                    </div>
-                </div>
-
-                <!-- ajax로 동적 select 박스 구현 test -->
-                <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label"></label>
                     <div class="col-md-4">
-                    <label class="form-label">Option1</label>
-                    <select class="form-select" name="selectOption1_region"></select>
+                        <select class="form-select" name="selectOption1_region"></select>
                     </div>
                     <div class="col-md-4">
-                    <label class="form-label">Option2</label>
-                    <select class="form-select" name="selectOption2_region"></select>
+                        <select class="form-select" name="selectOption2_region"></select>
                     </div>
                 </div>
                 <!-- ajax로 동적 select 박스 구현 test 끝-->
@@ -186,4 +190,4 @@
         </form:form>
     </div>
     </div>
-</main>
+</div>
