@@ -1,5 +1,7 @@
 package kr.co.sloop.daily.service;
 
+import kr.co.sloop.attachment.domain.AttachmentDTO;
+import kr.co.sloop.attachment.repository.AttachmentRepository;
 import kr.co.sloop.daily.domain.DailyDTO;
 import kr.co.sloop.daily.domain.PageDTO;
 import kr.co.sloop.daily.repository.DailyRepositoryImpl;
@@ -19,13 +21,14 @@ public class DailyServiceImpl implements DailyService {
 
     private final DailyRepositoryImpl dailyRepository;
     private final PostRepositoryImpl postRepository;
+    private final AttachmentRepository attachmentRepository;
 
     // 공부인증 전체리스트 불러오기
 
 
     // 공부인증 게시글 작성
     @Override
-    public boolean dailyWrite(DailyDTO dailyDTO) {
+    public boolean dailyWrite(DailyDTO dailyDTO, AttachmentDTO attachmentDTO) {
         int result = 0;
 
         /*
@@ -46,6 +49,14 @@ public class DailyServiceImpl implements DailyService {
         result = dailyRepository.dailyWrite(dailyDTO);
         if (result != 1) return false;
 
+        // 첨부파일 insert
+        if(attachmentDTO != null) {
+            attachmentDTO.setPostIdx(dailyDTO.getPostIdx());
+            log.info("첨부파일 insert : " + attachmentDTO);
+            result = dailyRepository.insertAttachment(attachmentDTO);
+            if (result != 1) return false;
+        }
+
         return true;
     }
 
@@ -53,7 +64,16 @@ public class DailyServiceImpl implements DailyService {
     //상세보기
     @Override
     public DailyDTO findByPostIdx(int postIdx) {
+        // 게시글
         DailyDTO dailyByPostIdx = dailyRepository.findByPostIdx(postIdx);
+
+        // 첨부파일
+        List<AttachmentDTO> attachmentDTO = attachmentRepository.findAttachmentByPostIdx(postIdx);
+        if(attachmentDTO != null && !attachmentDTO.isEmpty()) {
+            // 하나의 첨부파일만 관리
+            dailyByPostIdx.setAttachmentDirPath(attachmentDTO.get(0).getAttachmentDirPath());
+            dailyByPostIdx.setAttachmentName(attachmentDTO.get(0).getAttachmentName());
+        }
         return dailyByPostIdx;
     }
 
@@ -148,8 +168,4 @@ public class DailyServiceImpl implements DailyService {
         return pageDTO;
 
     }
-
-
-
-
 }

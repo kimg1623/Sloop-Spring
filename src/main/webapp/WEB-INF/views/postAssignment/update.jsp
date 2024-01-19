@@ -279,7 +279,7 @@
                             <span class="input-group-text" id="addon-wrapping">제목</span>
                             <form:input path="postAssignmentTitle" autofocus="true" placeholder="제목"
                                         class="form-control"
-                                        aria-describedby="addon-wrapping"/>
+                                        aria-describedby="addon-wrapping" />
                             <form:errors path="postAssignmentTitle"/>
                         </div><!--input-group flex-nowrap-->
                     </div>
@@ -343,25 +343,30 @@
                     <br>
 
                     <!-- 과제 마감일시 -->
-                    <label for="assignmentEndDate">마감일시</label>
+                    <div class="Enddate">
+                    <label for="assignmentEndDate">마감 일시</label>
                     <div id="assignmentEndDate">
                         <form:input path="assignmentEndDateString" id="assignmentEndDate_input"
                                     class="assignmentEndDate_input" type="text"/>
                     </div>
-
+                    </div>
+                    <div class="Enddate">
                     <!-- 과제 만점 점수 설정 -->
                     <label for="assignmentScore">만점 점수</label>
                     <p><form:input path="assignmentScore" type="number" id="assignmentScore" name="assignmentScore"
                                    rows="3"></form:input></p>
                     <p><form:errors path="assignmentScore"/></p>
-
+                    </div>
                     <!-- 과제 대상 설정 -->
 
                     <!-- 작성하기 버튼 -->
                     <section class="writeSection">
-                        <input type="submit" value="수정하기" class="btn_write"/>
+                        <input type="submit" value="수정" class="btn_update"/>
                     </section>
                 </form:form>
 
             </div>
-            </body>
+        </div>
+    </div>
+</main>
+

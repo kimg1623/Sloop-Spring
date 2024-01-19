@@ -96,6 +96,12 @@
             </div>
             <!-- post 제목 영역 끝 -->
 
+            <!-- 사진 출력 -->
+            <!-- 사진이 있을 때만 출력 -->
+            <c:if test="${not empty daily.attachmentName}">
+                <img src="./image?fileName=${daily.attachmentName}" alt="views" width="70%">
+            </c:if>
+
             <!-- post 내용 시작 -->
             <div class="post_content_contents">
                 <c:out value="${daily.postDailyContents}" escapeXml="false"/>

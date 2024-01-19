@@ -153,7 +153,7 @@
 
                 } else if (JSON.parse(data)['result'] == "ok"){
                     alert("업로드 성공!");
-                    location.href = "/member?memberIdx=${member.memberIdx}";
+                    location.href = "/member/home";
                 } return;
             },
             error: function (xhr, status, error) {

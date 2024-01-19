@@ -208,8 +208,11 @@
                 success: function (data) {
                     if(JSON.parse(data)['result'] == "OK"){
                         alert("파일업로드 성공");
-                    } else
-                        alert("서버내 오류로 처리가 지연되고있습니다. 잠시 후 다시 시도해주세요");
+                    } else if(JSON.parse(data)['result'] == "TYPEERROR"){
+                        alert("허용되는 확장자는 png, jpg, jpeg, gif입니다.");
+                    }else {
+                        alert("다시 시도해 주세요.");
+                    }
                 },
                 error: function (xhr, status, error) {
                     alert("서버오류로 지연되고있습니다. 잠시 후 다시 시도해주시기 바랍니다.");

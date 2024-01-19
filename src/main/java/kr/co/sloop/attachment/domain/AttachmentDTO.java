@@ -21,6 +21,15 @@ public class AttachmentDTO {
 
     private MultipartFile multipartFile; // 실제 첨부파일
 
+    // 생성자 (첨부파일 idx, 게시글 idx, 원래 파일명, 저장 디렉터리 경로, 파일명)
+    public AttachmentDTO(int attachmentIdx, int postIdx, String attachmentOrgName, String attachmentDirPath, String attachmentName){
+        this.attachmentIdx = attachmentIdx;
+        this.postIdx = postIdx;
+        this.attachmentOrgName = attachmentOrgName;
+        this.attachmentDirPath = attachmentDirPath;
+        this.attachmentName = attachmentName;
+    }
+
     // 생성자 (게시글 idx, 원래 파일명, 저장 디렉터리 경로, 파일명)
     public AttachmentDTO(int postIdx, String attachmentOrgName, String attachmentDirPath, String attachmentName){
         this.postIdx = postIdx;
@@ -28,4 +37,13 @@ public class AttachmentDTO {
         this.attachmentDirPath = attachmentDirPath;
         this.attachmentName = attachmentName;
     }
+
+    // 생성자 (원래 파일명, 저장 디렉터리 경로, 파일명)
+    public AttachmentDTO(String attachmentOrgName, String attachmentDirPath, String attachmentName){
+        this.attachmentOrgName = attachmentOrgName;
+        this.attachmentDirPath = attachmentDirPath;
+        this.attachmentName = attachmentName;
+    }
+
+
 }
