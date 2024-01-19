@@ -44,19 +44,23 @@ public class MemberServiceImpl implements MemberService {
     /** 로그인 bcrypt로 하는 메서드 */
     @Override
     public Map<String, String> login(MemberDTO memberDTO) {
-        MemberDTO loginMember = memberRepository.login(memberDTO);
-        /* bcrypt 암호화된 pwd 와 입력받은 pwd 값 참,거짓 확인 */
-        boolean pwdMatch = bcrypt.matches(memberDTO.getMemberPassword(), loginMember.getMemberPassword());
-        log.info("pwdMatch" + pwdMatch);
 
-        if (loginMember != null && pwdMatch == true){
-            Map<String, String> loginSessionMap = new HashMap<String, String>();
-            loginSessionMap.put("loginEmail", loginMember.getMemberEmail());
-            loginSessionMap.put("loginMemberIdx", String.valueOf(loginMember.getMemberIdx())); // 지원 추가
-            loginSessionMap.put("loginMemberNickname", loginMember.getMemberNickname());
-            return loginSessionMap;
-        } else {
+        MemberDTO loginMember = memberRepository.login(memberDTO);
+        if (loginMember == null){
             return null;
+        } else {
+            /* bcrypt 암호화된 pwd 와 입력받은 pwd 값 참,거짓 확인 */
+            boolean pwdMatch = bcrypt.matches(memberDTO.getMemberPassword(), loginMember.getMemberPassword());
+            log.info("pwdMatch" + pwdMatch);
+            if (loginMember != null && pwdMatch == true){
+                Map<String, String> loginSessionMap = new HashMap<String, String>();
+                loginSessionMap.put("loginEmail", loginMember.getMemberEmail());
+                loginSessionMap.put("loginMemberIdx", String.valueOf(loginMember.getMemberIdx())); // 지원 추가
+                loginSessionMap.put("loginMemberNickname", loginMember.getMemberNickname());
+                return loginSessionMap;
+            } else {
+                return null;
+            }
         }
     }
     /** 로그인 bcrypt로 하는 메서드 */
