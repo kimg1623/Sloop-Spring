@@ -119,35 +119,35 @@
                     <label class="col-sm-3 col-form-label">학년</label>
                     <div class="col-sm-8">
                         <form:select path="studyGroupGradeCode" class="form-select">
-                            <form:option value="100">초등학교</form:option>
-                            <form:option value="200">중학교</form:option>
-                            <form:option value="300">고등학교</form:option>
+                            <form:option value="101">초등1학년</form:option>
+                            <form:option value="102">초등2학년</form:option>
+                            <form:option value="103">초등3학년</form:option>
+                            <form:option value="104">초등4학년</form:option>
+                            <form:option value="105">초등5학년</form:option>
+                            <form:option value="106">초등6학년</form:option>
                         </form:select>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">과목</label>
                     <div class="col-sm-8">
-                        <form:input path="studyGroupSubjectCode" class="form-control"/>
+                        <form:select path="studyGroupSubjectCode" class="form-select">
+                            <form:option value="101">국어</form:option>
+                            <form:option value="102">수학</form:option>
+                            <form:option value="103">영어</form:option>
+                            <form:option value="104">사회</form:option>
+                            <form:option value="105">과학</form:option>
+                            <form:option value="106">기타</form:option>
+                        </form:select>
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label class="col-sm-3 col-form-label">지역</label>
-                    <div class="col-sm-8">
-                        <form:textarea path="studyGroupRegionCode" cols="50" rows="2" class="form-control"/>
-                    </div>
-                </div>
-
-                <!-- ajax로 동적 select 박스 구현 test -->
-                <div class="row mb-3">
-                    <label class="col-sm-3 col-form-label"></label>
                     <div class="col-md-4">
-                    <label class="form-label">Option1</label>
-                    <select class="form-select" name="selectOption1_region"></select>
+                        <select class="form-select" name="selectOption1_region"></select>
                     </div>
                     <div class="col-md-4">
-                    <label class="form-label">Option2</label>
-                    <select class="form-select" name="selectOption2_region"></select>
+                        <select class="form-select" name="selectOption2_region"></select>
                     </div>
                 </div>
                 <!-- ajax로 동적 select 박스 구현 test 끝-->
