@@ -117,7 +117,7 @@ public class MemberController {
             session.setAttribute("loginMemberIdx", loginResult.get("loginMemberIdx")); // 지원 추가
             session.setAttribute("loginMemberNickname", loginResult.get("loginMemberNickname")); // 지원 추가
             return "redirect:/"; // 로그인 성공시 세션에 "loginEmail"이란 이름으로 저장 후 studyList or mypage 로  // 지원 수정
-        } else{
+        } else {
             AlertUtils.alertAndMovePage(response, "로그인에 실패하였습니다..","/member/login");
         } return "redirect:/member/login";
     }
