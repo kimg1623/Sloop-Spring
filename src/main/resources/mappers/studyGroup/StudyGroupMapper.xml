@@ -85,9 +85,27 @@
 
     <!--창규 추가-->
     <update id="updateStudyGroupHits" parameterType="String">
-        update studygroup
+        update studyGroup
         set	studyGroupHits = studyGroupHits + 1
         where studyGroupCode = #{groupIdx}
     </update>
 
+
+    <select id="getStudyMemRoleByMemberIdx" resultType="String">
+        select studyMemRole from studyMem s
+        where memberIdx = #{loginMemberIdx} and studyGroupIdx = (select studyGroupIdx from studyGroup where studyGroupCode=#{studyGroupCode})
+    </select>
+
+    <select id="getStudyGroupMembers" resultType="Map">
+        select m.memberNickname as memberNickname, m.memberIdx as memberIdx, s.studyGroupIdx as studyGroupIdx, s.studyMemRole as studyMemRole
+            from studyMem s join `member` m
+            where s.memberIdx=m.memberIdx and s.studyGroupIdx=(
+                select studyGroupIdx from studyGroup
+                where studyGroupCode=#{studyGroupCode})
+    </select>
+
+    <update id="updateStudyMemberRoleApprove">
+        update studyMem set studyMemRole = 'ROLE_STUDY_MEMBER'
+        where studyGroupIdx = #{studyGroupIdx} and memberIdx = #{memberIdx}
+    </update>
 </mapper>

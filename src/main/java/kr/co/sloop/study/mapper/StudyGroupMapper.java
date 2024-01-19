@@ -38,4 +38,10 @@ public interface StudyGroupMapper {
     int joinStudyGroup(@Param("studyGroupIdx") String studyGroupIdx, @Param("memberIdx") int memberIdx);    // 스터디 그룹 가입 신청
 
     void updateStudyGroupHits(String groupCode);
+
+    String getStudyMemRoleByMemberIdx(@Param("loginMemberIdx") String loginMemberIdx, @Param("studyGroupCode")String studyGroupCode); // 멤버의 스터디 그룹 내 권한 조회
+
+    List<Map<String, String>> getStudyGroupMembers(@Param("studyGroupCode")String studyGroupCode);
+
+    int updateStudyMemberRoleApprove(@Param("memberIdx") String memberIdx, @Param("studyGroupIdx")String studyGroupIdx);
 }

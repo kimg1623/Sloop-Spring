@@ -33,4 +33,10 @@ public interface StudyGroupService {
     boolean joinStudyGroup(String studyGroupIdx, int memberIdx);
 
     void updateStudyGroupHits(String groupCode);
+
+    String getStudyMemRoleByMemberIdx(String loginMemberIdx, String studyGroupCode);
+
+    List<Map<String, String>> getStudyGroupMembers(String studyGroupCode);
+
+    int updateStudyMemberRoleApprove(String memberIdx, String studyGroupIdx);
 }
