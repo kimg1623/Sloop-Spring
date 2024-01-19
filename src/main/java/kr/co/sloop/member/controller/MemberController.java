@@ -190,7 +190,6 @@ public class MemberController {
         boolean idxMatch = (memberIdx == memberDTO.getMemberIdx());
 
         if (result == idxMatch) {
-
             AlertUtils.alertAndMovePage(response,"수정되었습니다." ,"home");// update 성공시 redirect로 상세보기 화면 출력
         }
         AlertUtils.alertAndMovePage(response , "수정에 실패하였습니다.","update");
