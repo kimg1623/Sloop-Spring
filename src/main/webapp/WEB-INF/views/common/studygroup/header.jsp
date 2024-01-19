@@ -23,7 +23,7 @@
             <div class="nav-item text-nowrap">
                 <c:choose>
                     <c:when test="${sessionScope.loginMemberNickname != null}">
-                        <span class="nav-link px-3 header-span"><a href="../member/home">${sessionScope.loginMemberNickname}님</a> | <a class="header-a" href="/member/logout">로그아웃</a></span>
+                        <span class="nav-link px-3 header-span"><a href="${contextPath}/member/home">${sessionScope.loginMemberNickname}님</a> | <a class="header-a" href="/member/logout">로그아웃</a></span>
                     </c:when>
                     <c:otherwise>
                         <a class="nav-link px-3" href="/member/login">로그인</a>
