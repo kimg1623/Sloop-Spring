@@ -53,12 +53,27 @@ public class StudyGroupController {
 	/*
 	 * 스터디 그룹에 대한 소개 확인하기
 	 */
+	/** 창규 추가 */
 	@GetMapping("/introduce")
+	public String requestStudyGroupIntroduce(@RequestParam("group") String groupCode, Model model){ // 웹 요청 처리할 메서드
+		studyGroupService.updateStudyGroupHits(groupCode);
+		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(groupCode);
+		int groupIdx = studyGroupDTO.getStudyGroupIdx();
+		if (groupIdx > 0){
+			model.addAttribute("studyGroup", studyGroupDTO); // model 객체에 view에 전달할 정보 담는다.
+			return "study/introduce"; // view
+		} else {
+			return "study/listtmp"; // view
+		}
+	}
+	/** 수정 전 */
+	/*@GetMapping("/introduce")
 	public String requestStudyGroupIntroduce(@RequestParam("group") String groupCode, Model model){ // 웹 요청 처리할 메서드
 		StudyGroupDTO studyGroupDTO = studyGroupService.getStudyGroupByGroupCode(groupCode);
 		model.addAttribute("studyGroup", studyGroupDTO); // model 객체에 view에 전달할 정보 담는다.
 		return "study/introduce"; // view
-	}
+	}*/
+	/** 수정 전 */
 
 	/*
 	 * 스터디 그룹 개설 : 화면 처리

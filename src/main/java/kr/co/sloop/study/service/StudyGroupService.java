@@ -31,4 +31,6 @@ public interface StudyGroupService {
     String getGroupNameByGroupCode(String studyGroupCode);
 
     boolean joinStudyGroup(String studyGroupIdx, int memberIdx);
+
+    void updateStudyGroupHits(String groupCode);
 }
