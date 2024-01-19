@@ -132,4 +132,9 @@ public class StudyGroupRepositoryImpl implements StudyGroupRepository {
     public String getGroupNameByGroupCode(String studyGroupCode) {
         return studyGroupMapper.getGroupNameByGroupCode(studyGroupCode);
     }
+
+    @Override
+    public int joinStudyGroup(String studyGroupIdx, int memberIdx) {
+        return studyGroupMapper.joinStudyGroup(studyGroupIdx, memberIdx);
+    }
 }

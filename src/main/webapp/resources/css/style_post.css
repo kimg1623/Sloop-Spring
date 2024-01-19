@@ -18,6 +18,21 @@ a:link{
     background: #fff;
     margin-bottom: 2rem;
 }
+/*
+    alert 메세지 스타일
+ */
+.alert-message{
+    animation-name: fadeOut;
+    animation-delay: 5000ms;
+}
+@keyframes fadeOut {
+    from {
+        opacity: 100%;
+    }
+    to {
+        opacity: 0%;
+    }
+}
 
 /*
     게시판 상단 스타일 : 제목, 버튼
@@ -35,12 +50,17 @@ a:link{
     display: flex;
     align-items: center;
 }
+.title_div_contents{
+    text-align: left;
+    margin-top: 5px;
+    color: #333;
+}
 .title_text{
     margin-bottom: 4px;
     font-weight: bold;
 }
 .btn_write{
-    height: 35px;
+    height: 30px;
     background: #458dfc;
     border-radius: 0.375rem;
     color: rgb(255, 255, 255);
@@ -106,13 +126,24 @@ a:link{
     background-color: #e2e2e2;
 }
 .bottom_registeredDate, .bottom_view {
+    margin-bottom: 0.5px;
     font-size: 0.7rem;
     color: #717171;
+}
+.bottom_endDate {
+    font-size: 0.7rem;
+    color: #ff976b;
 }
 .view_img{
     width: 16px;
     height: auto;
 }
+
+.pinned_img{
+    width: 16px;
+    height: auto;
+}
+
 
 /*
     post detail 상세보기 페이지
@@ -135,6 +166,17 @@ a:link{
     color: #000;
     text-align: left;
 }
+.post_content_title_assign{
+    display: flex;
+    justify-content: space-between;
+}
+.post_assign_score{
+    background-color: rgb(116, 206, 124);
+    color: #fff;
+    border-radius: 5%;
+    padding: 1px 10px;
+    font-size: 1rem;
+}
 .post_content_title_bottom {
     border-bottom: 3px solid #f2f2f2;
     display: flex;
@@ -142,7 +184,7 @@ a:link{
     justify-content: space-between;
 }
 .post_content_userAndDate {
-    margin-top: 32px;
+    margin-top: 25px;
     padding-bottom: 25px;
     display: flex;
     grid-gap: 15px;
@@ -181,9 +223,106 @@ a:link{
     font-size: 1rem;
     color: #717171;
 }
+.post_content_endDate {
+    color: #ff976b;
+}
 .post_content_contents{
     width: 100%;
     margin: 40px auto 0;
     font-size: 0.9rem;
     text-align: left;
+    padding: 10px 0px 50px 0px;
+}
+.post_content_attach{
+    width: 100%;
+    margin: 40px auto 0;
+    font-size: 0.9rem;
+    text-align: left;
+}
+.list-group-item-gray {
+    color: #141619;
+    background-color: #e3e3e3;
+}
+
+/*
+    스터디 관리 스타일
+ */
+.option_flex{
+    display: flex;
+    justify-content: flex-start;
+}
+.form-option-custom{
+    padding-left: 0px;
+    padding-right: 15px;
+    line-height: 2.4;
+}
+.infoFormBtn{
+    float: right;
+    height: auto;
+    padding-right: 65px;
+}
+.btn_edit{
+    height: 35px;
+    background: #458dfc;
+    border-radius: 0.375rem;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 14px;
+    border: none;
+    float: right;
+}
+.btn_edit:hover{
+    background: #c9c9c9;
+    transition: 0.2s ease;
+}
+.group_info_card{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 20px 14px;
+}
+.group_info_card_txt{
+    text-align: left;
+}
+.btn_delete{
+    height: 35px;
+    background: #eeeeee;
+    border-radius: 0.375rem;
+    color: #ff6b6b;
+    font-weight: 500;
+    font-size: 14px;
+    border: 0.7px solid #b9b9b9;
+    float: right;
+}
+.btn_delete:hover{
+    background: #ff4a4a;
+    color: #c9c9c9;
+    transition: 0.2s ease;
+}
+
+/*pinned*/
+
+.notice_categoryPinned {
+    display: flex;
+    grid-gap: 15px;
+    gap: 15px;
+}
+
+/*스터디관리 개설버튼*/
+
+.addStudyButton{
+    height: 35px;
+    width: 65px;
+    background: #458dfc;
+    border-radius: 0.375rem;
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+}
+
+.addStudyButton:hover{
+    background: #c9c9c9;
+    transition: 0.2s ease;
 }

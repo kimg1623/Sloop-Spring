@@ -21,6 +21,10 @@ public interface MemberMapper {
 
     MemberDTO findByMemberPhoneNumb(String memberPhonenumber);
 
+    List<MemberDTO> findStudyByIdx(String sessionIdx);
+
+    MemberDTO emailCheck(String memberEmail);
+
     /*    void uploadProfileByIdx(int memberIdx);*/
 
 

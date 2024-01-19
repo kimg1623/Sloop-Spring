@@ -20,6 +20,10 @@
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/study/infoForm.jsp" />
    </definition>
+   <definition name="study/members" extends="studyGroupLayout">
+      <put-attribute name="title" value="슬룹 Sloop" />
+      <put-attribute name="body" value="/WEB-INF/views/study/members.jsp" />
+   </definition>
    <!--notice-->
    <definition name="notice/list" extends="studyGroupLayout">
       <put-attribute name="title" value="슬룹 Sloop" />
@@ -36,11 +40,6 @@
    <definition name="notice/updateForm" extends="studyGroupLayout">
       <put-attribute name="title" value="슬룹 Sloop" />
       <put-attribute name="body" value="/WEB-INF/views/notice/updateForm.jsp" />
-   </definition>
-   <!--member-->
-   <definition name="member/login" extends="studyGroupLayout">
-      <put-attribute name="title" value="슬룹 Sloop" />
-      <put-attribute name="body" value="/WEB-INF/views/member/loginForm.jsp" />
    </definition>
 
    <!-- postForum -->

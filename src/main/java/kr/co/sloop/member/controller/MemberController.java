@@ -7,6 +7,9 @@ import kr.co.sloop.member.service.impl.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.io.FileUtils;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,14 +17,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
+import java.io.*;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.*;
 
 @Controller
@@ -29,8 +32,12 @@ import java.util.*;
 @RequiredArgsConstructor
 @Log4j2
 public class MemberController {
-
+    // 파일업로드
+    @Resource(name="uploadPathforMember")
+    String uploadPath;
     private final MemberService memberService;
+
+
 
     // signupForm.jsp 로 이동
     @GetMapping("/signup")
@@ -39,9 +46,9 @@ public class MemberController {
         model.addAttribute("memberDTO",memberDTO);
         return "member/signupForm";
     }
-
+/** bcrypt 없이 하는 회원가입 */
     // signupForm.jsp -> form method = Post 로 데이터 받아옴
-    @PostMapping("/signup")
+    /*@PostMapping("/signup")
     public String signup(@Validated @ModelAttribute MemberDTO memberDTO , BindingResult errors , HttpServletResponse response) throws IOException{
 
         if (errors.hasErrors()){
@@ -53,11 +60,39 @@ public class MemberController {
 
         if (signupResult > 0) {
             AlertUtils.alertAndMovePage(response, "회원가입 되었습니다.", "login");// update 성공시 redirect로 상세보기 화면 출력
-            /*return "member/signupSuccess"; // 회원가입 성공 시 이동*/
+            *//*return "member/signupSuccess"; // 회원가입 성공 시 이동*//*
         }
         return "member/signupForm";    // 회원가입 실패 시 이동
 
-    }
+    }*/
+    /** bcrypt 없이 하는 회원가입 */
+
+    /** bcrypt 회원가입 */
+    @PostMapping("/signup")
+    public String signup(@Validated @ModelAttribute MemberDTO memberDTO , BindingResult errors , HttpServletResponse response) throws IOException{
+
+        if (errors.hasErrors()){
+            AlertUtils.alert(response , "회원가입에 실패하였습니다.");
+            return "member/signupForm";
+        }
+
+        int signupResult = memberService.signup(memberDTO);
+        try {
+            if (signupResult > 0) {
+
+                AlertUtils.alertAndMovePage(response, "회원가입 되었습니다.", "login");// update 성공시 redirect로 상세보기 화면 출력
+                /*return "member/signupSuccess"; // 회원가입 성공 시 이동*/
+            } else {
+                AlertUtils.alertAndMovePage(response , "이메일,핸드폰번호,닉네임은 중복검사를 꼭 해주세요.","signup");
+            }
+        } catch (DuplicateKeyException e) {
+        }
+        return "member/signupForm";
+
+        }
+
+    /** bcrypt 회원가입 */
+
 
     // 회원가입 성공 후 로그인 하러 가기 버튼 클릭시 LoginForm.jsp 로 이동
     @GetMapping("/login")
@@ -90,21 +125,23 @@ public class MemberController {
     // 이메일 중복확인 AJAX
     @PostMapping("/email-check")
     public @ResponseBody String emailCheck(@RequestParam("memberEmail") String memberEmail){
-        System.out.println("memberEmail = " + memberEmail);
+        System.out.println("memberEmailddd"+memberEmail);
+        log.info("emailCheck=====" + memberEmail);
         String checkResult = memberService.emailCheck(memberEmail);
+        log.info("checkResult CONTROLLER" + checkResult );
         return checkResult;
     }
     // 닉네임 중복확인 AJAX
     @PostMapping("/nickname-check")
     public @ResponseBody String nicknameCheck(@RequestParam("memberNickname") String memberNickname){
-        log.info("memberNickname == "+memberNickname);
         String checkResult2 = memberService.nicknameCheck(memberNickname);
+        log.info("memberNickname == "+memberNickname);
         return checkResult2;
     }
     @PostMapping("/phoneNumb-check")
     public @ResponseBody String phoneNumbCheck(@RequestParam("memberPhonenumber") String memberPhonenumber){
-        log.info("memberPhonenumber == "+memberPhonenumber);
         String checkResult3 = memberService.phoneNumbCheck(memberPhonenumber);
+        log.info("memberPhonenumber == "+memberPhonenumber);
         return checkResult3;
     }
     // 회원 목록 보기 추후에 관리자 권한으로만 갈 수 있게하기
@@ -117,15 +154,14 @@ public class MemberController {
 
     // update.jsp의 Form 출력
     @GetMapping("update")
-    public String updateForm(@ModelAttribute("memberDTO") MemberDTO memberDTO, HttpSession session , HttpServletResponse response,
-                             @RequestParam("memberIdx") int memberIdx) throws IOException {
+    public String updateForm( HttpSession session , HttpServletResponse response,
+                              Model model) throws IOException {
         // 세션에 저장된 이메일 가져오기
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
         if (loginEmail != null) {
-
-            memberService.findByMemberEmail(loginEmail);
-
+            MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
+            model.addAttribute("memberDTO",memberDTO);
             return "member/update";
 
         } else{
@@ -138,34 +174,56 @@ public class MemberController {
 
     // update.jsp 의 Form method = Post로 데이터 받아옴
     @PostMapping("update")
-    public String update (@ModelAttribute MemberDTO memberDTO,
+    public String update (@Validated @ModelAttribute("memberDTO") MemberDTO memberDTO,
+                          BindingResult errors,
+                          @RequestParam("memberIdx") int memberIdx,
+                          HttpSession session,
                           HttpServletResponse response) throws IOException{
+        log.info("수정실패---------");
+        if (errors.hasGlobalErrors()){
+           AlertUtils.alert(response,"수정에 실패했습니다.");
+           return "member/update";
+        }
+
         boolean result = memberService.update(memberDTO);
 
-        if (result) {
+        boolean idxMatch = (memberIdx == memberDTO.getMemberIdx());
 
-            AlertUtils.alertAndMovePage(response,"수정되었습니다." ,"redirect:/member?memberIdx=" + memberDTO.getMemberIdx() );// update 성공시 redirect로 상세보기 화면 출력
+        if (result == idxMatch) {
+
+            AlertUtils.alertAndMovePage(response,"수정되었습니다." ,"/member?memberIdx="+memberDTO.getMemberIdx());// update 성공시 redirect로 상세보기 화면 출력
         }
-        return "redirect:/member/update";  // update 실패시 다시 수정할 수 있게 update.jsp로 정보 가져가면서 redirect 어케함?
+        AlertUtils.alertAndMovePage(response , "수정에 실패하였습니다.","update");
+        return "member/update";
 
     }
 
 
     // 회원 리스트에서 회원 정보 페이지로 이동 -> 관리자의 기능 ( 회원페이지 페이징도 추후 진행 )
     @GetMapping
-    public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model){
-        MemberDTO memberDTO = memberService.findByIdx(memberIdx);   // memberIdx 파라미터 값을 가져온 뒤 해당 domain 정보를 불러온다.
-        model.addAttribute("member",memberDTO);
-        return "member/mypage";
+    public String findByIdx(@RequestParam("memberIdx") int memberIdx , Model model , HttpSession session , HttpServletResponse response) throws IOException {
+        int sessionIdx = Integer.parseInt((String)session.getAttribute("loginMemberIdx"));
+        boolean matchIdx = sessionIdx == memberIdx;
+
+        if (!matchIdx) {
+
+            AlertUtils.alertAndMovePage(response, "해당 아이디로 로그인 먼저 하세요.", "member/login");
+
+        } else {
+            MemberDTO memberDTO = memberService.findByIdx(memberIdx);   // memberIdx 파라미터 값을 가져온 뒤 해당 domain 정보를 불러온다.
+            model.addAttribute("member", memberDTO);
+        } return "member/mypage";
+
+
     }
 
     // 꼭 로그인 후 마이페이지로 이동 ( 회원의 기능 )
     @GetMapping("mypage")
-    public String mypage(@ModelAttribute MemberDTO memberDTO , Model model , HttpSession session ,
+    public String mypage(Model model , HttpSession session ,
                          HttpServletResponse response) throws IOException {
 
         String loginEmail = (String) session.getAttribute("loginEmail");    // 세션에 저장된 이메일로 정보 가져오기
-        memberDTO = memberService.findByMemberEmail(loginEmail);
+        MemberDTO memberDTO = memberService.findByMemberEmail(loginEmail);
         model.addAttribute("member",memberDTO);
 
         if (loginEmail != null ){
@@ -232,11 +290,9 @@ public class MemberController {
         log.info("포스트업로드!!!!!!!!");
 
         // 기본적으로 JSON 객체로 "{"result":"FAIL"}" 이렇게 설정한다.
-        String strResult = "{ \"result\":\"FAIL\" }";
-        // 절대경로 초기화 - HttpServletRequest는 보안이슈가 있기에 ServletContext 를 통해 가져오는게 더 안전하지만 일단 씀
-        String contextRoot = new HttpServletRequestWrapper(request).getRealPath("/");
-        // 파일 경로 초기화
-        String fileRoot;
+        String strResult = "{ \"result\":\"ok\" }";
+
+
 
         // 세션에서 memberIdx 값을 가져온다.
         int memberIdx = Integer.parseInt((String) session.getAttribute("loginMemberIdx"));
@@ -244,51 +300,61 @@ public class MemberController {
         MemberDTO memberDTO = memberService.findByIdx(memberIdx);
         log.info("업로드 객체 안에 memberDTO 정보 불러오기" + memberDTO);
 
+        // 서버 저장 경로
+        String sDirPath = uploadPath + File.separator + "uploads";
+
 
         try {
             // 파일이 있을때 탄다.
             if (multipartFile.size() > 0 && !multipartFile.get(0).getOriginalFilename().equals("")) {
                 log.info("파일이 있음");
+
                 // for문을 통해 file 객체 안에 정보를 대입
                 for (MultipartFile file : multipartFile) {
-
-                    // 파일 경로 재 초기화
-                    fileRoot = contextRoot + "resources/upload/";
-                    System.out.println(fileRoot);
-                    
                     String originalFileName = file.getOriginalFilename();    //오리지날 파일명
-                    String extension = originalFileName.substring(originalFileName.lastIndexOf("."));    //파일 확장자
-                    String savedFileName = UUID.randomUUID() + extension;    //저장될 파일 명
+                    String extension = originalFileName.substring(originalFileName.lastIndexOf(".") + 1);    //파일 확장자
+                    extension = extension.toLowerCase(); // 소문자로 변경
+                    String savedFileName = UUID.randomUUID() + "." + extension;    //저장될 파일 명
+
+                    String allowedExtensions = "(jpg|jpeg|gif|png)"; // 허용되는 확장자
+
+                    sDirPath += File.separator + savedFileName;
+
                     // targetFile은 굳이 필요 없지만 나중에 쓰기 위해 객체 만들어줌
-                    File targetFile = new File(fileRoot + savedFileName);
+                    File targetFile = new File(sDirPath);
 
                     // memberDTO에 savedFileName으로 저장된 파일명을 넣어줌
                     memberDTO.setMemberProfile(savedFileName);
-                    // uploadProfile 메서드를 이용해서 service -> repository -> mapper 순으로 DB에 update문을 통해 저장.
-                    memberService.uploadProfile(memberDTO);
+
                     log.info("파일 저장 =====" + savedFileName);
                     log.info("타겟 파일 객체 ====" + targetFile);
-
-
-                    try {
-                        // 서버에 파일 저장하기 위해 쓰는 함수.
-                        // getInputStream 메서드는 multipartFile 객체에서 데이터를 읽어오기 위한 InputStream을 반환.
-                        InputStream fileStream = file.getInputStream();
-                        // fileStream , targetFile는 commmons 라이브러리인 FileUtils 클래스를 통해 서버에 특정 디렉토리에 저장.
-                        FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
-
-                    } catch (Exception e) {
+                    log.info("dddddddddd" +extension.matches(allowedExtensions));
+                    // 현재 첨부된 파일의 확장자가 허용되는 확장자 목록에 없는 경우, 오류 메세지 반환
+                    if (!extension.matches(allowedExtensions)){
+                        strResult = "{ \"result\":\"FAIL\" }";
                         //파일삭제
                         FileUtils.deleteQuietly(targetFile);    //저장된 현재 파일 삭제
-                        e.printStackTrace();
-                        break;
+                    } else {
+                        try {
+                            // 서버에 파일 저장하기 위해 쓰는 함수.
+                            // getInputStream 메서드는 multipartFile 객체에서 데이터를 읽어오기 위한 InputStream을 반환.
+                            InputStream fileStream = file.getInputStream();
+                            // fileStream , targetFile는 commmons 라이브러리인 FileUtils 클래스를 통해 서버에 특정 디렉토리에 저장.
+                            FileUtils.copyInputStreamToFile(fileStream, targetFile); //파일 저장
+                            // uploadProfile 메서드를 이용해서 service -> repository -> mapper 순으로 DB에 update문을 통해 저장.
+                            memberService.uploadProfile(memberDTO);
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            break;
+                        }
                     }
                 }
-                strResult = "{ \"result\":\"OK\" }";
+                /*strResult = "{ \"result\":\"ok\" }";*/
             }
             // 파일 아무것도 첨부 안했을때 탄다.(게시판일때, 업로드 없이 글을 등록하는경우)
             else
-                strResult = "{ \"result\":\"OK\" }";
+                strResult = "{ \"result\":\"ok\" }";
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -296,4 +362,75 @@ public class MemberController {
         return strResult;
     }
 /** 프로필 사진 업로드 끝 */
+
+/** 스터디 가입 목록 */
+    @GetMapping("/home")
+    public String joinStudy(HttpServletResponse response,
+                            HttpSession session , Model model , MemberDTO memberDTO
+                            ) throws IOException{
+
+
+
+        String sessionIdx =((String) session.getAttribute("loginMemberIdx"));
+        String loginEmail = (String) session.getAttribute("loginEmail");
+
+
+        if (sessionIdx != null) {
+            List<MemberDTO> memberDTOList = memberService.findStudyByIdx(sessionIdx);
+            memberDTO = memberService.findByMemberEmail(loginEmail);
+            log.info("스터디그룹아이디엑스"+memberDTO.getStudyGroupIdx());
+
+            model.addAttribute("myStudy", memberDTOList);
+            model.addAttribute("member" , memberDTO);
+            return "member/home";
+        } else {
+            AlertUtils.alertAndMovePage(response,"로그인을 해야 목록을 확인할 수 있습니다." , "login");
+            return "redirect:/member/login";
+        }
+    }
+
+    // 사진 출력
+    @GetMapping("/image")
+    public void printImage(@RequestParam(value="fileName") String fileName,
+                           HttpServletResponse response)
+            throws IOException{
+        //서버에 저장된 이미지 경로
+        String sDirPath = uploadPath + File.separator + "uploads" + File.separator + fileName;
+
+        File imgFile = new File(sDirPath);
+
+        //사진 이미지 찾지 못하는 경우 예외처리로 빈 이미지 파일을 설정한다.
+        if (imgFile.isFile()) {
+            byte[] buf = new byte[1024];
+            int readByte = 0;
+            int length = 0;
+            byte[] imgBuf = null;
+
+            FileInputStream fileInputStream = null;
+            ByteArrayOutputStream outputStream = null;
+            ServletOutputStream out = null;
+
+            try {
+                fileInputStream = new FileInputStream(imgFile);
+                outputStream = new ByteArrayOutputStream();
+                out = response.getOutputStream();
+
+                while ((readByte = fileInputStream.read(buf)) != -1) {
+                    outputStream.write(buf, 0, readByte);
+                }
+
+                imgBuf = outputStream.toByteArray();
+                length = imgBuf.length;
+                out.write(imgBuf, 0, length);
+                out.flush();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                outputStream.close();
+                fileInputStream.close();
+                out.close();
+            }
+        }
+    }
 }

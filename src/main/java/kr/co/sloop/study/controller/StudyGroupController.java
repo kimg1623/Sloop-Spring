@@ -1,5 +1,6 @@
 package kr.co.sloop.study.controller;
 
+import kr.co.sloop.common.AlertUtils;
 import kr.co.sloop.study.domain.CategoryRegionDTO;
 import kr.co.sloop.study.domain.StudyGroupDTO;
 import kr.co.sloop.study.service.StudyGroupService;
@@ -107,7 +108,7 @@ public class StudyGroupController {
 
 	/**
 	 * 스터디 그룹 관리 페이지: 스터디 설정 호출
-	 * URI : /study/{studyGroupCode}/info
+	 * URI : /study/{studyGroupCode}/manage/info
 	 */
 	@GetMapping("/{studyGroupCode}/manage/info")
 	public String requestStudyGroupInfo(@PathVariable("studyGroupCode") String studyGroupCode, Model model){
@@ -118,7 +119,7 @@ public class StudyGroupController {
 
 	/**
 	 * 스터디 설정 수정
-	 * URI : /study/{studyGroupCode}/info
+	 * URI : /study/{studyGroupCode}/manage/info
 	 */
 	@PostMapping("/{studyGroupCode}/manage/info")
 	public String submitUpdateStudyGroupForm(@PathVariable("studyGroupCode") String studyGroupCode,
@@ -136,6 +137,17 @@ public class StudyGroupController {
 	}
 
 	/**
+	 * 스터디 구성원 관리 페이지
+	 * URI : /study/{studyGroupCode}/manage/members
+	 */
+	@GetMapping("/{studyGroupCode}/manage/members")
+	public String requestStudyGroupMemebers(@PathVariable("studyGroupCode") String studyGroupCode,
+											 @ModelAttribute("StudyGroup") StudyGroupDTO studyGroupDTO,
+											 RedirectAttributes RA){
+		return "study/members";
+	}
+
+	/**
 	 * 스터디 그룹 폐쇄: 스터디 설정 호출
 	 * URI : /study/{studyGroupCode}/delete
 	 */
@@ -149,7 +161,25 @@ public class StudyGroupController {
 			return "study/"+studyGroupCode+"/infoForm";
 	}
 
+	/*
+	 * 스터디 그룹 가입 신청
+	 * URI: /study/join
+	 */
+	@PostMapping(value = "/join")
+	@ResponseBody
+	public Map joinStudyGroup(@RequestParam String studyGroupIdx, @RequestParam int memberIdx) {
+		Map result = new HashMap<String, Object>();
+		log.info("가입 신청 : " + studyGroupIdx + ", " + memberIdx);
+		// studyGroupIdx 스터디 그룹에 memberIdx 회원이 가입 신청
+		boolean joinResult = studyGroupService.joinStudyGroup(studyGroupIdx, memberIdx);
 
+		if(true){	// 성공
+			result.put("result", "ok");
+		}else{	// 실패
+			result.put("result", "false");
+		}
+		return result;
+	}
 
 
 
@@ -206,7 +236,4 @@ public class StudyGroupController {
 		System.out.println("buf = " + buf);
 		return buf.toString();
 	}
-
-
-	
 }

@@ -3,9 +3,7 @@ package kr.co.sloop.member.service.impl;
 
 import kr.co.sloop.member.domain.MemberDTO;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -30,11 +28,13 @@ public interface MemberService {
 
     int deleteByUser(int memberIdx);
 
-        void uploadProfile(MemberDTO memberDTO);
+    void uploadProfile(MemberDTO memberDTO);
 
     String phoneNumbCheck(String memberPhonenumber);
 
-    /*    void uploadProfileByIdx(int memberIdx);*/
+  List<MemberDTO> findStudyByIdx(String sessionIdx);
+
+  /*    void uploadProfileByIdx(int memberIdx);*/
 
 
 

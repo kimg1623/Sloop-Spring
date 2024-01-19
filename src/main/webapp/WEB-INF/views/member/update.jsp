@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <html>
 <head>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
@@ -8,18 +9,28 @@
     <title>S-loop 회원 정보 수정</title>
 </head>
 <body>
+
 <%--@elvariable id="memberDTO" type="kr.co.sloop.member.domain.MemberDTO"--%>
-<form:form action="/member/signup" method="post" modelAttribute="memberDTO">
-<p>이 메 일 : <form:input path="memberEmail"  placeholder="이메일" readonly="true"/>
+<form:form action="/member/update" method="post" modelAttribute="memberDTO">
+<!-- hidden -->
+<!-- 작성자 idx -->
+<p><form:hidden path="memberIdx"/></p>
+
+<p>이 메 일 : <form:input path="memberEmail" readonly="true"/>
+<%--
 <p>비밀번호 : <form:input path="memberPassword" type="password" placeholder="비밀번호" required="true" /></p>
-<p>닉 네 임 : <form:input path="memberNickname" placeholder="닉네임" readonly="true"/></p>
+--%>
+<p>닉 네 임 : <form:input path="memberNickname" readonly="true"/></p>
 <p>성   별 :
     <form:radiobutton path="memberGender" id="male" value="남자" />
     <label for="male">남자</label>
     <form:radiobutton path="memberGender" id="female" value="여자" />
     <label for="female">여자</label>
 </p>
-<p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호"/></p>
+    <p>전화번호 : <form:input path="memberPhonenumber" type="text" placeholder="핸드폰번호" required="true"/>
+        <form:button type="button" value="중복확인" onclick="phoneNumbCheck()">중복확인</form:button></p>
+    <form:errors path="memberPhonenumber" cssStyle="color: red"/>
+    <p id="check-result3"></p>
 <p>회원대분류 :
     <form:select path="memberGradeCode">
         <form:option value="">선택하세요.</form:option>
@@ -32,86 +43,92 @@
         <form:select name="memberGradeCode" id="memberGradeCode_sub" path="memberGradeCode">
             <option value="choose">선택하세요.</option>
         </form:select></p>--%>
-<p>학 교 명 : <form:input type="text" path="memberSchool" readonly="true"/></p>
+<p>학 교 명 : <form:input path="memberSchool"/></p>
 <p>관심 과목 :
-    <form:checkbox path="memberSubjectCode"/>국어
-    <form:checkbox path="memberSubjectCode"/>영어
-    <form:checkbox path="memberSubjectCode"/>수학
-    <form:checkbox path="memberSubjectCode"/>사회
-    <form:checkbox path="memberSubjectCode"/>과학
-    <form:checkbox path="memberSubjectCode"/>기타
+    <form:checkbox path="memberSubjectCode" value="국어"/>국어
+    <form:checkbox path="memberSubjectCode" value="영어"/>영어
+    <form:checkbox path="memberSubjectCode" value="수학"/>수학
+    <form:checkbox path="memberSubjectCode" value="사회"/>사회
+    <form:checkbox path="memberSubjectCode" value="과학"/>과학
+    <form:checkbox path="memberSubjectCode" value="기타"/>기타
 </p>
+    <form:errors path="memberSubjectCode" cssStyle="color: red"/>
 <p>지역대분류 :
     <form:select path="memberRegionCode">
         <form:option value="">선택하세요.</form:option>
-        <form:option value="900">서울특별시</form:option>
-        <form:option value="200">경기도</form:option>
-        <form:option value="1200">인천광역시</form:option>
-        <form:option value="100">강원특별자치도</form:option>
-        <form:option value="1700">충청북도</form:option>
-        <form:option value="1600">충청남도</form:option>
-        <form:option value="700">대전광역시</form:option>
-        <form:option value="1000">세종특별자치시</form:option>
-        <form:option value="1400">전라북도</form:option>
-        <form:option value="1300">전라남도</form:option>
-        <form:option value="500">광주광역시</form:option>
-        <form:option value="400">경상북도</form:option>
-        <form:option value="300">경상남도</form:option>
-        <form:option value="800">부산광역시</form:option>
-        <form:option value="600">대구광역시</form:option>
-        <form:option value="1100">울산광역시</form:option>
-        <form:option value="1500">제주특별자치도</form:option>
+        <form:option value="서울특별시">서울특별시</form:option>
+        <form:option value="경기도">경기도</form:option>
+        <form:option value="인천광역시">인천광역시</form:option>
+        <form:option value="강원특별자치도">강원특별자치도</form:option>
+        <form:option value="충청북도">충청북도</form:option>
+        <form:option value="충청남도">충청남도</form:option>
+        <form:option value="대전광역시">대전광역시</form:option>
+        <form:option value="세종특별자치시">세종특별자치시</form:option>
+        <form:option value="전라북도">전라북도</form:option>
+        <form:option value="전라남도">전라남도</form:option>
+        <form:option value="광주광역시">광주광역시</form:option>
+        <form:option value="경상북도">경상북도</form:option>
+        <form:option value="경상남도">경상남도</form:option>
+        <form:option value="부산광역시">부산광역시</form:option>
+        <form:option value="대구광역시">대구광역시</form:option>
+        <form:option value="울산광역시">울산광역시</form:option>
+        <form:option value="제주특별자치도">제주특별자치도</form:option>
     </form:select>
 </p>
     <%--<p>지역소분류 :
         <select name="memberRegionCode" id="memberRegionCode_sub" required>
             <option value="choose">선택하세요.</option>
         </select></p>--%>
-    <input type="button" value="수정" onclick="update()">
+    <input type="submit" value="수정">
 </form:form>
 </body>
 <script>
-
-    const update = () => {
+    /*const update = () => {
         const passwordDB = '${memberDTO.memberPassword}';
         const password = document.getElementById("memberPassword").value;
         if (passwordDB == password) {
             document.updateForm.submit();
+            /!*location.href = "/member/update";*!/
         } else {
             alert("비밀번호가 일치하지 않습니다!");
         }
-    }
-    // 이메일 입력값을 가져오고,
-    // 입력값을 서버로 전송하고 똑같은 이메일이 있는지 체크한 후
-    // 사용 가능 여부를 이메일 입력창 아래에 표시
+    }*/
+
     // document 관련된건 DOM 명령
-    const emailCheck = () => {
-        const email = document.getElementById("memberEmail").value;
-        const checkResult = document.getElementById("check-result");
-        console.log("입력한 이메일", email);
-        $.ajax({
-            // 요청방식: post, url: "email-check", 데이터: 이메일
-            type: "post",
-            url: "/member/email-check",
-            data: {
-                "memberEmail": email
-            },
-            success: function(res) {
-                console.log("요청성공", res);
-                if (res == "ok") {
-                    console.log("사용가능한 이메일");
-                    checkResult.style.color = "green";
-                    checkResult.innerHTML = "사용가능한 이메일";
-                } else {
-                    console.log("이미 사용중인 이메일");
-                    checkResult.style.color = "red";
-                    checkResult.innerHTML = "이미 사용중인 이메일";
+    const phoneNumbCheck = () => {
+        const phoneNumb = document.getElementById("memberPhonenumber").value;
+        const checkResult3 = document.getElementById("check-result3");
+        console.log("입력한 전화번호", phoneNumb);
+
+        let regex3 = new RegExp('0([0-9]{2,3})([0-9]{3,4})([0-9]{4})');
+        if (phoneNumb === "" || !regex3.test(phoneNumb)) { // 형식에 맞지 않거나 빈 문자열이라면
+            checkResult3.style.color = "red"
+            checkResult3.innerHTML = "전화번호를 형식에 맞게 기입하세요.(공백X)"
+        } else { // 형식에 맞을때
+            $.ajax({
+
+                type: "post",
+                url: "/member/phoneNumb-check",
+                data: {
+                    "memberPhonenumber": phoneNumb
+                },
+                success: function (res) {
+                    console.log("요청성공", res);
+                    if (res == "ok") {
+                        console.log("사용가능한 전화번호");
+                        checkResult3.style.color = "green";
+                        checkResult3.innerHTML = "사용가능한 전화번호";
+                    } else {
+                        console.log("이미 사용중인 전화번호");
+                        checkResult3.style.color = "red";
+                        checkResult3.innerHTML = "이미 사용중인 전화번호";
+                    }
+                },
+                error: function (err) {
+                    console.log("에러발생", err);
                 }
-            },
-            error: function(err) {
-                console.log("에러발생", err);
-            }
-        });
+            });
+        }
     }
     /*대분류 선택시 소분류 다르게 표시하기*/
 
@@ -177,23 +194,23 @@
 
         var target = document.getElementById("memberRegionCode_sub");
 
-        if (a.value == "900") var b = seoul;
-        else if (a.value == "200") var b = gyeonggi;
-        else if (a.value == "1200") var b = incheon;
-        else if (a.value == "100") var b = gangwon;
-        else if (a.value == "1700") var b = chungcheongbuk;
-        else if (a.value == "1600") var b = chungcheongnam;
-        else if (a.value == "700") var b = daejeon;
-        else if (a.value == "1000") var b = sejong;
-        else if (a.value == "1400") var b = jeollabuk;
-        else if (a.value == "1300") var b = jeollanam;
-        else if (a.value == "500") var b = gwangju;
-        else if (a.value == "400") var b = gyeongsangbuk;
-        else if (a.value == "300") var b = gyeongsangnam;
-        else if (a.value == "800") var b = busan;
-        else if (a.value == "600") var b = daegu;
-        else if (a.value == "1100") var b = ulsan;
-        else if (a.value == "1500") var b = jeju;
+        if (a.value == "서울특별시") var b = seoul;
+        else if (a.value == "경기도") var b = gyeonggi;
+        else if (a.value == "인천광역시") var b = incheon;
+        else if (a.value == "강원특별자치도") var b = gangwon;
+        else if (a.value == "충청북도") var b = chungcheongbuk;
+        else if (a.value == "충청남도") var b = chungcheongnam;
+        else if (a.value == "대전광역시") var b = daejeon;
+        else if (a.value == "세종특별자치시") var b = sejong;
+        else if (a.value == "전라북도") var b = jeollabuk;
+        else if (a.value == "전라남도") var b = jeollanam;
+        else if (a.value == "광주광역시") var b = gwangju;
+        else if (a.value == "경상북도") var b = gyeongsangbuk;
+        else if (a.value == "경상남도") var b = gyeongsangnam;
+        else if (a.value == "부산광역시") var b = busan;
+        else if (a.value == "대구광역시") var b = daegu;
+        else if (a.value == "울산광역시") var b = ulsan;
+        else if (a.value == "제주특별자치도") var b = jeju;
         target.options.length = 0;
 
         for (x in b) {

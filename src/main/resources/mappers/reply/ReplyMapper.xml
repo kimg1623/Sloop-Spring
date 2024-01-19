@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Reply">
+    <insert id="save" parameterType="kr.co.sloop.reply.domain.ReplyDTO">
+        INSERT INTO reply(postIdx, replyContents, memberIdx/*, replyGroup, replyGroupOrder, replyGroupDepth*/)
+        VALUES(#{postIdx}, #{replyContents}, #{memberIdx}/*, #{replyGroup}, #{replyGroupOrder}, #{replyGroupDepth}*/)
+    </insert>
+
+    <select id="findAll" parameterType="int" resultType="kr.co.sloop.reply.domain.ReplyDTO">
+        SELECT r.replyIdx, r.postIdx, r.replyContents, r.memberIdx, r.replyRegDate, m.memberNickname
+        FROM reply as r
+        join member as m on m.memberIdx = r.memberIdx
+        WHERE postIdx = #{postIdx}
+        order by r.replyRegDate desc
+    </select>
+
+    <update id="update" parameterType="kr.co.sloop.reply.domain.ReplyDTO">
+        UPDATE reply
+        SET replyContents = #{replyContents}, replyEditDate = #{replyEditDate}
+        WHERE replyIdx = #{replyIdx}
+    </update>
+
+    <delete id="deleteReply" parameterType="int">
+        DELETE FROM reply
+        WHERE replyIdx = #{replyIdx}
+    </delete>
+
+</mapper>

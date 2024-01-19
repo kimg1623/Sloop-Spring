@@ -1,5 +1,6 @@
 package kr.co.sloop.daily.repository;
 
+import kr.co.sloop.attachment.domain.AttachmentDTO;
 import kr.co.sloop.daily.domain.DailyDTO;
 import kr.co.sloop.daily.domain.PageDTO;
 import kr.co.sloop.daily.repository.impl.DailyRepository;
@@ -63,4 +64,9 @@ public class DailyRepositoryImpl implements DailyRepository {
         sql.update("Daily.updateViewCnt",postIdx);
     }
 
+    // 첨부파일
+    @Override
+    public int insertAttachment(AttachmentDTO attachmentDTO) {
+        return sql.insert("Daily.insertAttachment", attachmentDTO);
+    }
 }

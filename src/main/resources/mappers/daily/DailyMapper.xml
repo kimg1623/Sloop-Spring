@@ -79,7 +79,7 @@
         SELECT p.postIdx, p.postDailyTitle, p.memberIdx, p.postDailyRegDate, p.postDailyEditDate, p.postDailyContents, p.postDailyHits,  m.memberNickname, m.memberEmail
         FROM postDaily as p
         JOIN member as m ON p.memberIdx=m.memberIdx
-        WHERE postIdx=#{postIdx}
+        WHERE p.postIdx=#{postIdx}
     </select>
 
     <!--수정하기-->
@@ -102,6 +102,11 @@
         WHERE postIdx=#{postIdx}
     </update>
 
+    <!-- 첨부파일 업로드 -->
+    <insert id="insertAttachment" parameterType="attachment">
+        insert into attachment(postIdx, attachmentOrgName, attachmentDirPath, attachmentName)
+        values(#{postIdx}, #{attachmentOrgName}, #{attachmentDirPath}, #{attachmentName})
+    </insert>
 
 </mapper>
 

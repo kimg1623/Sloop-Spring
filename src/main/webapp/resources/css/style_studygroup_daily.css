@@ -17,6 +17,7 @@ body {
     display: flex;
 }
 .searchButton{
+    margin-left:4px;
     position: relative;
     border: none;
     display: inline-block;
@@ -90,13 +91,10 @@ ul {
 /*h1 class*/
 .dailyList-title{
     font-size: 17px;
-    min-height: 50px;
-    line-height: 28px;
     font-weight: 500;
-    /*letter-spacing: -.05em;*/
+    /* letter-spacing: -.05em; */
     display: -webkit-box;
     -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2;
     word-break: break-all;
     overflow: hidden;
 }
@@ -318,28 +316,79 @@ p{
     border-top: 1px solid #dcd8d8;
 }
 
-/*수정버튼*/
-.writeUpdate {
-    margin-right: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    background-color: #e5721e;
-    color: #ffffff;
+/*목록*/
+.btn_list{
+    height: 40px;
+    width: 60px;
+    background: #458dfc;
+    border-radius: 0.375rem;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 16px;
     border: none;
-    padding: 3px 10px;
 }
-/*삭제버튼*/
-.writeDelete {
-    margin-right: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: 600;
-    background-color: #da3c5b;
-    color: #ffffff;
+.btn_list:hover{
+    background: #000000;
+    transition: 0.2s ease;
+}
+
+/*수정*/
+.btn_update{
+    height: 35px;
+    width: 65px;
+    background: #458dfc;
+    border-radius: 0.375rem;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 17px;
     border: none;
-    padding: 3px 10px;
 }
+.btn_update:hover{
+    background: #f59436;
+    transition: 0.2s ease;
+}
+
+/*삭제*/
+.btn_delete{
+    margin-left: 4px;
+    height: 35px;
+    width: 65px;
+    background: #727272;
+    border-radius: 0.375rem;
+    color: rgb(255, 255, 255);
+    font-weight: 700;
+    font-size: 17px;
+    border: none;
+}
+.btn_delete:hover{
+    background: #ff3a3a;
+    transition: 0.2s ease;
+}
+
 
 /*-------dailyUpdate-------*/
 
+/*notice category, pinned */
+.CategoryList{
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+.Pinned{
+    text-align: left;
+    margin-bottom: 5px;
+}
+
+/*수정,삭제*/
+
+.buttonList{
+    text-align: right;
+}
+
+.Enddate{
+    margin-top: 10px;
+    display: flex;
+    grid-gap: 15px;
+    gap: 15px;
+    align-items: center;
+}

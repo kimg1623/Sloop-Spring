@@ -67,13 +67,15 @@
 	</beans:bean>
 
 	<!-- 이창규 - 주석 아래로 작성 -->
-
+	<beans:bean class="java.lang.String" id="uploadPathforMember">
+		<beans:constructor-arg value="D:\upload\sloop\profile\uploads"/>
+	</beans:bean>
 	<!-- 차소영 - 주석 아래로 작성 -->
 
 	<!-- 최지혜 - 주석 아래로 작성 -->
 	<!--	경로 수정 하기   -->
 	<beans:bean class="java.lang.String" id="uploadPathforDaily">
-		<beans:constructor-arg value="C:\Users\Sloop\postDaily\uploads"></beans:constructor-arg>
+		<beans:constructor-arg value="/Users/thegreatjy/Documents/sloop/postdaily"></beans:constructor-arg>
 	</beans:bean>
 
 </beans:beans>

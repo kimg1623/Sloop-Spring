@@ -15,27 +15,26 @@
         select *
         from member
         where memberEmail = #{memberEmail}
-          and memberPassword = #{memberPassword}
     </select>
 
     <select id="findByMemberEmail" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode , authority , memberProfile
+               memberSubjectCode, memberRegionCode , authority
         from  member
         where memberEmail = #{loginEmail}
     </select>
     <select id="findByMemberNickname" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode , authority , memberProfile
+               memberSubjectCode, memberRegionCode , authority
         from  member
         where memberNickname = #{memberNickname}
     </select>
     <select id="findByMemberPhoneNumb" parameterType="String" resultType="member">
         select memberIdx, memberEmail, memberPassword,
                memberNickname, memberGender, memberPhonenumber, memberSchool, memberGradeCode,
-               memberSubjectCode, memberRegionCode , authority , memberProfile
+               memberSubjectCode, memberRegionCode , authority
         from  member
         where memberPhonenumber = #{memberPhonenumber}
     </select>
@@ -61,7 +60,6 @@
     <update id="update" parameterType="member">
         update member
         set memberEmail = #{memberEmail},
-            memberPassword = #{memberPassword},
             memberNickname = #{memberNickname},
             memberGender = #{memberGender},
             memberPhonenumber = #{memberPhonenumber},
@@ -91,7 +89,19 @@
         where memberIdx = #{memberIdx}
     </update>
 
+    <select id="findStudyByIdx" parameterType="String" resultType="member">
+        select m.memberIdx , s.memberIdx , s.studyGroupIdx , s.studyMemRole , g.studyGroupIdx , g.studyGroupCode , g.studyGroupName
+        from member as m
+        join studyMem as s on m.memberIdx = s.memberIdx
+        join studyGroup as g on s.studyGroupIdx = g.studyGroupIdx
+        where m.memberIdx = #{sessionIdx}
+    </select>
 
+    <select id="emailCheck" parameterType="String" resultType="member">
+        select memberEmail
+        from member
+        where memberEmail = #{memberEmail}
+    </select>
     <!--Security-->
     <!--<select id="adminLogin" parameterType="member" resultType="kr.co.sloop.security.LoginUserDTO$MemberVO">
         select memberIdx, memberEmail, memberPassword,

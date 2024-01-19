@@ -16,10 +16,10 @@
         <th>이메일</th>
         <td>${member.memberEmail}</td>
     </tr>
-    <tr>
+<%--    <tr>
         <th>password</th>
         <td>${member.memberPassword}</td>
-    </tr>
+    </tr>--%>
     <tr>
         <th>닉네임</th>
         <td>${member.memberNickname}</td>
@@ -50,7 +50,7 @@
     </tr>
     <tr>
         <th>프로필 사진</th>
-        <td><img src="${pageContext.request.contextPath}/resources/upload/${member.memberProfile}"/></td>
+        <td><img src="./image?fileName=${member.memberProfile}"/></td>
     </tr>
 </table>
 <a href="/member/logout">로그아웃</a><br>

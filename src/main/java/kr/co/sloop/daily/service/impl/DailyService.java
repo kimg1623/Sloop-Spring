@@ -1,5 +1,6 @@
 package kr.co.sloop.daily.service.impl;
 
+import kr.co.sloop.attachment.domain.AttachmentDTO;
 import kr.co.sloop.daily.domain.DailyDTO;
 import kr.co.sloop.daily.domain.PageDTO;
 
@@ -15,7 +16,7 @@ public interface DailyService {
     PageDTO initialize(int boardIdx, int page, int searchType, String keyword, int boardType);
 
     //공부인증 게시글 작성
-    boolean dailyWrite(DailyDTO dailyDTO);
+    boolean dailyWrite(DailyDTO dailyDTO, AttachmentDTO attachmentDTO);
 
     //상세보기
     DailyDTO findByPostIdx(int postIdx);

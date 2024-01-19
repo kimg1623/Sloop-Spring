@@ -50,27 +50,29 @@
         // input file 파일 첨부시 fileCheck 함수 실행
     {
         $("#input_file").on("change", fileCheck);
+
     });
+
 
     /**
      * 첨부파일로직
      */
-    $(function () {
-        $('#btn-upload').click(function (e) {
-            e.preventDefault();
-            $('#input_file').click();
-        });
+
+    $('#btn-upload').click(function (e) {
+        e.preventDefault();
+        $('#input_file').click();
     });
 
     // 파일 현재 필드 숫자 totalCount랑 비교값
-    var fileCount = 0;
+    let fileCount = 0;
     // 해당 숫자를 수정하여 전체 업로드 갯수를 정한다.
-    var totalCount = 10;
+    let totalCount = 10;
     // 파일 고유넘버
-    var fileNum = 0;
+    let fileNum = 0;
     // 첨부파일 배열
-    var content_files = new Array();
+    let content_files = new Array();
 
+    // 파일 개수와 크기 검토 및 화면에 출력(업로드한 파일 목록 영역에)
     function fileCheck(e) {
         var files = e.target.files;
 
@@ -87,9 +89,16 @@
 
         // 각각의 파일 배열담기 및 기타
         filesArr.forEach(function (f) {
-            var reader = new FileReader();
+            let reader = new FileReader();
             reader.onload = function (e) {
+                // 파일 크기 검사 (25MB 미만만 업로드 가능)
+                if (f.size >= 26214400){
+                    alert("25MB 미만 파일만 첨부할 수 있습니다.");
+                    return;
+                }
                 content_files.push(f);
+
+                // 화면에 출력
                 $('#articlefileChange').append(
                     '<div id="file' + fileNum + '" onclick="fileDelete(\'file' + fileNum + '\')">'
                     + '<font style="font-size:12px">' + f.name + '</font>'
@@ -100,8 +109,6 @@
             };
             reader.readAsDataURL(f);
         });
-        console.log(content_files);
-        //초기화 한다.
         $("#input_file").val("");
     }
 
@@ -118,10 +125,11 @@
      * 폼 submit 로직
      */
     function registerAction(){
+        let status = false;
 
-        var form = $("form")[0];
-        var formData = new FormData(form);
-        for (var x = 0; x < content_files.length; x++) {
+        let form = $("form")[0];
+        let formData = new FormData(form);
+        for (let x = 0; x < content_files.length; x++) {
             // 삭제 안한것만 담아 준다.
             if(!content_files[x].is_delete){
                 formData.append("memberProfile", content_files[x]);
@@ -138,14 +146,15 @@
             processData: false,
             contentType: false,
             success: function (data) {
-                if(JSON.parse(data)['result'] == "OK"){
-                    alert("파일업로드 성공");
-                    location.href = "/member?memberIdx=${member.memberIdx}";
+                console.log(data);
+                if(JSON.parse(data)['result'] == "FAIL"){
+                    alert("파일업로드 실패! 확장자를 확인해주세요.");
+                    return ;
 
-
-
-                } else
-                    alert("서버내 오류로 처리가 지연되고있습니다. 잠시 후 다시 시도해주세요");
+                } else if (JSON.parse(data)['result'] == "ok"){
+                    alert("업로드 성공!");
+                    location.href = "/member/home";
+                } return;
             },
             error: function (xhr, status, error) {
                 alert("서버오류로 지연되고있습니다. 잠시 후 다시 시도해주시기 바랍니다.");
