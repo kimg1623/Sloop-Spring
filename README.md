@@ -135,8 +135,8 @@
 
 <details>
   <summary>ER 다이어그램</summary>
-  <img src="https://github.com/S-loop/Sloop-Spring/assets/40616792/64edc293-ed1f-406c-8b70-f0c2e596ae42">
 
+  <img src="https://github.com/S-loop/Sloop-Spring/assets/40616792/64edc293-ed1f-406c-8b70-f0c2e596ae42">
 
 </details>
 
@@ -206,7 +206,7 @@
 
 <br>
 
-
+<!-- 
 ## 5. 개인 회고
 
 ### 🍊 김지원
@@ -226,7 +226,7 @@
 <br>
 
 ### 😎 최지혜
-
+ -->
 <br>
 
 
