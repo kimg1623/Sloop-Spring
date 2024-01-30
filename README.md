@@ -107,7 +107,7 @@
 
 
 ## 3. 요구사항 명세 및 다이어그램
-👉 각 이미지를 클릭하면 확대되어 자세한 내용을 확인하실 수 있습니다.
+👉 각 이미지를 클릭하면 확대되어 자세한 내용을 확인하실 수 있습니다.(작업중)
 <details>
   <summary>요구사항 명세서</summary>
       
@@ -123,12 +123,6 @@
 
 <br>
 
-<details>
-  <summary>시퀀스 다이어그램</summary>
-
-</details>
-
-<br>
 
 <details>
   <summary>클래스 다이어그램</summary>
@@ -136,19 +130,13 @@
   
 </details>
 
-<br>
-
-<details>
-  <summary>블록 다이어그램</summary>
-  
-
-</details>
 
 <br>
 
 <details>
   <summary>ER 다이어그램</summary>
-  ![sloop-erd-png](https://github.com/kimg1623/Sloop-Spring/assets/40616792/ccef1f05-9c2d-4147-9c5b-decd978ba015)
+
+  <img src="https://github.com/S-loop/Sloop-Spring/assets/40616792/64edc293-ed1f-406c-8b70-f0c2e596ae42">
 
 </details>
 
@@ -218,7 +206,7 @@
 
 <br>
 
-
+<!-- 
 ## 5. 개인 회고
 
 ### 🍊 김지원
@@ -238,7 +226,7 @@
 <br>
 
 ### 😎 최지혜
-
+ -->
 <br>
 
 
