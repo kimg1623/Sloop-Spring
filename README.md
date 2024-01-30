@@ -148,6 +148,8 @@
 
 <details>
   <summary>ER 다이어그램</summary>
+  ![sloop-erd-png](https://github.com/S-loop/Sloop-Spring/assets/40616792/64edc293-ed1f-406c-8b70-f0c2e596ae42)
+
 
 </details>
 
