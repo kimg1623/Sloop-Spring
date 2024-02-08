@@ -22,9 +22,9 @@
   ### 👉 프로젝트 바로가기
   <div align="center">
   
-  | <img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/267e789a-5f97-445e-832e-27c5734c111f"  width="145" height="145"/> |<img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/564563d2-47e6-4cfa-b744-b11dc31e0ce9"  width="145" height="145"/> |
-  | :---: | :---: |
-  | [GitHub](https://github.com/S-loop/Sloop-Spring) | [Notion 팀회의록](https://geee1-kim.notion.site/Spring-Sloop-6a945387786344ca939c9c755cf0fdd7?pvs=4) |
+  | <img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/267e789a-5f97-445e-832e-27c5734c111f"  width="100" height="100"/> |<img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/564563d2-47e6-4cfa-b744-b11dc31e0ce9" width="100" height="100"/> | <img src="https://github.com/kimg1623/Sloop-Spring/assets/40616792/b9e42f8a-60ab-42cb-832f-c20ad5107ecf" width="100"/> |
+  | :---: | :---: | :---: |
+  | [GitHub](https://github.com/S-loop/Sloop-Spring) | [Notion 팀회의록](https://geee1-kim.notion.site/Spring-Sloop-6a945387786344ca939c9c755cf0fdd7?pvs=4) | [최종발표자료](https://www.canva.com/design/DAF6IMT-MRg/kg9FgWtSGAiejukB4scMvQ/view?utm_content=DAF6IMT-MRg&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel#1) |
  </div>
 
 <br><br>
@@ -37,7 +37,8 @@
 | **김지원** | **이지연** | **이창규** | **차소영** | **최지혜** |
 | :------: |  :------: | :------: | :------: | :------: |
 | [<img src="https://avatars.githubusercontent.com/u/40616792?v=4" height=140 width=140> <br/> @kimg1623](https://github.com/kimg1623) | [<img src="https://avatars.githubusercontent.com/u/74610908?v=4" height=140 width=140> <br/> @thegreatjy](https://github.com/thegreatjy) | [<img src="https://avatars.githubusercontent.com/u/145524731?v=4" height=140 width=140> <br/> @kidchang93](https://github.com/kidchang93)  | [<img src="https://avatars.githubusercontent.com/u/145963611?v=4" height=140 width=140> <br/> @Eumnya415](https://github.com/Eumnya415) | [<img src="https://avatars.githubusercontent.com/u/145963612?v=4" height=140 width=140> <br/> @jyeeeh](https://github.com/jyeeeh) |
-| 스터디 그룹 관리 구현 | 자유, 과제게시판 구현 |  회원 관리, 공지사항 구현 | 댓글 게시판 구현 | 인증 게시판 구현 | 
+| 총괄 리더 | 개발 리더 | 일정 리마인더 | 에디터 | 백업 리마인더 |
+| 스터디 그룹 ERD<br>스터디 그룹 기능<br>Front-end/Tiles | 게시판 ERD 설계<br>자유 게시판<br>과제 게시판 | 회원 ERD / 기능<br>공지 게시판<br>Spring Security | 댓글 기능<br>메인(헤더, 푸터) 페이지<br>Front-end | 공부 인증 게시판<br>Front-end<br>코드 백업 및 Git 관리 | 
 
 </div>
 
