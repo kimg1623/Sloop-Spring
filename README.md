@@ -22,9 +22,9 @@
   ### 👉 프로젝트 바로가기
   <div align="center">
   
-  | <img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/267e789a-5f97-445e-832e-27c5734c111f"  width="145" height="145"/> |<img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/564563d2-47e6-4cfa-b744-b11dc31e0ce9"  width="145" height="145"/> |
-  | :---: | :---: |
-  | [GitHub](https://github.com/S-loop/Sloop-Spring) | [Notion 팀회의록](https://geee1-kim.notion.site/Spring-Sloop-6a945387786344ca939c9c755cf0fdd7?pvs=4) |
+  | <img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/267e789a-5f97-445e-832e-27c5734c111f"  width="145" height="145"/> |<img src="https://github.com/ChunjaeMomCh/MomChannel/assets/145963633/564563d2-47e6-4cfa-b744-b11dc31e0ce9"  width="145" height="145"/> | 발표자료 |
+  | :---: | :---: | :---: |
+  | [GitHub](https://github.com/S-loop/Sloop-Spring) | [Notion 팀회의록](https://geee1-kim.notion.site/Spring-Sloop-6a945387786344ca939c9c755cf0fdd7?pvs=4) | [ppt](https://www.canva.com/design/DAF6IMT-MRg/kg9FgWtSGAiejukB4scMvQ/view?utm_content=DAF6IMT-MRg&utm_campaign=share_your_design&utm_medium=link&utm_source=shareyourdesignpanel#1) |
  </div>
 
 <br><br>
