@@ -217,13 +217,17 @@
 - CKEditor4 위즈윅 에디터를 사용하여 다양한 편집을 제공합니다. 
 - 에디터를 통한 파일 업로드 시, jpg, jpeg, gif, png의 파일 확장자이고, 10MB 이하의 이미지만 첨부가 가능합니다.
 
-![자유게시판](https://github.com/S-loop/Sloop-Spring/assets/74610908/b5c68295-0052-4bf5-ab1b-2b4cdfb4369c)
+https://github.com/S-loop/Sloop-Spring/assets/74610908/c3eaaa0f-b733-4aed-ac3e-95bc1ad9e5fe
+
+<br/>
 
 ### [ 과제 게시판 ]
 - Commons FileUpload를 사용하여 파일 업로드를 구현하였습니다. 
 - xls,xlsx,txt,png,jpg,jpeg,html,htm,mpg,mp4,mp3,pdf,zip 확장자이고, 25MB 이하의 파일만 첨부가 가능합니다.
 
-![과제 게시판 + 유효성](https://github.com/S-loop/Sloop-Spring/assets/74610908/595a72ff-bdc0-43cf-90df-3f36c4b6aafb)
+https://github.com/S-loop/Sloop-Spring/assets/74610908/d72ee204-4dac-49d6-a13a-7012cbf142d2
+
+<br/>
 
 
 <!-- 이창규 -->
