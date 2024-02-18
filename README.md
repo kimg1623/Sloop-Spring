@@ -108,9 +108,10 @@
 
 
 ## 3. 요구사항 명세 및 다이어그램
-👉 각 이미지를 클릭하면 확대되어 자세한 내용을 확인하실 수 있습니다.(작업중)
+👉 각 이미지를 클릭하면 확대되어 자세한 내용을 확인하실 수 있습니다.
 <details>
   <summary>요구사항 명세서</summary>
+  https://docs.google.com/spreadsheets/d/15XQPc8gPsYTeBJwkgJXVTgJ6lWjR7C81Wu9y1_1Detg/edit?usp=sharing
       
 </details>
 
@@ -118,21 +119,21 @@
 <br>
 
 <details>
-  <summary>유스케이스 다이어그램</summary>
+  <summary>서비스 Flow Chart</summary>
+  <img src="https://github.com/S-loop/Sloop-Spring/assets/40616792/90ea884e-411b-496f-aa15-c5fcc89531f7">
+
 
 </details>
 
 <br>
 
 
-<details>
+<!--<details>
   <summary>클래스 다이어그램</summary>
 
   
 </details>
-
-
-<br>
+<br>-->
 
 <details>
   <summary>ER 다이어그램</summary>
