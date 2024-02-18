@@ -167,7 +167,7 @@
  - 스터디 그룹을 소개하는 페이지입니다.
  - 학년, 과목, 지역, 모집 마감일, 스터디 시작일과 그룹 소개글을 확인할 수 있습니다.
 
-![image](https://github.com/S-loop/Sloop-Spring/assets/145963611/a75dd25b-2ac9-4e6a-9540-e2db5a6ea377)
+![1](https://github.com/S-loop/Sloop-Spring/assets/145963612/4f680bf9-522c-48e6-a6bc-4daaf74fe629)
 
 <br>
 
@@ -187,7 +187,7 @@
 - 회원 가입을 하면 DB의 member 테이블에 입력 받은 정보를 저장합니다.
 - 회원가입 성공 후 로그인 화면으로 이동합니다.
 
-![image](https://github.com/S-loop/Sloop-Spring/assets/145963611/e9ed8100-3929-452b-b150-9e614d77999b)
+![2](https://github.com/S-loop/Sloop-Spring/assets/145963612/bf1550a2-7eb2-4695-baf2-944cbfa85314)
 
 <br>
 
@@ -242,7 +242,14 @@ https://github.com/S-loop/Sloop-Spring/assets/74610908/d72ee204-4dac-49d6-a13a-7
 
 
 <!-- 최지혜 -->
+### [ 공부인증 게시판 ]
+- 3x3 앨범형 게시판으로 png, jpg, jpeg, gif 파일 확장자만 추가 가능합니다. 
+  
+| 글쓰기 폼 | 첨부파일 추가 후 | 리스트 |
+| --- | --- | --- |
+| ![3](https://github.com/S-loop/Sloop-Spring/assets/145963612/161c2f84-860c-46a3-9b79-b956ed0c4817) | ![4](https://github.com/S-loop/Sloop-Spring/assets/145963612/6a49f329-586f-4a82-8629-d118ad4a9e98) | ![5](https://github.com/S-loop/Sloop-Spring/assets/145963612/62e64257-b196-4072-9922-e3e0c96129b5) |
 
+<br/>
 
 
 
