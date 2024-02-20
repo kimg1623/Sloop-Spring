@@ -177,9 +177,29 @@
  - 회원 로그인을 한 뒤에 스터디 그룹 생성 버튼이 나타납니다.
  - 스터디 그룹이 생성되면, 생성한 회원은 관리자가 됩니다.
 
- - 영상
 
-<img src="https://github.com/S-loop/Sloop-Spring/assets/40616792/aa82b266-83f9-45c8-a7d5-beb02a2d0297" width="500px">
+
+https://github.com/S-loop/Sloop-Spring/assets/40616792/d240d041-17e4-4eb2-9768-78ac03fa91f7
+
+
+
+<br>
+
+### [ 스터디 그룹 가입 신청 ]
+ - 스터디 그룹 소개 페이지에서 스터디 정보를 확인하고 가입신청을 할 수 있습니다.
+ - 가입신청이 완료되면 마이페이지에서 확인이 가능하며, 해당 스터디의 리더가 승인을 해주면 그룹 LMS에 입장이 가능합니다.
+
+
+https://github.com/S-loop/Sloop-Spring/assets/40616792/25002125-9bfa-4433-b634-ae78499e48e5
+
+
+<br>
+
+### [ 마이 페이지 ]
+ - 회원 로그인시 헤더에서 닉네임을 클릭하면 마이 페이지가 나타납니다.
+ - 마이 페이지에서는 내가 가입한 스터디 그룹을 확인하고, 내 정보를 수정할 수 있습니다.
+
+<img src="https://github.com/S-loop/Sloop-Spring/assets/40616792/74223091-9cce-43c9-9b34-71bb73d910ea">
 
 <br>
 
