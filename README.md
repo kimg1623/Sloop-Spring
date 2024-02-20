@@ -263,8 +263,24 @@ https://github.com/S-loop/Sloop-Spring/assets/74610908/d72ee204-4dac-49d6-a13a-7
 
 
 <!-- 이창규 -->
+### [ 공지사항 게시판 ]
+ - 공지사항 게시판 입니다.
 
-
+| 공지사항 | 
+| --- |
+| 공지사항글쓰기 | 
+| ![(슬룹)공지사항글쓰기](https://github.com/S-loop/Sloop-Spring/assets/145524731/f39b477a-5fc5-4774-a4a1-2653870d05c7) |
+| 공지사항글작성시부모테이블에도삽입 |
+| ![(슬룹)공지사항글작성시부모테이블에도삽입](https://github.com/S-loop/Sloop-Spring/assets/145524731/1b8dbf36-49db-45cf-b894-486d56f9d353) |
+| 공지사항상단고정 |
+| ![(슬룹)공지사항상단고정](https://github.com/S-loop/Sloop-Spring/assets/145524731/46fe26cf-d4bf-4c26-804d-fddcab0b28de) |
+| ![(슬룹)공지사항상단고정1](https://github.com/S-loop/Sloop-Spring/assets/145524731/3032351f-8c7b-4516-8117-fedc2ae9d7ef) |
+| ![(슬룹)공지사항상단고정해제](https://github.com/S-loop/Sloop-Spring/assets/145524731/ccbc148c-ac74-48d0-a65b-b3b74be0f46d) |
+| ![(슬룹)공지사항상단고정해제후리스트](https://github.com/S-loop/Sloop-Spring/assets/145524731/6b457db1-e1d5-4e9d-acca-2d1f391a0138) |
+| 공지사항글리스트쿼리문 |
+| ![(슬룹)공지사항글리스트쿼리문](https://github.com/S-loop/Sloop-Spring/assets/145524731/e682e804-19e4-497e-9e91-bda231c241dd) |
+| 공지사항글삭제 |
+| ![(슬룹)공지사항글삭제](https://github.com/S-loop/Sloop-Spring/assets/145524731/24eadf9c-5c42-4802-b253-0d4fed340c1f) |
 
 
 <!-- 차소영 -->
