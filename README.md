@@ -187,7 +187,31 @@
 - 회원 가입을 하면 DB의 member 테이블에 입력 받은 정보를 저장합니다.
 - 회원가입 성공 후 로그인 화면으로 이동합니다.
 
-![2](https://github.com/S-loop/Sloop-Spring/assets/145963612/bf1550a2-7eb2-4695-baf2-944cbfa85314)
+| 회원가입 폼 |
+| --- |
+| ![(슬룹)회원가입폼](https://github.com/S-loop/Sloop-Spring/assets/145524731/9666f31d-1179-46b4-866e-cecdd6e906a1) |
+| 회원가입필수입력값제외시 |
+| ![(슬룹)회원가입필수입력값제외시](https://github.com/S-loop/Sloop-Spring/assets/145524731/0bc266c7-d2a1-4042-8585-da35661a0a98) |
+| 회원가입이메일중복검사 |
+| ![(슬룹)회원가입이메일중복검사](https://github.com/S-loop/Sloop-Spring/assets/145524731/fed2a1e4-b3f0-4582-9dd4-353f089ca4e3) |
+| 회원가입이메일중복검사 |
+| ![(슬룹)회원가입이메일중복검사2](https://github.com/S-loop/Sloop-Spring/assets/145524731/c16a1aa8-add0-4eba-8e8d-cc1c69861687) |
+| 회원가입이메일중복검사 |
+| ![(슬룹)회원가입이메일중복검사3](https://github.com/S-loop/Sloop-Spring/assets/145524731/9333856d-ea38-4b0c-8632-dab21e7d072d) |
+| 회원가입이메일중복검사 |
+| ![(슬룹)회원가입이메일중복검사4](https://github.com/S-loop/Sloop-Spring/assets/145524731/1fc48957-f543-4f6d-a1d8-369fa5949c9c) |
+| 회원가입이메일중복검사 |
+| ![(슬룹)회원가입이메일중복검사5](https://github.com/S-loop/Sloop-Spring/assets/145524731/632fa486-671b-4a9d-a2df-4153137ba7de) |
+| 회원validation |
+| ![(슬룹)회원validation1](https://github.com/S-loop/Sloop-Spring/assets/145524731/d6850c0e-e967-4006-9158-dec0d378b634) |
+| 회원가입백엔드코드 |
+| ![(슬룹)회원가입백엔드코드1](https://github.com/S-loop/Sloop-Spring/assets/145524731/d2dbaa7d-4f18-407f-b929-9fc07d1cc5e7) |
+| 회원가입시비밀번호암호화 |
+| ![(슬룹)회원가입시비밀번호암호화](https://github.com/S-loop/Sloop-Spring/assets/145524731/1026dce3-e760-411c-82d8-a328d2cd4a1b) |
+| 회원가입성공 |
+| ![(슬룹)회원가입성공](https://github.com/S-loop/Sloop-Spring/assets/145524731/13c2cfe3-6e2f-4c9e-9b3a-908b43e6fe01) |
+
+
 
 <br>
 
@@ -197,7 +221,14 @@
    
 | 로그인 폼 | 
 | --- | 
-| ![image](https://github.com/S-loop/Sloop-Spring/assets/145963611/68c77af9-e28d-4487-840b-950324e9fb71) |
+| 로그인 이메일 유효성 검사 | 
+| ![(슬룹)로그인이메일유효성검사](https://github.com/S-loop/Sloop-Spring/assets/145524731/2a111daa-a1a1-4e6a-ab3b-c04aec237fed) |
+| 로그인실패 |
+| ![(슬룹)로그인실패](https://github.com/S-loop/Sloop-Spring/assets/145524731/a46e93f5-078f-4cba-9ce6-bf3bbffb186c) |
+| 로그인컨트롤러 |
+| ![(슬룹)로그인컨트롤러](https://github.com/S-loop/Sloop-Spring/assets/145524731/53c5b416-c4ca-4bbd-a8c4-bf60c0d08ad5) |
+| 로그인성공 |
+| ![(슬룹)로그인성공](https://github.com/S-loop/Sloop-Spring/assets/145524731/c9979d2a-12ee-4994-a4ee-b5080caafc3b) |
 
 <br>
 
